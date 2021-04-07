@@ -1,21 +1,16 @@
 package com.example.foodapplication;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-public class LoadingScreen extends AppCompatActivity {
+public class Fill_Address_Screen extends AppCompatActivity {
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,18 +18,11 @@ public class LoadingScreen extends AppCompatActivity {
         //Transparent Status and Navigation Bar
         transparentStatusAndNavigation();
 
-        //Progress Bar run, if it finishes, Loading Screen will change a new screen
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startActivity(new Intent(LoadingScreen.this,MainActivity.class));
-                finish();
-            }
-        }, 5000);
-        setContentView(R.layout.activity_loading_screen);
+        setContentView(R.layout.activity_fill__address__screen);
     }
-    private void transparentStatusAndNavigation() {
+
+    private void transparentStatusAndNavigation()
+    {
         //make full transparent statusBar
         if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
             setWindowFlag(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
@@ -53,6 +41,8 @@ public class LoadingScreen extends AppCompatActivity {
             getWindow().setStatusBarColor(Color.TRANSPARENT);
             getWindow().setNavigationBarColor(Color.TRANSPARENT);
         }
+        //Change status bar text to black when screen is light white
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
     }
     private void setWindowFlag(final int bits, boolean on) {
         Window win = getWindow();
@@ -64,6 +54,4 @@ public class LoadingScreen extends AppCompatActivity {
         }
         win.setAttributes(winParams);
     }
-
-
 }
