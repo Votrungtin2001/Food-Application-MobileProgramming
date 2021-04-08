@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">FoodApplication</string>
+
+    <string name="activity_fav">Favorites</string>
 </resources>
