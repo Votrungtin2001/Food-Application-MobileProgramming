@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodApplication">
-        <activity android:name=".Fill_Address_Screen"></activity>
+        <activity android:name=".getCurrentLocation_LoadingScreen"></activity>
+        <activity android:name=".Fill_Address_Screen" />
         <activity android:name=".LoadingScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -2,14 +2,18 @@ package com.example.foodapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 
 public class Fill_Address_Screen extends AppCompatActivity {
+
+    private ImageView back_imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +23,20 @@ public class Fill_Address_Screen extends AppCompatActivity {
         transparentStatusAndNavigation();
 
         setContentView(R.layout.activity_fill__address__screen);
+
+        back_imageView = findViewById(R.id.Back_imageView);
+        back_imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                backPreviousScreen();
+            }
+        });
+    }
+
+    private void backPreviousScreen()
+    {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     private void transparentStatusAndNavigation()
