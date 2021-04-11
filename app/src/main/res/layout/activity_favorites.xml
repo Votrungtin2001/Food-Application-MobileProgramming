@@ -32,10 +32,10 @@
         app:layout_constraintTop_toBottomOf="@+id/txtFavoritesBanner" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvFavorites"
         android:layout_width="409dp"
         android:layout_height="593dp"
         android:layout_marginStart="2dp"
-        android:layout_marginLeft="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

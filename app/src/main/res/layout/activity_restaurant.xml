@@ -52,13 +52,23 @@
             <ImageView
                 android:id="@+id/imgPreview"
                 android:layout_width="match_parent"
-                android:layout_height="120dp" />
+                android:layout_height="96dp" />
 
             <TextView
-                android:id="@+id/txtRestaurantName"
+                android:id="@+id/txtResName"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/txtResDistance"
+                android:layout_width="82dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/txtResTravelTime"
+                android:layout_width="84dp"
+                android:layout_height="wrap_content" />
 
             <com.google.android.gms.maps.MapView
                 android:id="@+id/mapView"

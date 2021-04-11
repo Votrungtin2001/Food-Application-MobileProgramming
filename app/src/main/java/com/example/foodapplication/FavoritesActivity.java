@@ -8,10 +8,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 public class FavoritesActivity extends AppCompatActivity {
+    ArrayList<FavRestaurant> favs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,5 +44,10 @@ public class FavoritesActivity extends AppCompatActivity {
                 android.R.layout.simple_spinner_item, result);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinCategory.setAdapter(adapter);
+
+        RecyclerView rvFavorites = (RecyclerView) findViewById(R.id.rvFavorites);
+        FavoritesAdapter favAdapter = new FavoritesAdapter(favs);
+        rvFavorites.setAdapter(favAdapter);
+        rvFavorites.setLayoutManager(new LinearLayoutManager(this));
     }
 }
