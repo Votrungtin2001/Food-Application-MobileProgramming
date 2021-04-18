@@ -1,18 +1,42 @@
 <resources>
     <string name="app_name">FoodApplication</string>
 
+    <!--nav bar start-->
+    <string name="nav_label_home">Home</string>
+    <string name="nav_label_order">Order</string>
+    <string name="nav_label_favorites">Favorites</string>
+    <string name="nav_label_notif">Notifications</string>
+    <string name="nav_label_account">Account</string>
+    <!--nav bar end-->
+
     <string name="activity_fav">Favorites</string>
 
     <!--account screen strings start-->
-        <string name="activity_account_vouchers">My Vouchers</string>
-        <string name="activity_account_payment">Payment Method</string>
-        <string name="activity_account_address">Address</string>
-        <string name="activity_account_invite">Invite Friends</string>
-        <string name="activity_account_support">Customer Support</string>
-        <string name="activity_account_shopowner">For Shop Owners</string>
-        <string name="activity_account_policy">User Policy</string>
-        <string name="activity_account_settings">Settings</string>
-        <string name="activity_account_about">About us...</string>
-        <string name="activity_account_logout">LOGOUT</string>
+    <string name="activity_account_vouchers">My Vouchers</string>
+    <string name="activity_account_payment">Payment Method</string>
+    <string name="activity_account_address">Address</string>
+    <string name="activity_account_invite">Invite Friends</string>
+    <string name="activity_account_support">Customer Support</string>
+    <string name="activity_account_shopowner">For Shop Owners</string>
+    <string name="activity_account_policy">User Policy</string>
+    <string name="activity_account_settings">Settings</string>
+    <string name="activity_account_about">About us...</string>
+    <string name="activity_account_logout">LOGOUT</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <!--account screen strings end-->
 </resources>

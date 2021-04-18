@@ -1,7 +1,10 @@
 package com.example.foodapplication;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,6 +16,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -53,8 +58,38 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        BottomNavigationView navigation = findViewById(R.id.bottom_nav_bar);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull android.view.MenuItem item) {
+            Fragment fragment;
+            switch(item.getItemId()) {
+                case R.id.nav_favorites:
+                    fragment = new FavoritesFragment();
+                    break;
+                case R.id.nav_account:
+                    fragment = new AccountFragment();
+                    break;
+                default:
+                    return false;
+            }
+            loadFragment(fragment);
+            return true;
+        }
+    };
+
+    private void loadFragment(Fragment fragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
     private void openActivity1()
     {
         Intent intent = new Intent(this, Fill_Address_Screen.class);
