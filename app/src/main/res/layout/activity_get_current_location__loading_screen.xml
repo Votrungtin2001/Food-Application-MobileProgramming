@@ -8,19 +8,41 @@
     >
 
     <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gifImageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:src="@drawable/current_location_loading_screen"
-        android:background="@color/white"/>
+        tools:layout_editor_absoluteX="-121dp"
+        tools:layout_editor_absoluteY="-57dp" />
 
     <ProgressBar
+        android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="100dp"
-        android:visibility="invisible"></ProgressBar>
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/gifImageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
+    </ProgressBar>
+
+    <TextView
+        android:id="@+id/address_TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:textAlignment="center"
+        android:text=""
+        android:textSize="20dp"
+        android:textColor="#E6252525"
+        app:layout_constraintBottom_toBottomOf="@+id/gifImageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/gifImageView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
