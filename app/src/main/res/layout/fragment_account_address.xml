@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AccountAddressFragment">
+
+    <EditText
+        android:id="@+id/txtAccountAddressInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="1dp"
+        android:editable="true"
+        android:ems="10"
+        android:hint="@string/activity_account_address_input"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/txtAccountAddressGate"
+        android:layout_width="410dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtAccountAddressFloor"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="-1dp"
+        android:ems="10"
+        android:hint="@string/activity_account_address_gate"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/txtAccountAddressFloor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtAccountAddressInput"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="1dp"
+        android:ems="10"
+        android:hint="@string/activity_account_address_floor"
+        android:inputType="textPersonName" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="62dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="343dp"
+        android:text="@string/activity_account_address" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtAccountAddressGate"
+        android:layout_marginTop="3dp"
+        android:text="@string/activity_account_address_label" />
+
+    <RadioGroup
+        android:id="@+id/rbGroup"
+        android:layout_width="match_parent"
+        android:layout_height="31dp"
+        android:layout_below="@+id/textView4"
+        android:layout_marginTop="1dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rbHome"
+            android:layout_width="88dp"
+            android:layout_height="wrap_content"
+            android:text="@string/nav_label_home" />
+
+        <RadioButton
+            android:id="@+id/rbWork"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/activity_account_address_label_work" />
+
+        <RadioButton
+            android:id="@+id/rbOther"
+            android:layout_width="112dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="false"
+            android:text="@string/activity_account_address_label_other" />
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/txtOtherLabelName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rbGroup"
+        android:ems="10"
+        android:hint="@string/activity_account_address_label_other_spec"
+        android:inputType="textPersonName"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtOtherLabelName"
+        android:layout_marginTop="1dp"
+        android:text="@string/activity_account_address_contact" />
+
+    <EditText
+        android:id="@+id/txtAccountAddressContactName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:layout_marginTop="0dp"
+        android:ems="10"
+        android:hint="@string/activity_account_address_contact_name"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/txtAccountAddressContactNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtAccountAddressContactName"
+        android:layout_marginTop="0dp"
+        android:ems="10"
+        android:hint="@string/activity_account_address_contact_number"
+        android:inputType="phone" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtAccountAddressContactNumber"
+        android:layout_marginTop="1dp"
+        android:text="@string/activity_account_address_delivery" />
+
+    <EditText
+        android:id="@+id/txtDeliveryNote"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView10"
+        android:layout_marginTop="2dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine" />
+
+    <Button
+        android:id="@+id/btnAccountAddressSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtDeliveryNote"
+        android:layout_marginTop="165dp"
+        android:text="@string/save" />
+
+</RelativeLayout>
