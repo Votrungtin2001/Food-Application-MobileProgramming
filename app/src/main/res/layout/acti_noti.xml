@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/rectangle_1"
+        android:layout_width="411dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/rectangle_1"
+        android:text="Thông báo"
+        android:textSize="20dp"
+        android:gravity=""
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:drawablePadding="8dp"
+        android:ems="10"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/txtsale"
+        android:layout_width="370dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="12dp"
+        android:background="#FFFFFF"
+        android:text="@string/acti_noti_sale"
+        app:layout_constraintBottom_toTopOf="@+id/rectangle_3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/imageView8"
+        app:layout_constraintTop_toBottomOf="@+id/rectangle_1" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toTopOf="@+id/rectangle_3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rectangle_1"
+        app:srcCompat="@drawable/tag" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="41dp"
+        android:layout_height="42dp"
+        app:layout_constraintBottom_toBottomOf="@+id/txtVouchers"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/txtsale"
+        app:srcCompat="@drawable/right_arrow" />
+
+    <TextView
+        android:id="@+id/txtnew"
+        android:layout_width="370dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="12dp"
+        android:background="#FFFFFF"
+        android:text="@string/acti_noti_new"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.909"
+        app:layout_constraintStart_toEndOf="@+id/imageView8"
+        tools:layout_editor_absoluteY="80dp"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/imageView88"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView8"
+        app:srcCompat="@drawable/tag" />
+
+    <ImageView
+        android:id="@+id/imageView55"
+        android:layout_width="41dp"
+        android:layout_height="42dp"
+        app:layout_constraintBottom_toBottomOf="@+id/txtVouchers"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtsale"
+        app:srcCompat="@drawable/right_arrow" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_navigation_menu" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

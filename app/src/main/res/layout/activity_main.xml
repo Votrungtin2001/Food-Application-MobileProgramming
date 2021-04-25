@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -74,9 +73,8 @@
         android:id="@+id/editTextTextPersonName2"
         android:layout_width="365dp"
         android:layout_height="40dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/searchbg"
         android:drawableLeft="@drawable/ic_baseline_search_24"
         android:drawablePadding="8dp"
@@ -98,5 +96,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_navigation_menu" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

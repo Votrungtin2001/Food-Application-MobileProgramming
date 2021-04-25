@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <setting
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="18.62dp"
+    android:height="19.02dp"
+    android:viewportWidth="18.62"
+    android:viewportHeight="19.02"
+    >
+
+    <group>
+
+        <clip-path
+            android:pathData="M0 0H18.6211V19.015H0V0Z"
+            />
+
+        <path
+            android:pathData="M0 0V19.015H18.6211V0"
+            android:fillColor="#000000"
+            />
+
+    </group>
+    </setting>
+</selector>

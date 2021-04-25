@@ -2,6 +2,7 @@ package com.example.foodapplication;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -24,11 +26,20 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imageView2;
     private ImageView imageView4;
     private TextView textView;
+    private ScrollView scrollView;
+    public static final int SCROLL_DELTA = 15; // Pixel.
+
+    private ActionBar toolbar;
+
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // scroll
+        this.scrollView = (ScrollView) this.findViewById(R.id.scrollView);
 
         //Transparent Status and Navigation Bar
         transparentStatusAndNavigation();
@@ -60,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView navigation = findViewById(R.id.bottom_nav_bar);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -75,6 +87,8 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.nav_account:
                     fragment = new AccountFragment();
                     break;
+                case R.id.nav_notif:
+                    fragment = new Noti();
                 default:
                     return false;
             }
@@ -138,5 +152,25 @@ public class MainActivity extends AppCompatActivity {
             winParams.flags &= ~bits;
         }
         win.setAttributes(winParams);
+    }
+    private void doScrollUp() {
+
+        int x = this.scrollView.getScrollX();
+        int y = this.scrollView.getScrollY();
+
+        if(y - SCROLL_DELTA >= 0) {
+            this.scrollView.scrollTo(x, y-SCROLL_DELTA);
+        }
+
+    }
+    private void doScrollDown() {
+        int maxAmount = scrollView.getMaxScrollAmount();
+
+        int x = this.scrollView.getScrollX();
+        int y = this.scrollView.getScrollY();
+
+        if(y + SCROLL_DELTA <= maxAmount) {
+            this.scrollView.scrollTo(x, y + SCROLL_DELTA);
+        }
     }
 }
