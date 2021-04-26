@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E8E8E8"
+    tools:context=".AccountPayment" >
+
+    <TextView
+        android:id="@+id/txtAccountPaymentCoins"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="24dp"
+        android:background="#FFFFFF"
+        android:gravity="center|left"
+        android:textAlignment="gravity"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txtAccountPaymentHistory"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_below="@+id/txtAccountPaymentTopup"
+        android:layout_marginTop="2dp"
+        android:background="#FFFFFF"
+        android:gravity="center|left"
+        android:text="@string/activity_account_payment_history"
+        android:textAlignment="gravity"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txtAccountPaymentTopup"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_below="@+id/txtAccountPaymentCoins"
+        android:layout_marginTop="1dp"
+        android:background="#FFFFFF"
+        android:gravity="center|left"
+        android:text="@string/activity_account_payment_topup"
+        android:textAlignment="gravity"
+        android:textSize="18sp" />
+
+</RelativeLayout>

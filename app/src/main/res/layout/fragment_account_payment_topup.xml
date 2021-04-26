@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".AccountPaymentTopup">
+
+    <Button
+        android:id="@+id/btnDeposit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/TopupLayoutGrid"
+        android:layout_marginTop="110dp"
+        android:text="@string/activity_account_payment_deposit"
+        app:backgroundTint="#F44336" />
+
+    <EditText
+        android:id="@+id/txtTopupAmount"
+        android:layout_width="match_parent"
+        android:layout_height="114dp"
+        android:background="@null"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="number"
+        android:textAlignment="gravity"
+        android:textSize="24sp" />
+
+    <TableLayout
+        android:id="@+id/TopupLayoutGrid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtTopupAmount"
+        android:layout_marginTop="0dp">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/btnAdd50k"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.33"
+                android:background="#706767"
+                android:text="@string/activity_account_payment_50000"
+                android:textColor="#000000"
+                app:backgroundTint="#DCD6D6" />
+
+            <Button
+                android:id="@+id/btnAdd100k"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.33"
+                android:background="#706767"
+                android:text="@string/activity_account_payment_100000"
+                android:textColor="#000000"
+                app:backgroundTint="#DCD6D6" />
+
+            <Button
+                android:id="@+id/btnAdd200k"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.33"
+                android:background="#706767"
+                android:text="@string/activity_account_payment_200000"
+                android:textColor="#000000"
+                app:backgroundTint="#DCD6D6" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/btnAdd300k"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.33"
+                android:background="#706767"
+                android:text="@string/activity_account_payment_300000"
+                android:textColor="#000000"
+                app:backgroundTint="#DCD6D6" />
+
+            <Button
+                android:id="@+id/btnAdd500k"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.33"
+                android:background="#706767"
+                android:text="@string/activity_account_payment_500000"
+                android:textColor="#000000"
+                app:backgroundTint="#DCD6D6" />
+
+            <Button
+                android:id="@+id/btnAdd1M"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.33"
+                android:background="#706767"
+                android:text="@string/activity_account_payment_1000000"
+                android:textColor="#000000"
+                app:backgroundTint="#DCD6D6" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/btnAdd2M"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.33"
+                android:background="#706767"
+                android:text="@string/activity_account_payment_2000000"
+                android:textColor="#000000"
+                app:backgroundTint="#DCD6D6" />
+
+            <Button
+                android:id="@+id/btnAdd5M"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.33"
+                android:background="#706767"
+                android:text="@string/activity_account_payment_5000000"
+                android:textColor="#000000"
+                app:backgroundTint="#DCD6D6" />
+
+            <Button
+                android:id="@+id/btnAdd10M"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.33"
+                android:background="#706767"
+                android:text="@string/activity_account_payment_10000000"
+                android:textColor="#000000"
+                app:backgroundTint="#DCD6D6" />
+        </TableRow>
+
+    </TableLayout>
+
+</RelativeLayout>
