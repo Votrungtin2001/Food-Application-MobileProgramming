@@ -25,18 +25,38 @@
     <string name="activity_account_about">About us...</string>
     <string name="activity_account_logout">LOGOUT</string>
 
-        <!-- Account -> Address strings -->
-        <string name="activity_account_address_input">Enter address</string>
-        <string name="activity_account_address_floor">Building Floor No. (Optional)</string>
-        <string name="activity_account_address_gate">Gate (Optional)</string>
-        <string name="activity_account_address_label">Address Label (Optional)</string>
-        <string name="activity_account_address_label_work">Work</string>
-        <string name="activity_account_address_label_other">Other</string>
-        <string name="activity_account_address_label_other_spec">Label name, e.g. School, Gym</string>
-        <string name="activity_account_address_contact">Contact information</string>
-        <string name="activity_account_address_contact_name">Contact name</string>
-        <string name="activity_account_address_contact_number">Number</string>
-        <string name="activity_account_address_delivery">Delivery note (Optional)</string>
+    <!-- Account -> Vouchers strings -->
+    <string name="activity_account_vouchers_valid">Valid</string>
+    <string name="activity_account_vouchers_invalid">Invalid</string>
+    <string name="activity_account_vouchers_used">>Used</string>
+
+    <!-- Account -> Payment strings -->
+    <string name="activity_account_payment_topup">Top up Credits</string>
+    <string name="activity_account_payment_history">View Transaction History</string>
+    <string name="activity_account_payment_50000">50000</string>
+    <string name="activity_account_payment_100000">100000</string>
+    <string name="activity_account_payment_200000">200000</string>
+    <string name="activity_account_payment_300000">300000</string>
+    <string name="activity_account_payment_500000">500000</string>
+    <string name="activity_account_payment_1000000">1000000</string>
+    <string name="activity_account_payment_2000000">2000000</string>
+    <string name="activity_account_payment_5000000">5000000</string>
+    <string name="activity_account_payment_10000000">10000000</string>
+    <string name="activity_account_payment_deposit">Deposit</string>
+
+    <!-- Account -> Address strings -->
+    <string name="activity_account_address_input">Enter address</string>
+    <string name="activity_account_address_floor">Building Floor No. (Optional)</string>
+    <string name="activity_account_address_gate">Gate (Optional)</string>
+    <string name="activity_account_address_label">Address Label (Optional)</string>
+    <string name="activity_account_address_label_work">Work</string>
+    <string name="activity_account_address_label_other">Other</string>
+    <string name="activity_account_address_label_other_spec">Label name, e.g. School, Gym</string>
+    <string name="activity_account_address_contact">Contact information</string>
+    <string name="activity_account_address_contact_name">Contact name</string>
+    <string name="activity_account_address_contact_number">Number</string>
+    <string name="activity_account_address_delivery">Delivery note (Optional)</string>
+
 
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>

@@ -18,6 +18,9 @@ public class AccountFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_account, container, false);
 
+        btnVoucher = view.findViewById(R.id.btnVoucher);
+        btnVoucher.setOnClickListener(runVoucherFragment);
+
         btnAddress = view.findViewById(R.id.btnAddress);
         btnAddress.setOnClickListener(runAddressFragment);
 
@@ -28,7 +31,15 @@ public class AccountFragment extends Fragment {
         newFragment = new AccountAddressFragment();
         // source: https://stackoverflow.com/questions/21028786/how-do-i-open-a-new-fragment-from-another-fragment
         getActivity().getSupportFragmentManager().beginTransaction()
-                .replace( ((ViewGroup)getView().getParent()).getId(), newFragment, null)
+                .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
+                .addToBackStack(null)
+                .commit();
+    };
+
+    View.OnClickListener runVoucherFragment = v -> {
+        newFragment = new AccountVoucherFragment();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
                 .addToBackStack(null)
                 .commit();
     };
