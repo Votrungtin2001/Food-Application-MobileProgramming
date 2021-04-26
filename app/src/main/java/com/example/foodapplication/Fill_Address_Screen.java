@@ -10,10 +10,17 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 public class Fill_Address_Screen extends AppCompatActivity {
 
     private ImageView back_imageView;
+    private TextView textView1;
+    private TextView textView2;
+    private ImageView map_imageView;
+
+    private String nameStreet;
+    private String addressLine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +31,15 @@ public class Fill_Address_Screen extends AppCompatActivity {
 
         setContentView(R.layout.activity_fill__address__screen);
 
+        nameStreet = getIntent().getExtras().getString("NameStreet");
+        textView1 = findViewById(R.id.nameStreet_textView);
+        textView1.setText(nameStreet);
+
+        addressLine = getIntent().getExtras().getString("AddressLine");
+        textView2 = findViewById(R.id.fullAddress_textView);
+        textView2.setText(addressLine);
+
+
         back_imageView = findViewById(R.id.Back_imageView);
         back_imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,6 +47,20 @@ public class Fill_Address_Screen extends AppCompatActivity {
                 backPreviousScreen();
             }
         });
+
+        map_imageView = findViewById(R.id.Map_imageView);
+        map_imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openMapActivity();
+            }
+        });
+    }
+
+    private void openMapActivity()
+    {
+        Intent i = new Intent(Fill_Address_Screen.this, Map.class);
+        startActivity(i);
     }
 
     private void backPreviousScreen()

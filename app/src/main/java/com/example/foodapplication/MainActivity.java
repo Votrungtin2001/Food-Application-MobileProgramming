@@ -32,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
     private ActionBar toolbar;
 
 
+    private String addressLine;
+    private String nameStreet;
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,12 @@ public class MainActivity extends AppCompatActivity {
         //Transparent Status and Navigation Bar
         transparentStatusAndNavigation();
         setContentView(R.layout.activity_main);
+
+        textView = findViewById(R.id.address_Txt);
+        addressLine = getIntent().getExtras().getString("AddressLine");
+        textView.setText(addressLine);
+
+        nameStreet = getIntent().getExtras().getString("NameStreet");
 
         imageView2 = findViewById(R.id.imageView2);
         imageView2.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        textView = findViewById(R.id.textView);
+        textView = findViewById(R.id.address_Txt);
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,6 +116,8 @@ public class MainActivity extends AppCompatActivity {
     private void openActivity1()
     {
         Intent intent = new Intent(this, Fill_Address_Screen.class);
+        intent.putExtra("NameStreet", nameStreet);
+        intent.putExtra("AddressLine", addressLine);
         startActivity(intent);
     }
 

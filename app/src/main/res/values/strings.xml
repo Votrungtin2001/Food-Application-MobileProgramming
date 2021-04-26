@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">FoodApplication</string>
+    <string name="map_key" translatable="false">AIzaSyCxjW1Ofjkt8wmKpHk0tFYJyx4UrZiIPq4</string>
+    <string name="save">Save</string>
 
     <!--nav bar start-->
     <string name="nav_label_home">Home</string>
@@ -22,6 +24,20 @@
     <string name="activity_account_settings">Settings</string>
     <string name="activity_account_about">About us...</string>
     <string name="activity_account_logout">LOGOUT</string>
+
+        <!-- Account -> Address strings -->
+        <string name="activity_account_address_input">Enter address</string>
+        <string name="activity_account_address_floor">Building Floor No. (Optional)</string>
+        <string name="activity_account_address_gate">Gate (Optional)</string>
+        <string name="activity_account_address_label">Address Label (Optional)</string>
+        <string name="activity_account_address_label_work">Work</string>
+        <string name="activity_account_address_label_other">Other</string>
+        <string name="activity_account_address_label_other_spec">Label name, e.g. School, Gym</string>
+        <string name="activity_account_address_contact">Contact information</string>
+        <string name="activity_account_address_contact_name">Contact name</string>
+        <string name="activity_account_address_contact_number">Number</string>
+        <string name="activity_account_address_delivery">Delivery note (Optional)</string>
+
     <!-- Preference Titles -->
     <string name="messages_header">Messages</string>
     <string name="sync_header">Sync</string>
