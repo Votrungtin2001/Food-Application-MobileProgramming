@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
@@ -21,10 +22,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ImageView imageView2;
-    private ImageView imageView4;
-    private TextView textView;
-
     private String addressLine;
     private String nameStreet;
 
@@ -37,38 +34,28 @@ public class MainActivity extends AppCompatActivity {
         transparentStatusAndNavigation();
         setContentView(R.layout.activity_main);
 
-        textView = findViewById(R.id.address_Txt);
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        final HomeFragment homeFragment = new HomeFragment();
+
         addressLine = getIntent().getExtras().getString("AddressLine");
-        textView.setText(addressLine);
-
         nameStreet = getIntent().getExtras().getString("NameStreet");
+        Bundle b = new Bundle();
+        b.putString("AddressLine", addressLine);
+        b.putString("NameStreet", nameStreet);
+        homeFragment.setArguments(b);
+        fragmentTransaction.add(R.id.frame_container, homeFragment);
+        fragmentTransaction.commit();
 
-        imageView2 = findViewById(R.id.imageView2);
-        imageView2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openActivity1();
-            }
-        });
 
-        imageView4 = findViewById(R.id.imageView4);
-        imageView4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openActivity1();
-            }
-        });
 
-        textView = findViewById(R.id.address_Txt);
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openActivity1();
-            }
-        });
 
         BottomNavigationView navigation = findViewById(R.id.bottom_nav_bar);
+        loadFragment(homeFragment);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -78,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull android.view.MenuItem item) {
             Fragment fragment;
             switch(item.getItemId()) {
+                case R.id.nav_home:
+                    fragment = new HomeFragment();
+                    break;
                 case R.id.nav_favorites:
                     fragment = new FavoritesFragment();
                     break;
@@ -99,24 +89,7 @@ public class MainActivity extends AppCompatActivity {
         transaction.commit();
     }
 
-    private void openActivity1()
-    {
-        Intent intent = new Intent(this, Fill_Address_Screen.class);
-        intent.putExtra("NameStreet", nameStreet);
-        intent.putExtra("AddressLine", addressLine);
-        startActivity(intent);
-    }
 
-    private static void setWindowFlag(Activity activity, final int bits, boolean on) {
-        Window win = activity.getWindow();
-        WindowManager.LayoutParams winParams = win.getAttributes();
-        if (on) {
-            winParams.flags |= bits;
-        } else {
-            winParams.flags &= ~bits;
-        }
-        win.setAttributes(winParams);
-    }
     private void transparentStatusAndNavigation()
     {
         //make full transparent statusBar
