@@ -59,8 +59,6 @@ public class AccountPaymentTopup extends Fragment {
         return view;
     }
 
-
-
     View.OnClickListener onAmountClickListener = v -> {
         Button btn = (Button) v;
         txtTopupAmount.setText(btn.getText());
