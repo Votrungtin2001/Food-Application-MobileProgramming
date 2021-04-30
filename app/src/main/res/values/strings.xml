@@ -57,21 +57,36 @@
     <string name="activity_account_address_contact_number">Number</string>
     <string name="activity_account_address_delivery">Delivery note (Optional)</string>
 
+    <!-- Account -> Settings strings -->
+    <string name="activity_account_settings_account">Account Settings</string>
+    <string name="activity_account_settings_account_info">Information &amp; Contact</string>
+    <string name="activity_account_settings_account_password">Password</string>
+    <string name="activity_account_settings_app">App Settings</string>
+    <string name="activity_account_settings_app_lang">Change Language</string>
+    <string name="activity_account_settings_app_notif">Notifications</string>
+    <string name="activity_account_settings_account_info_avatar">Change avatar</string>
+    <string name="activity_account_settings_account_info_phone">Change phone number</string>
+    <string name="activity_account_settings_account_info_name">Change name</string>
+    <string name="activity_account_settings_account_info_email">Change email</string>
+    <string name="activity_account_settings_account_info_gender">Set gender</string>
+    <string name="activity_account_settings_account_info_dob">Set date of birth</string>
+    <string name="activity_account_settings_account_info_occupation">Set occupation</string>
+    <string name="activity_account_settings_account_info_occupation_desc">Select an Occupation</string>
+    <string name="activity_account_settings_account_info_occupation_office">Office State/Professional</string>
+    <string name="activity_account_settings_account_info_occupation_free">Self-Employed/Freelancer</string>
+    <string name="activity_account_settings_account_info_occupation_student">Student</string>
+    <string name="activity_account_settings_account_info_occupation_home">At Home</string>
+    <string name="activity_account_settings_account_info_occupation_other">Other</string>
+    <string name="activity_account_settings_account_password_desc">Update password</string>
+    <string name="activity_account_settings_account_password_old">Enter Current Password</string>
+    <string name="activity_account_settings_account_password_new">New Password</string>
+    <string name="activity_account_settings_account_password_confirm">Confirm New Password</string>
+    <string name="activity_account_settings_notif_push">Push Notifications</string>
+    <string name="activity_account_settings_notif_push_desc">Highly recommended to keep it on, so that you will be notified for all order status updates</string>
+    <string name="activity_account_settings_notif_promo">Promotions</string>
+    <string name="activity_account_settings_notif_promo_desc">Notify me when there are promotions in the selected province/city</string>
+    <string name="activity_account_settings_notif_province">Province/City</string>
 
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
-
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
-
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!--account screen strings end-->

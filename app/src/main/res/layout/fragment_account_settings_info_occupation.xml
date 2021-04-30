@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E8E8E8"
+    tools:context=".AccountSettingsInfoOccupationFragment" >
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="153dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="258dp"
+        android:text="@string/activity_account_settings_account_info_occupation_desc" />
+
+    <TextView
+        android:id="@+id/txtOccupationOffice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView13"
+        android:layout_marginTop="2dp"
+        android:background="#FFFFFF"
+        android:text="@string/activity_account_settings_account_info_occupation_office"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/txtOccupationFree"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtOccupationOffice"
+        android:layout_marginTop="2dp"
+        android:background="#FFFFFF"
+        android:text="@string/activity_account_settings_account_info_occupation_free"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/txtOccupationStudent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtOccupationFree"
+        android:layout_marginTop="2dp"
+        android:background="#FFFFFF"
+        android:text="@string/activity_account_settings_account_info_occupation_student"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/txtOccupationHome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtOccupationStudent"
+        android:layout_marginTop="2dp"
+        android:background="#FFFFFF"
+        android:text="@string/activity_account_settings_account_info_occupation_home"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/txtOccupationOther"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtOccupationHome"
+        android:layout_marginTop="2dp"
+        android:background="#FFFFFF"
+        android:text="@string/activity_account_settings_account_info_occupation_other"
+        android:textSize="24sp" />
+</RelativeLayout>
