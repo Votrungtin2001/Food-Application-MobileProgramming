@@ -51,27 +51,49 @@ public class HomeFragment extends Fragment {
         titles = new ArrayList<>();
         images = new ArrayList<>();
 
-        titles.add("Cơm");
+        titles.add("  Deal Hot \n Hôm Nay");
         titles.add("Giảm 70k");
+        titles.add("Cơm");
+        titles.add("   Freeship \n   Xtra");
         titles.add("Trà Sữa");
-        titles.add("Freeship Xtra");
+        titles.add("  NowShip - \n Giao Hàng");
         titles.add("Ăn Vặt");
-        titles.add("NowShip - Giao Hàng");
-        titles.add("NowFresh - Thực phẩm");
-        titles.add("Siêu Thị");
-        titles.add("Quán Yêu Thích");
+        titles.add("  NowFresh - \n Thực phẩm");
+        titles.add("Quán Mới");
+        titles.add("  NowTable - \n     Đặt Bàn");
+        titles.add("  Ưu Đãi - \n   Đối Tác");
+        titles.add("  Ưu Đãi \n   AirPay");
         titles.add("Hoa");
+        titles.add("Siêu Thị");
+        titles.add("Giặt Ủi");
+        titles.add("Thú Cưng");
+        titles.add("Thuốc");
+        titles.add("Bia");
+        titles.add("Làm Đẹp");
+        titles.add("     Quán \n Yêu Thích");
 
-        images.add(R.drawable.rice);
+
+        images.add(R.drawable.voucher);
         images.add(R.drawable.hot_deal);
-        images.add(R.drawable.milk_tea);
+        images.add(R.drawable.rice);
         images.add(R.drawable.xtra);
-        images.add(R.drawable.snack);
+        images.add(R.drawable.milk_tea);
         images.add(R.drawable.delivery);
+        images.add(R.drawable.snack);
         images.add(R.drawable.fish_meat);
-        images.add(R.drawable.cart);
-        images.add(R.drawable.like);
+        images.add(R.drawable.new_restaurant);
+        images.add((R.drawable.dining_table));
+        images.add(R.drawable.handshake);
+        images.add(R.drawable.airpay);
         images.add(R.drawable.flower);
+        images.add(R.drawable.cart);
+        images.add(R.drawable.cleaning_tshirt);
+        images.add(R.drawable.pet);
+        images.add(R.drawable.medicine);
+        images.add(R.drawable.beer);
+        images.add(R.drawable.salon);
+        images.add(R.drawable.like);
+
 
         adapter = new Adapter(getActivity(), titles, images);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.HORIZONTAL, false);
