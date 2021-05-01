@@ -30,6 +30,12 @@ public class AccountFragment extends Fragment {
         btnSettings = view.findViewById(R.id.btnSettings);
         btnSettings.setOnClickListener(runSettingsFragment);
 
+        btnInvite = view.findViewById(R.id.btnInvite);
+        btnInvite.setOnClickListener(runInviteFragment);
+
+        btnPolicy = view.findViewById(R.id.btnPolicy);
+        btnPolicy.setOnClickListener(runPolicyFragment);
+
         return view;
     }
 
@@ -58,8 +64,24 @@ public class AccountFragment extends Fragment {
                 .commit();
     };
 
+    View.OnClickListener runInviteFragment = v -> {
+        newFragment = new AccountInviteFragment();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
+                .addToBackStack(null)
+                .commit();
+    };
+
     View.OnClickListener runSettingsFragment = v -> {
         newFragment = new AccountSettings();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
+                .addToBackStack(null)
+                .commit();
+    };
+
+    View.OnClickListener runPolicyFragment = v -> {
+        newFragment = new AccountPolicyFragment();
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
                 .addToBackStack(null)
