@@ -1,0 +1,24 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <SwitchPreferenceCompat
+        android:id="@+id/SwitchPreferenceNotif"
+        android:layout_width="match_parent"
+        app:key="SwitchPreferenceNotif"
+        app:summary="@string/activity_account_settings_notif_push_desc"
+        app:title="@string/activity_account_settings_notif_push" />
+
+    <SwitchPreferenceCompat
+        android:id="@+id/SwitchPreferencePromos"
+        android:layout_width="match_parent"
+        app:key="SwitchPreferencePromos"
+        app:summary="@string/activity_account_settings_notif_promo_desc"
+        app:title="@string/activity_account_settings_notif_promo" />
+    <EditTextPreference
+        android:id="@+id/txtPreferenceProvince"
+        android:defaultValue="Default value"
+        android:key="txtPreferenceProvince"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/activity_account_settings_notif_province" />
+
+</PreferenceScreen>

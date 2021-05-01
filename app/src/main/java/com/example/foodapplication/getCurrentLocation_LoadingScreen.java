@@ -52,7 +52,8 @@ public class getCurrentLocation_LoadingScreen extends AppCompatActivity implemen
         grantPermission();
         checkLocationIsEnableOrNot(); //this will redirect us to the location setting
         getLocation();
-        addressLine = textView.getText().toString();
+
+
 
 
         //Progress Bar run, if it finishes, Loading Screen will change a new screen

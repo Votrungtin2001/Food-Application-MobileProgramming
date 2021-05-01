@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E8E8E8"
+    tools:context=".AccountSettings" >
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="157dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="254dp"
+        android:text="@string/activity_account_settings_account"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txtAccountSettingsInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView12"
+        android:layout_marginTop="3dp"
+        android:background="#FFFFFF"
+        android:clickable="true"
+        android:text="@string/activity_account_settings_account_info"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/txtAccountSettingsPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtAccountSettingsInfo"
+        android:layout_marginTop="-1dp"
+        android:background="#FFFFFF"
+        android:clickable="true"
+        android:text="@string/activity_account_settings_account_password"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtAccountSettingsPassword"
+        android:layout_marginTop="0dp"
+        android:text="@string/activity_account_settings_app"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txtAccountAppLanguage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView15"
+        android:layout_marginTop="0dp"
+        android:background="#FFFFFF"
+        android:clickable="true"
+        android:text="@string/activity_account_settings_app_lang"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/txtAccountAppNotif"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtAccountAppLanguage"
+        android:layout_marginTop="2dp"
+        android:background="#FFFFFF"
+        android:clickable="true"
+        android:text="@string/activity_account_settings_app_notif"
+        android:textSize="24sp" />
+</RelativeLayout>

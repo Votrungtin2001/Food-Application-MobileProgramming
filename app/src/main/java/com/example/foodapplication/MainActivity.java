@@ -1,5 +1,11 @@
 package com.example.foodapplication;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -9,16 +15,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -27,26 +24,14 @@ public class MainActivity extends AppCompatActivity {
     private ImageView imageView2;
     private ImageView imageView4;
     private TextView textView;
-    private ScrollView scrollView;
-    public static final int SCROLL_DELTA = 15; // Pixel.
-    private ActionBar toolbar;
+
     private String addressLine;
     private String nameStreet;
-    ViewPager viewPager;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        // ViewPager
-
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
-        ImageAdapter adapter = new ImageAdapter(this);
-        viewPager.setAdapter(adapter);
-        // scroll
-        this.scrollView = (ScrollView) this.findViewById(R.id.scrollView);
 
         //Transparent Status and Navigation Bar
         transparentStatusAndNavigation();
@@ -84,10 +69,6 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView navigation = findViewById(R.id.bottom_nav_bar);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-        // attaching bottom sheet behaviour - hide / show on scroll
-//        CoordinatorLayout.LayoutParams layoutParams = (CoordinatorLayout.LayoutParams) navigation.getLayoutParams();
-//        layoutParams.setBehavior(new BottomNavigationBehavior());
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -99,12 +80,10 @@ public class MainActivity extends AppCompatActivity {
             switch(item.getItemId()) {
                 case R.id.nav_favorites:
                     fragment = new FavoritesFragment();
-                    loadFragment(fragment);
                     break;
                 case R.id.nav_account:
                     fragment = new AccountFragment();
                     break;
-
                 default:
                     return false;
             }
@@ -138,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
         }
         win.setAttributes(winParams);
     }
-
     private void transparentStatusAndNavigation()
     {
         //make full transparent statusBar
@@ -162,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
         //Change status bar text to black when screen is light white
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
     }
-
     private void setWindowFlag(final int bits, boolean on) {
         Window win = getWindow();
         WindowManager.LayoutParams winParams = win.getAttributes();
@@ -173,26 +150,4 @@ public class MainActivity extends AppCompatActivity {
         }
         win.setAttributes(winParams);
     }
-
-    private void doScrollUp() {
-
-        int x = this.scrollView.getScrollX();
-        int y = this.scrollView.getScrollY();
-
-        if(y - SCROLL_DELTA >= 0) {
-            this.scrollView.scrollTo(x, y-SCROLL_DELTA);
-        }
-    }
-
-    private void doScrollDown() {
-        int maxAmount = scrollView.getMaxScrollAmount();
-
-        int x = this.scrollView.getScrollX();
-        int y = this.scrollView.getScrollY();
-
-        if(y + SCROLL_DELTA <= maxAmount) {
-            this.scrollView.scrollTo(x, y + SCROLL_DELTA);
-        }
-    }
-
 }

@@ -21,8 +21,14 @@ public class AccountFragment extends Fragment {
         btnVoucher = view.findViewById(R.id.btnVoucher);
         btnVoucher.setOnClickListener(runVoucherFragment);
 
+        btnPayment = view.findViewById(R.id.btnPayment);
+        btnPayment.setOnClickListener(runPaymentFragment);
+
         btnAddress = view.findViewById(R.id.btnAddress);
         btnAddress.setOnClickListener(runAddressFragment);
+
+        btnSettings = view.findViewById(R.id.btnSettings);
+        btnSettings.setOnClickListener(runSettingsFragment);
 
         return view;
     }
@@ -38,6 +44,22 @@ public class AccountFragment extends Fragment {
 
     View.OnClickListener runVoucherFragment = v -> {
         newFragment = new AccountVoucherFragment();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
+                .addToBackStack(null)
+                .commit();
+    };
+
+    View.OnClickListener runPaymentFragment = v -> {
+        newFragment = new AccountPayment();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
+                .addToBackStack(null)
+                .commit();
+    };
+
+    View.OnClickListener runSettingsFragment = v -> {
+        newFragment = new AccountSettings();
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
                 .addToBackStack(null)
