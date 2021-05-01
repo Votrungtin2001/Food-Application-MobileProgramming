@@ -15,18 +15,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ImageView imageView2;
-    private ImageView imageView4;
-    private TextView textView;
-
     private String addressLine;
     private String nameStreet;
+
+    FragmentManager fragmentManager = getSupportFragmentManager();
+    final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+    final HomeFragment homeFragment = new HomeFragment();
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -37,37 +38,21 @@ public class MainActivity extends AppCompatActivity {
         transparentStatusAndNavigation();
         setContentView(R.layout.activity_main);
 
-        textView = findViewById(R.id.address_Txt);
         addressLine = getIntent().getExtras().getString("AddressLine");
-        textView.setText(addressLine);
-
         nameStreet = getIntent().getExtras().getString("NameStreet");
+        Bundle b = new Bundle();
+        b.putString("AddressLine", addressLine);
+        b.putString("NameStreet", nameStreet);
+        homeFragment.setArguments(b);
+        fragmentTransaction.add(R.id.frame_container, homeFragment);
+        fragmentTransaction.commit();
 
-        imageView2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openActivity1();
-            }
-        });
-
-        imageView4 = findViewById(R.id.imageView4);
-        imageView4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openActivity1();
-            }
-        });
-
-        textView = findViewById(R.id.address_Txt);
-        textView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openActivity1();
-            }
-        });
 
         BottomNavigationView navigation = findViewById(R.id.bottom_nav_bar);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        //Default fragment
+        loadFragment(homeFragment);
+
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -77,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull android.view.MenuItem item) {
             Fragment fragment;
             switch(item.getItemId()) {
+                case R.id.nav_home:
+                    fragment = new HomeFragment();
                 case R.id.nav_favorites:
                     fragment = new FavoritesFragment();
                     break;

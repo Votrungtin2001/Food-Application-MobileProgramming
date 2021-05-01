@@ -15,8 +15,8 @@ import android.widget.TextView;
 public class Fill_Address_Screen extends AppCompatActivity {
 
     private ImageView back_imageView;
-    private TextView textView1;
-    private TextView textView2;
+    private TextView textView_nameStreet;
+    private TextView textView_addressLine;
     private ImageView map_imageView;
 
     private String nameStreet;
@@ -32,12 +32,12 @@ public class Fill_Address_Screen extends AppCompatActivity {
         setContentView(R.layout.activity_fill__address__screen);
 
         nameStreet = getIntent().getExtras().getString("NameStreet");
-        textView1 = findViewById(R.id.nameStreet_textView);
-        textView1.setText(nameStreet);
+        textView_nameStreet = findViewById(R.id.nameStreet_textView);
+        textView_nameStreet.setText(nameStreet);
 
         addressLine = getIntent().getExtras().getString("AddressLine");
-        textView2 = findViewById(R.id.fullAddress_textView);
-        textView2.setText(addressLine);
+        textView_addressLine = findViewById(R.id.fullAddress_textView);
+        textView_addressLine.setText(addressLine);
 
 
         back_imageView = findViewById(R.id.Back_imageView);
