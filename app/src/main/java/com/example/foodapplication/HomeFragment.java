@@ -136,5 +136,7 @@ public class HomeFragment extends Fragment {
         intent.putExtra("AddressLine", addressLine);
         intent.putExtra("NameStreet", nameStreet);
         startActivity(intent);
+
+
     }
 }

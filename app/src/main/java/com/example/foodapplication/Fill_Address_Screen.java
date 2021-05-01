@@ -44,7 +44,7 @@ public class Fill_Address_Screen extends AppCompatActivity {
         back_imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                backPreviousScreen();
+                finish();
             }
         });
 
@@ -63,10 +63,9 @@ public class Fill_Address_Screen extends AppCompatActivity {
         startActivity(i);
     }
 
-    private void backPreviousScreen()
-    {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+    @Override
+    public void finish() {
+        super.finish();
     }
 
     private void transparentStatusAndNavigation()

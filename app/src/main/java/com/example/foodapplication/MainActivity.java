@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("NameStreet", nameStreet);
         intent.putExtra("AddressLine", addressLine);
         startActivity(intent);
+
     }
 
     private static void setWindowFlag(Activity activity, final int bits, boolean on) {

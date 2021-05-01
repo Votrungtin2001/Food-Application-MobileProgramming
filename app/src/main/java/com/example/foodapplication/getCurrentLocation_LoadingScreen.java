@@ -66,6 +66,7 @@ public class getCurrentLocation_LoadingScreen extends AppCompatActivity implemen
                 i.putExtra("AddressLine", addressLine);
                 i.putExtra("NameStreet", nameStreet);
                 startActivity(i);
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 finish();
             }
         }, 5000);
