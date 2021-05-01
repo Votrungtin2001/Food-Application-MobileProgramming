@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E8E8E8"
+    tools:context=".AccountPolicyFragment">
+
+    <TextView
+        android:id="@+id/txtDisputePolicy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtToS"
+        android:layout_marginTop="2dp"
+        android:background="#FFFFFF"
+        android:text="@string/activity_account_policy_dispute"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/txtToS"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtRegulation"
+        android:layout_marginTop="2dp"
+        android:background="#FFFFFF"
+        android:text="@string/activity_account_policy_tos"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/txtRegulation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtPrivacyPolicy"
+        android:layout_marginTop="2dp"
+        android:background="#FFFFFF"
+        android:text="@string/activity_account_policy_regulation"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/txtPaymentGuide"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:text="@string/activity_account_policy_payment"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/txtPrivacyPolicy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtPaymentGuide"
+        android:layout_marginTop="2dp"
+        android:background="#FFFFFF"
+        android:text="@string/activity_account_policy_privacy"
+        android:textSize="24sp" />
+</RelativeLayout>

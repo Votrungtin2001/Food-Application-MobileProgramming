@@ -86,6 +86,16 @@
     <string name="activity_account_settings_notif_promo">Promotions</string>
     <string name="activity_account_settings_notif_promo_desc">Notify me when there are promotions in the selected province/city</string>
     <string name="activity_account_settings_notif_province">Province/City</string>
+    <string name="activity_account_settings_invite_sms">Send to SMS</string>
+    <string name="activity_account_settings_invite_email">Send to Email</string>
+    <string name="activity_account_settings_invite_link">Copy app download link</string>
+
+    <!-- Account -> Policy strings -->
+    <string name="activity_account_policy_payment">Payment Guide</string>
+    <string name="activity_account_policy_privacy">Privacy Policy</string>
+    <string name="activity_account_policy_regulation">Regulation</string>
+    <string name="activity_account_policy_tos">Terms of Service</string>
+    <string name="activity_account_policy_dispute">Dispute Resolution Policy</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
