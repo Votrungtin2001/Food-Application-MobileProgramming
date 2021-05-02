@@ -42,6 +42,33 @@ public class HomeFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        imageView_Location = (ImageView) view.findViewById(R.id.location_imageView);
+        imageView_Location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                runFillAddressActivity();
+            }
+        });
+
+        imageView_Next = (ImageView) view.findViewById(R.id.next_imageView);
+        imageView_Next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { runFillAddressActivity(); }
+        });
+
+        textView_addressLine = (TextView) view.findViewById(R.id.address_Txt);
+        textView_addressLine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { runFillAddressActivity(); }
+        });
+
+        textView_addressLine = (TextView) view.findViewById(R.id.address_Txt);
+        Bundle b = getArguments();
+        addressLine = b.getString("AddressLine");
+        nameStreet = b.getString("NameStreet");
+        textView_addressLine.setText(addressLine);
+
+
         viewPager3 = (ViewPager) view.findViewById(R.id.viewPager3);
         ImageAdapter adapter1 = new ImageAdapter(getActivity());
         viewPager3.setAdapter(adapter1);
@@ -72,7 +99,6 @@ public class HomeFragment extends Fragment {
         titles.add("Làm Đẹp");
         titles.add("     Quán \n Yêu Thích");
 
-
         images.add(R.drawable.voucher);
         images.add(R.drawable.hot_deal);
         images.add(R.drawable.rice);
@@ -98,32 +124,6 @@ public class HomeFragment extends Fragment {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.HORIZONTAL, false);
         recyclerView_list.setLayoutManager(gridLayoutManager);
         recyclerView_list.setAdapter(adapter);
-
-        imageView_Location = (ImageView) view.findViewById(R.id.location_imageView);
-        imageView_Location.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                runFillAddressActivity();
-            }
-        });
-
-        imageView_Next = (ImageView) view.findViewById(R.id.next_imageView);
-        imageView_Next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { runFillAddressActivity(); }
-        });
-
-        textView_addressLine = (TextView) view.findViewById(R.id.address_Txt);
-        textView_addressLine.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { runFillAddressActivity(); }
-        });
-
-        textView_addressLine = (TextView) view.findViewById(R.id.address_Txt);
-        Bundle b = getArguments();
-        addressLine = b.getString("AddressLine");
-        nameStreet = b.getString("NameStreet");
-        textView_addressLine.setText(addressLine);
 
         return view;
     }

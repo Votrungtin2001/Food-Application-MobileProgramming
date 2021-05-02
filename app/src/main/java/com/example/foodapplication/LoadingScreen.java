@@ -29,6 +29,7 @@ public class LoadingScreen extends AppCompatActivity {
             @Override
             public void run() {
                 startActivity(new Intent(LoadingScreen.this,getCurrentLocation_LoadingScreen.class));
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 finish();
             }
         }, 4000);
