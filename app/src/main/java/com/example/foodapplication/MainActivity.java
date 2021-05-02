@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        imageView4 = findViewById(R.id.imageView4);
+       // imageView4 = findViewById(R.id.imageView4);
         imageView4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
