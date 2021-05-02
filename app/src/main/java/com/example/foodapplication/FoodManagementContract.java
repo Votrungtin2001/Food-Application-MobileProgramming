@@ -12,8 +12,8 @@ public final class FoodManagementContract {
     public static final String DATABASE_NAME = "foodapp.db";
 
     public static final String[] SQL_CREATE_TABLE_ARRAY = {
-            CCustomer.CREATE_TABLE,
             CCity.CREATE_TABLE,
+            CCustomer.CREATE_TABLE,
             CRestaurant.CREATE_TABLE,
             CBranch.CREATE_TABLE,
             CProduct.CREATE_TABLE,
@@ -30,8 +30,8 @@ public final class FoodManagementContract {
             CCity.DELETE_TABLE,
             CRestaurant.DELETE_TABLE,
             CBranch.DELETE_TABLE,
-            CProduct.DELETE_TABLE,
             CCategory.DELETE_TABLE,
+            CProduct.DELETE_TABLE,
             CMenu.DELETE_TABLE,
             COrder.DELETE_TABLE,
             CDelivery.DELETE_TABLE,
@@ -49,7 +49,7 @@ public final class FoodManagementContract {
                 KEY_CITY = "City",
                 KEY_ADDRESS = "Address",
                 KEY_PHONE = "Phone",
-                KEY_EMAIL = "E-mail",
+                KEY_EMAIL = "Email",
                 KEY_FACEBOOK = "Facebook",
                 KEY_PASSWORD = "Password";
 
