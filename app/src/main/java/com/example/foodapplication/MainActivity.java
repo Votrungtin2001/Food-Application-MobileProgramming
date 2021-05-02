@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -64,16 +62,28 @@ public class MainActivity extends AppCompatActivity {
             switch(item.getItemId()) {
                 case R.id.nav_home:
                     fragment = new HomeFragment();
+                    loadFragment(fragment);
+
                 case R.id.nav_favorites:
                     fragment = new FavoritesFragment();
+                    loadFragment(fragment);
                     break;
                 case R.id.nav_account:
                     fragment = new AccountFragment();
+                    loadFragment(fragment);
+                    break;
+                case R.id.nav_notif:
+                    fragment = new Noti();
+                    loadFragment(fragment);
+                    break;
+                case R.id.nav_order:
+                    fragment=new OrderFragment();
+                    loadFragment(fragment);
                     break;
                 default:
                     return false;
             }
-            loadFragment(fragment);
+
             return true;
         }
     };
