@@ -1,232 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="#E8E8E8"
     tools:context=".AccountFragment">
-
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="match_parent"
-        android:layout_height="27dp"
-        android:background="#61B1A9A9"
-        app:drawableTint="#61B1A9A9"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnShop"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="match_parent"
-        android:layout_height="11dp"
-        android:layout_marginBottom="332dp"
-        android:background="#61B1A9A9"
-        app:drawableTint="#61B1A9A9"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnAddress" />
-
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="match_parent"
-        android:layout_height="11dp"
-        android:layout_marginBottom="240dp"
-        android:background="#61B1A9A9"
-        app:drawableTint="#61B1A9A9"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/imgUser"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="155dp"
-        android:layout_marginEnd="155dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginEnd="155dp" />
 
     <TextView
         android:id="@+id/txtName"
-        android:layout_width="115dp"
+        android:layout_width="wrap_content"
         android:layout_height="28dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgUser" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="match_parent"
-        android:layout_height="11dp"
-        android:background="#61B1A9A9"
-        app:drawableTint="#61B1A9A9"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtName"
-        app:layout_constraintVertical_bias="0.0" />
+        android:layout_below="@+id/imgUser"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="148dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="148dp" />
 
     <Button
         android:id="@+id/btnLogout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/btnAbout"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="147dp"
+        android:layout_marginTop="47dp"
+        android:layout_marginEnd="157dp"
         android:layout_marginBottom="4dp"
-        android:text="@string/activity_account_logout"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:text="@string/activity_account_logout" />
 
     <Button
         android:id="@+id/btnVoucher"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_weight="1"
+        android:layout_below="@+id/txtName"
+        android:layout_marginTop="12dp"
         android:drawableLeft="@drawable/tag"
         android:text="@string/activity_account_vouchers"
         android:textAlignment="textStart"
         android:textAllCaps="false"
         android:textColor="@color/black"
-        app:backgroundTint="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:backgroundTint="@color/white" />
 
     <Button
         android:id="@+id/btnPayment"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_weight="1"
+        android:layout_below="@+id/btnVoucher"
+        android:layout_marginTop="0dp"
         android:drawableLeft="@drawable/ic_baseline_credit_card_24"
         android:text="@string/activity_account_payment"
         android:textAlignment="textStart"
         android:textAllCaps="false"
         android:textColor="@color/black"
-        app:backgroundTint="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnVoucher" />
+        app:backgroundTint="@color/white" />
 
     <Button
         android:id="@+id/btnAddress"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_weight="1"
+        android:layout_below="@+id/btnPayment"
+        android:layout_marginTop="0dp"
         android:drawableLeft="@drawable/ic_baseline_place_24"
         android:text="@string/activity_account_address"
         android:textAlignment="textStart"
         android:textAllCaps="false"
         android:textColor="@color/black"
-        app:backgroundTint="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/textView6"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnPayment"
-        app:layout_constraintVertical_bias="0.0" />
+        app:backgroundTint="@color/white" />
 
     <Button
         android:id="@+id/btnInvite"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_weight="1"
+        android:layout_below="@+id/btnAddress"
+        android:layout_marginTop="5dp"
         android:drawableLeft="@drawable/ic_baseline_person_add_24"
         android:text="@string/activity_account_invite"
         android:textAlignment="textStart"
         android:textAllCaps="false"
         android:textColor="@color/black"
-        app:backgroundTint="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+        app:backgroundTint="@color/white" />
 
     <Button
         android:id="@+id/btnSupport"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="204dp"
-        android:layout_weight="1"
+        android:layout_below="@+id/btnInvite"
+        android:layout_marginTop="0dp"
         android:drawableLeft="@drawable/ic_baseline_help_center_24"
         android:text="@string/activity_account_support"
         android:textAlignment="textStart"
         android:textAllCaps="false"
         android:textColor="@color/black"
-        app:backgroundTint="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/textView7"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnInvite"
-        app:layout_constraintVertical_bias="0.16" />
+        app:backgroundTint="@color/white" />
 
     <Button
         android:id="@+id/btnShop"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_weight="1"
+        android:layout_below="@+id/btnSupport"
+        android:layout_marginTop="5dp"
         android:drawableLeft="@drawable/ic_baseline_store_24"
         android:text="@string/activity_account_shopowner"
         android:textAlignment="textStart"
         android:textAllCaps="false"
         android:textColor="@color/black"
-        app:backgroundTint="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+        app:backgroundTint="@color/white" />
 
     <Button
         android:id="@+id/btnPolicy"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_weight="1"
+        android:layout_below="@+id/btnShop"
+        android:layout_marginTop="5dp"
         android:drawableLeft="@drawable/ic_baseline_policy_24"
         android:text="@string/activity_account_policy"
         android:textAlignment="textStart"
         android:textAllCaps="false"
         android:textColor="@color/black"
-        app:backgroundTint="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+        app:backgroundTint="@color/white" />
 
     <Button
         android:id="@+id/btnSettings"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_weight="1"
+        android:layout_below="@+id/btnPolicy"
+        android:layout_marginTop="0dp"
         android:drawableLeft="@drawable/ic_baseline_settings_24"
         android:text="@string/activity_account_settings"
         android:textAlignment="textStart"
         android:textAllCaps="false"
         android:textColor="@color/black"
-        app:backgroundTint="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnPolicy" />
+        app:backgroundTint="@color/white" />
 
     <Button
         android:id="@+id/btnAbout"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_weight="1"
+        android:layout_below="@+id/btnSettings"
+        android:layout_marginTop="0dp"
         android:drawableLeft="@drawable/ic_baseline_info_24"
         android:text="@string/activity_account_about"
         android:textAlignment="textStart"
         android:textAllCaps="false"
         android:textColor="@color/black"
-        app:backgroundTint="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/btnLogout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnSettings" />
+        app:backgroundTint="@color/white" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
