@@ -76,6 +76,7 @@ public class MainActivity extends AppCompatActivity {
                     fragment = new Noti();
                     loadFragment(fragment);
                     break;
+
                 case R.id.nav_order:
                     fragment=new OrderFragment();
                     loadFragment(fragment);
