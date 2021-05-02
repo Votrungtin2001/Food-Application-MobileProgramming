@@ -6,10 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
@@ -28,7 +30,11 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerView_list;
     List<String> titles;
     List<Integer> images;
-    Adapter adapter;
+    ListAdapter listAdapter;
+
+    RecyclerView recyclerView_Collection;
+    CollectionAdapter collectionAdapter;
+
     ViewPager viewPager3;
 
     public HomeFragment(){
@@ -74,7 +80,27 @@ public class HomeFragment extends Fragment {
         viewPager3.setAdapter(adapter1);
 
         recyclerView_list = view.findViewById(R.id.list_recylcerView);
+        AddDataForList();
+        listAdapter = new ListAdapter(getActivity(), titles, images);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.HORIZONTAL, false);
+        recyclerView_list.setLayoutManager(gridLayoutManager);
+        recyclerView_list.setAdapter(listAdapter);
 
+
+
+        recyclerView_Collection = view.findViewById(R.id.collection_recyclerView);
+        AddDataForCollection();
+        collectionAdapter = new CollectionAdapter(getActivity(), titles, images);
+        LinearLayoutManager linearLayoutManager= new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView_Collection.setLayoutManager(linearLayoutManager);
+        recyclerView_Collection.setAdapter(collectionAdapter);
+
+
+        return view;
+    }
+
+    public void AddDataForList()
+    {
         titles = new ArrayList<>();
         images = new ArrayList<>();
 
@@ -119,13 +145,44 @@ public class HomeFragment extends Fragment {
         images.add(R.drawable.beer);
         images.add(R.drawable.salon);
         images.add(R.drawable.like);
+    }
 
-        adapter = new Adapter(getActivity(), titles, images);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.HORIZONTAL, false);
-        recyclerView_list.setLayoutManager(gridLayoutManager);
-        recyclerView_list.setAdapter(adapter);
+    public void AddDataForCollection()
+    {
+        titles = new ArrayList<>();
+        images = new ArrayList<>();
 
-        return view;
+        titles.add("Bánh Mì 0Đ");
+        titles.add("7 Ngày Review - \n Tiền Triệu Về Túi");
+        titles.add("Chi 5K - \n Ưu Đãi Freeship 15k");
+        titles.add("Cuối Tuần \n Free Ship");
+        titles.add("Đón Lễ Lớn");
+        titles.add("Deal Nửa Giá - \n Quán Gần Nhà");
+        titles.add("Deal Xịn - \n Giảm Tới 70k");
+        titles.add("Đi Hết Việt Nam - \n Freeship");
+        titles.add("Hè Xinh - \n Tiệc Xịn 55k");
+        titles.add("Lễ To - \n Deal Xịn Xò");
+        titles.add("Đặt NowFood - \n Nhận Quà Nutriboost");
+        titles.add("Trà Sữa Maycha 0d");
+        titles.add("Muộn Rồi Mà Sao Còn - \n Chưa Nhận Deal 55k");
+        titles.add("Ưu Đãi Kép");
+        titles.add("Vạn Deal -50% - \n Giảm Giá Siêu Xịn");
+
+        images.add(R.drawable.banh_mi_0d);
+        images.add(R.drawable.bay_ngay_tien_trieu_ve_tui);
+        images.add(R.drawable.chi_5k);
+        images.add(R.drawable.cuoi_tuan_freeship);
+        images.add(R.drawable.day_don_ngay_le);
+        images.add(R.drawable.deal_nua_gia_quan_gan_nha);
+        images.add(R.drawable.deal_xin);
+        images.add(R.drawable.di_het_viet_nam);
+        images.add(R.drawable.he_xinh_tiec_xin);
+        images.add(R.drawable.le_to_deal_xin_xo);
+        images.add(R.drawable.nhan_qua_nutriboost);
+        images.add(R.drawable.tra_sua_maycha_0d);
+        images.add(R.drawable.tiec_55k);
+        images.add(R.drawable.uu_dai_kep);
+        images.add(R.drawable.van_deal_50percent);
     }
 
     private void runFillAddressActivity()

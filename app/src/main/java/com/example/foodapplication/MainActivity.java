@@ -61,8 +61,9 @@ public class MainActivity extends AppCompatActivity {
             Fragment fragment;
             switch(item.getItemId()) {
                 case R.id.nav_home:
-                    fragment = new HomeFragment();
+                    fragment = homeFragment;
                     loadFragment(fragment);
+                    break;
 
                 case R.id.nav_favorites:
                     fragment = new FavoritesFragment();

@@ -12,13 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
+public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.ViewHolder> {
 
     List<String> titles;
     List<Integer> images;
     LayoutInflater inflater;
 
-    public Adapter(Context ctx, List<String> sTitles, List<Integer> sImages){
+    public CollectionAdapter(Context ctx, List<String> sTitles, List<Integer> sImages){
         this.titles = sTitles;
         this.images = sImages;
         this.inflater = LayoutInflater.from(ctx);
@@ -26,16 +26,15 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.custom_list_gridlayout, parent, false);
+    public CollectionAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = inflater.inflate(R.layout.custom_collection_linear_layout, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CollectionAdapter.ViewHolder holder, int position) {
         holder.title.setText(titles.get(position));
-        holder.gridIcon.setImageResource(images.get(position));
-
+        holder.linearIcon.setImageResource(images.get(position));
     }
 
     @Override
@@ -43,15 +42,14 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         return titles.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         TextView title;
-        ImageView gridIcon;
-
+        ImageView linearIcon;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            title = itemView.findViewById(R.id.option_textView);
-            gridIcon = itemView.findViewById(R.id.option_imageView);
+            title = itemView.findViewById(R.id.textView_Collection);
+            linearIcon = itemView.findViewById(R.id.imageView_Collection);
         }
     }
 }
