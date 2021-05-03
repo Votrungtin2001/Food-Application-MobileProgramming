@@ -153,20 +153,20 @@ public class HomeFragment extends Fragment {
         images = new ArrayList<>();
 
         titles.add("Bánh Mì 0Đ");
-        titles.add("7 Ngày Review - \n Tiền Triệu Về Túi");
-        titles.add("Chi 5K - \n Ưu Đãi Freeship 15k");
+        titles.add("  7 Ngày Review - \n Tiền Triệu Về Túi");
+        titles.add("             Chi 5K - \n Ưu Đãi Freeship 15k");
         titles.add("Cuối Tuần \n Free Ship");
         titles.add("Đón Lễ Lớn");
-        titles.add("Deal Nửa Giá - \n Quán Gần Nhà");
-        titles.add("Deal Xịn - \n Giảm Tới 70k");
-        titles.add("Đi Hết Việt Nam - \n Freeship");
-        titles.add("Hè Xinh - \n Tiệc Xịn 55k");
-        titles.add("Lễ To - \n Deal Xịn Xò");
-        titles.add("Đặt NowFood - \n Nhận Quà Nutriboost");
+        titles.add("  Deal Nửa Giá - \n Quán Gần Nhà");
+        titles.add("    Deal Xịn - \n Giảm Tới 70k");
+        titles.add("  Đi Hết Việt Nam - \n        Freeship");
+        titles.add("    Hè Xinh - \n Tiệc Xịn 55k");
+        titles.add("   Lễ To - \n Deal Xịn Xò");
+        titles.add("     Đặt NowFood - \n Nhận Quà Nutriboost");
         titles.add("Trà Sữa Maycha 0d");
         titles.add("Muộn Rồi Mà Sao Còn - \n Chưa Nhận Deal 55k");
         titles.add("Ưu Đãi Kép");
-        titles.add("Vạn Deal -50% - \n Giảm Giá Siêu Xịn");
+        titles.add("   Vạn Deal -50% - \n Giảm Giá Siêu Xịn");
 
         images.add(R.drawable.banh_mi_0d);
         images.add(R.drawable.bay_ngay_tien_trieu_ve_tui);
