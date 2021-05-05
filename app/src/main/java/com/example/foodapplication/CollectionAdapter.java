@@ -48,7 +48,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            title = itemView.findViewById(R.id.textView_Collection);
+            title = itemView.findViewById(R.id.textView_NameVoucher);
             linearIcon = itemView.findViewById(R.id.imageView_Collection);
         }
     }

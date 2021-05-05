@@ -28,12 +28,16 @@ public class HomeFragment extends Fragment {
     private String nameStreet;
 
     RecyclerView recyclerView_list;
-    List<String> titles;
+    List<String> titles1;
+    List<String> titles2;
     List<Integer> images;
     ListAdapter listAdapter;
 
     RecyclerView recyclerView_Collection;
     CollectionAdapter collectionAdapter;
+
+    RecyclerView recyclerView_ViewHistory;
+    ViewHistoryAdapter viewHistoryAdapter;
 
     ViewPager viewPager3;
 
@@ -81,7 +85,7 @@ public class HomeFragment extends Fragment {
 
         recyclerView_list = view.findViewById(R.id.list_recylcerView);
         AddDataForList();
-        listAdapter = new ListAdapter(getActivity(), titles, images);
+        listAdapter = new ListAdapter(getActivity(), titles1, images);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.HORIZONTAL, false);
         recyclerView_list.setLayoutManager(gridLayoutManager);
         recyclerView_list.setAdapter(listAdapter);
@@ -90,10 +94,17 @@ public class HomeFragment extends Fragment {
 
         recyclerView_Collection = view.findViewById(R.id.collection_recyclerView);
         AddDataForCollection();
-        collectionAdapter = new CollectionAdapter(getActivity(), titles, images);
-        LinearLayoutManager linearLayoutManager= new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerView_Collection.setLayoutManager(linearLayoutManager);
+        collectionAdapter = new CollectionAdapter(getActivity(), titles1, images);
+        LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView_Collection.setLayoutManager(linearLayoutManager1);
         recyclerView_Collection.setAdapter(collectionAdapter);
+
+        recyclerView_ViewHistory = view.findViewById(R.id.viewHistory_recyclerView);
+        AddDataForViewHistory();
+        viewHistoryAdapter = new ViewHistoryAdapter(getActivity(), titles1, titles2, images);
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView_ViewHistory.setLayoutManager(linearLayoutManager2);
+        recyclerView_ViewHistory.setAdapter(viewHistoryAdapter);
 
 
         return view;
@@ -101,29 +112,29 @@ public class HomeFragment extends Fragment {
 
     public void AddDataForList()
     {
-        titles = new ArrayList<>();
+        titles1 = new ArrayList<>();
         images = new ArrayList<>();
 
-        titles.add("  Deal Hot \n Hôm Nay");
-        titles.add("Giảm 70k");
-        titles.add("Cơm");
-        titles.add("   Freeship \n   Xtra");
-        titles.add("Trà Sữa");
-        titles.add("  NowShip - \n Giao Hàng");
-        titles.add("Ăn Vặt");
-        titles.add("  NowFresh - \n Thực phẩm");
-        titles.add("Quán Mới");
-        titles.add("  NowTable - \n     Đặt Bàn");
-        titles.add("  Ưu Đãi - \n   Đối Tác");
-        titles.add("  Ưu Đãi \n   AirPay");
-        titles.add("Hoa");
-        titles.add("Siêu Thị");
-        titles.add("Giặt Ủi");
-        titles.add("Thú Cưng");
-        titles.add("Thuốc");
-        titles.add("Bia");
-        titles.add("Làm Đẹp");
-        titles.add("     Quán \n Yêu Thích");
+        titles1.add("  Deal Hot \n Hôm Nay");
+        titles1.add("Giảm 70k");
+        titles1.add("Cơm");
+        titles1.add("   Freeship \n   Xtra");
+        titles1.add("Trà Sữa");
+        titles1.add("  NowShip - \n Giao Hàng");
+        titles1.add("Ăn Vặt");
+        titles1.add("  NowFresh - \n Thực phẩm");
+        titles1.add("Quán Mới");
+        titles1.add("  NowTable - \n     Đặt Bàn");
+        titles1.add("  Ưu Đãi - \n   Đối Tác");
+        titles1.add("  Ưu Đãi \n   AirPay");
+        titles1.add("Hoa");
+        titles1.add("Siêu Thị");
+        titles1.add("Giặt Ủi");
+        titles1.add("Thú Cưng");
+        titles1.add("Thuốc");
+        titles1.add("Bia");
+        titles1.add("Làm Đẹp");
+        titles1.add("     Quán \n Yêu Thích");
 
         images.add(R.drawable.voucher);
         images.add(R.drawable.hot_deal);
@@ -149,24 +160,24 @@ public class HomeFragment extends Fragment {
 
     public void AddDataForCollection()
     {
-        titles = new ArrayList<>();
+        titles1 = new ArrayList<>();
         images = new ArrayList<>();
 
-        titles.add("Bánh Mì 0Đ");
-        titles.add("  7 Ngày Review - \n Tiền Triệu Về Túi");
-        titles.add("             Chi 5K - \n Ưu Đãi Freeship 15k");
-        titles.add("Cuối Tuần \n Free Ship");
-        titles.add("Đón Lễ Lớn");
-        titles.add("  Deal Nửa Giá - \n Quán Gần Nhà");
-        titles.add("    Deal Xịn - \n Giảm Tới 70k");
-        titles.add("  Đi Hết Việt Nam - \n        Freeship");
-        titles.add("    Hè Xinh - \n Tiệc Xịn 55k");
-        titles.add("   Lễ To - \n Deal Xịn Xò");
-        titles.add("     Đặt NowFood - \n Nhận Quà Nutriboost");
-        titles.add("Trà Sữa Maycha 0d");
-        titles.add("Muộn Rồi Mà Sao Còn - \n Chưa Nhận Deal 55k");
-        titles.add("Ưu Đãi Kép");
-        titles.add("   Vạn Deal -50% - \n Giảm Giá Siêu Xịn");
+        titles1.add("Bánh Mì 0Đ");
+        titles1.add("  7 Ngày Review - \n Tiền Triệu Về Túi");
+        titles1.add("             Chi 5K - \n Ưu Đãi Freeship 15k");
+        titles1.add("Cuối Tuần \n Free Ship");
+        titles1.add("Đón Lễ Lớn");
+        titles1.add("  Deal Nửa Giá - \n Quán Gần Nhà");
+        titles1.add("    Deal Xịn - \n Giảm Tới 70k");
+        titles1.add("  Đi Hết Việt Nam - \n        Freeship");
+        titles1.add("    Hè Xinh - \n Tiệc Xịn 55k");
+        titles1.add("   Lễ To - \n Deal Xịn Xò");
+        titles1.add("     Đặt NowFood - \n Nhận Quà Nutriboost");
+        titles1.add("Trà Sữa Maycha 0d");
+        titles1.add("Muộn Rồi Mà Sao Còn - \n Chưa Nhận Deal 55k");
+        titles1.add("Ưu Đãi Kép");
+        titles1.add("   Vạn Deal -50% - \n Giảm Giá Siêu Xịn");
 
         images.add(R.drawable.banh_mi_0d);
         images.add(R.drawable.bay_ngay_tien_trieu_ve_tui);
@@ -183,6 +194,26 @@ public class HomeFragment extends Fragment {
         images.add(R.drawable.tiec_55k);
         images.add(R.drawable.uu_dai_kep);
         images.add(R.drawable.van_deal_50percent);
+    }
+
+    public void AddDataForViewHistory()
+    {
+        titles1 = new ArrayList<>();
+        titles2 = new ArrayList<>();
+        images = new ArrayList<>();
+
+        titles1.add("The Coffee House - Cao Thắng");
+        titles1.add("Cơm Tấm Phúc Lộc Thọ");
+        titles1.add("Mì Trộn Tên Lửa");
+
+        titles2.add("Đã xem 2 ngày trước");
+        titles2.add("Đã xem 23 giờ trước");
+        titles2.add("Đã xem 10 ngày trước");
+
+
+        images.add(R.drawable.the_coffee_house);
+        images.add(R.drawable.com_tam_phucloctho);
+        images.add(R.drawable.mi_tron_ten_lua);
     }
 
     private void runFillAddressActivity()
