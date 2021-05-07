@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import com.denzcoskun.imageslider.constants.ScaleTypes;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -14,6 +14,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
+
+import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.models.SlideModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +43,8 @@ public class HomeFragment extends Fragment {
     ViewHistoryAdapter viewHistoryAdapter;
 
     ViewPager viewPager3;
+    ImageSlider imageSlider;
+    List<SlideModel> slideModels = new ArrayList<>();
 
     public HomeFragment(){
 
@@ -106,6 +111,14 @@ public class HomeFragment extends Fragment {
         recyclerView_ViewHistory.setLayoutManager(linearLayoutManager2);
         recyclerView_ViewHistory.setAdapter(viewHistoryAdapter);
 
+        imageSlider = view.findViewById(R.id.advertisement_slider);
+
+        slideModels.add(new SlideModel("https://a.ipricegroup.com/media/Lam_La/Dat_NowFood_tren_Shopee.jpg", "", ScaleTypes.FIT));
+        slideModels.add(new SlideModel("https://storage.googleapis.com/partnership-shopee-files-live/live/airpay/filer_public_thumbnails/filer_public/11/72/117220a1-274f-44c1-9132-c207f29961b7/apa_banner_nowfood_buangon0d_web-2000x600.jpg__2000x600_q95_crop_subsampling-2.jpg", "", ScaleTypes.FIT));
+        slideModels.add(new SlideModel("https://cf.shopee.vn/file/e186e14fca4c4063fe89d47aab53bb78", "", ScaleTypes.FIT));
+        slideModels.add(new SlideModel("https://images.foody.vn/delivery/collection/s320x200/image-73b05d50-210416002203.jpeg", "", ScaleTypes.FIT));
+        slideModels.add(new SlideModel("https://images.foody.vn/delivery/collection/s480x300/beauty-upload-api-image-200703102303.jpeg", "", ScaleTypes.FIT));
+        imageSlider.setImageList(slideModels,  ScaleTypes.FIT);
 
         return view;
     }

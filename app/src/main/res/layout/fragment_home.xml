@@ -203,6 +203,21 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/viewHistory_textView" />
 
+            <com.denzcoskun.imageslider.ImageSlider
+                android:id="@+id/advertisement_slider"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewHistory_recyclerView"
+                android:layout_marginTop="10dp"
+                app:iss_auto_cycle="true"
+                app:iss_delay="0"
+                app:iss_period="1000"
+                app:iss_title_background="@android:color/transparent">
+
+            </com.denzcoskun.imageslider.ImageSlider>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
