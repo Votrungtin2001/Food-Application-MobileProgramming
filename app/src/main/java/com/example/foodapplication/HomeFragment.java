@@ -33,6 +33,8 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerView_list;
     List<String> titles1;
     List<String> titles2;
+    List<String> prices;
+    List<String> valueOfLike;
     List<Integer> images;
     ListAdapter listAdapter;
 
@@ -45,6 +47,12 @@ public class HomeFragment extends Fragment {
     ViewPager viewPager3;
     ImageSlider imageSlider;
     List<SlideModel> slideModels = new ArrayList<>();
+
+    RecyclerView recyclerView_RecentlyEaten;
+    RecentlyEatenAdapter recentlyEatenAdapter;
+
+    RecyclerView recyclerView_MayBeYouLike;
+    MaybeYouLikeAdapter maybeYouLikeAdapter;
 
     public HomeFragment(){
 
@@ -119,6 +127,20 @@ public class HomeFragment extends Fragment {
         slideModels.add(new SlideModel("https://images.foody.vn/delivery/collection/s320x200/image-73b05d50-210416002203.jpeg", "", ScaleTypes.FIT));
         slideModels.add(new SlideModel("https://images.foody.vn/delivery/collection/s480x300/beauty-upload-api-image-200703102303.jpeg", "", ScaleTypes.FIT));
         imageSlider.setImageList(slideModels,  ScaleTypes.FIT);
+
+        recyclerView_RecentlyEaten = view.findViewById(R.id.recentlyEaten_RecyclerView);
+        AddDataForRecentlyEaten();
+        recentlyEatenAdapter = new RecentlyEatenAdapter(getActivity(), titles1, titles2, images);
+        LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView_RecentlyEaten.setLayoutManager(linearLayoutManager3);
+        recyclerView_RecentlyEaten.setAdapter(recentlyEatenAdapter);
+
+        recyclerView_MayBeYouLike = view.findViewById(R.id.maybeYouLike_RecyclerView);
+        AddDataForMayBeYouLike();
+        maybeYouLikeAdapter = new MaybeYouLikeAdapter(getActivity(), titles1, titles2, prices, valueOfLike, images);
+        LinearLayoutManager linearLayoutManager4 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView_MayBeYouLike.setLayoutManager(linearLayoutManager4);
+        recyclerView_MayBeYouLike.setAdapter(maybeYouLikeAdapter);
 
         return view;
     }
@@ -227,6 +249,71 @@ public class HomeFragment extends Fragment {
         images.add(R.drawable.the_coffee_house);
         images.add(R.drawable.com_tam_phucloctho);
         images.add(R.drawable.mi_tron_ten_lua);
+    }
+
+    public void AddDataForRecentlyEaten()
+    {
+        titles1 = new ArrayList<>();
+        titles2 = new ArrayList<>();
+        images = new ArrayList<>();
+
+        titles1.add("Rau Má Mix");
+        titles1.add("Lotteria");
+        titles1.add("The Alley");
+        titles1.add("Jolibee");
+        titles1.add("Mì Cay Sasin");
+
+        titles2.add("FREESHIP");
+        titles2.add("Discount 15%");
+        titles2.add("Mua 2 tặng 1");
+        titles2.add("Free Nước");
+        titles2.add("Đi 4 tính tiền 3");
+
+        images.add(R.drawable.rau_ma_mix);
+        images.add(R.drawable.lotteria);
+        images.add(R.drawable.the_alley);
+        images.add(R.drawable.jolibee);
+        images.add(R.drawable.mi_cay_sasin);
+
+    }
+
+    private void AddDataForMayBeYouLike()
+    {
+        titles1 = new ArrayList<>();
+        titles2 = new ArrayList<>();
+        prices = new ArrayList<>();
+        valueOfLike = new ArrayList<>();
+        images = new ArrayList<>();
+
+        titles1.add("Mì cay hải sản");
+        titles1.add("Gà sốt cay Sài Gòn");
+        titles1.add("Hamburger Big Mac");
+        titles1.add("Pizza cá hồi xông khói");
+        titles1.add("Trà ô lông dâu");
+
+        titles2.add("Mì Cay Sasin - Đại Học Khoa Học Tự Nhiên");
+        titles2.add("Jolibee Sư Vạn Thạnh - Quận 5");
+        titles2.add("Mc Donald - Aeon Bình Dương");
+        titles2.add("Pizza Hut - Vincom Thủ Đức");
+        titles2.add("Phúc Long - Võ Văn Ngân");
+
+        prices.add("40,000đ");
+        prices.add("33,000đ");
+        prices.add("69,000đ");
+        prices.add("79,000đ");
+        prices.add("45,000đ");
+
+        valueOfLike.add("10+ lượt thích");
+        valueOfLike.add("100+ lượt thích");
+        valueOfLike.add("200+ lượt thích");
+        valueOfLike.add("50+ lượt thích");
+        valueOfLike.add("500+ lượt thích");
+
+        images.add(R.drawable.mi_cay_hai_san_sasin);
+        images.add(R.drawable.ga_sot_cay_jolibee);
+        images.add(R.drawable.hamburger_mcdonald);
+        images.add(R.drawable.pizza_ca_hoi_xong_khoi_pizzahut);
+        images.add(R.drawable.tra_o_long_dau_pl);
     }
 
     private void runFillAddressActivity()
