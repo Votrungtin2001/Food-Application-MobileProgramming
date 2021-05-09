@@ -12,27 +12,25 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.ViewHolder> {
-
+public class TypesOfFoodAdapter extends RecyclerView.Adapter<TypesOfFoodAdapter.ViewHolder> {
     List<String> titles;
     List<Integer> images;
     LayoutInflater inflater;
 
-    public CollectionAdapter(Context ctx, List<String> sTitles, List<Integer> sImages){
+    public TypesOfFoodAdapter(Context ctx, List<String> sTitles, List<Integer> sImages){
         this.titles = sTitles;
         this.images = sImages;
         this.inflater = LayoutInflater.from(ctx);
     }
-
     @NonNull
     @Override
-    public CollectionAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.custom_collection_linear_layout, parent, false);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = inflater.inflate(R.layout.custom_typesoffood_linear_layout, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CollectionAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.title.setText(titles.get(position));
         holder.linearIcon.setImageResource(images.get(position));
     }
@@ -48,8 +46,8 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            title = itemView.findViewById(R.id.textView_NameVoucher);
-            linearIcon = itemView.findViewById(R.id.imageView_Collection);
+            title = itemView.findViewById(R.id.textView_TypesOfName);
+            linearIcon = itemView.findViewById(R.id.imageView_TypesOfFood);
         }
     }
 }

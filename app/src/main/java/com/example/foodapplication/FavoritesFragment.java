@@ -36,6 +36,7 @@ public class FavoritesFragment extends Fragment {
         Spinner spinCategory = (Spinner) rootView.findViewById(R.id.spinCategory);
         ArrayList<String> result = new ArrayList<>();
 
+        db.beginTransaction();
         Cursor cursor = db.query(FoodManagementContract.CCategory.KEY_NAME, projection, null, null, null, null, null, null);
         while (cursor.moveToNext()) {
             String category = cursor.getString(
@@ -43,6 +44,7 @@ public class FavoritesFragment extends Fragment {
             result.add(category);
         }
         cursor.close();
+        db.endTransaction();
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
                 android.R.layout.simple_spinner_item, result);

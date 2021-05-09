@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import com.denzcoskun.imageslider.constants.ScaleTypes;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -14,6 +14,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
+
+import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.models.SlideModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,14 +31,34 @@ public class HomeFragment extends Fragment {
     private String nameStreet;
 
     RecyclerView recyclerView_list;
-    List<String> titles;
+    List<String> titles1;
+    List<String> titles2;
+    List<String> prices;
+    List<String> valueOfLike;
     List<Integer> images;
     ListAdapter listAdapter;
 
     RecyclerView recyclerView_Collection;
     CollectionAdapter collectionAdapter;
 
+    RecyclerView recyclerView_ViewHistory;
+    ViewHistoryAdapter viewHistoryAdapter;
+
     ViewPager viewPager3;
+    ImageSlider imageSlider;
+    List<SlideModel> slideModels = new ArrayList<>();
+
+    RecyclerView recyclerView_RecentlyEaten;
+    RecentlyEatenAdapter recentlyEatenAdapter;
+
+    RecyclerView recyclerView_MayBeYouLike;
+    MaybeYouLikeAdapter maybeYouLikeAdapter;
+
+    RecyclerView recyclerView_FreeshipXtra;
+    FreeshipXtraAdapter freeshipXtraAdapter;
+
+    RecyclerView recyclerView_TypesOfFood;
+    TypesOfFoodAdapter typesOfFoodAdapter;
 
     public HomeFragment(){
 
@@ -81,7 +104,7 @@ public class HomeFragment extends Fragment {
 
         recyclerView_list = view.findViewById(R.id.list_recylcerView);
         AddDataForList();
-        listAdapter = new ListAdapter(getActivity(), titles, images);
+        listAdapter = new ListAdapter(getActivity(), titles1, images);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.HORIZONTAL, false);
         recyclerView_list.setLayoutManager(gridLayoutManager);
         recyclerView_list.setAdapter(listAdapter);
@@ -90,40 +113,83 @@ public class HomeFragment extends Fragment {
 
         recyclerView_Collection = view.findViewById(R.id.collection_recyclerView);
         AddDataForCollection();
-        collectionAdapter = new CollectionAdapter(getActivity(), titles, images);
-        LinearLayoutManager linearLayoutManager= new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerView_Collection.setLayoutManager(linearLayoutManager);
+        collectionAdapter = new CollectionAdapter(getActivity(), titles1, images);
+        LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView_Collection.setLayoutManager(linearLayoutManager1);
         recyclerView_Collection.setAdapter(collectionAdapter);
 
+        recyclerView_ViewHistory = view.findViewById(R.id.viewHistory_recyclerView);
+        AddDataForViewHistory();
+        viewHistoryAdapter = new ViewHistoryAdapter(getActivity(), titles1, titles2, images);
+        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView_ViewHistory.setLayoutManager(linearLayoutManager2);
+        recyclerView_ViewHistory.setAdapter(viewHistoryAdapter);
+
+        imageSlider = view.findViewById(R.id.advertisement_slider);
+
+        slideModels.add(new SlideModel("https://a.ipricegroup.com/media/Lam_La/Dat_NowFood_tren_Shopee.jpg", "", ScaleTypes.FIT));
+        slideModels.add(new SlideModel("https://storage.googleapis.com/partnership-shopee-files-live/live/airpay/filer_public_thumbnails/filer_public/11/72/117220a1-274f-44c1-9132-c207f29961b7/apa_banner_nowfood_buangon0d_web-2000x600.jpg__2000x600_q95_crop_subsampling-2.jpg", "", ScaleTypes.FIT));
+        slideModels.add(new SlideModel("https://cf.shopee.vn/file/e186e14fca4c4063fe89d47aab53bb78", "", ScaleTypes.FIT));
+        slideModels.add(new SlideModel("https://images.foody.vn/delivery/collection/s320x200/image-73b05d50-210416002203.jpeg", "", ScaleTypes.FIT));
+        slideModels.add(new SlideModel("https://images.foody.vn/delivery/collection/s480x300/beauty-upload-api-image-200703102303.jpeg", "", ScaleTypes.FIT));
+        imageSlider.setImageList(slideModels,  ScaleTypes.FIT);
+
+        recyclerView_RecentlyEaten = view.findViewById(R.id.recentlyEaten_RecyclerView);
+        AddDataForRecentlyEaten();
+        recentlyEatenAdapter = new RecentlyEatenAdapter(getActivity(), titles1, titles2, images);
+        LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView_RecentlyEaten.setLayoutManager(linearLayoutManager3);
+        recyclerView_RecentlyEaten.setAdapter(recentlyEatenAdapter);
+
+        recyclerView_MayBeYouLike = view.findViewById(R.id.maybeYouLike_RecyclerView);
+        AddDataForMayBeYouLike();
+        maybeYouLikeAdapter = new MaybeYouLikeAdapter(getActivity(), titles1, titles2, prices, valueOfLike, images);
+        LinearLayoutManager linearLayoutManager4 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView_MayBeYouLike.setLayoutManager(linearLayoutManager4);
+        recyclerView_MayBeYouLike.setAdapter(maybeYouLikeAdapter);
+
+        recyclerView_FreeshipXtra = view.findViewById(R.id.FreeshipXtra_RecyclerView);
+        AddDataForFreeshipXtra();
+        freeshipXtraAdapter = new FreeshipXtraAdapter(getActivity(), titles1, titles2, images);
+        LinearLayoutManager linearLayoutManager5 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView_FreeshipXtra.setLayoutManager(linearLayoutManager5);
+        recyclerView_FreeshipXtra.setAdapter(freeshipXtraAdapter);
+
+        recyclerView_TypesOfFood = view.findViewById(R.id.TypesOfFood_RecyclerView);
+        AddDataForTypesOfFood();
+        typesOfFoodAdapter = new TypesOfFoodAdapter(getActivity(), titles1, images);
+        LinearLayoutManager linearLayoutManager6 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView_TypesOfFood.setLayoutManager(linearLayoutManager6);
+        recyclerView_TypesOfFood.setAdapter(typesOfFoodAdapter);
 
         return view;
     }
 
     public void AddDataForList()
     {
-        titles = new ArrayList<>();
+        titles1 = new ArrayList<>();
         images = new ArrayList<>();
 
-        titles.add("  Deal Hot \n Hôm Nay");
-        titles.add("Giảm 70k");
-        titles.add("Cơm");
-        titles.add("   Freeship \n   Xtra");
-        titles.add("Trà Sữa");
-        titles.add("  NowShip - \n Giao Hàng");
-        titles.add("Ăn Vặt");
-        titles.add("  NowFresh - \n Thực phẩm");
-        titles.add("Quán Mới");
-        titles.add("  NowTable - \n     Đặt Bàn");
-        titles.add("  Ưu Đãi - \n   Đối Tác");
-        titles.add("  Ưu Đãi \n   AirPay");
-        titles.add("Hoa");
-        titles.add("Siêu Thị");
-        titles.add("Giặt Ủi");
-        titles.add("Thú Cưng");
-        titles.add("Thuốc");
-        titles.add("Bia");
-        titles.add("Làm Đẹp");
-        titles.add("     Quán \n Yêu Thích");
+        titles1.add("  Deal Hot \n Hôm Nay");
+        titles1.add("Giảm 70k");
+        titles1.add("Cơm");
+        titles1.add("   Freeship \n   Xtra");
+        titles1.add("Trà Sữa");
+        titles1.add("  NowShip - \n Giao Hàng");
+        titles1.add("Ăn Vặt");
+        titles1.add("  NowFresh - \n Thực phẩm");
+        titles1.add("Quán Mới");
+        titles1.add("  NowTable - \n     Đặt Bàn");
+        titles1.add("  Ưu Đãi - \n   Đối Tác");
+        titles1.add("  Ưu Đãi \n   AirPay");
+        titles1.add("Hoa");
+        titles1.add("Siêu Thị");
+        titles1.add("Giặt Ủi");
+        titles1.add("Thú Cưng");
+        titles1.add("Thuốc");
+        titles1.add("Bia");
+        titles1.add("Làm Đẹp");
+        titles1.add("     Quán \n Yêu Thích");
 
         images.add(R.drawable.voucher);
         images.add(R.drawable.hot_deal);
@@ -149,24 +215,24 @@ public class HomeFragment extends Fragment {
 
     public void AddDataForCollection()
     {
-        titles = new ArrayList<>();
+        titles1 = new ArrayList<>();
         images = new ArrayList<>();
 
-        titles.add("Bánh Mì 0Đ");
-        titles.add("  7 Ngày Review - \n Tiền Triệu Về Túi");
-        titles.add("             Chi 5K - \n Ưu Đãi Freeship 15k");
-        titles.add("Cuối Tuần \n Free Ship");
-        titles.add("Đón Lễ Lớn");
-        titles.add("  Deal Nửa Giá - \n Quán Gần Nhà");
-        titles.add("    Deal Xịn - \n Giảm Tới 70k");
-        titles.add("  Đi Hết Việt Nam - \n        Freeship");
-        titles.add("    Hè Xinh - \n Tiệc Xịn 55k");
-        titles.add("   Lễ To - \n Deal Xịn Xò");
-        titles.add("     Đặt NowFood - \n Nhận Quà Nutriboost");
-        titles.add("Trà Sữa Maycha 0d");
-        titles.add("Muộn Rồi Mà Sao Còn - \n Chưa Nhận Deal 55k");
-        titles.add("Ưu Đãi Kép");
-        titles.add("   Vạn Deal -50% - \n Giảm Giá Siêu Xịn");
+        titles1.add("Bánh Mì 0Đ");
+        titles1.add("  7 Ngày Review - \n Tiền Triệu Về Túi");
+        titles1.add("             Chi 5K - \n Ưu Đãi Freeship 15k");
+        titles1.add("Cuối Tuần \n Free Ship");
+        titles1.add("Đón Lễ Lớn");
+        titles1.add("  Deal Nửa Giá - \n Quán Gần Nhà");
+        titles1.add("    Deal Xịn - \n Giảm Tới 70k");
+        titles1.add("  Đi Hết Việt Nam - \n        Freeship");
+        titles1.add("    Hè Xinh - \n Tiệc Xịn 55k");
+        titles1.add("   Lễ To - \n Deal Xịn Xò");
+        titles1.add("     Đặt NowFood - \n Nhận Quà Nutriboost");
+        titles1.add("Trà Sữa Maycha 0d");
+        titles1.add("Muộn Rồi Mà Sao Còn - \n Chưa Nhận Deal 55k");
+        titles1.add("Ưu Đãi Kép");
+        titles1.add("   Vạn Deal -50% - \n Giảm Giá Siêu Xịn");
 
         images.add(R.drawable.banh_mi_0d);
         images.add(R.drawable.bay_ngay_tien_trieu_ve_tui);
@@ -183,6 +249,155 @@ public class HomeFragment extends Fragment {
         images.add(R.drawable.tiec_55k);
         images.add(R.drawable.uu_dai_kep);
         images.add(R.drawable.van_deal_50percent);
+    }
+
+    public void AddDataForViewHistory()
+    {
+        titles1 = new ArrayList<>();
+        titles2 = new ArrayList<>();
+        images = new ArrayList<>();
+
+        titles1.add("The Coffee House - Cao Thắng");
+        titles1.add("Cơm Tấm Phúc Lộc Thọ");
+        titles1.add("Mì Trộn Tên Lửa");
+
+        titles2.add("Đã xem 2 ngày trước");
+        titles2.add("Đã xem 23 giờ trước");
+        titles2.add("Đã xem 10 ngày trước");
+
+
+        images.add(R.drawable.the_coffee_house);
+        images.add(R.drawable.com_tam_phucloctho);
+        images.add(R.drawable.mi_tron_ten_lua);
+    }
+
+    public void AddDataForRecentlyEaten()
+    {
+        titles1 = new ArrayList<>();
+        titles2 = new ArrayList<>();
+        images = new ArrayList<>();
+
+        titles1.add("Rau Má Mix");
+        titles1.add("Lotteria");
+        titles1.add("The Alley");
+        titles1.add("Jolibee");
+        titles1.add("Mì Cay Sasin");
+
+        titles2.add("FREESHIP");
+        titles2.add("Discount 15%");
+        titles2.add("Mua 2 tặng 1");
+        titles2.add("Free Nước");
+        titles2.add("Đi 4 tính tiền 3");
+
+        images.add(R.drawable.rau_ma_mix);
+        images.add(R.drawable.lotteria);
+        images.add(R.drawable.the_alley);
+        images.add(R.drawable.jolibee);
+        images.add(R.drawable.mi_cay_sasin);
+
+    }
+
+    private void AddDataForMayBeYouLike()
+    {
+        titles1 = new ArrayList<>();
+        titles2 = new ArrayList<>();
+        prices = new ArrayList<>();
+        valueOfLike = new ArrayList<>();
+        images = new ArrayList<>();
+
+        titles1.add("Mì cay hải sản");
+        titles1.add("Gà sốt cay Sài Gòn");
+        titles1.add("Hamburger Big Mac");
+        titles1.add("Pizza cá hồi xông khói");
+        titles1.add("Trà ô lông dâu");
+
+        titles2.add("Mì Cay Sasin - Đại Học Khoa Học Tự Nhiên");
+        titles2.add("Jolibee Sư Vạn Thạnh - Quận 5");
+        titles2.add("Mc Donald - Aeon Bình Dương");
+        titles2.add("Pizza Hut - Vincom Thủ Đức");
+        titles2.add("Phúc Long - Võ Văn Ngân");
+
+        prices.add("40,000đ");
+        prices.add("33,000đ");
+        prices.add("69,000đ");
+        prices.add("79,000đ");
+        prices.add("45,000đ");
+
+        valueOfLike.add("10+ lượt thích");
+        valueOfLike.add("100+ lượt thích");
+        valueOfLike.add("200+ lượt thích");
+        valueOfLike.add("50+ lượt thích");
+        valueOfLike.add("500+ lượt thích");
+
+        images.add(R.drawable.mi_cay_hai_san_sasin);
+        images.add(R.drawable.ga_sot_cay_jolibee);
+        images.add(R.drawable.hamburger_mcdonald);
+        images.add(R.drawable.pizza_ca_hoi_xong_khoi_pizzahut);
+        images.add(R.drawable.tra_o_long_dau_pl);
+    }
+
+    public void AddDataForFreeshipXtra()
+    {
+        titles1 = new ArrayList<>();
+        titles2 = new ArrayList<>();
+        images = new ArrayList<>();
+
+        titles1.add("HP Cơm Tấm - Nguyễn Tri Phương");
+        titles1.add("Thái Tuk Tuk - Ẩm Thực Thái");
+        titles1.add("Uncle Tea - Trà Đài Loan");
+        titles1.add("Sushi Cô Chủ Nhỏ");
+        titles1.add("Salad Poki Katuri");
+
+        titles2.add("FREESHIP");
+        titles2.add("Giảm 50%");
+        titles2.add("Giảm món");
+        titles2.add("Giảm 50%");
+        titles2.add("Giảm món");
+
+
+        images.add(R.drawable.hp_com_tam);
+        images.add(R.drawable.thai_tuk_tuk);
+        images.add(R.drawable.uncle_tea);
+        images.add(R.drawable.sushi_cochunho);
+        images.add(R.drawable.salad_poki_katuri);
+
+    }
+
+    public void AddDataForTypesOfFood()
+    {
+        titles1 = new ArrayList<>();
+        images = new ArrayList<>();
+
+        titles1.add("Tất cả");
+        titles1.add("Đồ ăn");
+        titles1.add("Đồ uống");
+        titles1.add("Đồ chay");
+        titles1.add("Bánh kem");
+        titles1.add("Tráng miệng");
+        titles1.add("Homemade");
+        titles1.add("Vỉa hè");
+        titles1.add("Pizza/Burger");
+        titles1.add("Món gà");
+        titles1.add("Món lẩu");
+        titles1.add("Sushi");
+        titles1.add("Mì phở");
+        titles1.add("Cơm hộp");
+
+        images.add(R.drawable.all_types);
+        images.add(R.drawable.general_food);
+        images.add(R.drawable.general_drink);
+        images.add(R.drawable.vegetarian_food);
+        images.add(R.drawable.sweet_cake);
+        images.add(R.drawable.dessert_food);
+        images.add(R.drawable.sweet_soup);
+        images.add(R.drawable.street_food);
+        images.add(R.drawable.pizza);
+        images.add(R.drawable.chicken_food);
+        images.add(R.drawable.hot_pot);
+        images.add(R.drawable.sushi_food);
+        images.add(R.drawable.noodle_food);
+        images.add(R.drawable.bento);
+
     }
 
     private void runFillAddressActivity()
