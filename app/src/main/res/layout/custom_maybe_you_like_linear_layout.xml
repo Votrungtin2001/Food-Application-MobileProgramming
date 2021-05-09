@@ -50,7 +50,7 @@
             android:maxLines="1"
             android:text="Name Product"
             android:textColor="@color/black"
-            android:textSize="9dp"
+            android:textSize="12dp"
             android:textStyle="bold"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
@@ -68,7 +68,7 @@
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
             android:text="Name Restaurant"
-            android:textSize="9dp"
+            android:textSize="12dp"
             android:textStyle="normal"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/TextView_NameProduct_MayBeYouLike" />

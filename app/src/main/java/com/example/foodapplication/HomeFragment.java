@@ -54,6 +54,12 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerView_MayBeYouLike;
     MaybeYouLikeAdapter maybeYouLikeAdapter;
 
+    RecyclerView recyclerView_FreeshipXtra;
+    FreeshipXtraAdapter freeshipXtraAdapter;
+
+    RecyclerView recyclerView_TypesOfFood;
+    TypesOfFoodAdapter typesOfFoodAdapter;
+
     public HomeFragment(){
 
     }
@@ -141,6 +147,20 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager linearLayoutManager4 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView_MayBeYouLike.setLayoutManager(linearLayoutManager4);
         recyclerView_MayBeYouLike.setAdapter(maybeYouLikeAdapter);
+
+        recyclerView_FreeshipXtra = view.findViewById(R.id.FreeshipXtra_RecyclerView);
+        AddDataForFreeshipXtra();
+        freeshipXtraAdapter = new FreeshipXtraAdapter(getActivity(), titles1, titles2, images);
+        LinearLayoutManager linearLayoutManager5 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView_FreeshipXtra.setLayoutManager(linearLayoutManager5);
+        recyclerView_FreeshipXtra.setAdapter(freeshipXtraAdapter);
+
+        recyclerView_TypesOfFood = view.findViewById(R.id.TypesOfFood_RecyclerView);
+        AddDataForTypesOfFood();
+        typesOfFoodAdapter = new TypesOfFoodAdapter(getActivity(), titles1, images);
+        LinearLayoutManager linearLayoutManager6 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView_TypesOfFood.setLayoutManager(linearLayoutManager6);
+        recyclerView_TypesOfFood.setAdapter(typesOfFoodAdapter);
 
         return view;
     }
@@ -314,6 +334,70 @@ public class HomeFragment extends Fragment {
         images.add(R.drawable.hamburger_mcdonald);
         images.add(R.drawable.pizza_ca_hoi_xong_khoi_pizzahut);
         images.add(R.drawable.tra_o_long_dau_pl);
+    }
+
+    public void AddDataForFreeshipXtra()
+    {
+        titles1 = new ArrayList<>();
+        titles2 = new ArrayList<>();
+        images = new ArrayList<>();
+
+        titles1.add("HP Cơm Tấm - Nguyễn Tri Phương");
+        titles1.add("Thái Tuk Tuk - Ẩm Thực Thái");
+        titles1.add("Uncle Tea - Trà Đài Loan");
+        titles1.add("Sushi Cô Chủ Nhỏ");
+        titles1.add("Salad Poki Katuri");
+
+        titles2.add("FREESHIP");
+        titles2.add("Giảm 50%");
+        titles2.add("Giảm món");
+        titles2.add("Giảm 50%");
+        titles2.add("Giảm món");
+
+
+        images.add(R.drawable.hp_com_tam);
+        images.add(R.drawable.thai_tuk_tuk);
+        images.add(R.drawable.uncle_tea);
+        images.add(R.drawable.sushi_cochunho);
+        images.add(R.drawable.salad_poki_katuri);
+
+    }
+
+    public void AddDataForTypesOfFood()
+    {
+        titles1 = new ArrayList<>();
+        images = new ArrayList<>();
+
+        titles1.add("Tất cả");
+        titles1.add("Đồ ăn");
+        titles1.add("Đồ uống");
+        titles1.add("Đồ chay");
+        titles1.add("Bánh kem");
+        titles1.add("Tráng miệng");
+        titles1.add("Homemade");
+        titles1.add("Vỉa hè");
+        titles1.add("Pizza/Burger");
+        titles1.add("Món gà");
+        titles1.add("Món lẩu");
+        titles1.add("Sushi");
+        titles1.add("Mì phở");
+        titles1.add("Cơm hộp");
+
+        images.add(R.drawable.all_types);
+        images.add(R.drawable.general_food);
+        images.add(R.drawable.general_drink);
+        images.add(R.drawable.vegetarian_food);
+        images.add(R.drawable.sweet_cake);
+        images.add(R.drawable.dessert_food);
+        images.add(R.drawable.sweet_soup);
+        images.add(R.drawable.street_food);
+        images.add(R.drawable.pizza);
+        images.add(R.drawable.chicken_food);
+        images.add(R.drawable.hot_pot);
+        images.add(R.drawable.sushi_food);
+        images.add(R.drawable.noodle_food);
+        images.add(R.drawable.bento);
+
     }
 
     private void runFillAddressActivity()

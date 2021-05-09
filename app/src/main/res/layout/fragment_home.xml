@@ -274,7 +274,7 @@
                 android:id="@+id/maybeYouLike_TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mọi người vừa ăn gì?"
+                android:text="Có thể bạn thích"
                 android:textColor="#575555"
                 android:textSize="22dp"
                 android:textStyle="bold"
@@ -303,6 +303,73 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/maybeYouLike_TextView"/>
+
+            <TextView
+                android:id="@+id/txtView2"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="#F5EAF1EE"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/maybeYouLike_RecyclerView" />
+
+            <TextView
+                android:id="@+id/FreeshipXtra_TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Freeship Xtra + Giảm 50%"
+                android:textColor="#575555"
+                android:textSize="22dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtView2" />
+
+            <TextView
+                android:id="@+id/FreeshipXtra_more"
+                android:layout_width="wrap_content"
+                android:layout_height="37dp"
+                android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
+                android:gravity="center"
+                android:text="Xem thêm"
+                android:textSize="18dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtView2" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/FreeshipXtra_RecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbarSize="4dp"
+                android:scrollbarThumbHorizontal="@color/scrollBackground"
+                android:scrollbarTrackHorizontal="@color/scrollTrack"
+                android:scrollbars="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/FreeshipXtra_TextView"/>
+
+            <TextView
+                android:id="@+id/txtView3"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="#F5EAF1EE"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/FreeshipXtra_RecyclerView" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/TypesOfFood_RecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbarSize="4dp"
+                android:layout_marginTop="5dp"
+                android:scrollbarThumbHorizontal="@color/scrollBackground"
+                android:scrollbarTrackHorizontal="@color/scrollTrack"
+                android:scrollbars="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtView3"/>
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
