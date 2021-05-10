@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 public class AccountFragment extends Fragment {
-    Button btnVoucher, btnPayment, btnAddress, btnInvite, btnSupport, btnShop, btnPolicy, btnSettings, btnAbout, btnLogout;
+    Button btnVoucher, btnShopee, btnPayment, btnAddress, btnInvite, btnSupport, btnShop, btnPolicy, btnSettings, btnAbout, btnLogout;
     Fragment newFragment;
 
     @Override
@@ -21,6 +21,9 @@ public class AccountFragment extends Fragment {
         btnVoucher = view.findViewById(R.id.btnVoucher);
         btnVoucher.setOnClickListener(runVoucherFragment);
 
+        btnShopee = view.findViewById(R.id.btnShopee);
+        btnShopee.setOnClickListener(runShopeeFragment);
+
         btnPayment = view.findViewById(R.id.btnPayment);
         btnPayment.setOnClickListener(runPaymentFragment);
 
@@ -29,6 +32,12 @@ public class AccountFragment extends Fragment {
 
         btnSettings = view.findViewById(R.id.btnSettings);
         btnSettings.setOnClickListener(runSettingsFragment);
+
+        btnSupport = view.findViewById(R.id.btnSupport);
+        btnSupport.setOnClickListener(runSupportFragment);
+
+        btnAbout = view.findViewById(R.id.btnAbout);
+        btnAbout.setOnClickListener(runAboutFragment);
 
         btnInvite = view.findViewById(R.id.btnInvite);
         btnInvite.setOnClickListener(runInviteFragment);
@@ -48,8 +57,24 @@ public class AccountFragment extends Fragment {
                 .commit();
     };
 
+    View.OnClickListener runShopeeFragment = v -> {
+        newFragment = new AccountShopeeFragment();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
+                .addToBackStack(null)
+                .commit();
+    };
+
     View.OnClickListener runVoucherFragment = v -> {
         newFragment = new AccountVoucherFragment();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
+                .addToBackStack(null)
+                .commit();
+    };
+
+    View.OnClickListener runSupportFragment = v -> {
+        newFragment = new AccountSupportFragment();
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
                 .addToBackStack(null)
@@ -74,6 +99,14 @@ public class AccountFragment extends Fragment {
 
     View.OnClickListener runSettingsFragment = v -> {
         newFragment = new AccountSettings();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
+                .addToBackStack(null)
+                .commit();
+    };
+
+    View.OnClickListener runAboutFragment = v -> {
+        newFragment = new AccountAbout();
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
                 .addToBackStack(null)

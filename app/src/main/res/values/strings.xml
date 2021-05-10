@@ -15,6 +15,7 @@
 
     <!--account screen strings start-->
     <string name="activity_account_vouchers">My Vouchers</string>
+    <string name="activity_account_shopee">My Shopee Coins</string>
     <string name="activity_account_payment">Payment Method</string>
     <string name="activity_account_address">Address</string>
     <string name="activity_account_invite">Invite Friends</string>
@@ -29,6 +30,20 @@
     <string name="activity_account_vouchers_valid">Valid</string>
     <string name="activity_account_vouchers_invalid">Invalid</string>
     <string name="activity_account_vouchers_used">>Used</string>
+
+    <!-- Account -> Shopee strings -->
+    <string name="activity_account_shopee_faq">How to earn</string>
+    <string name="activity_account_shopee_link">Link Shopee Account</string>
+
+    <!-- Account -> Support strings -->
+    <string name="activity_account_support_search">Search your issues</string>
+    <string name="activity_account_support_report">Report a problem</string>
+    <string name="activity_account_support_report_photo">Upload photos</string>
+    <string name="activity_account_support_report_photo_desc">You may upload multiple files. Images and PDF only.</string>
+    <string name="activity_account_support_report_contact">Contact info</string>
+    <string name="activity_account_support_report_contact_hint">Name, email, phone number...</string>
+    <string name="activity_account_support_report_issue">Describe the issue</string>
+    <string name="activity_account_support_report_send">Send report</string>
 
     <!-- Account -> Payment strings -->
     <string name="activity_account_payment_topup">Top up Credits</string>
@@ -106,5 +121,16 @@
     <string name="title_activity_order_fragment">OrderFragment</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
+    <string name="large_text">
+        "FoodManagementApp is an e-commerce traiding floor, providing multiple utility services"
+        "including: food &amp; drink delivery, shopping on both desktop and mobile platforms."
+        "No matter what time of the day it is, FoodManagementApp can satisfy your needs with just"
+        "a few simple steps."
+
+        "You can easily place order by 1 of the 3 following ways:"
+        "1. Via Website: https://github.com/Votrungtin2001/Food-Application-MobileProgramming "
+        "2. Via FoodManagementApp: Android"
+        "3. Via UIT app: iOS or Android"
+    </string>
 
 </resources>
