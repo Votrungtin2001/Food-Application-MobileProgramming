@@ -1,7 +1,11 @@
 package com.example.foodapplication;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +64,12 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerView_TypesOfFood;
     TypesOfFoodAdapter typesOfFoodAdapter;
 
+    TextView textView_NearMeCategories;
+    TextView textView_BestSellerCategories;
+    TextView textView_BestRatingCategories;
+    TextView textView_FastestDeliveryCategories;
+
+
     public HomeFragment(){
 
     }
@@ -102,7 +112,7 @@ public class HomeFragment extends Fragment {
         ImageAdapter adapter1 = new ImageAdapter(getActivity());
         viewPager3.setAdapter(adapter1);
 
-        recyclerView_list = view.findViewById(R.id.list_recylcerView);
+        recyclerView_list = view.findViewById(R.id.list_recyclerView);
         AddDataForList();
         listAdapter = new ListAdapter(getActivity(), titles1, images);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.HORIZONTAL, false);
@@ -161,6 +171,43 @@ public class HomeFragment extends Fragment {
         LinearLayoutManager linearLayoutManager6 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView_TypesOfFood.setLayoutManager(linearLayoutManager6);
         recyclerView_TypesOfFood.setAdapter(typesOfFoodAdapter);
+
+        textView_NearMeCategories = view.findViewById(R.id.NearMe_Categories);
+        textView_BestSellerCategories = view.findViewById(R.id.BestSeller_Categories);
+        textView_BestRatingCategories = view.findViewById(R.id.BestRating_Categories);
+        textView_FastestDeliveryCategories = view.findViewById(R.id.FastestDelivery_Categories);
+
+        textView_NearMeCategories.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NearMe_Click();
+            }
+        });
+
+
+        textView_BestSellerCategories.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BestSeller_Click();
+            }
+        });
+
+
+        textView_BestRatingCategories.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BestRating_Click();
+            }
+        });
+
+
+        textView_FastestDeliveryCategories.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FastestDelivery_Click();
+            }
+        });
+
 
         return view;
     }
@@ -400,6 +447,82 @@ public class HomeFragment extends Fragment {
 
     }
 
+    private void NearMe_Click()
+    {
+        Spannable spannableString = new SpannableStringBuilder(textView_NearMeCategories.getText());
+        spannableString.setSpan(new StyleSpan(Typeface.BOLD),
+                0,
+                7,
+                0);
+        textView_NearMeCategories.setText(spannableString);
+
+        String s = textView_BestSellerCategories.getText().toString();
+        textView_BestSellerCategories.setText(s);
+
+        s = textView_BestRatingCategories.getText().toString();
+        textView_BestRatingCategories.setText(s);
+
+        s = textView_FastestDeliveryCategories.getText().toString();
+        textView_FastestDeliveryCategories.setText(s);
+
+    }
+
+    private void BestSeller_Click()
+    {
+        Spannable spannableString = new SpannableStringBuilder(textView_BestSellerCategories.getText());
+        spannableString.setSpan(new StyleSpan(Typeface.BOLD),
+                0,
+                8,
+                0);
+        textView_BestSellerCategories.setText(spannableString);
+
+        String s = textView_NearMeCategories.getText().toString();
+        textView_NearMeCategories.setText(s);
+
+        s = textView_BestRatingCategories.getText().toString();
+        textView_BestRatingCategories.setText(s);
+
+        s = textView_FastestDeliveryCategories.getText().toString();
+        textView_FastestDeliveryCategories.setText(s);
+
+    }
+    private void BestRating_Click()
+    {
+        Spannable spannableString = new SpannableStringBuilder(textView_BestRatingCategories.getText());
+        spannableString.setSpan(new StyleSpan(Typeface.BOLD),
+                0,
+                8,
+                0);
+        textView_BestRatingCategories.setText(spannableString);
+
+        String s = textView_NearMeCategories.getText().toString();
+        textView_NearMeCategories.setText(s);
+
+        s = textView_BestSellerCategories.getText().toString();
+        textView_BestSellerCategories.setText(s);
+
+        s = textView_FastestDeliveryCategories.getText().toString();
+        textView_FastestDeliveryCategories.setText(s);
+    }
+
+    private void FastestDelivery_Click()
+    {
+        Spannable spannableString = new SpannableStringBuilder(textView_FastestDeliveryCategories.getText());
+        spannableString.setSpan(new StyleSpan(Typeface.BOLD),
+                0,
+                10,
+                0);
+        textView_FastestDeliveryCategories.setText(spannableString);
+
+        String s = textView_NearMeCategories.getText().toString();
+        textView_NearMeCategories.setText(s);
+
+        s = textView_BestSellerCategories.getText().toString();
+        textView_BestSellerCategories.setText(s);
+
+        s = textView_BestRatingCategories.getText().toString();
+        textView_BestRatingCategories.setText(s);
+    }
     private void runFillAddressActivity()
     {
         Intent intent = new Intent(getActivity(), Fill_Address_Screen.class);

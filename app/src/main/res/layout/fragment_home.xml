@@ -87,7 +87,7 @@
     <ScrollView
         android:id="@+id/scrollView3"
         android:layout_width="match_parent"
-        android:layout_height="565dp"
+        android:layout_height="580dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/location_container">
@@ -107,7 +107,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/list_recylcerView"
+                android:id="@+id/list_recyclerView"
                 android:layout_width="370dp"
                 android:layout_height="200dp"
                 android:layout_marginTop="10dp"
@@ -124,7 +124,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
                 android:background="#F5EAF1EE"
-                app:layout_constraintTop_toBottomOf="@+id/list_recylcerView"
+                app:layout_constraintTop_toBottomOf="@+id/list_recyclerView"
                 tools:layout_editor_absoluteX="-63dp" />
 
             <TextView
@@ -207,14 +207,15 @@
                 android:id="@+id/advertisement_slider"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/viewHistory_recyclerView"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="28dp"
                 app:iss_auto_cycle="true"
                 app:iss_delay="0"
                 app:iss_period="1000"
-                app:iss_title_background="@android:color/transparent">
+                app:iss_title_background="@android:color/transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewHistory_recyclerView">
 
             </com.denzcoskun.imageslider.ImageSlider>
 
@@ -368,6 +369,53 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtView3"/>
+
+            <LinearLayout
+                android:id="@+id/Categories_LinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                app:layout_constraintTop_toBottomOf="@+id/TypesOfFood_RecyclerView"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/NearMe_Categories"
+                    android:layout_width="98dp"
+                    android:layout_height="30dp"
+                    android:text="Gần tôi"
+                    android:gravity="center"
+                    android:textSize="15dp"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/BestSeller_Categories"
+                    android:layout_width="98dp"
+                    android:layout_height="30dp"
+                    android:text="Bán chạy"
+                    android:textAlignment="center"
+                    android:textSize="15dp"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/BestRating_Categories"
+                    android:layout_width="98dp"
+                    android:layout_height="30dp"
+                    android:text="Đánh giá"
+                    android:textAlignment="center"
+                    android:textSize="15dp"
+                    android:textColor="@color/black"/>
+
+                <TextView
+                    android:id="@+id/FastestDelivery_Categories"
+                    android:layout_width="98dp"
+                    android:layout_height="30dp"
+                    android:text="Giao nhanh"
+                    android:textAlignment="center"
+                    android:textSize="15dp"
+                    android:textColor="@color/black"/>
+
+
+            </LinearLayout>
 
 
 
