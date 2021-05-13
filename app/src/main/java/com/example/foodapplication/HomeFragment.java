@@ -14,6 +14,7 @@ import com.denzcoskun.imageslider.constants.ScaleTypes;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,6 +22,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +39,7 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerView_list;
     List<String> titles1;
     List<String> titles2;
+
     List<String> prices;
     List<String> valueOfLike;
     List<Integer> images;
@@ -64,10 +67,11 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerView_TypesOfFood;
     TypesOfFoodAdapter typesOfFoodAdapter;
 
-    TextView textView_NearMeCategories;
-    TextView textView_BestSellerCategories;
-    TextView textView_BestRatingCategories;
-    TextView textView_FastestDeliveryCategories;
+    TabLayout tabLayout_Categories;
+    ViewPager viewPager_Categories;
+    ViewPagerAdapter viewPagerAdapter;
+
+
 
 
     public HomeFragment(){
@@ -172,41 +176,18 @@ public class HomeFragment extends Fragment {
         recyclerView_TypesOfFood.setLayoutManager(linearLayoutManager6);
         recyclerView_TypesOfFood.setAdapter(typesOfFoodAdapter);
 
-        textView_NearMeCategories = view.findViewById(R.id.NearMe_Categories);
-        textView_BestSellerCategories = view.findViewById(R.id.BestSeller_Categories);
-        textView_BestRatingCategories = view.findViewById(R.id.BestRating_Categories);
-        textView_FastestDeliveryCategories = view.findViewById(R.id.FastestDelivery_Categories);
+        tabLayout_Categories = (TabLayout) view.findViewById(R.id.Categories_TabLayout);
+        viewPager_Categories = (ViewPager) view.findViewById(R.id.Categories_ViewPager);
+        viewPagerAdapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
 
-        textView_NearMeCategories.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NearMe_Click();
-            }
-        });
+        viewPagerAdapter.addFragment(new NearMeCategoriesFragment(), "Gần nhất");
+        viewPagerAdapter.addFragment(new BestSellerCategoriesFragment(), "Bán chạy");
+        viewPagerAdapter.addFragment(new BestRatingCategoriesFragment(), "Đánh giá");
+        viewPagerAdapter.addFragment(new FastestDeliveryCategoriesFragment(), "Giao nhanh");
 
+        viewPager_Categories.setAdapter(viewPagerAdapter);
+        tabLayout_Categories.setupWithViewPager(viewPager_Categories);
 
-        textView_BestSellerCategories.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BestSeller_Click();
-            }
-        });
-
-
-        textView_BestRatingCategories.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                BestRating_Click();
-            }
-        });
-
-
-        textView_FastestDeliveryCategories.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FastestDelivery_Click();
-            }
-        });
 
 
         return view;
@@ -447,82 +428,6 @@ public class HomeFragment extends Fragment {
 
     }
 
-    private void NearMe_Click()
-    {
-        Spannable spannableString = new SpannableStringBuilder(textView_NearMeCategories.getText());
-        spannableString.setSpan(new StyleSpan(Typeface.BOLD),
-                0,
-                7,
-                0);
-        textView_NearMeCategories.setText(spannableString);
-
-        String s = textView_BestSellerCategories.getText().toString();
-        textView_BestSellerCategories.setText(s);
-
-        s = textView_BestRatingCategories.getText().toString();
-        textView_BestRatingCategories.setText(s);
-
-        s = textView_FastestDeliveryCategories.getText().toString();
-        textView_FastestDeliveryCategories.setText(s);
-
-    }
-
-    private void BestSeller_Click()
-    {
-        Spannable spannableString = new SpannableStringBuilder(textView_BestSellerCategories.getText());
-        spannableString.setSpan(new StyleSpan(Typeface.BOLD),
-                0,
-                8,
-                0);
-        textView_BestSellerCategories.setText(spannableString);
-
-        String s = textView_NearMeCategories.getText().toString();
-        textView_NearMeCategories.setText(s);
-
-        s = textView_BestRatingCategories.getText().toString();
-        textView_BestRatingCategories.setText(s);
-
-        s = textView_FastestDeliveryCategories.getText().toString();
-        textView_FastestDeliveryCategories.setText(s);
-
-    }
-    private void BestRating_Click()
-    {
-        Spannable spannableString = new SpannableStringBuilder(textView_BestRatingCategories.getText());
-        spannableString.setSpan(new StyleSpan(Typeface.BOLD),
-                0,
-                8,
-                0);
-        textView_BestRatingCategories.setText(spannableString);
-
-        String s = textView_NearMeCategories.getText().toString();
-        textView_NearMeCategories.setText(s);
-
-        s = textView_BestSellerCategories.getText().toString();
-        textView_BestSellerCategories.setText(s);
-
-        s = textView_FastestDeliveryCategories.getText().toString();
-        textView_FastestDeliveryCategories.setText(s);
-    }
-
-    private void FastestDelivery_Click()
-    {
-        Spannable spannableString = new SpannableStringBuilder(textView_FastestDeliveryCategories.getText());
-        spannableString.setSpan(new StyleSpan(Typeface.BOLD),
-                0,
-                10,
-                0);
-        textView_FastestDeliveryCategories.setText(spannableString);
-
-        String s = textView_NearMeCategories.getText().toString();
-        textView_NearMeCategories.setText(s);
-
-        s = textView_BestSellerCategories.getText().toString();
-        textView_BestSellerCategories.setText(s);
-
-        s = textView_BestRatingCategories.getText().toString();
-        textView_BestRatingCategories.setText(s);
-    }
     private void runFillAddressActivity()
     {
         Intent intent = new Intent(getActivity(), Fill_Address_Screen.class);

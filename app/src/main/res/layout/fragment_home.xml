@@ -370,52 +370,28 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtView3"/>
 
-            <LinearLayout
-                android:id="@+id/Categories_LinearLayout"
+
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/Categories_TabLayout"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@+id/TypesOfFood_RecyclerView"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:tabSelectedTextColor="@color/colorAccent"></com.google.android.material.tabs.TabLayout>
 
-                <TextView
-                    android:id="@+id/NearMe_Categories"
-                    android:layout_width="98dp"
-                    android:layout_height="30dp"
-                    android:text="Gần tôi"
-                    android:gravity="center"
-                    android:textSize="15dp"
-                    android:textColor="@color/black"/>
-
-                <TextView
-                    android:id="@+id/BestSeller_Categories"
-                    android:layout_width="98dp"
-                    android:layout_height="30dp"
-                    android:text="Bán chạy"
-                    android:textAlignment="center"
-                    android:textSize="15dp"
-                    android:textColor="@color/black"/>
-
-                <TextView
-                    android:id="@+id/BestRating_Categories"
-                    android:layout_width="98dp"
-                    android:layout_height="30dp"
-                    android:text="Đánh giá"
-                    android:textAlignment="center"
-                    android:textSize="15dp"
-                    android:textColor="@color/black"/>
-
-                <TextView
-                    android:id="@+id/FastestDelivery_Categories"
-                    android:layout_width="98dp"
-                    android:layout_height="30dp"
-                    android:text="Giao nhanh"
-                    android:textAlignment="center"
-                    android:textSize="15dp"
-                    android:textColor="@color/black"/>
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/Categories_ViewPager"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                app:layout_constraintTop_toBottomOf="@+id/Categories_TabLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"></androidx.viewpager.widget.ViewPager>
 
 
-            </LinearLayout>
+
+
 
 
 
