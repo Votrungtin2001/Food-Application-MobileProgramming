@@ -14,7 +14,12 @@
         <TextView
             android:id="@+id/txtVersion"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnLogout"
+            android:layout_marginTop="0dp"
+            android:gravity="center"
+            android:text="@string/activity_account_version"
+            android:textAlignment="gravity" />
 
         <ImageView
             android:id="@+id/imgUser"
@@ -42,7 +47,7 @@
             android:layout_marginTop="12dp"
             android:drawableLeft="@drawable/tag"
             android:text="@string/activity_account_vouchers"
-            android:textAlignment="textStart"
+            android:textAlignment="viewStart"
             android:textAllCaps="false"
             android:textColor="@color/black"
             app:backgroundTint="@color/white" />
@@ -56,7 +61,7 @@
 
             android:drawableLeft="@drawable/ic_outline_monetization_on_24"
             android:text="@string/activity_account_shopee"
-            android:textAlignment="textStart"
+            android:textAlignment="viewStart"
             android:textAllCaps="false"
             android:textColor="@color/black"
             app:backgroundTint="@color/white" />
@@ -69,7 +74,7 @@
             android:layout_marginTop="0dp"
             android:drawableLeft="@drawable/ic_baseline_credit_card_24"
             android:text="@string/activity_account_payment"
-            android:textAlignment="textStart"
+            android:textAlignment="viewStart"
             android:textAllCaps="false"
             android:textColor="@color/black"
             app:backgroundTint="@color/white" />
@@ -92,7 +97,7 @@
             android:layout_marginTop="0dp"
             android:drawableLeft="@drawable/ic_baseline_help_center_24"
             android:text="@string/activity_account_support"
-            android:textAlignment="textStart"
+            android:textAlignment="viewStart"
             android:textAllCaps="false"
             android:textColor="@color/black"
             app:backgroundTint="@color/white" />
@@ -105,7 +110,7 @@
             android:layout_marginTop="5dp"
             android:drawableLeft="@drawable/ic_baseline_store_24"
             android:text="@string/activity_account_shopowner"
-            android:textAlignment="textStart"
+            android:textAlignment="viewStart"
             android:textAllCaps="false"
             android:textColor="@color/black"
             app:backgroundTint="@color/white" />
@@ -118,7 +123,7 @@
             android:layout_marginTop="5dp"
             android:drawableLeft="@drawable/ic_baseline_policy_24"
             android:text="@string/activity_account_policy"
-            android:textAlignment="textStart"
+            android:textAlignment="viewStart"
             android:textAllCaps="false"
             android:textColor="@color/black"
             app:backgroundTint="@color/white" />
@@ -131,7 +136,7 @@
             android:layout_marginTop="0dp"
             android:drawableLeft="@drawable/ic_baseline_settings_24"
             android:text="@string/activity_account_settings"
-            android:textAlignment="textStart"
+            android:textAlignment="viewStart"
             android:textAllCaps="false"
             android:textColor="@color/black"
             app:backgroundTint="@color/white" />
@@ -144,7 +149,7 @@
             android:layout_marginTop="0dp"
             android:drawableLeft="@drawable/ic_baseline_info_24"
             android:text="@string/activity_account_about"
-            android:textAlignment="textStart"
+            android:textAlignment="viewStart"
             android:textAllCaps="false"
             android:textColor="@color/black"
             app:backgroundTint="@color/white" />
@@ -157,7 +162,7 @@
             android:layout_marginTop="0dp"
             android:drawableLeft="@drawable/ic_baseline_place_24"
             android:text="@string/activity_account_address"
-            android:textAlignment="textStart"
+            android:textAlignment="viewStart"
             android:textAllCaps="false"
             android:textColor="@color/black"
             app:backgroundTint="@color/white" />
@@ -170,7 +175,7 @@
             android:layout_marginTop="5dp"
             android:drawableLeft="@drawable/ic_baseline_person_add_24"
             android:text="@string/activity_account_invite"
-            android:textAlignment="textStart"
+            android:textAlignment="viewStart"
             android:textAllCaps="false"
             android:textColor="@color/black"
             app:backgroundTint="@color/white" />

@@ -25,6 +25,7 @@
     <string name="activity_account_settings">Settings</string>
     <string name="activity_account_about">About us...</string>
     <string name="activity_account_logout">LOGOUT</string>
+    <string name="activity_account_version">Version 0.00.01</string>
 
     <!-- Account -> Vouchers strings -->
     <string name="activity_account_vouchers_valid">Valid</string>
