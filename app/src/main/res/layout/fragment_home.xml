@@ -87,7 +87,8 @@
     <ScrollView
         android:id="@+id/scrollView3"
         android:layout_width="match_parent"
-        android:layout_height="565dp"
+        android:layout_height="580dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/location_container">
@@ -107,7 +108,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/list_recylcerView"
+                android:id="@+id/list_recyclerView"
                 android:layout_width="370dp"
                 android:layout_height="200dp"
                 android:layout_marginTop="10dp"
@@ -124,8 +125,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
                 android:background="#F5EAF1EE"
-                app:layout_constraintTop_toBottomOf="@+id/list_recylcerView"
-                tools:layout_editor_absoluteX="-63dp" />
+                app:layout_constraintTop_toBottomOf="@+id/list_recyclerView" />
 
             <TextView
                 android:id="@+id/collection_textView"
@@ -207,14 +207,15 @@
                 android:id="@+id/advertisement_slider"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/viewHistory_recyclerView"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="28dp"
                 app:iss_auto_cycle="true"
                 app:iss_delay="0"
                 app:iss_period="1000"
-                app:iss_title_background="@android:color/transparent">
+                app:iss_title_background="@android:color/transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/viewHistory_recyclerView">
 
             </com.denzcoskun.imageslider.ImageSlider>
 
@@ -368,6 +369,35 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtView3"/>
+
+
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/Categories_TabLayout"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:background="@color/white"
+                app:tabInlineLabel="true"
+                app:tabTextColor="@color/black"
+                app:tabIndicatorColor="@color/colorAccent"
+                app:layout_constraintTop_toBottomOf="@+id/TypesOfFood_RecyclerView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:tabSelectedTextColor="@color/colorAccent"
+                app:tabTextAppearance="@style/TextAppearance.AppCompat.Small"/>
+
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/Categories_ViewPager"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginTop="5dp"
+                app:layout_constraintTop_toBottomOf="@+id/Categories_TabLayout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+
+
+
 
 
 

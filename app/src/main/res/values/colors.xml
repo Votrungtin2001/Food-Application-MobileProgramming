@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="scrollBackground">#F85F53</color>
     <color name="scrollTrack">#F0D5D0D0</color>
+    <color name="colorAccent">#F0F33E3E</color>
 </resources>

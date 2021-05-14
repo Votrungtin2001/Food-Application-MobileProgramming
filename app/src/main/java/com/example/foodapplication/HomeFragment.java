@@ -1,7 +1,11 @@
 package com.example.foodapplication;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +22,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +39,7 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerView_list;
     List<String> titles1;
     List<String> titles2;
+
     List<String> prices;
     List<String> valueOfLike;
     List<Integer> images;
@@ -59,6 +66,15 @@ public class HomeFragment extends Fragment {
 
     RecyclerView recyclerView_TypesOfFood;
     TypesOfFoodAdapter typesOfFoodAdapter;
+
+    TabLayout tabLayout_Categories;
+    ViewPager viewPager_Categories;
+    ViewPagerAdapter viewPagerAdapter;
+
+    ArrayList<String> title_Categories = new ArrayList<>();
+
+
+
 
     public HomeFragment(){
 
@@ -102,7 +118,7 @@ public class HomeFragment extends Fragment {
         ImageAdapter adapter1 = new ImageAdapter(getActivity());
         viewPager3.setAdapter(adapter1);
 
-        recyclerView_list = view.findViewById(R.id.list_recylcerView);
+        recyclerView_list = view.findViewById(R.id.list_recyclerView);
         AddDataForList();
         listAdapter = new ListAdapter(getActivity(), titles1, images);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.HORIZONTAL, false);
@@ -160,7 +176,51 @@ public class HomeFragment extends Fragment {
         recyclerView_TypesOfFood.setLayoutManager(linearLayoutManager6);
         recyclerView_TypesOfFood.setAdapter(typesOfFoodAdapter);
 
+        tabLayout_Categories = (TabLayout) view.findViewById(R.id.Categories_TabLayout);
+        viewPager_Categories = (ViewPager) view.findViewById(R.id.Categories_ViewPager);
+
+        title_Categories.add("Gần tôi");
+        title_Categories.add("Bán chạy");
+        title_Categories.add("Đánh giá");
+        title_Categories.add("Giao nhanh");
+        //Set tab layout
+        tabLayout_Categories.setupWithViewPager(viewPager_Categories);
+
+        //Prepare view pager
+        prepareViewPagerCategories(viewPager_Categories, title_Categories);
+
+
+
+
         return view;
+    }
+
+    private void prepareViewPagerCategories(ViewPager viewPager, ArrayList<String> arrayList)
+    {
+        viewPagerAdapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
+        for(int i = 0; i < title_Categories.size(); i++)
+        {
+            if (i == 0)
+            {
+                NearMeCategoriesFragment nearMeCategoriesFragment = new NearMeCategoriesFragment();
+                viewPagerAdapter.addFragment(nearMeCategoriesFragment, title_Categories.get(i));
+            }
+            if (i == 1)
+            {
+                BestSellerCategoriesFragment bestSellerCategoriesFragment = new BestSellerCategoriesFragment();
+                viewPagerAdapter.addFragment(bestSellerCategoriesFragment, title_Categories.get(i));
+            }
+            if (i == 2)
+            {
+                BestRatingCategoriesFragment bestRatingCategoriesFragment = new BestRatingCategoriesFragment();
+                viewPagerAdapter.addFragment(bestRatingCategoriesFragment, title_Categories.get(i));
+            }
+            if (i == 3) {
+                FastestDeliveryCategoriesFragment fastestDeliveryCategoriesFragment = new FastestDeliveryCategoriesFragment();
+                viewPagerAdapter.addFragment(fastestDeliveryCategoriesFragment, title_Categories.get(i));
+            }
+        }
+        viewPager.setAdapter(viewPagerAdapter);
     }
 
     public void AddDataForList()

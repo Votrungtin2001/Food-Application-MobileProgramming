@@ -15,6 +15,7 @@
 
     <!--account screen strings start-->
     <string name="activity_account_vouchers">My Vouchers</string>
+    <string name="activity_account_shopee">My Shopee Coins</string>
     <string name="activity_account_payment">Payment Method</string>
     <string name="activity_account_address">Address</string>
     <string name="activity_account_invite">Invite Friends</string>
@@ -24,11 +25,26 @@
     <string name="activity_account_settings">Settings</string>
     <string name="activity_account_about">About us...</string>
     <string name="activity_account_logout">LOGOUT</string>
+    <string name="activity_account_version">Version 0.00.01</string>
 
     <!-- Account -> Vouchers strings -->
     <string name="activity_account_vouchers_valid">Valid</string>
     <string name="activity_account_vouchers_invalid">Invalid</string>
     <string name="activity_account_vouchers_used">>Used</string>
+
+    <!-- Account -> Shopee strings -->
+    <string name="activity_account_shopee_faq">How to earn</string>
+    <string name="activity_account_shopee_link">Link Shopee Account</string>
+
+    <!-- Account -> Support strings -->
+    <string name="activity_account_support_search">Search your issues</string>
+    <string name="activity_account_support_report">Report a problem</string>
+    <string name="activity_account_support_report_photo">Upload photos</string>
+    <string name="activity_account_support_report_photo_desc">You may upload multiple files. Images and PDF only.</string>
+    <string name="activity_account_support_report_contact">Contact info</string>
+    <string name="activity_account_support_report_contact_hint">Name, email, phone number...</string>
+    <string name="activity_account_support_report_issue">Describe the issue</string>
+    <string name="activity_account_support_report_send">Send report</string>
 
     <!-- Account -> Payment strings -->
     <string name="activity_account_payment_topup">Top up Credits</string>
@@ -106,26 +122,16 @@
     <string name="title_activity_order_fragment">OrderFragment</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
-    <string name="notification_setting">Notification Setting</string>
-    <string name="khuy_n_m_i">Khuyến mãi</string>
-    <string name="khuy_n_kh_ch_lu_n_lu_n_b_t_nh_n_t_nh_tr_ng_th_ng_b_o_v_n_h_ng">Khuyến khích luôn luôn bật để nhận tình trạng thông báo về đơn hàng</string>
-    <string name="th_ng_b_o_khuy_n_m_i_c_c_t_nh_th_nh_ch_n">Thông báo khuyến mãi ở các tỉnh thành đã chọn</string>
-    <string name="t_nh_th_nh">Tỉnh thành</string>
-    <string name="g_i_th_ng_b_o_v_khuy_n_m_i_t_i_nh_ng_a_i_m_b_n_d_i">Gửi thông báo về khuyến mãi tại những địa điểm bên dưới</string>
+    <string name="large_text">
+        "FoodManagementApp is an e-commerce traiding floor, providing multiple utility services"
+        "including: food &amp; drink delivery, shopping on both desktop and mobile platforms."
+        "No matter what time of the day it is, FoodManagementApp can satisfy your needs with just"
+        "a few simple steps."
 
-    <!--history_order -->
-    <string name="service">Dịch vụ</string>
-    <string-array name="service_array">
-        <item>Đồ ăn</item>
-        <item>Thực phẩm</item>
-        <item>Bia</item>
-        <item>Hoa</item>
-        <item>Siêu thị</item>
-        <item>Thuốc</item>
-        <item>Đặt bản</item>
-        <item>Salon</item>
-        <item>Thú cưng</item>
-        <item>Giặt ủi</item>
-    </string-array>
+        "You can easily place order by 1 of the 3 following ways:"
+        "1. Via Website: https://github.com/Votrungtin2001/Food-Application-MobileProgramming "
+        "2. Via FoodManagementApp: Android"
+        "3. Via UIT app: iOS or Android"
+    </string>
 
 </resources>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    tools:context=".AccountShopeeFragment">
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="2dp"
+        app:srcCompat="@drawable/ic_outline_monetization_on_24" />
+
+    <TextView
+        android:id="@+id/txtShopeeCoins"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="82dp"
+        android:layout_toEndOf="@+id/imageView2"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/btnShopeeFAQ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="218dp"
+        android:layout_marginTop="1dp"
+        android:layout_toEndOf="@+id/imageView2"
+        android:text="@string/activity_account_shopee_faq"
+        android:textAllCaps="false"
+        android:textSize="10sp"
+        app:backgroundTint="@color/quantum_googred400" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="520dp"
+        android:text="@string/activity_account_shopee_link"
+        android:textAllCaps="false"
+        app:backgroundTint="@color/scrollBackground" />
+</RelativeLayout>
