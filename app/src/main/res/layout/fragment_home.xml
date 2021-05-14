@@ -88,6 +88,7 @@
         android:id="@+id/scrollView3"
         android:layout_width="match_parent"
         android:layout_height="580dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/location_container">
@@ -375,19 +376,25 @@
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/Categories_TabLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="?actionBarSize"
+                android:background="@color/white"
+                app:tabInlineLabel="true"
+                app:tabTextColor="@color/black"
+                app:tabIndicatorColor="@color/colorAccent"
                 app:layout_constraintTop_toBottomOf="@+id/TypesOfFood_RecyclerView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:tabSelectedTextColor="@color/colorAccent"></com.google.android.material.tabs.TabLayout>
+                app:tabSelectedTextColor="@color/colorAccent"
+                app:tabTextAppearance="@style/TextAppearance.AppCompat.Small"/>
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/Categories_ViewPager"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
+                android:layout_marginTop="5dp"
                 app:layout_constraintTop_toBottomOf="@+id/Categories_TabLayout"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"></androidx.viewpager.widget.ViewPager>
+                app:layout_constraintStart_toStartOf="parent"/>
 
 
 

@@ -71,6 +71,8 @@ public class HomeFragment extends Fragment {
     ViewPager viewPager_Categories;
     ViewPagerAdapter viewPagerAdapter;
 
+    ArrayList<String> title_Categories = new ArrayList<>();
+
 
 
 
@@ -178,19 +180,49 @@ public class HomeFragment extends Fragment {
 
         tabLayout_Categories = (TabLayout) view.findViewById(R.id.Categories_TabLayout);
         viewPager_Categories = (ViewPager) view.findViewById(R.id.Categories_ViewPager);
-        viewPagerAdapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
 
-        viewPagerAdapter.addFragment(new NearMeCategoriesFragment(), "Gần nhất");
-        viewPagerAdapter.addFragment(new BestSellerCategoriesFragment(), "Bán chạy");
-        viewPagerAdapter.addFragment(new BestRatingCategoriesFragment(), "Đánh giá");
-        viewPagerAdapter.addFragment(new FastestDeliveryCategoriesFragment(), "Giao nhanh");
-
-        viewPager_Categories.setAdapter(viewPagerAdapter);
+        title_Categories.add("Gần tôi");
+        title_Categories.add("Bán chạy");
+        title_Categories.add("Đánh giá");
+        title_Categories.add("Giao nhanh");
+        //Set tab layout
         tabLayout_Categories.setupWithViewPager(viewPager_Categories);
+
+        //Prepare view pager
+        prepareViewPagerCategories(viewPager_Categories, title_Categories);
+
 
 
 
         return view;
+    }
+
+    private void prepareViewPagerCategories(ViewPager viewPager, ArrayList<String> arrayList)
+    {
+        viewPagerAdapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
+        for(int i = 0; i < title_Categories.size(); i++)
+        {
+            if (i == 0)
+            {
+                NearMeCategoriesFragment nearMeCategoriesFragment = new NearMeCategoriesFragment();
+                viewPagerAdapter.addFragment(nearMeCategoriesFragment, title_Categories.get(i));
+            }
+            if (i == 1)
+            {
+                BestSellerCategoriesFragment bestSellerCategoriesFragment = new BestSellerCategoriesFragment();
+                viewPagerAdapter.addFragment(bestSellerCategoriesFragment, title_Categories.get(i));
+            }
+            if (i == 2)
+            {
+                BestRatingCategoriesFragment bestRatingCategoriesFragment = new BestRatingCategoriesFragment();
+                viewPagerAdapter.addFragment(bestRatingCategoriesFragment, title_Categories.get(i));
+            }
+            if (i == 3) {
+                FastestDeliveryCategoriesFragment fastestDeliveryCategoriesFragment = new FastestDeliveryCategoriesFragment();
+                viewPagerAdapter.addFragment(fastestDeliveryCategoriesFragment, title_Categories.get(i));
+            }
+        }
+        viewPager.setAdapter(viewPagerAdapter);
     }
 
     public void AddDataForList()
