@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import com.denzcoskun.imageslider.constants.ScaleTypes;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -16,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
 import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 
 import java.util.ArrayList;
@@ -108,8 +108,6 @@ public class HomeFragment extends Fragment {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.HORIZONTAL, false);
         recyclerView_list.setLayoutManager(gridLayoutManager);
         recyclerView_list.setAdapter(listAdapter);
-
-
 
         recyclerView_Collection = view.findViewById(R.id.collection_recyclerView);
         AddDataForCollection();

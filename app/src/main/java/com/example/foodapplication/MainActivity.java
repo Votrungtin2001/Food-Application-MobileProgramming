@@ -1,5 +1,6 @@
 package com.example.foodapplication;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -18,7 +20,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements CommunicationInterface{
+
+    NotiSettingFragment NotiSettingFrag;
 
     private String addressLine;
     private String nameStreet;
@@ -148,5 +152,18 @@ public class MainActivity extends AppCompatActivity {
             winParams.flags &= ~bits;
         }
         win.setAttributes(winParams);
+    }
+
+    @Override
+    public void onClickTopFragment(String str) {
+        @SuppressLint("ResourceType") NotiSettingFragment fragBot = (NotiSettingFragment) getSupportFragmentManager().findFragmentById(R.layout.fragment_noti_setting);
+        if ("add".equalsIgnoreCase(String.valueOf(fragBot))) { // kiểm tra Fragment cần truyền data đến có thực sự tồn tại và đang hiện.
+            fragBot.updateFragment(str);
+            Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
+        }
+        else
+            {
+            Toast.makeText(this, "Khong tim thay, hoac fragment khong hien", Toast.LENGTH_SHORT).show();
+        }
     }
 }

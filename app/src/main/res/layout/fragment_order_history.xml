@@ -1,15 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".OrderHistoryFragment">
 
-
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ord_history"
         android:layout_width="match_parent"
-        android:layout_height="89dp"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
-    </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:orientation="horizontal">
+
+            <Spinner
+                android:id="@+id/service"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:entries="@array/service_array"
+                android:prompt="@string/service"
+                android:spinnerMode="dropdown" />
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="40dp" />
+
+<!--            <com.savvi.rangedatepicker.CalendarPickerView-->
+<!--                android:id="@+id/calendar_view"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:scrollbarStyle="outsideOverlay"-->
+<!--                android:clipToPadding="false"-->
+
+<!--                />-->
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

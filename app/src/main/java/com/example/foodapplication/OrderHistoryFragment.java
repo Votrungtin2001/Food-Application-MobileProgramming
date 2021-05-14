@@ -4,60 +4,78 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.Spinner;
 
 import androidx.fragment.app.Fragment;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link OrderHistoryFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+//import com.savvi.rangedatepicker.CalendarPickerView;
+
 public class OrderHistoryFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public OrderHistoryFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment OrderHistoryFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static OrderHistoryFragment newInstance(String param1, String param2) {
-        OrderHistoryFragment fragment = new OrderHistoryFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+    Spinner service1,dateSpinner;
+    // CalendarPickerView calendar;
+    Button button;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_order_history, container, false);
+        View view = inflater.inflate(R.layout.fragment_order_history, container, false);
+
+        service1 = (Spinner) view.findViewById(R.id.service);
+        ArrayAdapter<CharSequence> staticAdapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.service_array, android.R.layout.simple_spinner_item);
+        staticAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        service1.setAdapter(staticAdapter);
+
+//        final Calendar nextYear = Calendar.getInstance();
+//        nextYear.add(Calendar.YEAR, 10);
+//
+//        final Calendar lastYear = Calendar.getInstance();
+//        lastYear.add(Calendar.YEAR, - 10);
+//
+//        calendar = view.findViewById(R.id.calendar_view);
+//
+//        ArrayList<Integer> list = new ArrayList<>();
+//        list.add(2);
+//
+//        calendar.deactivateDates(list);
+//        ArrayList<Date> arrayList = new ArrayList<>();
+//        try {
+//            SimpleDateFormat dateformat = new SimpleDateFormat("dd-MM-yyyy");
+//
+//            String strdate = "22-4-2019";
+//            String strdate2 = "26-4-2019";
+//
+//            Date newdate = dateformat.parse(strdate);
+//            Date newdate2 = dateformat.parse(strdate2);
+//            arrayList.add(newdate);
+//            arrayList.add(newdate2);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//
+//        calendar.init(lastYear.getTime(), nextYear.getTime(), new SimpleDateFormat("MMMM, YYYY", Locale.getDefault())) //
+//                .inMode(CalendarPickerView.SelectionMode.RANGE) //
+//                .withDeactivateDates(list)
+//                .withHighlightedDates(arrayList);
+//
+//        calendar.scrollToDate(new Date());
+//
+//
+//        button.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View view) {
+//                Toast.makeText(getActivity(), "list " + calendar.getSelectedDates().toString(), Toast.LENGTH_LONG).show();
+//            }
+//        });
+
+
+        return view;
     }
+
+
 }

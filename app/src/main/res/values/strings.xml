@@ -106,5 +106,26 @@
     <string name="title_activity_order_fragment">OrderFragment</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
+    <string name="notification_setting">Notification Setting</string>
+    <string name="khuy_n_m_i">Khuyến mãi</string>
+    <string name="khuy_n_kh_ch_lu_n_lu_n_b_t_nh_n_t_nh_tr_ng_th_ng_b_o_v_n_h_ng">Khuyến khích luôn luôn bật để nhận tình trạng thông báo về đơn hàng</string>
+    <string name="th_ng_b_o_khuy_n_m_i_c_c_t_nh_th_nh_ch_n">Thông báo khuyến mãi ở các tỉnh thành đã chọn</string>
+    <string name="t_nh_th_nh">Tỉnh thành</string>
+    <string name="g_i_th_ng_b_o_v_khuy_n_m_i_t_i_nh_ng_a_i_m_b_n_d_i">Gửi thông báo về khuyến mãi tại những địa điểm bên dưới</string>
+
+    <!--history_order -->
+    <string name="service">Dịch vụ</string>
+    <string-array name="service_array">
+        <item>Đồ ăn</item>
+        <item>Thực phẩm</item>
+        <item>Bia</item>
+        <item>Hoa</item>
+        <item>Siêu thị</item>
+        <item>Thuốc</item>
+        <item>Đặt bản</item>
+        <item>Salon</item>
+        <item>Thú cưng</item>
+        <item>Giặt ủi</item>
+    </string-array>
 
 </resources>

@@ -1,19 +1,18 @@
 package com.example.foodapplication;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
 public class OrderAdapter extends FragmentStatePagerAdapter {
 final int pageCount = 3;
-private String tabTitles[] = new String[]{"Đang đến","Lịch sử","Đã hủy"};
-    public OrderAdapter(@NonNull FragmentManager fm) {
+private String tabTitles[] = new String[]{"Đang đến","Lịch sử","Đơn nháp"};
+
+    public OrderAdapter( FragmentManager fm, int tabCount) {
         super(fm,BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
     }
 
-    @NonNull
+
     @Override
     public Fragment getItem(int position) {
         switch (position)
@@ -26,16 +25,14 @@ private String tabTitles[] = new String[]{"Đang đến","Lịch sử","Đã h�
                 return new OrderDraftFragment();
             default:
                 return null;
-
         }
     }
 
     @Override
     public int getCount() {
-        return pageCount;
+        return tabTitles.length;
     }
 
-    @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
         return tabTitles[position];
