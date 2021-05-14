@@ -3,6 +3,7 @@ package com.example.foodapplication;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -15,7 +16,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.Autocomplete;
@@ -35,6 +39,8 @@ public class Fill_Address_Screen extends AppCompatActivity {
 
     private String nameStreet;
     private String addressLine;
+
+    private int PLACE_PICKER_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,12 +111,13 @@ public class Fill_Address_Screen extends AppCompatActivity {
             //Display toast
             Toast.makeText(getApplicationContext(), status.getStatusMessage(), Toast.LENGTH_SHORT).show();
         }
+
     }
 
     private void openMapActivity()
     {
-        Intent i = new Intent(Fill_Address_Screen.this, Map.class);
-        startActivity(i);
+        Intent intent = new Intent(Fill_Address_Screen.this, Map.class);
+        startActivity(intent);
     }
 
     @Override
