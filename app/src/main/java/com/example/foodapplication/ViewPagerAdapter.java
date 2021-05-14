@@ -1,5 +1,7 @@
 package com.example.foodapplication;
 
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
@@ -33,7 +35,9 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
-        return titles.get(position);
+        SpannableString spannableString = new SpannableString(titles.get(position));
+        return spannableString;
+
     }
 
     public void addFragment(Fragment fragment, String title)
