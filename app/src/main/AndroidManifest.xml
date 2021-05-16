@@ -15,7 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name=".CreateAddressScreen"></activity>
+        <activity android:name=".CreateAddressScreen"
+            android:parentActivityName=".Fill_Address_Screen"
+            android:theme="@style/Theme.AppCompat.Button"/>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -23,7 +25,8 @@
 
         <activity android:name=".Map" />
         <activity android:name=".getCurrentLocation_LoadingScreen" />
-        <activity android:name=".Fill_Address_Screen" />
+        <activity android:name=".Fill_Address_Screen"
+            android:theme="@style/Theme.AppCompat.Button"/>
         <activity android:name=".LoadingScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -29,6 +29,7 @@ import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
 import java.util.Arrays;
 import java.util.List;
 
+
 public class Fill_Address_Screen extends AppCompatActivity {
 
     private ImageView back_imageView;
@@ -39,6 +40,23 @@ public class Fill_Address_Screen extends AppCompatActivity {
 
     private String nameStreet;
     private String addressLine;
+
+    private ImageView imageView_Home;
+    private TextView textView_HomeAddress;
+    private ImageView imageView_HomeNext;
+
+    private  ImageView imageView_BriefCase;
+    private TextView textView_CompanyAddress;
+    private ImageView imageView_CompanyNext;
+
+    private  TextView textView_FullAddress1;
+    private TextView textView_NameContact1;
+    private TextView textView_PhoneContact1;
+    private TextView textView_Note1;
+    private  TextView textView_FullAddress2;
+    private TextView textView_NameContact2;
+    private TextView textView_PhoneContact2;
+    private TextView textView_Note2;
 
     private int PLACE_PICKER_REQUEST = 1;
 
@@ -92,6 +110,64 @@ public class Fill_Address_Screen extends AppCompatActivity {
                 startActivityForResult(intent, 100);
             }
         });
+
+        imageView_Home = findViewById(R.id.home_imageView);
+        imageView_Home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCreateAddressActivityWithHomeOption();
+            }
+        });
+
+        textView_HomeAddress = findViewById(R.id.addHomeAddress_textView);
+        textView_HomeAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCreateAddressActivityWithHomeOption();
+            }
+        });
+
+        imageView_HomeNext = findViewById(R.id.next1_imageView);
+        imageView_HomeNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCreateAddressActivityWithHomeOption();
+            }
+        });
+
+        imageView_BriefCase = findViewById(R.id.briefCase_imageView);
+        imageView_BriefCase.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCreateAddressActivityWithCompanyOption();
+            }
+        });
+
+        textView_CompanyAddress = findViewById(R.id.addCompanyAddress_textView);
+        textView_CompanyAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCreateAddressActivityWithCompanyOption();
+            }
+        });
+
+        imageView_CompanyNext = findViewById(R.id.next2_imageView);
+        imageView_CompanyNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCreateAddressActivityWithCompanyOption();
+            }
+        });
+
+        textView_FullAddress1 = findViewById(R.id.FullAddress_FillAddress1);
+        textView_NameContact1 = findViewById(R.id.NameContact_FillAddress1);
+        textView_PhoneContact1 = findViewById(R.id.PhoneContact_FillAddress1);
+        textView_Note1 = findViewById(R.id.Note_FillAddress1);
+
+        textView_FullAddress2 = findViewById(R.id.FullAddress_FillAddress2);
+        textView_NameContact2 = findViewById(R.id.NameContact_FillAddress2);
+        textView_PhoneContact2 = findViewById(R.id.PhoneContact_FillAddress2);
+        textView_Note2 = findViewById(R.id.Note_FillAddress2);
     }
 
     @Override
@@ -111,8 +187,93 @@ public class Fill_Address_Screen extends AppCompatActivity {
             //Display toast
             Toast.makeText(getApplicationContext(), status.getStatusMessage(), Toast.LENGTH_SHORT).show();
         }
+        if(requestCode == 1)
+        {
+            if(resultCode == RESULT_OK){
+                String fullAddress = data.getStringExtra("Full Address");
+                String houseAddress = data.getStringExtra("House Address");
+                String numberOfGateAddress = data.getStringExtra("Number Of Gate");
+                String nameContact = data.getStringExtra("Name Contact");
+                String phoneContact = data.getStringExtra("Phone Contact");
+                String note = data.getStringExtra("Note");
+                int choose = data.getIntExtra("Number Of Choice", 1);
+                if(choose == 1) {
+                    textView_HomeAddress.setText("Nhà");
+                    if(!houseAddress.trim().equals("") && !numberOfGateAddress.trim().equals("")) {
+                        textView_FullAddress1.setText(" [" + houseAddress + ", " + numberOfGateAddress + "] \t " + fullAddress);
+                    }
+                    else if (!houseAddress.trim().equals("")){
+                        textView_FullAddress1.setText(" " + houseAddress + ", " + fullAddress);
+                    }
+                    else if (!numberOfGateAddress.trim().equals("")){
+                        textView_FullAddress1.setText("Cong: " + numberOfGateAddress + ", " + fullAddress);
+                    }
+                    else  textView_FullAddress1.setText(" " + fullAddress);
+                    if(!nameContact.trim().equals("")) textView_NameContact1.setText("Tên liên lạc: " + nameContact);
+                    else textView_NameContact1.setText("Tên liên lạc: Không có.");
+                    if(!phoneContact.trim().equals("")) textView_PhoneContact1.setText("Điện thoại: " + phoneContact);
+                    else textView_PhoneContact1.setText("Điện thoại: Không có.");
+                    if(!note.trim().equals("")) textView_Note1.setText("Ghi chú: " + note);
+                    else textView_Note1.setText("Ghi chú: Không có.");
+
+                }
+                else if (choose == 2) {
+                    textView_CompanyAddress.setText("Công ty");
+                    if(!houseAddress.trim().equals("") && !numberOfGateAddress.trim().equals("")) {
+                        textView_FullAddress2.setText(" [" + houseAddress + ", " + numberOfGateAddress + "] \t " + fullAddress);
+                    }
+                    else if (!houseAddress.trim().equals("")){
+                        textView_FullAddress2.setText(" " + houseAddress + ", " + fullAddress);
+                    }
+                    else if (!numberOfGateAddress.trim().equals("")){
+                        textView_FullAddress2.setText("Cong: " + numberOfGateAddress + ", " + fullAddress);
+                    }
+                    else  textView_FullAddress2.setText(" " + fullAddress);
+                    if(!nameContact.trim().equals("")) textView_NameContact2.setText("Tên liên lạc: " + nameContact);
+                    else textView_NameContact2.setText("Tên liên lạc: Không có.");
+                    if(!phoneContact.trim().equals("")) textView_PhoneContact2.setText("Điện thoại: " + phoneContact);
+                    else textView_PhoneContact2.setText("Điện thoại: Không có.");
+                    if(!note.trim().equals("")) textView_Note2.setText("Ghi chú: " + note);
+                    else textView_Note2.setText("Ghi chú: Không có.");
+                }
+                else {
+                    textView_CompanyAddress.setText("Nơi khác");
+                    if(!houseAddress.trim().equals("") && !numberOfGateAddress.trim().equals("")) {
+                        textView_FullAddress2.setText(" [" + houseAddress + ", " + numberOfGateAddress + "] \t " + fullAddress);
+                    }
+                    else if (!houseAddress.trim().equals("")){
+                        textView_FullAddress2.setText(" " + houseAddress + ", " + fullAddress);
+                    }
+                    else if (!numberOfGateAddress.trim().equals("")){
+                        textView_FullAddress2.setText("Cong: " + numberOfGateAddress + ", " + fullAddress);
+                    }
+                    else  textView_FullAddress2.setText(" " + fullAddress);
+                    if(!nameContact.trim().equals("")) textView_NameContact2.setText("Tên liên lạc: " + nameContact);
+                    else textView_NameContact2.setText("Tên liên lạc: Không có.");
+                    if(!phoneContact.trim().equals("")) textView_PhoneContact2.setText("Điện thoại: " + phoneContact);
+                    else textView_PhoneContact2.setText("Điện thoại: Không có.");
+                    if(!note.trim().equals("")) textView_Note2.setText("Ghi chú: " + note);
+                    else textView_Note2.setText("Ghi chú: Không có.");
+                }
+            }
+        }
 
     }
+
+    private void openCreateAddressActivityWithHomeOption()
+    {
+        Intent intent = new Intent(Fill_Address_Screen.this, CreateAddressScreen.class);
+        intent.putExtra("HomeOption", "Enable");
+        startActivityForResult(intent, 1);
+    }
+
+    private void openCreateAddressActivityWithCompanyOption()
+    {
+        Intent intent = new Intent(Fill_Address_Screen.this, CreateAddressScreen.class);
+        intent.putExtra("HomeOption", "Not Enable");
+        startActivityForResult(intent, 1);
+    }
+
 
     private void openMapActivity()
     {

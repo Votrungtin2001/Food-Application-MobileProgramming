@@ -44,7 +44,7 @@
         android:id="@+id/searchAddressBar_editText"
         android:layout_width="370dp"
         android:layout_height="40dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="15dp"
         android:layout_marginLeft="10dp"
         android:background="@drawable/searchbg"
         android:drawableLeft="@drawable/ic_baseline_search_24"
@@ -63,7 +63,7 @@
     <ImageView
         android:id="@+id/bookMark_imageView"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_width="17dp"
         android:layout_height="31dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -74,7 +74,7 @@
         android:id="@+id/nameStreet_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="12dp"
         android:layout_marginStart="40dp"
         android:textSize="20dp"
         android:text="TextView"
@@ -88,7 +88,7 @@
         android:id="@+id/fullAddress_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:layout_marginLeft="40dp"
         android:textSize="15dp"
         android:text="TextView"
@@ -101,7 +101,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:textSize="16dp"
         android:text="TextView"
         android:textColor="@color/black"
@@ -113,7 +113,7 @@
         android:id="@+id/saved_Title"
         android:layout_width="match_parent"
         android:layout_height="28dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:gravity="center|left"
         android:text="   Đã lưu"
         android:textSize="18dp"
@@ -125,9 +125,9 @@
     <TextView
         android:id="@+id/addHomeAddress_textView"
         android:layout_width="325dp"
-        android:layout_height="25dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:text="Thêm địa chỉ Nhà"
         android:textColor="@color/black"
         android:textSize="20dp"
@@ -136,22 +136,71 @@
         app:layout_constraintTop_toBottomOf="@+id/saved_Title" />
 
     <TextView
-        android:id="@+id/textView9"
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:layout_marginTop="10dp"
-        android:text=""
-        android:background="#F5EAF1EE"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:id="@+id/FullAddress_FillAddress1"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="5dp"
+        android:text="Chưa có thông tin..."
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:gravity="center|left"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addHomeAddress_textView" />
 
     <TextView
+        android:id="@+id/NameContact_FillAddress1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="5dp"
+        android:text="Chưa có thông tin..."
+        android:textSize="14dp"
+        android:gravity="center|left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/FullAddress_FillAddress1" />
+
+    <TextView
+        android:id="@+id/Note_FillAddress1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="5dp"
+        android:text="Chưa có thông tin..."
+        android:textSize="14dp"
+        android:gravity="center|left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/NameContact_FillAddress1"/>
+
+    <TextView
+        android:id="@+id/PhoneContact_FillAddress1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:text=""
+        android:textSize="14dp"
+        android:gravity="center|left"
+        app:layout_constraintStart_toEndOf="@+id/NameContact_FillAddress1"
+        app:layout_constraintTop_toBottomOf="@+id/FullAddress_FillAddress1" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_marginTop="5dp"
+        android:text=""
+        android:background="#F5EAF1EE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Note_FillAddress1" />
+
+    <TextView
         android:id="@+id/addCompanyAddress_textView"
         android:layout_width="325dp"
-        android:layout_height="25dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:text="Thêm địa chỉ Công ty"
         android:textColor="@color/black"
         android:textSize="20dp"
@@ -159,11 +208,60 @@
         app:layout_constraintStart_toEndOf="@+id/briefCase_imageView"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
+    <TextView
+        android:id="@+id/FullAddress_FillAddress2"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="5dp"
+        android:text="Chưa có thông tin..."
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        android:gravity="center|left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/addCompanyAddress_textView" />
+
+    <TextView
+        android:id="@+id/NameContact_FillAddress2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="5dp"
+        android:text="Chưa có thông tin..."
+        android:textSize="14dp"
+        android:gravity="center|left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/FullAddress_FillAddress2" />
+
+    <TextView
+        android:id="@+id/Note_FillAddress2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="5dp"
+        android:text="Chưa có thông tin..."
+        android:textSize="14dp"
+        android:gravity="center|left"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/NameContact_FillAddress2"/>
+
+    <TextView
+        android:id="@+id/PhoneContact_FillAddress2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:text=""
+        android:textSize="14dp"
+        android:gravity="center|left"
+        app:layout_constraintStart_toEndOf="@+id/NameContact_FillAddress2"
+        app:layout_constraintTop_toBottomOf="@+id/FullAddress_FillAddress2" />
+
     <ImageView
         android:id="@+id/home_imageView"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="8dp"
         android:layout_marginLeft="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/saved_Title"
@@ -173,9 +271,8 @@
         android:id="@+id/next1_imageView"
         android:layout_width="27dp"
         android:layout_height="25dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/addHomeAddress_textView"
         app:layout_constraintTop_toBottomOf="@+id/saved_Title"
         app:srcCompat="@drawable/right_arrow" />
 
@@ -183,7 +280,7 @@
         android:id="@+id/briefCase_imageView"
         android:layout_width="20dp"
         android:layout_height="20dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="8dp"
         android:layout_marginLeft="10dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9"
@@ -193,7 +290,7 @@
         android:id="@+id/next2_imageView"
         android:layout_width="27dp"
         android:layout_height="25dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/addCompanyAddress_textView"
         app:layout_constraintTop_toBottomOf="@+id/textView9"
@@ -202,13 +299,13 @@
     <TextView
         android:id="@+id/textView11"
         android:layout_width="match_parent"
-        android:layout_height="290dp"
+        android:layout_height="150dp"
         android:layout_marginTop="10dp"
         android:text=""
         android:background="#F5EAF1EE"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/addCompanyAddress_textView" />
+        app:layout_constraintTop_toBottomOf="@+id/Note_FillAddress2" />
 
     <Button
         android:id="@+id/addNewAddress_button"
