@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class CreateAddressScreen extends AppCompatActivity {
@@ -16,6 +17,8 @@ public class CreateAddressScreen extends AppCompatActivity {
     private TextView textView_Home;
     private TextView textView_Company;
     private  TextView textView_Others;
+
+    private ImageView imageView_Back;
 
     private EditText editText_FullAddress;
     private EditText editText_HouseAddress;
@@ -40,6 +43,14 @@ public class CreateAddressScreen extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_address_screen);
+
+        imageView_Back = findViewById(R.id.Back_CreateAddress);
+        imageView_Back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         textView_Home = findViewById(R.id.HomeOption_CreateAddress);
         textView_Company = findViewById(R.id.CompanyOption_CreateAddress);

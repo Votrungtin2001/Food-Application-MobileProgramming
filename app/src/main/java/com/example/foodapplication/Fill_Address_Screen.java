@@ -58,7 +58,6 @@ public class Fill_Address_Screen extends AppCompatActivity {
     private TextView textView_PhoneContact2;
     private TextView textView_Note2;
 
-    private int PLACE_PICKER_REQUEST = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -281,10 +280,6 @@ public class Fill_Address_Screen extends AppCompatActivity {
         startActivity(intent);
     }
 
-    @Override
-    public void finish() {
-        super.finish();
-    }
 
     private void transparentStatusAndNavigation()
     {
