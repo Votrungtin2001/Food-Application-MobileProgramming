@@ -183,7 +183,7 @@ public class CreateAddressScreen extends AppCompatActivity {
     }
 
     private void TurnOnOption(){
-        if(getIntent().getStringExtra("HomeOption").equals("Enable")){
+        if(getIntent().getStringExtra("Option").equals("Home")){
             choose = 1;
             textView_Home.setTextColor(getResources().getColor(R.color.colorAccent));
             textView_Home.setBackground(getResources().getDrawable(R.drawable.address_option_turn_on));
@@ -192,7 +192,7 @@ public class CreateAddressScreen extends AppCompatActivity {
             textView_Others.setTextColor(getResources().getColor(R.color.black));
             textView_Others.setBackground(getResources().getDrawable(R.drawable.searchbg));
         }
-        else {
+        else if (getIntent().getStringExtra("Option").equals("Company")) {
             choose = 2;
             textView_Company.setTextColor(getResources().getColor(R.color.colorAccent));
             textView_Company.setBackground(getResources().getDrawable(R.drawable.address_option_turn_on));

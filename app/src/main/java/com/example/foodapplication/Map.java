@@ -8,11 +8,13 @@ import androidx.core.content.ContextCompat;
 import com.google.android.libraries.places.api.Places;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -135,11 +137,25 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback,
                     /* TODO: Get info about the selected place. */
                     String placeName = place.getName();
                     LatLng placeLatLng = place.getLatLng();
+                    double dLatitude = place.getLatLng().latitude;
+                    double dLongitude = place.getLatLng().longitude;
                     String placeAddress = place.getAddress();
 
                         if (placeLatLng != null) {
                             moveCamera(placeLatLng, DEFAULT_ZOOM, placeName);
                             Toast.makeText(Map.this, "Moving to " + placeName, Toast.LENGTH_SHORT).show();
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Intent resultIntent = new Intent();
+                                    resultIntent.putExtra("Latitude", dLatitude);
+                                    resultIntent.putExtra("Longitude", dLongitude);
+                                    resultIntent.putExtra("Place Name", placeName);
+                                    resultIntent.putExtra("Place Address", placeAddress);
+                                    setResult(RESULT_OK, resultIntent);
+                                    finish();
+                                }
+                            }, 1000);
 //                            distanceBetween();
                         }
                         else {

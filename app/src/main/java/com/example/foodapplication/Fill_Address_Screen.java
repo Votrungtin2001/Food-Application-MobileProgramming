@@ -1,16 +1,23 @@
 package com.example.foodapplication;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,14 +27,19 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 
 public class Fill_Address_Screen extends AppCompatActivity {
@@ -57,6 +69,14 @@ public class Fill_Address_Screen extends AppCompatActivity {
     private TextView textView_NameContact2;
     private TextView textView_PhoneContact2;
     private TextView textView_Note2;
+
+    private Button button_NewAddress;
+
+    private Location location;
+    private Geocoder geocoder;
+    private static final String apiKey = "@string/map_key";
+    double dLatitude;
+    double dLongitude;
 
 
     @Override
@@ -104,7 +124,7 @@ public class Fill_Address_Screen extends AppCompatActivity {
                     , Place.Field.LAT_LNG, Place.Field.NAME);
                 //Create intent
                 Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY
-                        , fieldList).build(Fill_Address_Screen.this);
+                        , fieldList).setCountry("VN").build(Fill_Address_Screen.this);
                 //Start activity result
                 startActivityForResult(intent, 100);
             }
@@ -167,6 +187,14 @@ public class Fill_Address_Screen extends AppCompatActivity {
         textView_NameContact2 = findViewById(R.id.NameContact_FillAddress2);
         textView_PhoneContact2 = findViewById(R.id.PhoneContact_FillAddress2);
         textView_Note2 = findViewById(R.id.Note_FillAddress2);
+
+        button_NewAddress = findViewById(R.id.addNewAddress_button);
+        button_NewAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCreateAddressActivityWithNewAddressOption();
+            }
+        });
     }
 
     @Override
@@ -178,6 +206,23 @@ public class Fill_Address_Screen extends AppCompatActivity {
             Place place = Autocomplete.getPlaceFromIntent(data);
             //Set address on EditText
             editText_AddressBar.setText(place.getAddress());
+            textView_addressLine.setText(place.getAddress());
+            textView_nameStreet.setText(place.getName());
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    Intent resultIntent = new Intent();
+                    addressLine = textView_addressLine.getText().toString();
+                    nameStreet = textView_nameStreet.getText().toString();
+                    resultIntent.putExtra("Name Street", nameStreet);
+                    resultIntent.putExtra("Address Line", addressLine);
+                    setResult(RESULT_OK, resultIntent);
+                    finish();
+                }
+            }, 1000);
+
+
+
         }
         else if(resultCode == AutocompleteActivity.RESULT_ERROR){
             //When error
@@ -256,20 +301,58 @@ public class Fill_Address_Screen extends AppCompatActivity {
                 }
             }
         }
+        if(requestCode == 2) {
+            if(resultCode == RESULT_OK) {
+                dLatitude = data.getDoubleExtra("Latitude", 0);
+                dLongitude = data.getDoubleExtra("Longitude", 0);
+                String placeName = data.getStringExtra("Place Name");
+                String placeAddress = data.getStringExtra("Place Address");
+
+                try {
+                    geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+                    List<Address> addresses = geocoder.getFromLocation(dLatitude, dLongitude, 1);
+                    textView_nameStreet.setText(placeName);
+                    textView_addressLine.setText(placeAddress);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            Intent resultIntent = new Intent();
+                            nameStreet = textView_nameStreet.getText().toString();
+                            resultIntent.putExtra("Name Street", nameStreet);
+                            addressLine = textView_addressLine.getText().toString();
+                            resultIntent.putExtra("Address Line", addressLine);
+                            setResult(RESULT_OK, resultIntent);
+                            finish();
+                        }
+                    }, 1000);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
     }
+
+
 
     private void openCreateAddressActivityWithHomeOption()
     {
         Intent intent = new Intent(Fill_Address_Screen.this, CreateAddressScreen.class);
-        intent.putExtra("HomeOption", "Enable");
+        intent.putExtra("Option", "Home");
         startActivityForResult(intent, 1);
     }
 
     private void openCreateAddressActivityWithCompanyOption()
     {
         Intent intent = new Intent(Fill_Address_Screen.this, CreateAddressScreen.class);
-        intent.putExtra("HomeOption", "Not Enable");
+        intent.putExtra("Option", "Company");
+        startActivityForResult(intent, 1);
+    }
+
+    private void openCreateAddressActivityWithNewAddressOption()
+    {
+        Intent intent = new Intent(Fill_Address_Screen.this, CreateAddressScreen.class);
+        intent.putExtra("Option", "New Address");
         startActivityForResult(intent, 1);
     }
 
@@ -277,7 +360,7 @@ public class Fill_Address_Screen extends AppCompatActivity {
     private void openMapActivity()
     {
         Intent intent = new Intent(Fill_Address_Screen.this, Map.class);
-        startActivity(intent);
+        startActivityForResult(intent, 2);
     }
 
 
