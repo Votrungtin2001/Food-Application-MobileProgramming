@@ -160,5 +160,6 @@
     <string name="activity_create_address_screen_title">Tạo địa chỉ</string>
     <string name="activity_create_address_screen_textview1">Địa chỉ*</string>
 
-
+    <string name="facebook_app_id">2843189842676632</string>
+    <string name="fb_login_protocol_scheme">fb2843189842676632</string>
 </resources>
