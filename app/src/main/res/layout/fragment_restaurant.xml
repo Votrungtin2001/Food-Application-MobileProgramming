@@ -6,6 +6,54 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:id="@+id/checkoutBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/scrollView2"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtCheckoutNoOfItems"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="7dp"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/txtCheckoutTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/txtCheckoutNoOfItems"
+            android:layout_marginStart="14dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="7dp"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/btnCheckout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="3dp"
+            android:layout_marginBottom="0dp"
+            android:backgroundTint="@color/colorAccent"
+            android:text="Checkout" />
+    </RelativeLayout>
+
     <Button
         android:id="@+id/btnBack"
         android:layout_width="42dp"
@@ -38,8 +86,8 @@
 
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="412dp"
-        android:layout_height="787dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/btnBack"
         android:layout_marginTop="0dp">
 
@@ -93,6 +141,8 @@
                 android:id="@+id/rvMenu"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
+
         </LinearLayout>
     </ScrollView>
+
 </RelativeLayout>

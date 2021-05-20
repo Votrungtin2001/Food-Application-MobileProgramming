@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -463,6 +464,19 @@ public class HomeFragment extends Fragment {
         Intent intent = new Intent(getActivity(), Fill_Address_Screen.class);
         intent.putExtra("AddressLine", addressLine);
         intent.putExtra("NameStreet", nameStreet);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1){
+            if(resultCode == getActivity().RESULT_OK)
+            {
+                addressLine = data.getStringExtra("Address Line");
+                textView_addressLine.setText(addressLine);
+                nameStreet = data.getStringExtra("Name Street");
+            }
+        }
     }
 }

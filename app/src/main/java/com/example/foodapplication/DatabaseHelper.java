@@ -12,7 +12,7 @@ import java.util.Date;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // REMEMBER TO ADD 1 TO THIS CONSTANT WHEN YOU MAKE ANY CHANGES TO THE CONTRACT CLASS!
-    public static final int DATABASE_VERSION = 4;
+    public static final int DATABASE_VERSION = 6;
 
     public DatabaseHelper(Context context) {
         super(context, FoodManagementContract.DATABASE_NAME, null, DATABASE_VERSION);
@@ -45,6 +45,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(FoodManagementContract.CCustomer.KEY_GENDER, gender);
         values.put(FoodManagementContract.CCustomer.KEY_DOB, DoB.toString());
         values.put(FoodManagementContract.CCustomer.KEY_OCCUPATION, job);
+        values.put(FoodManagementContract.CCustomer.KEY_CREDITS, 0);
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.insertOrThrow(FoodManagementContract.CCustomer.TABLE_NAME, null, values);
@@ -283,9 +284,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public Cursor getMenu() {
+    public Cursor getMenu(int res_id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(FoodManagementContract.CMenu.TABLE_NAME, null, null, null, null, null, null);
+
+        String selection = FoodManagementContract.CMenu.KEY_RESTAURANT + " = ?";
+        String[] selectionArgs = { Integer.toString(res_id) };
+        String[] columns = { FoodManagementContract.CMenu.KEY_PRODUCT, FoodManagementContract.CMenu.KEY_DESC, FoodManagementContract.CMenu.KEY_PRICE};
+
+        Cursor cursor = db.query(FoodManagementContract.CMenu.TABLE_NAME, columns, selection, selectionArgs, null, null, null);
         db.close();
         return cursor;
     }
@@ -304,11 +310,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void updOrder(int id) {
+    public long addOrder(Date date, int customer_id) {
+        ContentValues values = new ContentValues();
+        values.put(FoodManagementContract.COrder.KEY_DATETIME, date.toString());
+        values.put(FoodManagementContract.COrder.KEY_CUSTOMER, customer_id);
+        values.put(FoodManagementContract.COrder.KEY_STATUS, 0);
+        values.put(FoodManagementContract.COrder.KEY_STATUS, 0);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        long id = db.insertOrThrow(FoodManagementContract.COrder.TABLE_NAME, null, values);
+        db.close();
+        return id;
+    }
+
+    public void updOrderStatus(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(FoodManagementContract.COrder.KEY_STATUS, 1);
+
+        String selection = FoodManagementContract.CMenu._ID + " = ?";
+        String[] selectionArgs = {Integer.toString(id)};
+        db.update(FoodManagementContract.COrder.TABLE_NAME, values, selection, selectionArgs);
+        db.close();
+    }
+
+    public void updOrderTotal(int id, int total) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(FoodManagementContract.COrder.KEY_TOTAL, total);
 
         String selection = FoodManagementContract.CMenu._ID + " = ?";
         String[] selectionArgs = {Integer.toString(id)};
@@ -348,24 +379,76 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void updOrderDetail(int order_id, int item_id, int quantity, int price) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(FoodManagementContract.COrderDetails.KEY_ORDER, order_id);
+        values.put(FoodManagementContract.COrderDetails.KEY_MENUITEM, item_id);
+        values.put(FoodManagementContract.COrderDetails.KEY_QUANTITY, quantity);
+        values.put(FoodManagementContract.COrderDetails.KEY_PRICE, price);
+
+        String selection = FoodManagementContract.COrderDetails.KEY_ORDER + " = ? "
+                + "AND " + FoodManagementContract.COrderDetails.KEY_MENUITEM + " = ?";
+        String[] selectionArgs = { Integer.toString(order_id), Integer.toString(item_id) };
+        db.update(FoodManagementContract.COrderDetails.TABLE_NAME, values, selection, selectionArgs);
+        db.close();
+    }
+
     public void delOrderDetail(int order_id, int item_id) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         String selection = FoodManagementContract.COrderDetails.KEY_ORDER + " = ? "
                 + "AND " + FoodManagementContract.COrderDetails.KEY_MENUITEM + " = ?";
         String[] selectionArgs = { Integer.toString(order_id), Integer.toString(item_id) };
-        db.delete(FoodManagementContract.COrder.TABLE_NAME, selection, selectionArgs);
+        db.delete(FoodManagementContract.COrderDetails.TABLE_NAME, selection, selectionArgs);
+        db.close();
+    }
+
+    public void delOrderDetail(int order_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String selection = FoodManagementContract.COrderDetails.KEY_ORDER + " = ? ";
+        String[] selectionArgs = { Integer.toString(order_id)};
+        db.delete(FoodManagementContract.COrderDetails.TABLE_NAME, selection, selectionArgs);
         db.close();
     }
 
     public Cursor getOrderDetail(int order_id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String selection = FoodManagementContract.COrderDetails._ID + " = ?";
+        String selection = FoodManagementContract.COrderDetails.KEY_ORDER + " = ?";
         String[] selectionArgs = { Integer.toString(order_id) };
 
         Cursor cursor = db.query(FoodManagementContract.COrderDetails.TABLE_NAME, null, selection, selectionArgs, null, null, null);
         db.close();
         return cursor;
+    }
+
+    public Cursor getOrderDetail(int order_id, int item_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selection = FoodManagementContract.COrderDetails.KEY_ORDER + " = ? "
+                + "AND " + FoodManagementContract.COrderDetails.KEY_MENUITEM + " = ?";
+        String[] selectionArgs = { Integer.toString(order_id), Integer.toString(item_id) };
+
+        Cursor cursor = db.query(FoodManagementContract.COrderDetails.TABLE_NAME, null, selection, selectionArgs, null, null, null);
+        db.close();
+        return cursor;
+    }
+
+    public int calcOrderTotal(int order_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selection = FoodManagementContract.COrderDetails.KEY_ORDER + " = ?";
+        String[] selectionArgs = { Integer.toString(order_id) };
+        Cursor cursor = db.query(FoodManagementContract.COrderDetails.TABLE_NAME, null, selection, selectionArgs, null, null, null);
+
+        int total = 0;
+        while(cursor.moveToNext()) {
+            total += cursor.getInt(cursor.getColumnIndexOrThrow(FoodManagementContract.COrderDetails.KEY_PRICE));
+        }
+
+        return total;
     }
 }

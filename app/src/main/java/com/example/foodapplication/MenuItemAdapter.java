@@ -1,29 +1,57 @@
 package com.example.foodapplication;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHolder> {
-    private List<MenuItem> lMenuItems;
+    private ArrayList<MenuItem> lMenuItems;
+    private Context context;
+    private OnItemClickListener listener;
+
+    public interface OnItemClickListener {
+        void onItemClick(View itemView, int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        this.listener = listener;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView txtMenuName, txtMenuDesc, txtMenuPrice;
+        public Button btnOrder;
+
         public ViewHolder(View itemView) {
             super(itemView);
 
-            txtMenuName = (TextView) itemView.findViewById(R.id.txtMenuName);
-            txtMenuDesc = (TextView) itemView.findViewById(R.id.txtMenuDesc);
-            txtMenuPrice = (TextView) itemView.findViewById(R.id.txtMenuPrice);
+            txtMenuName = itemView.findViewById(R.id.txtMenuName);
+            txtMenuDesc = itemView.findViewById(R.id.txtMenuDesc);
+            txtMenuPrice = itemView.findViewById(R.id.txtMenuPrice);
+
+            btnOrder = itemView.findViewById(R.id.btnOrder);
+
+            btnOrder.setOnClickListener(v -> {
+                if (listener != null) {
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        listener.onItemClick(btnOrder, position);
+                    }
+                }
+            });
         }
     }
 
-    public MenuItemAdapter(List<MenuItem> lMenuItems) { this.lMenuItems = lMenuItems; }
+    public MenuItemAdapter(ArrayList<MenuItem> lMenuItems, Context context) { this.lMenuItems = lMenuItems; this.context = context;}
 
     @Override
     public MenuItemAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

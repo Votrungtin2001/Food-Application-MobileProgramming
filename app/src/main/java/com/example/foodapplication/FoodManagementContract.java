@@ -61,7 +61,8 @@ public final class FoodManagementContract {
                 KEY_PASSWORD = "Password",
                 KEY_GENDER = "Gender",
                 KEY_DOB = "DoB",
-                KEY_OCCUPATION = "Occupation";
+                KEY_OCCUPATION = "Occupation",
+                KEY_CREDITS = "Credits";
 
         /* no id column here unlike in standard SQL: an SQLite table needs a column explicitly named
         "_id" in order to use the cursor class and its dependencies provided by Android */
@@ -77,6 +78,7 @@ public final class FoodManagementContract {
                 + KEY_GENDER + " INTEGER,"
                 + KEY_DOB + " TEXT,"
                 + KEY_OCCUPATION + " TEXT,"
+                + KEY_CREDITS + " INTEGER,"
                 + "FOREIGN KEY (" + KEY_CITY + ") REFERENCES " + CCity.TABLE_NAME + " (" + CCity._ID + ")"
                 + ");";
 
@@ -288,7 +290,7 @@ public final class FoodManagementContract {
                 + _ID + " INTEGER PRIMARY KEY,"
                 + KEY_DATETIME + " TEXT,"
                 + KEY_CUSTOMER + " INTEGER NOT NULL,"
-                + KEY_DELIVERY + " INTEGER NOT NULL,"
+                + KEY_DELIVERY + " INTEGER NULL,"
                 + KEY_ADDRESS + " INTEGER NOT NULL,"
                 + KEY_TOTAL + " INTEGER,"
                 + KEY_STATUS + " INTEGER,"
