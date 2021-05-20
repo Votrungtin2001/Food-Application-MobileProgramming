@@ -1,17 +1,18 @@
 package com.example.foodapplication;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 public class AccountFragment extends Fragment {
     Button btnVoucher, btnShopee, btnPayment, btnAddress, btnInvite, btnSupport, btnShop, btnPolicy, btnSettings, btnAbout, btnLogout;
     Fragment newFragment;
+    TextView txtlogin;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -44,6 +45,10 @@ public class AccountFragment extends Fragment {
 
         btnPolicy = view.findViewById(R.id.btnPolicy);
         btnPolicy.setOnClickListener(runPolicyFragment);
+
+        txtlogin = view.findViewById(R.id.txtName);
+        txtlogin.setOnClickListener(runLoginFragment);
+
 
         return view;
     }
@@ -115,6 +120,14 @@ public class AccountFragment extends Fragment {
 
     View.OnClickListener runPolicyFragment = v -> {
         newFragment = new AccountPolicyFragment();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
+                .addToBackStack(null)
+                .commit();
+    };
+
+    View.OnClickListener runLoginFragment = v -> {
+        newFragment = new LoginFragment();
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
                 .addToBackStack(null)
