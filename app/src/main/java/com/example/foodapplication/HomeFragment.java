@@ -28,6 +28,8 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import models.CollectionModel;
+
 
 public class HomeFragment extends Fragment {
 
@@ -47,7 +49,9 @@ public class HomeFragment extends Fragment {
     ListAdapter listAdapter;
 
     RecyclerView recyclerView_Collection;
-    CollectionAdapter collectionAdapter;
+    List<CollectionModel> collectionModels;
+    RecyclerView.Adapter adapter;
+    TextView textView_MoreCollection;
 
     RecyclerView recyclerView_ViewHistory;
     ViewHistoryAdapter viewHistoryAdapter;
@@ -127,11 +131,20 @@ public class HomeFragment extends Fragment {
         recyclerView_list.setAdapter(listAdapter);
 
         recyclerView_Collection = view.findViewById(R.id.collection_recyclerView);
+        textView_MoreCollection = view.findViewById(R.id.collection_more);
+        collectionModels = new ArrayList<>();
+        adapter = new CollectionAdapter(collectionModels, getActivity());
         AddDataForCollection();
-        collectionAdapter = new CollectionAdapter(getActivity(), titles1, images);
         LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         recyclerView_Collection.setLayoutManager(linearLayoutManager1);
-        recyclerView_Collection.setAdapter(collectionAdapter);
+        recyclerView_Collection.setAdapter(adapter);
+        textView_MoreCollection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ItemList_Collection.class);
+                startActivity(intent);
+            }
+        });
 
         recyclerView_ViewHistory = view.findViewById(R.id.viewHistory_recyclerView);
         AddDataForViewHistory();
@@ -274,40 +287,17 @@ public class HomeFragment extends Fragment {
 
     public void AddDataForCollection()
     {
-        titles1 = new ArrayList<>();
-        images = new ArrayList<>();
+        collectionModels.add(new CollectionModel(R.drawable.banh_mi_0d, "Bánh Mì 0Đ"));
+        collectionModels.add(new CollectionModel(R.drawable.bay_ngay_tien_trieu_ve_tui, "7 Ngày Review - \nTiền Triệu Về Túi"));
+        collectionModels.add(new CollectionModel(R.drawable.chi_5k, "Chi 5K - \nƯu Đãi Freeship 15k"));
+        collectionModels.add(new CollectionModel(R.drawable.cuoi_tuan_freeship, "Cuối Tuần \nFree Ship"));
+        collectionModels.add(new CollectionModel(R.drawable.day_don_ngay_le, "Đón Lễ Lớn"));
+        collectionModels.add(new CollectionModel(R.drawable.deal_nua_gia_quan_gan_nha, "Deal Nửa Giá - \nQuán Gần Nhà"));
+        collectionModels.add(new CollectionModel(R.drawable.deal_xin, "Deal Xịn - \n Giảm Tới 70k"));
+        collectionModels.add(new CollectionModel(R.drawable.di_het_viet_nam, "Đi Hết Việt Nam - \nFreeship"));
+        collectionModels.add(new CollectionModel(R.drawable.he_xinh_tiec_xin, "Hè Xinh - \nTiệc Xịn 55k"));
+        collectionModels.add(new CollectionModel(R.drawable.le_to_deal_xin_xo, "Lễ To - \nDeal Xịn Xò"));
 
-        titles1.add("Bánh Mì 0Đ");
-        titles1.add("  7 Ngày Review - \n Tiền Triệu Về Túi");
-        titles1.add("             Chi 5K - \n Ưu Đãi Freeship 15k");
-        titles1.add("Cuối Tuần \n Free Ship");
-        titles1.add("Đón Lễ Lớn");
-        titles1.add("  Deal Nửa Giá - \n Quán Gần Nhà");
-        titles1.add("    Deal Xịn - \n Giảm Tới 70k");
-        titles1.add("  Đi Hết Việt Nam - \n        Freeship");
-        titles1.add("    Hè Xinh - \n Tiệc Xịn 55k");
-        titles1.add("   Lễ To - \n Deal Xịn Xò");
-        titles1.add("     Đặt NowFood - \n Nhận Quà Nutriboost");
-        titles1.add("Trà Sữa Maycha 0d");
-        titles1.add("Muộn Rồi Mà Sao Còn - \n Chưa Nhận Deal 55k");
-        titles1.add("Ưu Đãi Kép");
-        titles1.add("   Vạn Deal -50% - \n Giảm Giá Siêu Xịn");
-
-        images.add(R.drawable.banh_mi_0d);
-        images.add(R.drawable.bay_ngay_tien_trieu_ve_tui);
-        images.add(R.drawable.chi_5k);
-        images.add(R.drawable.cuoi_tuan_freeship);
-        images.add(R.drawable.day_don_ngay_le);
-        images.add(R.drawable.deal_nua_gia_quan_gan_nha);
-        images.add(R.drawable.deal_xin);
-        images.add(R.drawable.di_het_viet_nam);
-        images.add(R.drawable.he_xinh_tiec_xin);
-        images.add(R.drawable.le_to_deal_xin_xo);
-        images.add(R.drawable.nhan_qua_nutriboost);
-        images.add(R.drawable.tra_sua_maycha_0d);
-        images.add(R.drawable.tiec_55k);
-        images.add(R.drawable.uu_dai_kep);
-        images.add(R.drawable.van_deal_50percent);
     }
 
     public void AddDataForViewHistory()

@@ -8,38 +8,38 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 import models.CollectionModel;
 
-public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.ViewHolder> {
+public class ItemListCollectionAdapter extends RecyclerView.Adapter<ItemListCollectionAdapter.ViewHolder> {
 
     List<CollectionModel> my_list;
     Context context;
 
-    public CollectionAdapter(List<CollectionModel> my_list, Context context){
+    public ItemListCollectionAdapter(List<CollectionModel> my_list, Context context){
         this.my_list = my_list;
         this.context = context;
     }
 
     @NonNull
     @Override
-    public CollectionAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_collection_linear_layout, parent, false);
-        return new ViewHolder(view);
+    public ItemListCollectionAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_itemlistcollection_grid_layout, parent, false);
+        return new ItemListCollectionAdapter.ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CollectionAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ItemListCollectionAdapter.ViewHolder holder, int position) {
         CollectionModel collectionModel = my_list.get(position);
         holder.title.setText(collectionModel.getItem_name());
         holder.linearIcon.setImageDrawable(context.getResources().getDrawable(collectionModel.getImage()));
-        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+        holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String sDescription;
@@ -122,7 +122,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
                         break;
                     case 9:
                         sDescription = "[DEAL MÊ ĐẮM - SẮM NGẤT NGÂY - DUY NHẤT TRONG THÁNG 6]\n" +
-                        "Chỉ cần ở nhà mở app Now vào mục NowFresh là có ngay các mặt hàng từ thực phẩm tươi như thịt, hải sản, rau củ quả, sữa...với nhiều ưu đãi hấp dẫn lên đến 50% từ cửa hàng nha.\n" +
+                                "Chỉ cần ở nhà mở app Now vào mục NowFresh là có ngay các mặt hàng từ thực phẩm tươi như thịt, hải sản, rau củ quả, sữa...với nhiều ưu đãi hấp dẫn lên đến 50% từ cửa hàng nha.\n" +
                                 "Chưa hết đâu NowFresh còn có dàn code siêu yêu thương cho mọi người để thêm vào giỏ hàng đi chợ đây!";
                         intent.putExtra("description", sDescription);
                         break;
@@ -146,13 +146,13 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView title;
         ImageView linearIcon;
-        LinearLayout linearLayout;
+        ConstraintLayout constraintLayout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            title = itemView.findViewById(R.id.textView_NameVoucher);
-            linearIcon = itemView.findViewById(R.id.imageView_Collection);
-            linearLayout = itemView.findViewById(R.id.Collection_LinearLayout);
+            title = itemView.findViewById(R.id.ItemListCollection_NameVoucher);
+            linearIcon = itemView.findViewById(R.id.imageView_ItemListCollection);
+            constraintLayout = itemView.findViewById(R.id.ItemListCollection_ConstraintLayout);
         }
     }
 }
