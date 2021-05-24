@@ -120,17 +120,12 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
                         sDescription = "Khởi động cho Tiệc chào hè 5.5, để giúp \"thượng đế\" an tâm ngồi tại nhà hoặc nơi làm việc thưởng thức các món ngon mà không phải lo lắng về những cơn mưa rào bất chợt hay cái nắng gắt chói chang đầu hè. NowFood đã tung ra các Bộ sưu tập rất hấp dẫn như đồng giá các món ngon chỉ còn 5K, Combo chỉ 55K, các deal đếm ngược về 1Đ... giúp người dùng tha hồ tận hưởng bữa tiệc xịn đúng chất hè.";
                         intent.putExtra("description", sDescription);
                         break;
-                    case 9:
+                    default:
                         sDescription = "[DEAL MÊ ĐẮM - SẮM NGẤT NGÂY - DUY NHẤT TRONG THÁNG 6]\n" +
                         "Chỉ cần ở nhà mở app Now vào mục NowFresh là có ngay các mặt hàng từ thực phẩm tươi như thịt, hải sản, rau củ quả, sữa...với nhiều ưu đãi hấp dẫn lên đến 50% từ cửa hàng nha.\n" +
                                 "Chưa hết đâu NowFresh còn có dàn code siêu yêu thương cho mọi người để thêm vào giỏ hàng đi chợ đây!";
                         intent.putExtra("description", sDescription);
                         break;
-
-
-
-
-
 
                 }
                 context.startActivity(intent);

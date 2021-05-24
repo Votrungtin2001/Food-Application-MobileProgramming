@@ -22,6 +22,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         for (String s : FoodManagementContract.SQL_CREATE_TABLE_ARRAY)
             db.execSQL(s);
+
+
     }
 
     /* note: this snippet is copied directly from developer.android.com and is meant to be used for online caches;

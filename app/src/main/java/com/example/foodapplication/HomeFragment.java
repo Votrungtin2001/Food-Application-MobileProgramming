@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -22,6 +23,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
+import com.denzcoskun.imageslider.interfaces.ItemClickListener;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.google.android.material.tabs.TabLayout;
 
@@ -56,8 +58,8 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerView_ViewHistory;
     ViewHistoryAdapter viewHistoryAdapter;
 
-    ViewPager viewPager3;
-    ImageSlider imageSlider;
+    ImageSlider imageSlider_advertisement;
+    ImageSlider imageSlider_promo;
     List<SlideModel> slideModels = new ArrayList<>();
 
     RecyclerView recyclerView_RecentlyEaten;
@@ -78,7 +80,7 @@ public class HomeFragment extends Fragment {
 
     ArrayList<String> title_Categories = new ArrayList<>();
 
-
+    DatabaseHelper databaseHelper;
 
 
     public HomeFragment(){
@@ -91,6 +93,8 @@ public class HomeFragment extends Fragment {
 
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        databaseHelper = new DatabaseHelper(getActivity());
 
         imageView_Location = (ImageView) view.findViewById(R.id.location_imageView);
         imageView_Location.setOnClickListener(new View.OnClickListener() {
@@ -118,10 +122,14 @@ public class HomeFragment extends Fragment {
         nameStreet = b.getString("NameStreet");
         textView_addressLine.setText(addressLine);
 
-
-        viewPager3 = (ViewPager) view.findViewById(R.id.viewPager3);
-        ImageAdapter adapter1 = new ImageAdapter(getActivity());
-        viewPager3.setAdapter(adapter1);
+        imageSlider_promo = view.findViewById(R.id.promo_slider);
+        AddDataForPromoImageSlider();
+        imageSlider_promo.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onItemSelected(int i) {
+                ClickPromoItemImageSlider(i);
+            }
+        });
 
         recyclerView_list = view.findViewById(R.id.list_recyclerView);
         AddDataForList();
@@ -153,14 +161,15 @@ public class HomeFragment extends Fragment {
         recyclerView_ViewHistory.setLayoutManager(linearLayoutManager2);
         recyclerView_ViewHistory.setAdapter(viewHistoryAdapter);
 
-        imageSlider = view.findViewById(R.id.advertisement_slider);
+        imageSlider_advertisement = view.findViewById(R.id.advertisement_slider);
+        AddDataForAdvertisementImageSlider();
+        imageSlider_advertisement.setItemClickListener(new ItemClickListener() {
+            @Override
+            public void onItemSelected(int i) {
+                ClickAdvertisementItemImageSlider(i);
+            }
+        });
 
-        slideModels.add(new SlideModel("https://a.ipricegroup.com/media/Lam_La/Dat_NowFood_tren_Shopee.jpg", "", ScaleTypes.FIT));
-        slideModels.add(new SlideModel("https://storage.googleapis.com/partnership-shopee-files-live/live/airpay/filer_public_thumbnails/filer_public/11/72/117220a1-274f-44c1-9132-c207f29961b7/apa_banner_nowfood_buangon0d_web-2000x600.jpg__2000x600_q95_crop_subsampling-2.jpg", "", ScaleTypes.FIT));
-        slideModels.add(new SlideModel("https://cf.shopee.vn/file/e186e14fca4c4063fe89d47aab53bb78", "", ScaleTypes.FIT));
-        slideModels.add(new SlideModel("https://images.foody.vn/delivery/collection/s320x200/image-73b05d50-210416002203.jpeg", "", ScaleTypes.FIT));
-        slideModels.add(new SlideModel("https://images.foody.vn/delivery/collection/s480x300/beauty-upload-api-image-200703102303.jpeg", "", ScaleTypes.FIT));
-        imageSlider.setImageList(slideModels,  ScaleTypes.FIT);
 
         recyclerView_RecentlyEaten = view.findViewById(R.id.recentlyEaten_RecyclerView);
         AddDataForRecentlyEaten();
@@ -468,5 +477,165 @@ public class HomeFragment extends Fragment {
                 nameStreet = data.getStringExtra("Name Street");
             }
         }
+    }
+
+    public void AddDataForPromoImageSlider()
+    {
+        slideModels = new ArrayList<>();
+        slideModels.add(new SlideModel("https://scontent-xsp1-1.xx.fbcdn.net/v/t1.6435-9/185300233_2957674807883799_868667496622488565_n.png?_nc_cat=110&ccb=1-3&_nc_sid=730e14&_nc_ohc=8hcDqTC2dI0AX8e9G-x&_nc_ht=scontent-xsp1-1.xx&oh=0144670a64d17d8f9ad030ab3c632fb8&oe=60D12B74", "", ScaleTypes.FIT));
+        slideModels.add(new SlideModel("https://scontent.fsgn5-1.fna.fbcdn.net/v/t1.6435-9/189848638_2958264391158174_8825296688695429966_n.jpg?_nc_cat=101&ccb=1-3&_nc_sid=730e14&_nc_ohc=WRjv_bLl5-EAX93YN_U&_nc_ht=scontent.fsgn5-1.fna&oh=1c30559f0ff054c1e2e9a7553dbf9698&oe=60D24BE6", "", ScaleTypes.FIT));
+        slideModels.add(new SlideModel("https://scontent-xsp1-3.xx.fbcdn.net/v/t1.6435-9/189654320_2957909371193676_2363560169176149542_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=e3f864&_nc_ohc=M4DNMZxSCvMAX-VPTjq&_nc_ht=scontent-xsp1-3.xx&oh=560db1b6c656d8482f40eeca00a6f027&oe=60D0A310", "", ScaleTypes.FIT));
+        slideModels.add(new SlideModel("https://scontent.fsgn5-5.fna.fbcdn.net/v/t1.6435-9/186629918_2956213878029892_1702674951943422020_n.jpg?_nc_cat=100&ccb=1-3&_nc_sid=730e14&_nc_ohc=-D1lKSojBkgAX-6lvQU&_nc_ht=scontent.fsgn5-5.fna&oh=c721ae5fece413a70dbcd87c4a9b25ad&oe=60D0A1B3", "", ScaleTypes.FIT));
+        slideModels.add(new SlideModel("https://scontent-xsp1-3.xx.fbcdn.net/v/t1.6435-9/187515711_2956744857976794_8796511153691441813_n.jpg?_nc_cat=107&ccb=1-3&_nc_sid=730e14&_nc_ohc=dZ7DvN9Ij9MAX-WBKSZ&_nc_ht=scontent-xsp1-3.xx&oh=aa23cf7817739bab7b053c64a8828f87&oe=60D12A2C", "", ScaleTypes.FIT));
+        imageSlider_promo.setImageList(slideModels,  ScaleTypes.FIT);
+    }
+
+    public void ClickPromoItemImageSlider(int i)
+    {
+        String sDescription = "";
+        Intent intent = new Intent(getActivity(), Item_Collection.class);
+        int iImage = 0;
+        String sName = "";
+        switch (i) {
+            case 0:
+                iImage = R.drawable.van_deal_50_percent;
+                sName = "Vạn Deal \n Giảm 50%";
+                sDescription = "[DUY NHẤT 24.5 - LÊN ĐƠN \"VỢT\" GẤP 7749 CHIẾC DEAL 50% BẠN ƠI!]\n" +
+                        "Mùa dịch này không lên đường được thì mình ở nhà lên đơn thôi chứ còn làm gì nữa nè. Bao la deal đỉnh giảm 50% đang đợi bạn nè: Burger King, Popeyes, Phúc Long, Starbucks, Koi Thé, ... Nhanh tay kẻo hết nhé!\n" +
+                        "✅Số lượng mã có hạn\n";
+                break;
+            case 1:
+                iImage = R.drawable.san_voucher_tien_trieu;
+                sName = "Game Cực Fun \n Săn Voucher Tiền Triệu";
+                sDescription = "[ĐẦU TUẦN GAME CỰC FUN - SĂN VOUCHER TIỀN TRIỆU]\n" +
+                        "\n" +
+                        "Nạp ít năng lượng tích cực ngày đầu tuần không các game thủ của Now ơi ❤ Chẳng có gì kéo mood tốt bằng một ít vitamin M-oney đâu nhỉ \uD83D\uDE0F Thế thì còn chờ gì mà không lăn xả vào chiếc game chơi siêu dễ mà phần thưởng siêu to khổng lồ Now dành cho bạn thui \uD83D\uDCAA\n" +
+                        "\n" +
+                        "☀️Thể lệ:\n" +
+                        "\uD83D\uDC49 Bước 1. Fo.llow fanpage Now.vn và L.ike bài đăng này.\n" +
+                        "\uD83D\uDC49 Bước 2: Co.mment usernameNow (thật chính xác) + tag 2 người bạn + 01 con số may mắn từ 10-999\n" +
+                        "Ví dụ: ilovenow + @ilovenow + @ilovefoody + 999\n" +
+                        "\uD83D\uDC49 Bước 3: Liên tục tương tác với co.mment của bạn\n" +
+                        "\n" +
+                        "\uD83C\uDF81 \uD83C\uDF81 \uD83C\uDF81 GIẢI THƯỞNG:\n" +
+                        "\n" +
+                        "\uD83E\uDD7302 giải nhất, mỗi giải là voucher NowFood trị giá 2,000,000 dành cho 02 bạn thực hiện đầy đủ 3 bước trên và có số lượt REPLY nhiều nhất.\n" +
+                        "\uD83E\uDD7310 giải may mắn, mỗi giải là voucher NowFood trị giá 50k cho người thực hiện đầy đủ 3 bước trên và có số may mắn được lựa chọn ngẫu nhiên.\n" +
+                        "\n" +
+                        "\uD83D\uDCA2LƯU Ý:\n" +
+                        "- Now chỉ xét trao giải cho các bạn comment theo đúng cú pháp, các bạn nhớ lưu ý dấu \"+\" để không bị sót mất bạn nhé!\n" +
+                        "- Comment hợp lệ là comment không chỉnh sửa\n" +
+                        "- Nếu có nhiều bạn trùng số may mắn hoặc có số lượt reply bằng nhau, Now sẽ ưu tiên bạn có comment sớm nhất\n" +
+                        "- Mỗi bạn được comment nhiều lần với số may mắn khác nhau";
+                break;
+            case 2:
+                iImage = R.drawable.sale_nua_gia;
+                sName = "Sale Giữa Năm \n Giảm Nửa Giá";
+                sDescription = "\uD83D\uDD256.6 NOWFOOD SALE GIỮA NĂM - GIẢM NỬA GIÁ\uD83D\uDD25\n" +
+                        "⚡️Sale tháng 6 chỉ 6k\n" +
+                        "⚡️Tiệc nửa giá 66k bao la món đỉnh\n" +
+                        "⚡️Deal đếm ngược 1Đ\n" +
+                        "\uD83D\uDCA5Bắt trọn voucher khủng mỗi khung giờ vàng\n" +
+                        "Cùng NowFood đại náo mùa hè!!!";
+                break;
+            case 3:
+                iImage = R.drawable.chi_tu_0d;
+                sName = "Hot Deal \n Chi Tu 0đ";
+                sDescription = "[DEAL HOT CHỈ TỪ 0 ĐỒNG - MỘT LÒNG Ở NHÀ LÊN NOW CHỐT ĐƠN]\n" +
+                        "Bây giờ ra đường chi nữa khi mà lên Now có quá trời món ngon hấp dẫn, giá nghe hết hồn nè! Săn deal lẹ lẹ kẻo hết nha cả nhà:\n" +
+                        ". Sữa Chua Trân Châu Hạ Long Ngon\n" +
+                        "- Sữa chua trân châu Thanh Nghi\n" +
+                        "- Bún Đậu Gánh Hà Thành\n" +
+                        "- Rau Má Plus\n" +
+                        "- Bánh Mì Bami Bread\n" +
+                        "- Twitter Beans Coffee\n" +
+                        "- Bánh Mì Dân Tổ Hà Nội\n" +
+                        "- Cơm Gà Bento\n" +
+                        "- Sữa Chua Trân Châu Hoàng Gia\n" +
+                        "- Tiger Sugar - Đường Nâu Sữa Đài Loan\n" +
+                        "✅ Số lượng có hạn";
+                break;
+            default:
+                iImage = R.drawable.o_nha_dat_now;
+                sName = "Xa Mặt Cách 2 Mét \n Quán Nhỏ Now Vẫn Giao";
+                sDescription = "[ĐỪNG LO LẮNG, QUÁN NHỎ BẠN THÍCH VẪN GIAO TRÊN NOW]\n" +
+                        "Bạn ơi đừng lo lắng, quán nhỏ quen thuộc không thể phục vụ tại chỗ thì lên Now đặt là có ngay. Cứ yên tâm ở nhà hủ tíu, bột chiên, xiên que, gỏi cuốn...nóng hổi sẽ được giao tận cửa. Để đảm bảo an toàn trong mùa dịch, Now khuyến khích bạn thanh toán qua Airpay và lựa chọn không tiếp xúc nhé.\n" +
+                        "✅ Nhập mã ANTOAN để được giảm ngay 15K phí ship cho đơn từ 0Đ.";
+                break;
+
+
+        }
+        intent.putExtra("image", iImage);
+        intent.putExtra("name", sName);
+        intent.putExtra("description", sDescription);
+        startActivity(intent);
+    }
+
+    public void AddDataForAdvertisementImageSlider()
+    {
+        slideModels = new ArrayList<>();
+        slideModels.add(new SlideModel("https://scontent-xsp1-1.xx.fbcdn.net/v/t1.6435-9/188671556_2956750824642864_7898612267439071608_n.jpg?_nc_cat=110&ccb=1-3&_nc_sid=e3f864&_nc_ohc=5T1by_CuRnsAX_GYF2T&_nc_oc=AQnSFjs4Cp3BCVQoajaWL2wNwlzn5MkY2JSf_fyMekJgXS1eUX570GYxahi_AOGNFDqgvAj7A_18cJ3GsYmq4AOi&_nc_ht=scontent-xsp1-1.xx&oh=b49ea9fd0dd3fa4375729ca0991d649d&oe=60D1E0DA", "", ScaleTypes.FIT));
+        slideModels.add(new SlideModel("https://scontent-xsp1-3.xx.fbcdn.net/v/t1.6435-9/185061072_2955623628088917_8236040101871481045_n.jpg?_nc_cat=107&ccb=1-3&_nc_sid=730e14&_nc_ohc=l1HyBy6ZrLoAX9icslA&_nc_ht=scontent-xsp1-3.xx&oh=62da3033eb8a0fac09aff2750e84ed1a&oe=60D20C0C", "", ScaleTypes.FIT));
+        slideModels.add(new SlideModel("https://scontent.fsgn5-5.fna.fbcdn.net/v/t1.6435-9/188460271_2955282381456375_7822490260664823430_n.jpg?_nc_cat=102&ccb=1-3&_nc_sid=730e14&_nc_ohc=3kjXuEqXHQAAX-cvzwt&_nc_ht=scontent.fsgn5-5.fna&oh=fcb070d238afbb7b3e35a56739c93421&oe=60D25137", "", ScaleTypes.FIT));
+        slideModels.add(new SlideModel("https://scontent.fsgn5-5.fna.fbcdn.net/v/t1.6435-9/182918562_2950431178608162_2329511474755934128_n.jpg?_nc_cat=100&ccb=1-3&_nc_sid=730e14&_nc_ohc=Jgq6I7C60f0AX-2AN7W&_nc_ht=scontent.fsgn5-5.fna&oh=a57d61aef409cdf117feb5ce0d9c096f&oe=60D19B3E", "", ScaleTypes.FIT));
+        slideModels.add(new SlideModel("https://scontent.fsgn5-5.fna.fbcdn.net/v/t1.6435-9/183957113_2952210498430230_5664319190676897654_n.jpg?_nc_cat=100&ccb=1-3&_nc_sid=730e14&_nc_ohc=za8BW5IJPXkAX9pLiwy&_nc_ht=scontent.fsgn5-5.fna&oh=9703325e27053340c449dc54a4b119d4&oe=60CFE4AE", "", ScaleTypes.FIT));
+        imageSlider_advertisement.setImageList(slideModels,  ScaleTypes.FIT);
+    }
+
+    public void ClickAdvertisementItemImageSlider(int i)
+    {
+        String sDescription = "";
+        Intent intent = new Intent(getActivity(), Item_Collection.class);
+        int iImage = 0;
+        String sName = "";
+        switch (i) {
+            case 0:
+                iImage = R.drawable.quan_van_mo_now_van_giao;
+                sName = "Quán Vẫn Mở \n Now Vẫn Giao";
+                sDescription = "[QUÁN QUEN YÊU THÍCH VẪN MỞ TRÊN NOW]\n" +
+                        "Bạn ơi đừng lo lắng, quán nhỏ quen thuộc không thể phục vụ tại chỗ thì lên Now đặt là có ngay. Hủ tíu, bột chiên, xiên que, gỏi cuốn... ở nhà vẫn ăn ngon. Để đảm bảo an toàn trong mùa dịch, Now khuyến khích bạn thanh toán qua Airpay và lựa chọn không tiếp xúc nhé.\n" +
+                        "✅ Nhập mã ANTOAN để được giảm ngay 15K phí ship cho đơn từ 0Đ.";
+                break;
+            case 1:
+                iImage = R.drawable.xe_san_sale;
+                sName = "Xế Săn Sale \n Giảm 50%";
+                sDescription = "[XẾ SĂN SALE GIẢM 50% - MĂM MĂM QUÀ VẶT DEAL GIẢM NGẬP MẶT]\n" +
+                        "Ding dong! Lại tới giờ linh của chị em mình rồi, cả nhà đã có đồ ăn vặt cả chưa, chưa thì lên Now săn ngay deal 50% các món siêu tốn \"enzym\" nè: cóc non sốt muối thái 15k, xôi chiên 6k, bánh tráng 10k, sữa chua kem socola 15k, bắp nếp xào xúc xích 17,5k,... và nhiều nhiều món ngon hấp dẫn khác. Lẹ tay chị em ơi!\n" +
+                        "✅Số lượng có hạn";
+                break;
+            case 2:
+                iImage = R.drawable.mon_hau_hoan_vu;
+                sName = "Món Hậu Hoàn Vũ";
+                sDescription = "Cùng dự đoán \"món hậu\" nào sẽ lên ngôi trong mùa giải năm nay nào cả nhà ơi!\n" +
+                        "Link bình chọn: https://nowfood.onelink.me/dBJB/4b6fec7a";
+                break;
+            case 3:
+                iImage = R.drawable.he_ron_ra;
+                sName = "Hè Rộn Rã \n Săn Deal Giờ Vàng";
+                sDescription = "[HÈ RỘN RÃ - ĐI CHỢ SĂN DEAL GIỜ VÀNG]\n" +
+                        "Săn khung giờ vàng với nghìn ưu đãi đến từ NowFresh nha mọi người ơi. Các thương hiệu đã có giảm giá sẵn lên đến 50% từ thực phẩm tươi, thịt, cá, rau củ quả, sữa rồi, giờ chỉ cần áp đúng mã code để được giảm thêm nữa nhé.";
+                break;
+            default:
+                iImage = R.drawable.announcement_now;
+                sName = "Thông Báo";
+                sDescription = "\uD83D\uDCE3 THÔNG BÁO NOW TẠM NGƯNG TẤT CẢ DỊCH VỤ TẠI ĐÀ NẴNG \uD83D\uDCE3\n" +
+                        "\n" +
+                        "Với nỗ lực chung tay phòng chống dịch cùng cộng đồng và thực hiện nghiêm túc Công văn số 2938/UBND-KGVX của UBND Thành phố Đà Nẵng, Now thông báo sẽ tạm ngưng tất cả dịch vụ tại Đà Nẵng từ 0h ngày 17.05.2021 & sẽ mở lại dịch vụ khi có thông báo chính thức từ Chính phủ.\n" +
+                        "\n" +
+                        "Việc tạm ngưng dịch vụ Now có thể sẽ đem đến những bất tiện nhất định, nhưng Now tin rằng quyết định này sẽ góp phần chung tay cùng cộng đồng đẩy lùi dịch bệnh.\n" +
+                        "Rất mong Quý Khách hàng thông cảm, đồng thời chủ động bảo vệ sức khoẻ của bản thân, cộng đồng và thực hiện đầy đủ các khuyến cáo từ Bộ Y tế.\n" +
+                        "\n" +
+                        "Đà Nẵng ơi, cố lên!\n" +
+                        "\n" +
+                        "Trân trọng,\n" +
+                        "Đội ngũ Now.";
+                break;
+
+
+        }
+        intent.putExtra("image", iImage);
+        intent.putExtra("name", sName);
+        intent.putExtra("description", sDescription);
+        startActivity(intent);
     }
 }
