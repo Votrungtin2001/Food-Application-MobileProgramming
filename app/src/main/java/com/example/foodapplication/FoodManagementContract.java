@@ -134,8 +134,8 @@ public final class FoodManagementContract {
 
         public static final String POPULATE_TABLE = "INSERT INTO " + TABLE_NAME + " (" + KEY_TYPE + ")"
                 + " VALUES "
-                + " (Home),"
-                + " (Work);";
+                + " (\"Home\"),"
+                + " (\"Work\");";
 
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
@@ -269,7 +269,7 @@ public final class FoodManagementContract {
                 + KEY_ADDRESS + " TEXT,"
                 + KEY_PHONE + " TEXT,"
                 + KEY_EMAIL + " TEXT,"
-                + KEY_LICENSE + " TEXT,"
+                + KEY_LICENSE + " TEXT"
                 + ");";
 
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
@@ -306,7 +306,7 @@ public final class FoodManagementContract {
         private COrderDetails() { }
 
         public static final String TABLE_NAME = "ORDER_DETAILS",
-                KEY_ORDER = "Order",
+                KEY_ORDER = "OrderID",
                 KEY_MENUITEM = "Item",
                 KEY_QUANTITY = "Qty",
                 KEY_PRICE = "Price";
@@ -329,8 +329,8 @@ public final class FoodManagementContract {
 
         public static final String TABLE_NAME = "OFFERS",
                 KEY_MENUITEM = "Item",
-                KEY_DATE_ACTIVE_FROM = "From",
-                KEY_DATE_ACTIVE_TO = "To",
+                KEY_DATE_ACTIVE_FROM = "FromDate",
+                KEY_DATE_ACTIVE_TO = "ToDate",
                 KEY_PRICE = "Price";
 
         public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ("

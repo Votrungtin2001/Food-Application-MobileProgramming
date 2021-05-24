@@ -12,7 +12,7 @@ import java.util.Date;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // REMEMBER TO ADD 1 TO THIS CONSTANT WHEN YOU MAKE ANY CHANGES TO THE CONTRACT CLASS!
-    public static final int DATABASE_VERSION = 6;
+    public static final int DATABASE_VERSION = 10;
 
     public DatabaseHelper(Context context) {
         super(context, FoodManagementContract.DATABASE_NAME, null, DATABASE_VERSION);
@@ -22,8 +22,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         for (String s : FoodManagementContract.SQL_CREATE_TABLE_ARRAY)
             db.execSQL(s);
-
-
     }
 
     /* note: this snippet is copied directly from developer.android.com and is meant to be used for online caches;
