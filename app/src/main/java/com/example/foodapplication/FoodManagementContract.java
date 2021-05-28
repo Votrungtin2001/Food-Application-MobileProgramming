@@ -12,7 +12,9 @@ public final class FoodManagementContract {
     public static final String DATABASE_NAME = "foodapp.db";
 
     public static final String[] SQL_CREATE_TABLE_ARRAY = {
+            CDistrict.CREATE_TABLE,
             CCity.CREATE_TABLE,
+            CMaster.CREATE_TABLE,
             CAddressLabel.CREATE_TABLE,
             CAddressLabel.POPULATE_TABLE,
             CCategory.CREATE_TABLE,
@@ -30,6 +32,8 @@ public final class FoodManagementContract {
     };
 
     public static final String[] SQL_DELETE_TABLE_ARRAY = {
+            CDistrict.DELETE_TABLE,
+            CMaster.DELETE_TABLE,
             COffer.DELETE_TABLE,
             COrderDetails.DELETE_TABLE,
             COrder.DELETE_TABLE,
@@ -85,6 +89,34 @@ public final class FoodManagementContract {
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
 
+    public static final class CMaster implements BaseColumns {
+        private CMaster() { }
+
+        public static final String TABLE_NAME = "MASTER",
+                KEY_NAME = "Name",
+                KEY_PHONE = "Phone",
+                KEY_EMAIL = "Email",
+                KEY_FACEBOOK = "Facebook",
+                KEY_USERNAME = "Username",
+                KEY_PASSWORD = "Password";
+
+        /* no id column here unlike in standard SQL: an SQLite table needs a column explicitly named
+        "_id" in order to use the cursor class and its dependencies provided by Android */
+        public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ("
+                + _ID + " INTEGER PRIMARY KEY,"
+                + KEY_NAME + " TEXT,"
+                + KEY_PHONE + " TEXT,"
+                + KEY_EMAIL + " TEXT,"
+                + KEY_FACEBOOK + " TEXT,"
+                + KEY_USERNAME + " TEXT,"
+                + KEY_PASSWORD + " TEXT NOT NULL"
+                + ");";
+
+        public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
+    }
+
+
+
     public static final class CCity implements BaseColumns {
         private CCity() { }
 
@@ -98,11 +130,27 @@ public final class FoodManagementContract {
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
 
+    public static final class CDistrict implements BaseColumns {
+        private CDistrict() { }
+
+        public static final String TABLE_NAME = "DISTRICT", KEY_NAME = "Name", KEY_CITY = "City";
+
+        public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ("
+                + _ID + " INTEGER PRIMARY KEY,"
+                + KEY_NAME + " TEXT,"
+                + KEY_CITY + " INTEGER NULL,"
+                + "FOREIGN KEY (" + KEY_CITY + ") REFERENCES " + CCity.TABLE_NAME + " (" + CCity._ID + ")"
+                + ");";
+
+        public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
+    }
+
     public static final class CAddress implements BaseColumns {
         private CAddress() {}
 
         public static final String TABLE_NAME = "ADDRESS",
                 KEY_ADDRESS = "Address",
+                KEY_DISTRICT = "District",
                 KEY_CITY = "City",
                 KEY_FLOOR = "Floor",
                 KEY_GATE = "Gate",
@@ -111,10 +159,12 @@ public final class FoodManagementContract {
         public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ("
                 + _ID + " INTEGER PRIMARY KEY,"
                 + KEY_ADDRESS + " TEXT,"
+                + KEY_DISTRICT + " INTEGER NOT NULL,"
                 + KEY_CITY + " INTEGER NOT NULL,"
                 + KEY_FLOOR + " INTEGER NULL,"
                 + KEY_GATE + " INTEGER NULL,"
                 + KEY_LABEL + " INTEGER NULL,"
+                + "FOREIGN KEY (" + KEY_DISTRICT + ") REFERENCES " + CDistrict.TABLE_NAME + " (" + CDistrict._ID + "),"
                 + "FOREIGN KEY (" + KEY_CITY + ") REFERENCES " + CCity.TABLE_NAME + " (" + CCity._ID + "),"
                 + "FOREIGN KEY (" + KEY_LABEL + ") REFERENCES " + CAddressLabel.TABLE_NAME + " (" + CAddressLabel._ID + ")"
                 + ");";
@@ -135,7 +185,9 @@ public final class FoodManagementContract {
         public static final String POPULATE_TABLE = "INSERT INTO " + TABLE_NAME + " (" + KEY_TYPE + ")"
                 + " VALUES "
                 + " (\"Home\"),"
-                + " (\"Work\");";
+                + " (\"Work\"),"
+                + " (\"Other\"),"
+                + " (\"Restaurant\");";
 
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
@@ -163,8 +215,8 @@ public final class FoodManagementContract {
 
         public static final String TABLE_NAME = "RESTAURANT",
                 KEY_NAME = "Name",
-                KEY_CITY = "City",
-                KEY_OPEN = "Opening_Times";
+                KEY_OPEN = "Opening_Times",
+                KEY_IMAGE = "Image";
 
         /* as quoted by SQLite documentation on https://www.sqlite.org/datatype3.html:
         SQLite does not have a storage class set aside for storing dates and/or times.
@@ -173,9 +225,8 @@ public final class FoodManagementContract {
         public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ("
                 + _ID + " INTEGER PRIMARY KEY,"
                 + KEY_NAME + " TEXT,"
-                + KEY_CITY + " INTEGER NOT NULL,"
                 + KEY_OPEN + " TEXT NOT NULL,"
-                + "FOREIGN KEY (" + KEY_CITY + ") REFERENCES " + CCity.TABLE_NAME + " (" + CCity._ID + ")"
+                + KEY_IMAGE + " BLOB NOT NULL"
                 + ");";
 
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
@@ -185,14 +236,20 @@ public final class FoodManagementContract {
         private CBranch() { }
 
         public static final String TABLE_NAME = "BRANCHES",
+                KEY_NAME = "NAME",
                 KEY_PARENT = "Restaurant",
-                KEY_ADDRESS = "Address";
+                KEY_ADDRESS = "Address",
+                KEY_MASTER = "Master";
 
         public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ("
                 + _ID + " INTEGER PRIMARY KEY,"
+                + KEY_NAME + " TEXT,"
                 + KEY_PARENT + " INTEGER NOT NULL,"
-                + KEY_ADDRESS + " TEXT,"
-                + "FOREIGN KEY (" + KEY_PARENT + ") REFERENCES " + CRestaurant.TABLE_NAME + " (" + CRestaurant._ID + ")"
+                + KEY_ADDRESS + " INTEGER NOT NULL,"
+                + KEY_MASTER + " INTEGER NOT NULL,"
+                + "FOREIGN KEY (" + KEY_PARENT + ") REFERENCES " + CRestaurant.TABLE_NAME + " (" + CRestaurant._ID + "),"
+                + "FOREIGN KEY (" + KEY_ADDRESS + ") REFERENCES " + CAddress.TABLE_NAME + " (" + CAddress._ID + ")"
+                + "FOREIGN KEY (" + KEY_MASTER + ") REFERENCES " + CMaster.TABLE_NAME + " (" + CMaster._ID + ")"
                 + ");";
 
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
@@ -219,12 +276,16 @@ public final class FoodManagementContract {
 
         public static final String TABLE_NAME = "PRODUCTS",
                 KEY_NAME = "Name",
-                KEY_CATEGORY = "Category";
+                KEY_DESC = "Description",
+                KEY_CATEGORY = "Category",
+                KEY_IMAGE = "Image";
 
         public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ("
                 + _ID + " INTEGER PRIMARY KEY,"
                 + KEY_NAME + " TEXT,"
+                + KEY_DESC + " TEXT,"
                 + KEY_CATEGORY + " INTEGER NOT NULL,"
+                + KEY_IMAGE + " BLOB NOT NULL,"
                 + "FOREIGN KEY (" + KEY_CATEGORY + ") REFERENCES " + CCategory.TABLE_NAME + " (" + CCategory._ID + ")"
                 + ");";
 
@@ -261,6 +322,9 @@ public final class FoodManagementContract {
                 KEY_ADDRESS = "Address",
                 KEY_PHONE = "Phone",
                 KEY_EMAIL = "Email",
+                KEY_FACEBOOK = "Facebook",
+                KEY_USERNAME = "Username",
+                KEY_PASSWORD = "Password",
                 KEY_LICENSE = "License_Plate";
 
         public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ("
@@ -269,6 +333,9 @@ public final class FoodManagementContract {
                 + KEY_ADDRESS + " TEXT,"
                 + KEY_PHONE + " TEXT,"
                 + KEY_EMAIL + " TEXT,"
+                + KEY_FACEBOOK + " TEXT,"
+                + KEY_USERNAME + " TEXT,"
+                + KEY_PASSWORD + " TEXT NOT NULL,"
                 + KEY_LICENSE + " TEXT"
                 + ");";
 

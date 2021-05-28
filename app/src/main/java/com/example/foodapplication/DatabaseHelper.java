@@ -12,7 +12,7 @@ import java.util.Date;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // REMEMBER TO ADD 1 TO THIS CONSTANT WHEN YOU MAKE ANY CHANGES TO THE CONTRACT CLASS!
-    public static final int DATABASE_VERSION = 10;
+    public static final int DATABASE_VERSION = 24;
 
     public DatabaseHelper(Context context) {
         super(context, FoodManagementContract.DATABASE_NAME, null, DATABASE_VERSION);
@@ -73,6 +73,90 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void addMaster(String name, String phone, String email, String fb, String user, String pass) {
+        ContentValues values = new ContentValues();
+        values.put(FoodManagementContract.CMaster.KEY_NAME, name);
+        values.put(FoodManagementContract.CMaster.KEY_PHONE, phone);
+        values.put(FoodManagementContract.CMaster.KEY_EMAIL, email);
+        values.put(FoodManagementContract.CMaster.KEY_FACEBOOK, fb);
+        values.put(FoodManagementContract.CMaster.KEY_USERNAME, user);
+        values.put(FoodManagementContract.CMaster.KEY_PASSWORD, pass);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.insertOrThrow(FoodManagementContract.CMaster.TABLE_NAME, null, values);
+        db.close();
+    }
+
+    public void updMaster(int id, String name, String phone, String email, String fb, String user, String pass) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(FoodManagementContract.CMaster.KEY_NAME, name);
+        values.put(FoodManagementContract.CMaster.KEY_PHONE, phone);
+        values.put(FoodManagementContract.CMaster.KEY_EMAIL, email);
+        values.put(FoodManagementContract.CMaster.KEY_FACEBOOK, fb);
+        values.put(FoodManagementContract.CMaster.KEY_USERNAME, user);
+        values.put(FoodManagementContract.CMaster.KEY_PASSWORD, pass);
+
+        String selection = FoodManagementContract.CMaster._ID + " = ?";
+        String[] selectionArgs = { Integer.toString(id) };
+        db.update(FoodManagementContract.CMaster.TABLE_NAME, values, selection, selectionArgs);
+        db.close();
+    }
+
+    public void addDelivery(String name, String address, String phone, String email, String fb, String user, String pass, String license) {
+        ContentValues values = new ContentValues();
+        values.put(FoodManagementContract.CDelivery.KEY_NAME, name);
+        values.put(FoodManagementContract.CDelivery.KEY_ADDRESS, address);
+        values.put(FoodManagementContract.CDelivery.KEY_PHONE, phone);
+        values.put(FoodManagementContract.CDelivery.KEY_EMAIL, email);
+        values.put(FoodManagementContract.CDelivery.KEY_FACEBOOK, fb);
+        values.put(FoodManagementContract.CDelivery.KEY_USERNAME, user);
+        values.put(FoodManagementContract.CDelivery.KEY_PASSWORD, pass);
+        values.put(FoodManagementContract.CDelivery.KEY_LICENSE, license);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.insertOrThrow(FoodManagementContract.CDelivery.TABLE_NAME, null, values);
+        db.close();
+    }
+
+    public void updDelivery(int id, String name, String address, String phone, String email, String fb, String user, String pass, String license) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(FoodManagementContract.CDelivery.KEY_NAME, name);
+        values.put(FoodManagementContract.CDelivery.KEY_ADDRESS, address);
+        values.put(FoodManagementContract.CDelivery.KEY_PHONE, phone);
+        values.put(FoodManagementContract.CDelivery.KEY_EMAIL, email);
+        values.put(FoodManagementContract.CDelivery.KEY_FACEBOOK, fb);
+        values.put(FoodManagementContract.CDelivery.KEY_USERNAME, user);
+        values.put(FoodManagementContract.CDelivery.KEY_PASSWORD, pass);
+        values.put(FoodManagementContract.CDelivery.KEY_LICENSE, license);
+
+        String selection = FoodManagementContract.CDelivery._ID + " = ?";
+        String[] selectionArgs = { Integer.toString(id) };
+        db.update(FoodManagementContract.CDelivery.TABLE_NAME, values, selection, selectionArgs);
+        db.close();
+    }
+
+    public void addDistrict(String name, int city_id) {
+        ContentValues values = new ContentValues();
+
+        values.put(FoodManagementContract.CDistrict.KEY_NAME, name);
+        values.put(FoodManagementContract.CDistrict.KEY_CITY, city_id);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.insertOrThrow(FoodManagementContract.CDistrict.TABLE_NAME, null, values);
+        db.close();
+    }
+
+    public Cursor getDistricts() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(FoodManagementContract.CDistrict.TABLE_NAME, null, null, null, null, null, null);
+        db.close();
+        return cursor;
+    }
+
     public void addCity(String name) {
         ContentValues values = new ContentValues();
         values.put(FoodManagementContract.CCity.KEY_NAME, name);
@@ -89,9 +173,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public void addAddress(String address, int city_id, int floor, int gate, int label_id) {
+    public void addAddress(String address, int district_id, int city_id, int floor, int gate, int label_id) {
         ContentValues values = new ContentValues();
         values.put(FoodManagementContract.CAddress.KEY_ADDRESS, address);
+        values.put(FoodManagementContract.CAddress.KEY_DISTRICT, district_id);
         values.put(FoodManagementContract.CAddress.KEY_CITY, city_id);
         values.put(FoodManagementContract.CAddress.KEY_FLOOR, floor);
         values.put(FoodManagementContract.CAddress.KEY_GATE, gate);
@@ -102,11 +187,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void updAddress(int id, String address, int city_id, int floor, int gate, int label_id) {
+    public void updAddress(int id, String address, int district_id, int city_id, int floor, int gate, int label_id) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(FoodManagementContract.CAddress.KEY_ADDRESS, address);
+        values.put(FoodManagementContract.CAddress.KEY_DISTRICT, district_id);
         values.put(FoodManagementContract.CAddress.KEY_CITY, city_id);
         values.put(FoodManagementContract.CAddress.KEY_GATE, gate);
         values.put(FoodManagementContract.CAddress.KEY_FLOOR, floor);
@@ -210,11 +296,43 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public void addRestaurant(String name, String opening_time, byte[] image) {
+        ContentValues values = new ContentValues();
+        values.put(FoodManagementContract.CRestaurant.KEY_NAME, name);
+        values.put(FoodManagementContract.CRestaurant.KEY_OPEN, opening_time);
+        values.put(FoodManagementContract.CRestaurant.KEY_IMAGE, image);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.insertOrThrow(FoodManagementContract.CRestaurant.TABLE_NAME, null, values);
+        db.close();
+    }
+
     public Cursor getRestaurant() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(FoodManagementContract.CRestaurant.TABLE_NAME, null, null, null, null, null, null);
         db.close();
         return cursor;
+    }
+
+    public void delRestaurant(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String selection = FoodManagementContract.CRestaurant._ID + " = ?";
+        String[] selectionArgs = { Integer.toString(id) };
+        db.delete(FoodManagementContract.CRestaurant.TABLE_NAME, selection, selectionArgs);
+        db.close();
+    }
+
+    public void addBranch (String name, int restaurant_id, int address_id, int master_id) {
+        ContentValues values = new ContentValues();
+        values.put(FoodManagementContract.CBranch.KEY_NAME, name);
+        values.put(FoodManagementContract.CBranch.KEY_PARENT, restaurant_id);
+        values.put(FoodManagementContract.CBranch.KEY_ADDRESS, address_id);
+        values.put(FoodManagementContract.CBranch.KEY_MASTER, master_id);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.insertOrThrow(FoodManagementContract.CBranch.TABLE_NAME, null, values);
+        db.close();
     }
 
     public Cursor getBranch() {
@@ -224,6 +342,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public void delBranch(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String selection = FoodManagementContract.CBranch._ID + " = ?";
+        String[] selectionArgs = { Integer.toString(id) };
+        db.delete(FoodManagementContract.CBranch.TABLE_NAME, selection, selectionArgs);
+        db.close();
+    }
+
     public Cursor getCategory() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(FoodManagementContract.CCategory.TABLE_NAME, null, null, null, null, null, null);
@@ -231,10 +358,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public void addProduct(String name, int category_id) {
+    public void addCategory(String name, String description) {
+        ContentValues values = new ContentValues();
+        values.put(FoodManagementContract.CCategory.KEY_NAME, name);
+        values.put(FoodManagementContract.CCategory.KEY_DESC, description);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.insertOrThrow(FoodManagementContract.CCategory.TABLE_NAME, null, values);
+        db.close();
+    }
+
+    public void addProduct(String name, String description, int category_id, byte[] image) {
         ContentValues values = new ContentValues();
         values.put(FoodManagementContract.CProduct.KEY_NAME, name);
+        values.put(FoodManagementContract.CProduct.KEY_DESC, description);
         values.put(FoodManagementContract.CProduct.KEY_CATEGORY, category_id);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, image);
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
@@ -246,6 +385,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.query(FoodManagementContract.CProduct.TABLE_NAME, null, null, null, null, null, null);
         db.close();
         return cursor;
+    }
+
+    public void delProduct(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String selection = FoodManagementContract.CProduct._ID + " = ?";
+        String[] selectionArgs = { Integer.toString(id) };
+        db.delete(FoodManagementContract.CProduct.TABLE_NAME, selection, selectionArgs);
+        db.close();
+    }
+
+    public void updProduct(int id, String name, String description, int category_id, byte[] image) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, name);
+        values.put(FoodManagementContract.CProduct.KEY_DESC, description);
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, category_id);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, image);
+
+        String selection = FoodManagementContract.CMenu._ID + " = ?";
+        String[] selectionArgs = { Integer.toString(id) };
+        db.update(FoodManagementContract.CMenu.TABLE_NAME, values, selection, selectionArgs);
+        db.close();
     }
 
     public void addMenu(int res_id, int prod_id, String desc, int price) {

@@ -1,7 +1,14 @@
 package com.example.foodapplication;
 
 import android.content.Intent;
+import android.content.res.Resources;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
@@ -27,6 +34,8 @@ import com.denzcoskun.imageslider.interfaces.ItemClickListener;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.google.android.material.tabs.TabLayout;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -81,6 +90,8 @@ public class HomeFragment extends Fragment {
     ArrayList<String> title_Categories = new ArrayList<>();
 
     DatabaseHelper databaseHelper;
+    SQLiteDatabase db;
+    byte[] img1;
 
 
     public HomeFragment(){
@@ -95,6 +106,12 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         databaseHelper = new DatabaseHelper(getActivity());
+        db = databaseHelper.getReadableDatabase();
+
+
+
+
+
 
         imageView_Location = (ImageView) view.findViewById(R.id.location_imageView);
         imageView_Location.setOnClickListener(new View.OnClickListener() {
