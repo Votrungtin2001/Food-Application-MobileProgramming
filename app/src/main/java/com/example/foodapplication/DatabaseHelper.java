@@ -405,7 +405,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(FoodManagementContract.CProduct.KEY_CATEGORY, category_id);
         values.put(FoodManagementContract.CProduct.KEY_IMAGE, image);
 
-        String selection = FoodManagementContract.CMenu._ID + " = ?";
+        String selection = FoodManagementContract.CProduct._ID + " = ?";
         String[] selectionArgs = { Integer.toString(id) };
         db.update(FoodManagementContract.CProduct.TABLE_NAME, values, selection, selectionArgs);
         db.close();
