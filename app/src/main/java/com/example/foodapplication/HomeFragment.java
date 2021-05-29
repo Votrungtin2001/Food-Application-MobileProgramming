@@ -92,7 +92,12 @@ public class HomeFragment extends Fragment {
     DatabaseHelper databaseHelper;
     SQLiteDatabase db;
     byte[] img1;
-
+    int img;
+    Resources resources;
+    Drawable drawable;
+    Bitmap bitmap;
+    ByteArrayOutputStream stream;
+    byte[] bitmapData;
 
     public HomeFragment(){
 
@@ -107,7 +112,6 @@ public class HomeFragment extends Fragment {
 
         databaseHelper = new DatabaseHelper(getActivity());
         db = databaseHelper.getReadableDatabase();
-
 
 
 
