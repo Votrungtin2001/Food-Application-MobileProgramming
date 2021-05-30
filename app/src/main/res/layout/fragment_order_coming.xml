@@ -11,14 +11,41 @@
        android:layout_width="match_parent"
        android:layout_height="match_parent">
 
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:gravity="center"
-          android:text="Test"
-          android:textSize="50dp"
+      <ImageView
+          android:id="@+id/imageView3"
+          android:layout_width="414dp"
+          android:layout_height="70dp"
+          android:scaleType="fitXY"
           app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent" />
+          app:layout_constraintHorizontal_bias="0.615"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:srcCompat="@drawable/sale66" />
+
+      <TextView
+          android:id="@+id/textView21"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Quên chưa đặt món rồi nè bạn ơi?"
+          android:textSize="20sp"
+          android:textStyle="bold"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+      <TextView
+          android:id="@+id/address1"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:gravity="center"
+          android:lines="3"
+          android:maxLines="3"
+          android:text="Những đơn hàng đã được xác nhận, đang được chuẩn bị và giao đi đều sẽ được hiển thị ở đây để bạn có thể theo dõi nhé!"
+          android:textSize="17dp"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/textView21"/>
    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

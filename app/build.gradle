@@ -71,6 +71,10 @@ dependencies {
     // login fb
     implementation 'com.facebook.android:facebook-android-sdk:[8,9)'
     implementation 'com.facebook.android:facebook-login:[8.1)'
+    //sms
+    implementation platform('com.google.firebase:firebase-bom:28.0.1')
+    implementation 'com.google.firebase:firebase-auth'
 
+    implementation'com.google.android.material:material:1.2.0-alpha03'
 
 }

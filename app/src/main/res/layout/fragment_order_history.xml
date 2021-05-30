@@ -28,17 +28,19 @@
                 android:spinnerMode="dropdown" />
 
             <Spinner
+                android:id="@+id/all"
                 android:layout_width="wrap_content"
-                android:layout_height="40dp" />
+                android:layout_height="40dp"
+                android:spinnerMode="dropdown"/>
 
-<!--            <com.savvi.rangedatepicker.CalendarPickerView-->
-<!--                android:id="@+id/calendar_view"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:scrollbarStyle="outsideOverlay"-->
-<!--                android:clipToPadding="false"-->
+            <TextView
+                android:id="@+id/setDate_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:layout_centerInParent="true" />
 
-<!--                />-->
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

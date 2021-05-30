@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,18 +32,25 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.PhoneAuthCredential;
+import com.google.firebase.auth.PhoneAuthProvider;
 
 import org.json.JSONObject;
+
+import java.util.concurrent.Executor;
+import java.util.concurrent.TimeUnit;
 
 
 public class LoginFragment extends Fragment  {
     private static final int RC_SIGN_IN = 9001 ;
-    Fragment newFragment;
-
     public User user = new User();
     private View view;
-TextView mess;
+    TextView mess;
     private AccessTokenTracker accessTokenTracker;
     private final String TAG = "LoginFragment";
     private FirebaseAuth mFirebaseAuth;
@@ -56,6 +64,14 @@ TextView mess;
     private GoogleApiClient mGoogleApiClient; // for google sign in
     private CallbackManager mFacebookCallbackManager; // for facebook log in
     LoginButton mFacebookLoginButton;
+
+
+    FirebaseAuth mAuth;
+    EditText xPhone;
+    EditText xOTP;
+    String codeSent;
+    Button getOTP ;
+    Button submitButton;
     public LoginFragment() {
 
     }
@@ -88,6 +104,27 @@ private View.OnClickListener mOnClickListener = new View.OnClickListener() {
       // initFBFacebookLogIn();
       mess = view.findViewById(R.id.message1);
       mFacebookLoginButton = (LoginButton) view.findViewById(R.id.signin_fb);
+
+//        getOTP = (Button) view.findViewById(R.id.get_otp);
+//        submitButton= (Button) view.findViewById(R.id.btnNext);
+//        xPhone = view.findViewById(R.id.editText);
+//        xOTP=view.findViewById(R.id.fill_OTP);
+//        mAuth=FirebaseAuth.getInstance();
+//
+//        getOTP.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                sendVerificationCode();
+//                Intent  a = new Intent(getActivity(), FillOTPFragment.class);
+//                startActivity(a);
+//            }
+//        });
+//        submitButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                verifyOTP();
+//            }
+//        });
       return view;
     }
 
@@ -131,9 +168,7 @@ private View.OnClickListener mOnClickListener = new View.OnClickListener() {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         }
-       else
-           {mFacebookCallbackManager.onActivityResult(requestCode, resultCode, data);
-           mess.setText("SS");}
+        mFacebookCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     // [START auth_with_google]
@@ -244,12 +279,9 @@ private View.OnClickListener mOnClickListener = new View.OnClickListener() {
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
-
                         String accessToken = loginResult.getAccessToken().getToken();
                         getFacebookDetails(loginResult.getAccessToken());
-
                     }
-
                     @Override
                     public void onCancel() {
                         Log.d(TAG,"Canceled !");
@@ -270,23 +302,14 @@ private View.OnClickListener mOnClickListener = new View.OnClickListener() {
                 }
             }
         };
-
-
     }
 
     public void getFacebookDetails(final AccessToken accessToken) {
-
-
-
         GraphRequest request = GraphRequest.newMeRequest(
                 accessToken,
                 new GraphRequest.GraphJSONObjectCallback() {
-
-
                     @Override
-                    public void onCompleted(JSONObject jsonObject,
-                                            GraphResponse response) {
-
+                    public void onCompleted(JSONObject jsonObject, GraphResponse response) {
                         // Getting FB User Data
                         Bundle facebookData = getFacebookData(jsonObject);
                         user.setName(facebookData.getString("name"));
@@ -294,11 +317,8 @@ private View.OnClickListener mOnClickListener = new View.OnClickListener() {
                         user.setLoginType(user.FACEBOOK);
                         user.setAccessToken(accessToken.getToken());
                        //  ((LoginActivity) getActivity()).loginSuccess(user);
-
-
                     }
                 });
-
         Bundle parameters = new Bundle();
         parameters.putString("fields", "id,name,email");
         request.setParameters(parameters);
@@ -307,11 +327,8 @@ private View.OnClickListener mOnClickListener = new View.OnClickListener() {
 
     private Bundle getFacebookData(JSONObject object) {
         Bundle bundle = new Bundle();
-
         try {
             String id = object.getString("id");
-
-
             bundle.putString("idFacebook", id);
             if (object.has("name"))
                 bundle.putString("name", object.getString("name"));
@@ -320,10 +337,90 @@ private View.OnClickListener mOnClickListener = new View.OnClickListener() {
         } catch (Exception e) {
             Log.d(TAG, "BUNDLE Exception : "+e.toString());
         }
-
         return bundle;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
+    }
+    private void verifyOTP(){
+        String tOTP=xOTP.getText().toString().trim();
 
+        if(tOTP.isEmpty()){
+            xOTP.setError("OTP is required!");
+            xOTP.requestFocus();
+            return;
+        }
+
+        if(tOTP.length()<6){
+            xOTP.setError("Please enter a valid OTP!");
+            xOTP.requestFocus();
+            return;
+        }
+        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(codeSent, tOTP);
+        signInWithPhoneAuthCredential(credential);
+    }
+    private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener((Executor) this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithCredential:success");
+
+                            FirebaseUser user = task.getResult().getUser();
+                            // ...
+                        } else {
+                            // Sign in failed, display a message and update the UI
+                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                                // The verification code entered was invalid
+                            }
+                        }
+                    }
+                });
+    }
+    private void sendVerificationCode() {
+
+        String xMobileNumber=xPhone.getText().toString().trim();
+
+        if(xMobileNumber.isEmpty()){
+            xPhone.setError("Phone number is required!");
+            xPhone.requestFocus();
+            return;
+        }
+
+        if(xMobileNumber.length()<10){
+            xPhone.setError("Please enter a valid phone number!");
+            xPhone.requestFocus();
+            return;
+        }
+        PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                xMobileNumber,        // Phone number to verify
+                60,                 // Timeout duration
+                TimeUnit.SECONDS,   // Unit of timeout
+                getActivity(),               // Activity (for callback binding) //NOT SURE ABOUT THIS
+                mCallbacks);        // OnVerificationStateChangedCallbacks
+
+    }
+    PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+        @Override
+        public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
+
+        }
+
+        @Override
+        public void onVerificationFailed(@NonNull FirebaseException e) {
+
+        }
+
+        @Override
+        public void onCodeSent(@NonNull String s, @NonNull PhoneAuthProvider.ForceResendingToken forceResendingToken) {
+            super.onCodeSent(s, forceResendingToken);
+            codeSent=s;
+        }
+    };
 }

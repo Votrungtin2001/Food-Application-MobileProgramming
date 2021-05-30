@@ -4,33 +4,44 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
-import android.widget.DatePicker;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-import androidx.fragment.app.Fragment;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.util.Calendar;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link DatePickerFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+
+public class DatePickerFragment extends DialogFragment  {
+
+    DatePickerDialog.OnDateSetListener onDateSet;
+    public static DatePickerFragment newInstance(){
+        DatePickerFragment frag = new DatePickerFragment();
+        return frag;
+    }
+
+    public DatePickerFragment(){}
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
-        // Use the current date as the default date in the picker
-        final Calendar c = Calendar.getInstance();
+        Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
-
-        // Create a new instance of DatePickerDialog and return it
-        return new DatePickerDialog(getActivity(), this, year, month, day);
+        return new DatePickerDialog(getActivity(),onDateSet,year,month,day);
+    }
+    public void setCallBack(DatePickerDialog.OnDateSetListener onDate) {
+        onDateSet = onDate;
     }
 
-    public void onDateSet(DatePicker view, int year, int month, int day) {
-        // Do something with the date chosen by the user
+    public void show(FragmentTransaction beginTransaction, String datePickerFragment) {
     }
 }

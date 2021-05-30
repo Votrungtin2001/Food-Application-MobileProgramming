@@ -1,13 +1,11 @@
 package com.example.foodapplication;
 
-import android.app.admin.FactoryResetProtectionPolicy;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.io.FileOutputStream;
 import java.util.Date;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
