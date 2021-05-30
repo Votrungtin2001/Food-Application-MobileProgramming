@@ -133,16 +133,7 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
 
     }
 
-    private static void setWindowFlag(Activity activity, final int bits, boolean on) {
-        Window win = activity.getWindow();
-        WindowManager.LayoutParams winParams = win.getAttributes();
-        if (on) {
-            winParams.flags |= bits;
-        } else {
-            winParams.flags &= ~bits;
-        }
-        win.setAttributes(winParams);
-    }
+
     private void transparentStatusAndNavigation()
     {
         //make full transparent statusBar
