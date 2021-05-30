@@ -118,6 +118,8 @@ public class HomeFragment extends Fragment {
 
 
 
+
+
         imageView_Location = (ImageView) view.findViewById(R.id.location_imageView);
         imageView_Location.setOnClickListener(new View.OnClickListener() {
             @Override
