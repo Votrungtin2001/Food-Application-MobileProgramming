@@ -2,15 +2,22 @@ package com.example.foodapplication;
 
 import android.content.Intent;
 import android.content.res.Resources;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -30,7 +37,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import adapter.ListAdapter;
+import adapter.SearchBarAdapter;
 import models.CollectionModel;
+import models.SearchBarModel;
 
 
 public class HomeFragment extends Fragment {
@@ -38,8 +47,13 @@ public class HomeFragment extends Fragment {
     private ImageView imageView_Location;
     private ImageView imageView_Next;
     private TextView textView_addressLine;
+    private EditText editText_search;
     private String addressLine;
     private String nameStreet;
+
+    RecyclerView recyclerView_SearchBar;
+    SearchBarAdapter searchBarAdapter;
+    List<SearchBarModel> searchBarModels;
 
     RecyclerView recyclerView_list;
     List<String> titles1;
@@ -110,6 +124,29 @@ public class HomeFragment extends Fragment {
 
 
 
+        /*editText_search = view.findViewById(R.id.editText_SearchBar);
+        searchBarAdapter = new SearchBarAdapter(getActivity(), searchBarModels);
+        recyclerView_SearchBar = view.findViewById(R.id.recyclerView_SearchBar);
+
+        editText_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filter(s.toString(), district_id);
+            }
+        });*/
+
+
+
 
 
 
@@ -137,6 +174,7 @@ public class HomeFragment extends Fragment {
         Bundle b = getArguments();
         addressLine = b.getString("AddressLine");
         nameStreet = b.getString("NameStreet");
+        district_id = b.getInt("District ID");
 
         textView_addressLine.setText(addressLine);
 
@@ -235,6 +273,28 @@ public class HomeFragment extends Fragment {
 
         return view;
     }
+
+    private void filter(String toString, int id) {
+        int i = 0;
+        searchBarModels = new ArrayList<>();
+        String selectQuery = "SELECT B.NAME, R.Image FROM (RESTAURANT R JOIN BRANCHES B ON R._id = B.Restaurant) JOIN ADDRESS A ON B.Address = A._id WHERE A.District ='" + id + "';";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            do {
+                i++;
+                String a = Integer.toString(i);
+                Toast.makeText(getActivity(), a, Toast.LENGTH_SHORT);
+                byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
+
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+
+    }
+
+
 
     private void prepareViewPagerCategories(ViewPager viewPager, ArrayList<String> arrayList)
     {

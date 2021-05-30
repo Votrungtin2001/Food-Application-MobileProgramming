@@ -12,7 +12,7 @@ import java.util.Date;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // REMEMBER TO ADD 1 TO THIS CONSTANT WHEN YOU MAKE ANY CHANGES TO THE CONTRACT CLASS!
-    public static final int DATABASE_VERSION = 24;
+    public static final int DATABASE_VERSION = 26;
 
     public DatabaseHelper(Context context) {
         super(context, FoodManagementContract.DATABASE_NAME, null, DATABASE_VERSION);
@@ -614,4 +614,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return total;
     }
+
 }

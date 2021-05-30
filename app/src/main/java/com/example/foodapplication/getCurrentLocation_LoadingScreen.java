@@ -45,9 +45,8 @@ public class getCurrentLocation_LoadingScreen extends AppCompatActivity {
     private String nameStreet;
 
     FusedLocationProviderClient fusedLocationProviderClient;
-
-
     boolean permission = false;
+    int district_id;
 
 
     @Override
@@ -73,6 +72,7 @@ public class getCurrentLocation_LoadingScreen extends AppCompatActivity {
                 addressLine = textView.getText().toString();
                 i.putExtra("AddressLine", addressLine);
                 i.putExtra("NameStreet", nameStreet);
+                i.putExtra("District ID", district_id);
                 startActivity(i);
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 finish();
@@ -107,6 +107,11 @@ public class getCurrentLocation_LoadingScreen extends AppCompatActivity {
                             addressLine = addresses.get(0).getAddressLine(0);
                             nameStreet = addresses.get(0).getThoroughfare();
                             textView.setText(addressLine);
+                            String disctrict = addresses.get(0).getSubAdminArea().toString();
+                            if(disctrict.trim().equals("Thủ Đức") || disctrict.trim().equals("Thu Duc") || disctrict.trim().equals("Thành Phố Thủ Đức") || disctrict.trim().equals("Quận Thủ Đức")) {
+                                district_id = 14;
+                            }
+                            else district_id = -1;
 
                         } catch (IOException e) {
                             e.printStackTrace();
