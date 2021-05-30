@@ -2,27 +2,18 @@ package com.example.foodapplication;
 
 import android.content.Intent;
 import android.content.res.Resources;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableStringBuilder;
-import android.text.style.StyleSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,11 +25,11 @@ import com.denzcoskun.imageslider.interfaces.ItemClickListener;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.google.android.material.tabs.TabLayout;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import adapter.ListAdapter;
 import models.CollectionModel;
 
 
@@ -88,6 +79,8 @@ public class HomeFragment extends Fragment {
     ViewPagerAdapter viewPagerAdapter;
 
     ArrayList<String> title_Categories = new ArrayList<>();
+
+    int district_id;
 
     DatabaseHelper databaseHelper;
     SQLiteDatabase db;
@@ -144,6 +137,7 @@ public class HomeFragment extends Fragment {
         Bundle b = getArguments();
         addressLine = b.getString("AddressLine");
         nameStreet = b.getString("NameStreet");
+
         textView_addressLine.setText(addressLine);
 
         imageSlider_promo = view.findViewById(R.id.promo_slider);
@@ -275,47 +269,12 @@ public class HomeFragment extends Fragment {
         titles1 = new ArrayList<>();
         images = new ArrayList<>();
 
-        titles1.add("  Deal Hot \n Hôm Nay");
-        titles1.add("Giảm 70k");
         titles1.add("Cơm");
-        titles1.add("   Freeship \n   Xtra");
         titles1.add("Trà Sữa");
-        titles1.add("  NowShip - \n Giao Hàng");
-        titles1.add("Ăn Vặt");
-        titles1.add("  NowFresh - \n Thực phẩm");
-        titles1.add("Quán Mới");
-        titles1.add("  NowTable - \n     Đặt Bàn");
-        titles1.add("  Ưu Đãi - \n   Đối Tác");
-        titles1.add("  Ưu Đãi \n   AirPay");
-        titles1.add("Hoa");
-        titles1.add("Siêu Thị");
-        titles1.add("Giặt Ủi");
-        titles1.add("Thú Cưng");
-        titles1.add("Thuốc");
-        titles1.add("Bia");
-        titles1.add("Làm Đẹp");
-        titles1.add("     Quán \n Yêu Thích");
 
-        images.add(R.drawable.voucher);
-        images.add(R.drawable.hot_deal);
+
         images.add(R.drawable.rice);
-        images.add(R.drawable.xtra);
         images.add(R.drawable.milk_tea);
-        images.add(R.drawable.delivery);
-        images.add(R.drawable.snack);
-        images.add(R.drawable.fish_meat);
-        images.add(R.drawable.new_restaurant);
-        images.add((R.drawable.dining_table));
-        images.add(R.drawable.handshake);
-        images.add(R.drawable.airpay);
-        images.add(R.drawable.flower);
-        images.add(R.drawable.cart);
-        images.add(R.drawable.cleaning_tshirt);
-        images.add(R.drawable.pet);
-        images.add(R.drawable.medicine);
-        images.add(R.drawable.beer);
-        images.add(R.drawable.salon);
-        images.add(R.drawable.like);
     }
 
     public void AddDataForCollection()
@@ -497,6 +456,7 @@ public class HomeFragment extends Fragment {
             if(resultCode == getActivity().RESULT_OK)
             {
                 addressLine = data.getStringExtra("Address Line");
+                district_id = data.getIntExtra("District ID", 0);
                 textView_addressLine.setText(addressLine);
                 nameStreet = data.getStringExtra("Name Street");
             }

@@ -53,9 +53,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class Map extends AppCompatActivity implements OnMapReadyCallback,
         GoogleApiClient.OnConnectionFailedListener {
+
+    int district_id;
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
@@ -84,7 +87,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback,
     }
 
     private static final String TAG = "MapActivity";
-    private static final String apiKey = "@string/map_key";
+    private static final String apiKey = "AIzaSyB_RuQCaFrm4wAIamLJA9R-NvSc7RmjlrA";
 
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
@@ -146,6 +149,17 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback,
                     String placeAddress = place.getAddress();
 
                         if (placeLatLng != null) {
+                            Geocoder geocoder = new Geocoder(Map.this, Locale.getDefault());
+                            try {
+                                List<Address> addresses = geocoder.getFromLocation(dLatitude, dLongitude, 1);
+                                String stateName = addresses.get(0).getSubAdminArea();
+                                if(stateName.trim().equals("Thủ Đức") || stateName.trim().equals("Thu Duc") || stateName.trim().equals("Thành Phố Thủ Đức") || stateName.trim().equals("Quận Thủ Đức")) {
+                                    district_id = 14;
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+
+                            }
                             moveCamera(placeLatLng, DEFAULT_ZOOM, placeName);
                             Toast.makeText(Map.this, "Moving to " + placeName, Toast.LENGTH_SHORT).show();
                             new Handler().postDelayed(new Runnable() {
@@ -156,6 +170,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback,
                                     resultIntent.putExtra("Longitude", dLongitude);
                                     resultIntent.putExtra("Place Name", placeName);
                                     resultIntent.putExtra("Place Address", placeAddress);
+                                    resultIntent.putExtra("District ID", district_id);
                                     setResult(RESULT_OK, resultIntent);
                                     finish();
                                 }
