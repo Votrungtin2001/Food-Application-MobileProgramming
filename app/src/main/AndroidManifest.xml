@@ -26,7 +26,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/map_key" />
+            android:value="AIzaSyB_RuQCaFrm4wAIamLJA9R-NvSc7RmjlrA" />
 
         <activity android:name=".Map" />
         <activity android:name=".getCurrentLocation_LoadingScreen" />

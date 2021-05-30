@@ -74,9 +74,11 @@ public class Fill_Address_Screen extends AppCompatActivity {
 
     private Location location;
     private Geocoder geocoder;
-    private static final String apiKey = "@string/map_key";
+    private static final String apiKey = "AIzaSyB_RuQCaFrm4wAIamLJA9R-NvSc7RmjlrA";
     double dLatitude;
     double dLongitude;
+
+    private int district_id;
 
 
     @Override
@@ -114,7 +116,7 @@ public class Fill_Address_Screen extends AppCompatActivity {
         });
 
         editText_AddressBar = findViewById(R.id.searchAddressBar_editText);
-        Places.initialize(getApplicationContext(), "AIzaSyBTVnRocNYtZdZa359_zfrlELKGOkFlXYg");
+        Places.initialize(getApplicationContext(), apiKey);
         editText_AddressBar.setFocusable(false);
         editText_AddressBar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -208,6 +210,21 @@ public class Fill_Address_Screen extends AppCompatActivity {
             editText_AddressBar.setText(place.getAddress());
             textView_addressLine.setText(place.getAddress());
             textView_nameStreet.setText(place.getName());
+
+            LatLng latLng = place.getLatLng();
+            double MyLat = latLng.latitude;
+            double MyLong = latLng.longitude;
+            Geocoder geocoder = new Geocoder(Fill_Address_Screen.this, Locale.getDefault());
+            try {
+                List<Address> addresses = geocoder.getFromLocation(MyLat, MyLong, 1);
+                String stateName = addresses.get(0).getSubAdminArea();
+                if(stateName.trim().equals("Thủ Đức") || stateName.trim().equals("Thu Duc") || stateName.trim().equals("Thành Phố Thủ Đức") || stateName.trim().equals("Quận Thủ Đức")) {
+                    district_id = 14;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+
+            }
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -216,6 +233,7 @@ public class Fill_Address_Screen extends AppCompatActivity {
                     nameStreet = textView_nameStreet.getText().toString();
                     resultIntent.putExtra("Name Street", nameStreet);
                     resultIntent.putExtra("Address Line", addressLine);
+                    resultIntent.putExtra("District ID", district_id);
                     setResult(RESULT_OK, resultIntent);
                     finish();
                 }
@@ -307,6 +325,7 @@ public class Fill_Address_Screen extends AppCompatActivity {
                 dLongitude = data.getDoubleExtra("Longitude", 0);
                 String placeName = data.getStringExtra("Place Name");
                 String placeAddress = data.getStringExtra("Place Address");
+                district_id = data.getIntExtra("District ID", 0);
 
                 try {
                     geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
@@ -321,6 +340,7 @@ public class Fill_Address_Screen extends AppCompatActivity {
                             resultIntent.putExtra("Name Street", nameStreet);
                             addressLine = textView_addressLine.getText().toString();
                             resultIntent.putExtra("Address Line", addressLine);
+                            resultIntent.putExtra("District ID", district_id);
                             setResult(RESULT_OK, resultIntent);
                             finish();
                         }

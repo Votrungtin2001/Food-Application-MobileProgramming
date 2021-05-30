@@ -15,10 +15,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -26,16 +28,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 
-public class getCurrentLocation_LoadingScreen extends AppCompatActivity implements LocationListener {
+public class getCurrentLocation_LoadingScreen extends AppCompatActivity {
 
     private TextView textView;
-    LocationManager locationManager;
     private String addressLine;
     private String nameStreet;
+
+    FusedLocationProviderClient fusedLocationProviderClient;
+
+
+    boolean permission = false;
 
 
     @Override
@@ -48,10 +60,7 @@ public class getCurrentLocation_LoadingScreen extends AppCompatActivity implemen
 
         textView = findViewById(R.id.address_TextView);
         //get current location - Address Line
-        grantPermission();
-        checkLocationIsEnableOrNot(); //this will redirect us to the location setting
         getLocation();
-
 
 
 
@@ -73,64 +82,39 @@ public class getCurrentLocation_LoadingScreen extends AppCompatActivity implemen
 
     }
 
-    private void getLocation()
-    {
-        try{
-            locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 500, 5, (LocationListener) this);
-        } catch(SecurityException e)
-        {
-            e.printStackTrace();
+    public void getLocation() {
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        if (ActivityCompat.checkSelfPermission(getCurrentLocation_LoadingScreen.this,
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            //when permission granted
+           permission = true;
+        } else {
+            //when permisson denied
+            ActivityCompat.requestPermissions(getCurrentLocation_LoadingScreen.this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 44);
         }
-    }
+        if (permission) {
+            fusedLocationProviderClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+                @Override
+                public void onComplete(@NonNull Task<Location> task) {
+                    Location location = task.getResult();
+                    if (location != null) {
+                        try {
+                            Geocoder geocoder = new Geocoder(getCurrentLocation_LoadingScreen.this, Locale.getDefault());
+                            List<Address> addresses = geocoder.getFromLocation(
+                                    location.getLatitude(), location.getLongitude(), 1);
 
+                            addressLine = addresses.get(0).getAddressLine(0);
+                            nameStreet = addresses.get(0).getThoroughfare();
+                            textView.setText(addressLine);
 
-    private void checkLocationIsEnableOrNot() {
-        LocationManager lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        boolean gpsEnabled = false;
-        boolean networkEnabled = false;
-
-        try {
-            gpsEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        } catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-
-        try{
-            networkEnabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-        } catch(Exception e)
-
-        {
-            e.printStackTrace();
-        }
-
-        if(!gpsEnabled && !networkEnabled)
-        {
-            new AlertDialog.Builder(this)
-                    .setTitle("Enable GPS Service")
-                    .setCancelable(false)
-                    .setPositiveButton("Enable", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //this intent redirect us to the location settings, if GPS is disabled this dialog will be show
-                            startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
-                    }).setNegativeButton("Cancel", null)
-                    .show();
+                    }
+                }
+            });
         }
-
-    }
-
-    private void grantPermission() {
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(getApplicationContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
-        {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION}, 100);
-        }
-
     }
 
     private void transparentStatusAndNavigation() {
@@ -167,18 +151,5 @@ public class getCurrentLocation_LoadingScreen extends AppCompatActivity implemen
         win.setAttributes(winParams);
     }
 
-    @Override
-    public void onLocationChanged(@NonNull Location location) {
-        try{
-            Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
-            List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
 
-            textView.setText(addresses.get(0).getAddressLine(0));
-            nameStreet = addresses.get(0).getThoroughfare();
-        } catch(IOException e)
-        {
-            e.printStackTrace();
-        }
-
-    }
 }
