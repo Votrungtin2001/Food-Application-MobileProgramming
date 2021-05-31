@@ -365,6 +365,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void updBranch(int id, String name, int restaurant_id, int address_id, int master_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(FoodManagementContract.CBranch.KEY_NAME, name);
+        values.put(FoodManagementContract.CBranch.KEY_PARENT, restaurant_id);
+        values.put(FoodManagementContract.CBranch.KEY_ADDRESS, address_id);
+        values.put(FoodManagementContract.CBranch.KEY_MASTER, master_id);
+
+        String selection = FoodManagementContract.CBranch._ID + " = ?";
+        String[] selectionArgs = { Integer.toString(id) };
+        db.update(FoodManagementContract.CBranch.TABLE_NAME, values, selection, selectionArgs);
+        db.close();
+    }
+
     public Cursor getCategory() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(FoodManagementContract.CCategory.TABLE_NAME, null, null, null, null, null, null);

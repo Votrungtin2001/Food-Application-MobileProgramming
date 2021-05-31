@@ -96,6 +96,7 @@ public class HomeFragment extends Fragment {
     ArrayList<String> title_Categories = new ArrayList<>();
 
     int district_id;
+    boolean district_isAvailable = false;
 
     DatabaseHelper databaseHelper;
     SQLiteDatabase db;
@@ -123,6 +124,8 @@ public class HomeFragment extends Fragment {
 
 
 
+
+
         editText_search = view.findViewById(R.id.editText_SearchBar);
         searchBarAdapter = new SearchBarAdapter(getActivity(), searchBarModels);
         recyclerView_SearchBar = view.findViewById(R.id.recyclerView_SearchBar);
@@ -142,14 +145,15 @@ public class HomeFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
                 String key_search = editText_search.getText().toString();
-                if(key_search.trim().equals("")) {
-                    recyclerView_SearchBar.setVisibility(View.GONE);
+                if(district_isAvailable == true) {
+                    if (key_search.trim().equals("")) {
+                        recyclerView_SearchBar.setVisibility(View.GONE);
 
-                }
-                else {
-                    recyclerView_SearchBar.setVisibility(View.VISIBLE);
-                    filter(s.toString(), district_id);
+                    } else {
+                        recyclerView_SearchBar.setVisibility(View.VISIBLE);
+                        filter(s.toString(), district_id);
 
+                    }
                 }
             }
         });
@@ -184,6 +188,7 @@ public class HomeFragment extends Fragment {
         addressLine = b.getString("AddressLine");
         nameStreet = b.getString("NameStreet");
         district_id = b.getInt("District ID");
+        if(district_id >= 0) district_isAvailable = true;
 
         textView_addressLine.setText(addressLine);
 
@@ -198,7 +203,7 @@ public class HomeFragment extends Fragment {
 
         recyclerView_list = view.findViewById(R.id.list_recyclerView);
         AddDataForList();
-        listAdapter = new ListAdapter(getActivity(), titles1, images);
+        listAdapter = new ListAdapter(getActivity(), titles1, images, district_id, district_isAvailable);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.HORIZONTAL, false);
         recyclerView_list.setLayoutManager(gridLayoutManager);
         recyclerView_list.setAdapter(listAdapter);
@@ -345,10 +350,14 @@ public class HomeFragment extends Fragment {
 
         titles1.add("Cơm");
         titles1.add("Trà Sữa");
+        titles1.add("Mì");
+        titles1.add("Smoothie");
 
 
         images.add(R.drawable.rice);
         images.add(R.drawable.milk_tea);
+        images.add(R.drawable.noodle_icon);
+        images.add(R.drawable.smoothie_icon);
     }
 
     public void AddDataForCollection()
