@@ -54,6 +54,7 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerView_SearchBar;
     SearchBarAdapter searchBarAdapter;
     List<SearchBarModel> searchBarModels;
+    LinearLayoutManager linearLayoutManager_SearchBar;
 
     RecyclerView recyclerView_list;
     List<String> titles1;
@@ -124,10 +125,11 @@ public class HomeFragment extends Fragment {
 
 
 
-        /*editText_search = view.findViewById(R.id.editText_SearchBar);
+        editText_search = view.findViewById(R.id.editText_SearchBar);
         searchBarAdapter = new SearchBarAdapter(getActivity(), searchBarModels);
         recyclerView_SearchBar = view.findViewById(R.id.recyclerView_SearchBar);
-
+        linearLayoutManager_SearchBar = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        recyclerView_SearchBar.setLayoutManager(linearLayoutManager_SearchBar);
         editText_search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -141,9 +143,18 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                filter(s.toString(), district_id);
+                String key_search = editText_search.getText().toString();
+                if(key_search.trim().equals("")) {
+                    recyclerView_SearchBar.setVisibility(View.GONE);
+
+                }
+                else {
+                    recyclerView_SearchBar.setVisibility(View.VISIBLE);
+                    filter(s.toString(), district_id);
+
+                }
             }
-        });*/
+        });
 
 
 
@@ -275,19 +286,24 @@ public class HomeFragment extends Fragment {
     }
 
     private void filter(String toString, int id) {
-        int i = 0;
         searchBarModels = new ArrayList<>();
         String selectQuery = "SELECT B.NAME, R.Image FROM (RESTAURANT R JOIN BRANCHES B ON R._id = B.Restaurant) JOIN ADDRESS A ON B.Address = A._id WHERE A.District ='" + id + "';";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor != null) {
             cursor.moveToFirst();
             do {
-                i++;
-                String a = Integer.toString(i);
-                Toast.makeText(getActivity(), a, Toast.LENGTH_SHORT);
-                byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
+                String name_branch = cursor.getString(cursor.getColumnIndex("NAME"));
+                if(name_branch.toLowerCase().contains(toString.toLowerCase())) {
+                    byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
 
+                    Bitmap img_bitmap = BitmapFactory.decodeByteArray(img_byte, 0, img_byte.length);
+                    SearchBarModel searchBarModel = new SearchBarModel(img_bitmap, name_branch);
+                    searchBarModels.add(searchBarModel);
+                }
             } while (cursor.moveToNext());
+            searchBarAdapter.filterList(searchBarModels);
+            recyclerView_SearchBar.setAdapter(searchBarAdapter);
+
         }
         cursor.close();
 
@@ -527,7 +543,7 @@ public class HomeFragment extends Fragment {
     {
         slideModels = new ArrayList<>();
         slideModels.add(new SlideModel("https://scontent-xsp1-1.xx.fbcdn.net/v/t1.6435-9/185300233_2957674807883799_868667496622488565_n.png?_nc_cat=110&ccb=1-3&_nc_sid=730e14&_nc_ohc=8hcDqTC2dI0AX8e9G-x&_nc_ht=scontent-xsp1-1.xx&oh=0144670a64d17d8f9ad030ab3c632fb8&oe=60D12B74", "", ScaleTypes.FIT));
-        slideModels.add(new SlideModel("https://scontent.fsgn5-1.fna.fbcdn.net/v/t1.6435-9/189848638_2958264391158174_8825296688695429966_n.jpg?_nc_cat=101&ccb=1-3&_nc_sid=730e14&_nc_ohc=WRjv_bLl5-EAX93YN_U&_nc_ht=scontent.fsgn5-1.fna&oh=1c30559f0ff054c1e2e9a7553dbf9698&oe=60D24BE6", "", ScaleTypes.FIT));
+        slideModels.add(new SlideModel("https://scontent.fsgn5-7.fna.fbcdn.net/v/t1.6435-9/186486539_2962000987451181_5574183893428808477_n.jpg?_nc_cat=104&ccb=1-3&_nc_sid=730e14&_nc_ohc=1E2IX-q2UHsAX-HXkAo&_nc_ht=scontent.fsgn5-7.fna&oh=ad4cea16142bf5a7a9c96a88ffada497&oe=60D8FE8C", "", ScaleTypes.FIT));
         slideModels.add(new SlideModel("https://scontent-xsp1-3.xx.fbcdn.net/v/t1.6435-9/189654320_2957909371193676_2363560169176149542_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=e3f864&_nc_ohc=M4DNMZxSCvMAX-VPTjq&_nc_ht=scontent-xsp1-3.xx&oh=560db1b6c656d8482f40eeca00a6f027&oe=60D0A310", "", ScaleTypes.FIT));
         slideModels.add(new SlideModel("https://scontent.fsgn5-5.fna.fbcdn.net/v/t1.6435-9/186629918_2956213878029892_1702674951943422020_n.jpg?_nc_cat=100&ccb=1-3&_nc_sid=730e14&_nc_ohc=-D1lKSojBkgAX-6lvQU&_nc_ht=scontent.fsgn5-5.fna&oh=c721ae5fece413a70dbcd87c4a9b25ad&oe=60D0A1B3", "", ScaleTypes.FIT));
         slideModels.add(new SlideModel("https://scontent-xsp1-3.xx.fbcdn.net/v/t1.6435-9/187515711_2956744857976794_8796511153691441813_n.jpg?_nc_cat=107&ccb=1-3&_nc_sid=730e14&_nc_ohc=dZ7DvN9Ij9MAX-WBKSZ&_nc_ht=scontent-xsp1-3.xx&oh=aa23cf7817739bab7b053c64a8828f87&oe=60D12A2C", "", ScaleTypes.FIT));
@@ -549,28 +565,12 @@ public class HomeFragment extends Fragment {
                         "✅Số lượng mã có hạn\n";
                 break;
             case 1:
-                iImage = R.drawable.san_voucher_tien_trieu;
-                sName = "Game Cực Fun \n Săn Voucher Tiền Triệu";
-                sDescription = "[ĐẦU TUẦN GAME CỰC FUN - SĂN VOUCHER TIỀN TRIỆU]\n" +
+                iImage = R.drawable.oder_lien_tay;
+                sName = "Order Liền Tay \n Nhận Ngay Iphone 12 Pro Max";
+                sDescription = "                            [CONTEST]\n" +
+                        "ORDER LIỀN TAY - NHẬN NGAY IPHONE 12 PRO MAX\n" +
                         "\n" +
-                        "Nạp ít năng lượng tích cực ngày đầu tuần không các game thủ của Now ơi ❤ Chẳng có gì kéo mood tốt bằng một ít vitamin M-oney đâu nhỉ \uD83D\uDE0F Thế thì còn chờ gì mà không lăn xả vào chiếc game chơi siêu dễ mà phần thưởng siêu to khổng lồ Now dành cho bạn thui \uD83D\uDCAA\n" +
-                        "\n" +
-                        "☀️Thể lệ:\n" +
-                        "\uD83D\uDC49 Bước 1. Fo.llow fanpage Now.vn và L.ike bài đăng này.\n" +
-                        "\uD83D\uDC49 Bước 2: Co.mment usernameNow (thật chính xác) + tag 2 người bạn + 01 con số may mắn từ 10-999\n" +
-                        "Ví dụ: ilovenow + @ilovenow + @ilovefoody + 999\n" +
-                        "\uD83D\uDC49 Bước 3: Liên tục tương tác với co.mment của bạn\n" +
-                        "\n" +
-                        "\uD83C\uDF81 \uD83C\uDF81 \uD83C\uDF81 GIẢI THƯỞNG:\n" +
-                        "\n" +
-                        "\uD83E\uDD7302 giải nhất, mỗi giải là voucher NowFood trị giá 2,000,000 dành cho 02 bạn thực hiện đầy đủ 3 bước trên và có số lượt REPLY nhiều nhất.\n" +
-                        "\uD83E\uDD7310 giải may mắn, mỗi giải là voucher NowFood trị giá 50k cho người thực hiện đầy đủ 3 bước trên và có số may mắn được lựa chọn ngẫu nhiên.\n" +
-                        "\n" +
-                        "\uD83D\uDCA2LƯU Ý:\n" +
-                        "- Now chỉ xét trao giải cho các bạn comment theo đúng cú pháp, các bạn nhớ lưu ý dấu \"+\" để không bị sót mất bạn nhé!\n" +
-                        "- Comment hợp lệ là comment không chỉnh sửa\n" +
-                        "- Nếu có nhiều bạn trùng số may mắn hoặc có số lượt reply bằng nhau, Now sẽ ưu tiên bạn có comment sớm nhất\n" +
-                        "- Mỗi bạn được comment nhiều lần với số may mắn khác nhau";
+                        "Mùa này không thể ra đường thì thôi mình cứ ở nhà đặt món cho khỏe, sẵn tiện tham gia đua đơn cùng Now biết đâu rinh luôn cái Iphone 12 Pro Max 128GB nè! Không chỉ thế, chỉ cần 01 ĐƠN thôi là bạn cũng có cơ hội trúng ngay các voucher NowFood xịn xò dành cho các bạn may mắn tham gia đường đua kì này. Chờ gì nữa mà không xắn tay áo, bật điện thoại nhanh nhanh order.";
                 break;
             case 2:
                 iImage = R.drawable.sale_nua_gia;
