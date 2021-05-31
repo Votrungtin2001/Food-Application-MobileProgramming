@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -36,6 +35,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import adapter.CollectionAdapter;
 import adapter.ListAdapter;
 import adapter.SearchBarAdapter;
 import models.CollectionModel;
@@ -120,8 +120,6 @@ public class HomeFragment extends Fragment {
 
         databaseHelper = new DatabaseHelper(getActivity());
         db = databaseHelper.getReadableDatabase();
-
-
 
 
 
@@ -287,7 +285,7 @@ public class HomeFragment extends Fragment {
 
     private void filter(String toString, int id) {
         searchBarModels = new ArrayList<>();
-        String selectQuery = "SELECT B.NAME, R.Image FROM (RESTAURANT R JOIN BRANCHES B ON R._id = B.Restaurant) JOIN ADDRESS A ON B.Address = A._id WHERE A.District ='" + id + "';";
+        String selectQuery = "SELECT B._id, B.NAME, R.Image FROM (RESTAURANT R JOIN BRANCHES B ON R._id = B.Restaurant) JOIN ADDRESS A ON B.Address = A._id WHERE A.District ='" + id + "';";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor != null) {
             cursor.moveToFirst();
@@ -295,9 +293,9 @@ public class HomeFragment extends Fragment {
                 String name_branch = cursor.getString(cursor.getColumnIndex("NAME"));
                 if(name_branch.toLowerCase().contains(toString.toLowerCase())) {
                     byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
-
+                    int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
                     Bitmap img_bitmap = BitmapFactory.decodeByteArray(img_byte, 0, img_byte.length);
-                    SearchBarModel searchBarModel = new SearchBarModel(img_bitmap, name_branch);
+                    SearchBarModel searchBarModel = new SearchBarModel(img_bitmap, name_branch, branch_id);
                     searchBarModels.add(searchBarModel);
                 }
             } while (cursor.moveToNext());

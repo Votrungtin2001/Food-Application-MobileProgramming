@@ -210,7 +210,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/viewHistory_recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:scrollbarSize="4dp"
                 android:scrollbarThumbHorizontal="@color/scrollBackground"
                 android:scrollbarTrackHorizontal="@color/scrollTrack"
@@ -269,7 +269,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recentlyEaten_RecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:scrollbarSize="4dp"
                 android:scrollbarThumbHorizontal="@color/scrollBackground"
                 android:scrollbarTrackHorizontal="@color/scrollTrack"
@@ -312,7 +312,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/maybeYouLike_RecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:scrollbarSize="4dp"
                 android:scrollbarThumbHorizontal="@color/scrollBackground"
                 android:scrollbarTrackHorizontal="@color/scrollTrack"
@@ -355,7 +355,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/FreeshipXtra_RecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:scrollbarSize="4dp"
                 android:scrollbarThumbHorizontal="@color/scrollBackground"
                 android:scrollbarTrackHorizontal="@color/scrollTrack"

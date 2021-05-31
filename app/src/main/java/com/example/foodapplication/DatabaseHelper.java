@@ -314,6 +314,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public void updRestaurant(int id, String name, String opening_time, byte[] image) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(FoodManagementContract.CRestaurant.KEY_NAME, name);
+        values.put(FoodManagementContract.CRestaurant.KEY_OPEN, opening_time);
+        values.put(FoodManagementContract.CRestaurant.KEY_IMAGE, image);
+
+        String selection = FoodManagementContract.CRestaurant._ID + " = ?";
+        String[] selectionArgs = { Integer.toString(id) };
+        db.update(FoodManagementContract.CRestaurant.TABLE_NAME, values, selection, selectionArgs);
+        db.close();
+    }
+
     public void delRestaurant(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
 
