@@ -1,6 +1,7 @@
 package adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,8 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.foodapplication.ProductWithCategory;
 import com.example.foodapplication.R;
 
 import java.util.List;
@@ -19,11 +22,17 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     List<String> titles;
     List<Integer> images;
     LayoutInflater inflater;
+    Context context;
+    int district_id;
+    boolean district_isAvailable;
 
-    public ListAdapter(Context ctx, List<String> sTitles, List<Integer> sImages){
+    public ListAdapter(Context ctx, List<String> sTitles, List<Integer> sImages, int District_ID, boolean Sign){
+        this.context = ctx;
         this.titles = sTitles;
         this.images = sImages;
         this.inflater = LayoutInflater.from(ctx);
+        this.district_id = District_ID;
+        this.district_isAvailable = Sign;
     }
 
     @NonNull
@@ -37,6 +46,37 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.title.setText(titles.get(position));
         holder.gridIcon.setImageResource(images.get(position));
+        holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(district_isAvailable == true) {
+                    int category_id = -1;
+                    Intent intent = new Intent(context, ProductWithCategory.class);
+                    switch (position) {
+                        case 0:
+                            category_id = 8;
+                            break;
+
+                        case 1:
+                            category_id = 13;
+                            break;
+
+                        case 2:
+                            category_id = 7;
+                            break;
+
+                        case 3:
+                            category_id = 2;
+                            break;
+
+
+                    }
+                    intent.putExtra("Category ID", category_id);
+                    intent.putExtra("District ID", district_id);
+                    context.startActivity(intent);
+                }
+            }
+        });
 
     }
 
@@ -48,12 +88,14 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView title;
         ImageView gridIcon;
+        ConstraintLayout constraintLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             title = itemView.findViewById(R.id.option_textView);
             gridIcon = itemView.findViewById(R.id.option_imageView);
+            constraintLayout = itemView.findViewById(R.id.ConstraintLayout_List);
         }
     }
 }

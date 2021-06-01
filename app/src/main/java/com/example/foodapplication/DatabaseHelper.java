@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // REMEMBER TO ADD 1 TO THIS CONSTANT WHEN YOU MAKE ANY CHANGES TO THE CONTRACT CLASS!
-    public static final int DATABASE_VERSION = 24;
+    public static final int DATABASE_VERSION = 26;
 
     public DatabaseHelper(Context context) {
         super(context, FoodManagementContract.DATABASE_NAME, null, DATABASE_VERSION);
@@ -312,6 +312,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public void updRestaurant(int id, String name, String opening_time, byte[] image) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(FoodManagementContract.CRestaurant.KEY_NAME, name);
+        values.put(FoodManagementContract.CRestaurant.KEY_OPEN, opening_time);
+        values.put(FoodManagementContract.CRestaurant.KEY_IMAGE, image);
+
+        String selection = FoodManagementContract.CRestaurant._ID + " = ?";
+        String[] selectionArgs = { Integer.toString(id) };
+        db.update(FoodManagementContract.CRestaurant.TABLE_NAME, values, selection, selectionArgs);
+        db.close();
+    }
+
     public void delRestaurant(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -346,6 +360,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selection = FoodManagementContract.CBranch._ID + " = ?";
         String[] selectionArgs = { Integer.toString(id) };
         db.delete(FoodManagementContract.CBranch.TABLE_NAME, selection, selectionArgs);
+        db.close();
+    }
+
+    public void updBranch(int id, String name, int restaurant_id, int address_id, int master_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(FoodManagementContract.CBranch.KEY_NAME, name);
+        values.put(FoodManagementContract.CBranch.KEY_PARENT, restaurant_id);
+        values.put(FoodManagementContract.CBranch.KEY_ADDRESS, address_id);
+        values.put(FoodManagementContract.CBranch.KEY_MASTER, master_id);
+
+        String selection = FoodManagementContract.CBranch._ID + " = ?";
+        String[] selectionArgs = { Integer.toString(id) };
+        db.update(FoodManagementContract.CBranch.TABLE_NAME, values, selection, selectionArgs);
         db.close();
     }
 
@@ -612,4 +641,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return total;
     }
+
 }

@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
 
     private String addressLine;
     private String nameStreet;
+    private int district_id;
 
     FragmentManager fragmentManager = getSupportFragmentManager();
     final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -50,9 +51,11 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
 
         addressLine = getIntent().getExtras().getString("AddressLine");
         nameStreet = getIntent().getExtras().getString("NameStreet");
+        district_id = getIntent().getExtras().getInt("District ID");
         Bundle b = new Bundle();
         b.putString("AddressLine", addressLine);
         b.putString("NameStreet", nameStreet);
+        b.putInt("District ID", district_id);
         homeFragment.setArguments(b);
         fragmentTransaction.add(R.id.frame_container, homeFragment);
         fragmentTransaction.commit();
