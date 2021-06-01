@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.foodapplication.auth.LoginFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class AccountFragment extends Fragment {

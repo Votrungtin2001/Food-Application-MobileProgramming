@@ -10,4 +10,7 @@
     <color name="scrollBackground">#F85F53</color>
     <color name="scrollTrack">#F0D5D0D0</color>
     <color name="colorAccent">#F0F33E3E</color>
+    <color name="fb_color">#44619C</color>
+    <color name="g_color">#DD4C39</color>
+    <color name="twitter_color">#55ACEE</color>
 </resources>

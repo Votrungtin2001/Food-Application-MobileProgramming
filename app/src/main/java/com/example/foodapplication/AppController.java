@@ -8,7 +8,7 @@ public class AppController {
     public static final String TAG = AppController.class
             .getSimpleName();
 
-    private User user;
+   // private User user;
     private String token;
     private HashMap<String, String> ticketFields;
 
@@ -22,8 +22,8 @@ public class AppController {
 
     protected AppController() {}
 
-    public void setUser(User user) { this.user = user; }
-    public User getUser() { return user; }
+   // public void setUser(User user) { this.user = user; }
+   // public User getUser() { return user; }
 
     public void set_token(String token) {
         this.token = token;

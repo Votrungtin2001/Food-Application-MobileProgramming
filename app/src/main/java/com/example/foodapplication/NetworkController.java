@@ -14,8 +14,6 @@ public class NetworkController {
     private NetworkController(Context context) {
         mCtx = context;
         mRequestQueue = getRequestQueue();
-
-
     }
 
     public static synchronized NetworkController getInstance(Context context) {

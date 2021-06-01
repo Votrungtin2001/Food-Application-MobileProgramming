@@ -16,8 +16,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name=".LoginActivity"></activity>
-        <activity android:name=".ItemList_Collection"></activity>
+        <activity android:name=".auth.LoginActivity"></activity>
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:label="@string/title_activity_login" />
+        <activity android:name=".ItemList_Collection" />
         <activity android:name=".Item_Collection" />
         <activity
             android:name=".CreateAddressScreen"
