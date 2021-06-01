@@ -69,6 +69,46 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                             category_id = 2;
                             break;
 
+                        case 4:
+                            category_id = 6;
+                            break;
+
+                        case 5:
+                            category_id = 1;
+                            break;
+
+                        case 6:
+                            category_id = 15;
+                            break;
+
+                        case 7:
+                            category_id = 3;
+                            break;
+
+                        case 8:
+                            category_id = 9;
+                            break;
+
+                        case 9:
+                            category_id = 14;
+                            break;
+
+                        case 10:
+                            category_id = 10;
+                            break;
+
+                        case 11:
+                            category_id = 18;
+                            break;
+
+                        case 12:
+                            category_id = 16;
+                            break;
+
+                        case 13:
+                            category_id = 5;
+                            break;
+
 
                     }
                     intent.putExtra("Category ID", category_id);

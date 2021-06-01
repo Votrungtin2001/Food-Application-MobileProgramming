@@ -46,7 +46,7 @@ public class getCurrentLocation_LoadingScreen extends AppCompatActivity {
 
     FusedLocationProviderClient fusedLocationProviderClient;
     boolean permission = false;
-    int district_id;
+    int district_id = -1;
 
 
     @Override

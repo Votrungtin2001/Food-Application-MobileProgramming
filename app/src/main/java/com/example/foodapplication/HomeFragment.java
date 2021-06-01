@@ -36,10 +36,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import adapter.CollectionAdapter;
+import adapter.DiscountComboProductAdapter;
 import adapter.ListAdapter;
 import adapter.SearchBarAdapter;
+import adapter.AllRestaurantAdapter;
 import models.CollectionModel;
 import models.SearchBarModel;
+import models.AllRestaurantModel;
+import models.SortOfProductModel;
 
 
 public class HomeFragment extends Fragment {
@@ -50,41 +54,65 @@ public class HomeFragment extends Fragment {
     private EditText editText_search;
     private String addressLine;
     private String nameStreet;
+    private TextView textView_DistrictIsUnavailable;
+    private TextView textView_space1;
+    private TextView textView_space2;
+    private TextView textView_space3;
+    private TextView textView_space4;
 
+    //RecyclerView SearchBar
     RecyclerView recyclerView_SearchBar;
     SearchBarAdapter searchBarAdapter;
     List<SearchBarModel> searchBarModels;
     LinearLayoutManager linearLayoutManager_SearchBar;
 
+    //RecyclerView List
     RecyclerView recyclerView_list;
     List<String> titles1;
+    List<Integer> images;
+    ListAdapter listAdapter;
+
+
+
     List<String> titles2;
 
     List<String> prices;
     List<String> valueOfLike;
-    List<Integer> images;
-    ListAdapter listAdapter;
 
+
+    //RecyclerView Collection
     RecyclerView recyclerView_Collection;
     List<CollectionModel> collectionModels;
     RecyclerView.Adapter adapter;
+    TextView textView_CollectionTitle;
     TextView textView_MoreCollection;
 
-    RecyclerView recyclerView_ViewHistory;
-    ViewHistoryAdapter viewHistoryAdapter;
+    //RecyclerView AllRestaurant
+    RecyclerView recyclerView_AllRestaurants;
+    AllRestaurantAdapter allRestaurantAdapter;
+    List<AllRestaurantModel> allRestaurantModelList = new ArrayList<>();
+    TextView AllRestaurant_more;
+    TextView AllRestaurant_Title;
 
+    //ImageSlider Promo and Advertisement
     ImageSlider imageSlider_advertisement;
     ImageSlider imageSlider_promo;
     List<SlideModel> slideModels = new ArrayList<>();
 
-    RecyclerView recyclerView_RecentlyEaten;
-    RecentlyEatenAdapter recentlyEatenAdapter;
+    //RecyclerView Discount Combo Product
+    RecyclerView recyclerView_DiscountComboProduct;
+    DiscountComboProductAdapter discountComboProductAdapter;
+    List<SortOfProductModel> sortOfProductModelList1 = new ArrayList<>();
+    TextView DiscountComboProduct_Title;
+    TextView DiscountComboProduct_more;
 
-    RecyclerView recyclerView_MayBeYouLike;
-    MaybeYouLikeAdapter maybeYouLikeAdapter;
+    //RecyclerView CheapestProduct
+    RecyclerView recyclerView_CheapestProduct;
+    TextView CheapestProduct_Title;
+    TextView CheapestProduct_more;
+    DiscountComboProductAdapter cheapestproductAdapter;
+    List<SortOfProductModel> sortOfProductModelList2 = new ArrayList<>();
 
-    RecyclerView recyclerView_FreeshipXtra;
-    FreeshipXtraAdapter freeshipXtraAdapter;
 
     RecyclerView recyclerView_TypesOfFood;
     TypesOfFoodAdapter typesOfFoodAdapter;
@@ -192,75 +220,140 @@ public class HomeFragment extends Fragment {
 
         textView_addressLine.setText(addressLine);
 
+        textView_DistrictIsUnavailable = view.findViewById(R.id.textView_DistrictIsUnavailable);
+        //Promo ImageSlider
         imageSlider_promo = view.findViewById(R.id.promo_slider);
-        AddDataForPromoImageSlider();
-        imageSlider_promo.setItemClickListener(new ItemClickListener() {
-            @Override
-            public void onItemSelected(int i) {
-                ClickPromoItemImageSlider(i);
-            }
-        });
 
+        //RecyclerView List
         recyclerView_list = view.findViewById(R.id.list_recyclerView);
-        AddDataForList();
-        listAdapter = new ListAdapter(getActivity(), titles1, images, district_id, district_isAvailable);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.HORIZONTAL, false);
-        recyclerView_list.setLayoutManager(gridLayoutManager);
-        recyclerView_list.setAdapter(listAdapter);
 
+        textView_space1 = view.findViewById(R.id.textView7);
+
+        //RecyclerView Collection
+        textView_CollectionTitle = view.findViewById(R.id.collection_textView);
         recyclerView_Collection = view.findViewById(R.id.collection_recyclerView);
         textView_MoreCollection = view.findViewById(R.id.collection_more);
-        collectionModels = new ArrayList<>();
-        adapter = new CollectionAdapter(collectionModels, getActivity());
-        AddDataForCollection();
-        LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerView_Collection.setLayoutManager(linearLayoutManager1);
-        recyclerView_Collection.setAdapter(adapter);
-        textView_MoreCollection.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), ItemList_Collection.class);
-                startActivity(intent);
-            }
-        });
 
-        recyclerView_ViewHistory = view.findViewById(R.id.viewHistory_recyclerView);
-        AddDataForViewHistory();
-        viewHistoryAdapter = new ViewHistoryAdapter(getActivity(), titles1, titles2, images);
-        LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerView_ViewHistory.setLayoutManager(linearLayoutManager2);
-        recyclerView_ViewHistory.setAdapter(viewHistoryAdapter);
+        textView_space2 = view.findViewById(R.id.textView17);
 
+        //RecyclerView AllRestaurant
+        recyclerView_AllRestaurants = view.findViewById(R.id.AllRestaurants_recyclerView);
+        AllRestaurant_Title = view.findViewById(R.id.AllRestaurants_textView);
+        AllRestaurant_more = view.findViewById(R.id.AllRestaurants_more);
+
+        textView_space3 = view.findViewById(R.id.txtView);
+
+        //ImageSlider Advertisement
         imageSlider_advertisement = view.findViewById(R.id.advertisement_slider);
-        AddDataForAdvertisementImageSlider();
-        imageSlider_advertisement.setItemClickListener(new ItemClickListener() {
-            @Override
-            public void onItemSelected(int i) {
-                ClickAdvertisementItemImageSlider(i);
-            }
-        });
+
+        //RecyclerView Discount Combo Product
+        recyclerView_DiscountComboProduct = view.findViewById(R.id.DiscountComboProduct_RecyclerView);
+        DiscountComboProduct_Title = view.findViewById(R.id.DiscountComboProduct_Title);
+        DiscountComboProduct_more = view.findViewById(R.id.DiscountComboProduct_more);
+
+        textView_space4 = view.findViewById(R.id.txtView1);
+
+        //RecyclerView CheapestProduct
+        recyclerView_CheapestProduct = view.findViewById(R.id.CheapestProduct_RecyclerView);
+        CheapestProduct_Title = view.findViewById(R.id.CheapestProduct_Title);
+        CheapestProduct_more = view.findViewById(R.id.CheapestProduct_more);
 
 
-        recyclerView_RecentlyEaten = view.findViewById(R.id.recentlyEaten_RecyclerView);
-        AddDataForRecentlyEaten();
-        recentlyEatenAdapter = new RecentlyEatenAdapter(getActivity(), titles1, titles2, images);
-        LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerView_RecentlyEaten.setLayoutManager(linearLayoutManager3);
-        recyclerView_RecentlyEaten.setAdapter(recentlyEatenAdapter);
+        if (district_isAvailable == true) {
+            //Promo ImageSlider
+            AddDataForPromoImageSlider();
+            imageSlider_promo.setItemClickListener(new ItemClickListener() {
+                @Override
+                public void onItemSelected(int i) {
+                    ClickPromoItemImageSlider(i);
+                }
+            });
 
-        recyclerView_MayBeYouLike = view.findViewById(R.id.maybeYouLike_RecyclerView);
-        AddDataForMayBeYouLike();
-        maybeYouLikeAdapter = new MaybeYouLikeAdapter(getActivity(), titles1, titles2, prices, valueOfLike, images);
-        LinearLayoutManager linearLayoutManager4 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerView_MayBeYouLike.setLayoutManager(linearLayoutManager4);
-        recyclerView_MayBeYouLike.setAdapter(maybeYouLikeAdapter);
+            //RecyclerView List
+            AddDataForList();
+            listAdapter = new ListAdapter(getActivity(), titles1, images, district_id, district_isAvailable);
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.HORIZONTAL, false);
+            recyclerView_list.setLayoutManager(gridLayoutManager);
+            recyclerView_list.setAdapter(listAdapter);
 
-        recyclerView_FreeshipXtra = view.findViewById(R.id.FreeshipXtra_RecyclerView);
-        AddDataForFreeshipXtra();
-        freeshipXtraAdapter = new FreeshipXtraAdapter(getActivity(), titles1, titles2, images);
-        LinearLayoutManager linearLayoutManager5 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerView_FreeshipXtra.setLayoutManager(linearLayoutManager5);
-        recyclerView_FreeshipXtra.setAdapter(freeshipXtraAdapter);
+            //RecyclerView Collection
+            collectionModels = new ArrayList<>();
+            adapter = new CollectionAdapter(collectionModels, getActivity());
+            AddDataForCollection();
+            LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+            recyclerView_Collection.setLayoutManager(linearLayoutManager1);
+            recyclerView_Collection.setAdapter(adapter);
+            textView_MoreCollection.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), ItemList_Collection.class);
+                    startActivity(intent);
+                }
+            });
+
+            //RecyclerView AllRestaurant
+                GetDataForAllRestaurants(district_id);
+                allRestaurantAdapter = new AllRestaurantAdapter(getActivity(), allRestaurantModelList);
+                LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+                recyclerView_AllRestaurants.setLayoutManager(linearLayoutManager2);
+                recyclerView_AllRestaurants.setAdapter(allRestaurantAdapter);
+                AllRestaurant_more.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(getActivity(), RestaurantList.class);
+                        intent.putExtra("Name Activity", "All Restaurants");
+                        intent.putExtra("District ID", district_id);
+                        startActivity(intent);
+                    }
+                });
+
+            // ImageSlider Advertisement
+            AddDataForAdvertisementImageSlider();
+            imageSlider_advertisement.setItemClickListener(new ItemClickListener() {
+                @Override
+                public void onItemSelected(int i) {
+                    ClickAdvertisementItemImageSlider(i);
+                }
+            });
+
+            // RecyclerView Discount Combo Product
+            AddDataForDiscountComboProduct(district_id);
+            discountComboProductAdapter = new DiscountComboProductAdapter(getActivity(), sortOfProductModelList1);
+            LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+            recyclerView_DiscountComboProduct.setLayoutManager(linearLayoutManager3);
+            recyclerView_DiscountComboProduct.setAdapter(discountComboProductAdapter);
+            DiscountComboProduct_more.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), SortOfProductList.class);
+                    intent.putExtra("District ID", district_id);
+                    intent.putExtra("Name Activity", "Discount Combo Product");
+                    startActivity(intent);
+                }
+            });
+
+            //RecyclerView Cheapest Product
+            AddDataForCheapestProduct(district_id);
+           cheapestproductAdapter = new DiscountComboProductAdapter(getActivity(), sortOfProductModelList2);
+            LinearLayoutManager linearLayoutManager4 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+            recyclerView_CheapestProduct.setLayoutManager(linearLayoutManager4);
+            recyclerView_CheapestProduct.setAdapter(cheapestproductAdapter);
+            CheapestProduct_more.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), SortOfProductList.class);
+                    intent.putExtra("District ID", district_id);
+                    intent.putExtra("Name Activity", "Cheapest Product");
+                    startActivity(intent);
+                }
+            });
+
+        }
+
+
+
+
+
 
         recyclerView_TypesOfFood = view.findViewById(R.id.TypesOfFood_RecyclerView);
         AddDataForTypesOfFood();
@@ -283,9 +376,57 @@ public class HomeFragment extends Fragment {
         prepareViewPagerCategories(viewPager_Categories, title_Categories);
 
 
-
+        setUpSreen(district_isAvailable);
 
         return view;
+    }
+
+
+    private void setUpSreen(boolean sign) {
+        if (sign == true) {
+            imageSlider_promo.setVisibility(View.VISIBLE);
+            textView_DistrictIsUnavailable.setVisibility(View.GONE);
+            recyclerView_list.setVisibility(View.VISIBLE);
+            textView_space1.setVisibility(View.VISIBLE);
+            textView_CollectionTitle.setVisibility(View.VISIBLE);
+            textView_MoreCollection.setVisibility(View.VISIBLE);
+            recyclerView_Collection.setVisibility(View.VISIBLE);
+            textView_space2.setVisibility(View.VISIBLE);
+            AllRestaurant_Title.setVisibility(View.VISIBLE);
+            AllRestaurant_more.setVisibility(View.VISIBLE);
+            recyclerView_AllRestaurants.setVisibility(View.VISIBLE);
+            imageSlider_advertisement.setVisibility(View.VISIBLE);
+            textView_space3.setVisibility(View.VISIBLE);
+            DiscountComboProduct_Title.setVisibility(View.VISIBLE);
+            DiscountComboProduct_more.setVisibility(View.VISIBLE);
+            recyclerView_DiscountComboProduct.setVisibility(View.VISIBLE);
+            textView_space4.setVisibility(View.VISIBLE);
+            CheapestProduct_Title.setVisibility(View.VISIBLE);
+            CheapestProduct_more.setVisibility(View.VISIBLE);
+            recyclerView_CheapestProduct.setVisibility(View.VISIBLE);
+        }
+        else {
+            imageSlider_promo.setVisibility(View.GONE);
+            textView_DistrictIsUnavailable.setVisibility(View.VISIBLE);
+            recyclerView_list.setVisibility(View.GONE);
+            textView_space1.setVisibility(View.GONE);
+            textView_CollectionTitle.setVisibility(View.GONE);
+            textView_MoreCollection.setVisibility(View.GONE);
+            recyclerView_Collection.setVisibility(View.GONE);
+            textView_space2.setVisibility(View.GONE);
+            AllRestaurant_Title.setVisibility(View.GONE);
+            AllRestaurant_more.setVisibility(View.GONE);
+            recyclerView_AllRestaurants.setVisibility(View.GONE);
+            imageSlider_advertisement.setVisibility(View.GONE);
+            textView_space3.setVisibility(View.GONE);
+            DiscountComboProduct_Title.setVisibility(View.GONE);
+            DiscountComboProduct_more.setVisibility(View.GONE);
+            recyclerView_DiscountComboProduct.setVisibility(View.GONE);
+            textView_space4.setVisibility(View.GONE);
+            CheapestProduct_Title.setVisibility(View.GONE);
+            CheapestProduct_more.setVisibility(View.GONE);
+            recyclerView_CheapestProduct.setVisibility(View.GONE);
+        }
     }
 
     private void filter(String toString, int id) {
@@ -312,6 +453,79 @@ public class HomeFragment extends Fragment {
 
 
     }
+
+    private void GetDataForAllRestaurants(int id) {
+            String selectQuery = "SELECT B._id, R.Image, B.NAME, A.Address FROM (RESTAURANT R JOIN BRANCHES B ON R._id = B.Restaurant) JOIN ADDRESS A ON B.Address = A._id WHERE A.District = '" + id + "';";
+            Cursor cursor = db.rawQuery(selectQuery, null);
+            if (cursor != null) {
+                cursor.moveToFirst();
+                do {
+                    int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
+                    byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(img_byte, 0, img_byte.length);
+                    String name_branch = cursor.getString(cursor.getColumnIndex("NAME"));
+                    String address_branch = cursor.getString(cursor.getColumnIndex("Address"));
+                    AllRestaurantModel allRestaurantModel = new AllRestaurantModel(bitmap,name_branch,address_branch, branch_id);
+                    allRestaurantModelList.add(allRestaurantModel);
+                } while (cursor.moveToNext());
+
+            }
+            cursor.close();
+    }
+
+    private void AddDataForDiscountComboProduct(int id) {
+        String selectQuery = "SELECT B._id, P.Image, P.Name, B.NAME, M.Price " +
+                "FROM (((PRODUCTS P JOIN MENU M ON P._id = M.Product) " +
+                "JOIN RESTAURANT R ON M.Restaurant = R._id) " +
+                "JOIN BRANCHES B ON R._id = B.Restaurant) " +
+                "JOIN ADDRESS A ON B.Address = A._id " +
+                "WHERE A.District ='" + id + "';";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            do {
+                String key = "Combo";
+                String name_product = cursor.getString(cursor.getColumnIndex("Name"));
+                if(name_product.toLowerCase().contains(key.toLowerCase())) {
+                    byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
+                    int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
+                    Bitmap img_bitmap = BitmapFactory.decodeByteArray(img_byte, 0, img_byte.length);
+                    String name_branch = cursor.getString(cursor.getColumnIndex("NAME"));
+                    int price = cursor.getInt(cursor.getColumnIndex("Price"));
+                    SortOfProductModel sortOfProductModel = new SortOfProductModel(img_bitmap, name_product, name_branch, price, branch_id);
+                    sortOfProductModelList1.add(sortOfProductModel);
+                }
+            } while (cursor.moveToNext());
+
+        }
+        cursor.close();
+    }
+
+    public void AddDataForCheapestProduct(int id) {
+        String selectQuery = "SELECT B._id, P.Image, P.Name, B.NAME, M.Price " +
+                "FROM (((PRODUCTS P JOIN MENU M ON P._id = M.Product) " +
+                "JOIN RESTAURANT R ON M.Restaurant = R._id) " +
+                "JOIN BRANCHES B ON R._id = B.Restaurant) " +
+                "JOIN ADDRESS A ON B.Address = A._id  " +
+                "WHERE M.Price <= 25000 AND M.Price >= 15000 AND P.Category != 4 AND P.Category != 12 AND A.District ='" + id + "';";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            do {
+                String name_product = cursor.getString(cursor.getColumnIndex("Name"));
+                byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
+                int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
+                Bitmap img_bitmap = BitmapFactory.decodeByteArray(img_byte, 0, img_byte.length);
+                String name_branch = cursor.getString(cursor.getColumnIndex("NAME"));
+                int price = cursor.getInt(cursor.getColumnIndex("Price"));
+                SortOfProductModel sortOfProductModel = new SortOfProductModel(img_bitmap, name_product, name_branch, price, branch_id);
+                sortOfProductModelList2.add(sortOfProductModel);
+            } while (cursor.moveToNext());
+
+        }
+        cursor.close();
+    }
+
 
 
 
@@ -345,81 +559,60 @@ public class HomeFragment extends Fragment {
 
     public void AddDataForList()
     {
-        titles1 = new ArrayList<>();
-        images = new ArrayList<>();
+            titles1 = new ArrayList<>();
+            images = new ArrayList<>();
 
-        titles1.add("Cơm");
-        titles1.add("Trà Sữa");
-        titles1.add("Mì");
-        titles1.add("Smoothie");
+            titles1.add("Cơm");
+            titles1.add("Trà Sữa");
+            titles1.add("Mì");
+            titles1.add("Smoothie");
+            titles1.add("Gà");
+            titles1.add("Coffee");
+            titles1.add("Pizza");
+            titles1.add("Tea");
+            titles1.add("Hamburger");
+            titles1.add("Juice");
+            titles1.add("Bánh Mì");
+            titles1.add("Chè");
+            titles1.add("Salad");
+            titles1.add("Cake");
 
 
-        images.add(R.drawable.rice);
-        images.add(R.drawable.milk_tea);
-        images.add(R.drawable.noodle_icon);
-        images.add(R.drawable.smoothie_icon);
+            images.add(R.drawable.rice);
+            images.add(R.drawable.milk_tea);
+            images.add(R.drawable.noodle_icon);
+            images.add(R.drawable.smoothie_icon);
+            images.add(R.drawable.chicken_icon);
+            images.add(R.drawable.coffee_icon);
+            images.add(R.drawable.pizza_icon);
+            images.add(R.drawable.tea_icon);
+            images.add(R.drawable.hamburger_icon);
+            images.add(R.drawable.juice_icon);
+            images.add(R.drawable.banhmi_icon);
+            images.add(R.drawable.sweetsoup_icon);
+            images.add(R.drawable.salad_icon);
+            images.add(R.drawable.cake_icon);
+
     }
 
     public void AddDataForCollection()
     {
-        collectionModels.add(new CollectionModel(R.drawable.banh_mi_0d, "Bánh Mì 0Đ"));
-        collectionModels.add(new CollectionModel(R.drawable.bay_ngay_tien_trieu_ve_tui, "7 Ngày Review - \nTiền Triệu Về Túi"));
-        collectionModels.add(new CollectionModel(R.drawable.chi_5k, "Chi 5K - \nƯu Đãi Freeship 15k"));
-        collectionModels.add(new CollectionModel(R.drawable.cuoi_tuan_freeship, "Cuối Tuần \nFree Ship"));
-        collectionModels.add(new CollectionModel(R.drawable.day_don_ngay_le, "Đón Lễ Lớn"));
-        collectionModels.add(new CollectionModel(R.drawable.deal_nua_gia_quan_gan_nha, "Deal Nửa Giá - \nQuán Gần Nhà"));
-        collectionModels.add(new CollectionModel(R.drawable.deal_xin, "Deal Xịn - \n Giảm Tới 70k"));
-        collectionModels.add(new CollectionModel(R.drawable.di_het_viet_nam, "Đi Hết Việt Nam - \nFreeship"));
-        collectionModels.add(new CollectionModel(R.drawable.he_xinh_tiec_xin, "Hè Xinh - \nTiệc Xịn 55k"));
-        collectionModels.add(new CollectionModel(R.drawable.le_to_deal_xin_xo, "Lễ To - \nDeal Xịn Xò"));
+            collectionModels.add(new CollectionModel(R.drawable.banh_mi_0d, "Bánh Mì 0Đ"));
+            collectionModels.add(new CollectionModel(R.drawable.bay_ngay_tien_trieu_ve_tui, "7 Ngày Review - \nTiền Triệu Về Túi"));
+            collectionModels.add(new CollectionModel(R.drawable.chi_5k, "Chi 5K - \nƯu Đãi Freeship 15k"));
+            collectionModels.add(new CollectionModel(R.drawable.cuoi_tuan_freeship, "Cuối Tuần \nFree Ship"));
+            collectionModels.add(new CollectionModel(R.drawable.day_don_ngay_le, "Đón Lễ Lớn"));
+            collectionModels.add(new CollectionModel(R.drawable.deal_nua_gia_quan_gan_nha, "Deal Nửa Giá - \nQuán Gần Nhà"));
+            collectionModels.add(new CollectionModel(R.drawable.deal_xin, "Deal Xịn - \n Giảm Tới 70k"));
+            collectionModels.add(new CollectionModel(R.drawable.di_het_viet_nam, "Đi Hết Việt Nam - \nFreeship"));
+            collectionModels.add(new CollectionModel(R.drawable.he_xinh_tiec_xin, "Hè Xinh - \nTiệc Xịn 55k"));
+            collectionModels.add(new CollectionModel(R.drawable.le_to_deal_xin_xo, "Lễ To - \nDeal Xịn Xò"));
+
 
     }
 
-    public void AddDataForViewHistory()
-    {
-        titles1 = new ArrayList<>();
-        titles2 = new ArrayList<>();
-        images = new ArrayList<>();
-
-        titles1.add("The Coffee House - Cao Thắng");
-        titles1.add("Cơm Tấm Phúc Lộc Thọ");
-        titles1.add("Mì Trộn Tên Lửa");
-
-        titles2.add("Đã xem 2 ngày trước");
-        titles2.add("Đã xem 23 giờ trước");
-        titles2.add("Đã xem 10 ngày trước");
 
 
-        images.add(R.drawable.the_coffee_house);
-        images.add(R.drawable.com_tam_phucloctho);
-        images.add(R.drawable.mi_tron_ten_lua);
-    }
-
-    public void AddDataForRecentlyEaten()
-    {
-        titles1 = new ArrayList<>();
-        titles2 = new ArrayList<>();
-        images = new ArrayList<>();
-
-        titles1.add("Rau Má Mix");
-        titles1.add("Lotteria");
-        titles1.add("The Alley");
-        titles1.add("Jolibee");
-        titles1.add("Mì Cay Sasin");
-
-        titles2.add("FREESHIP");
-        titles2.add("Discount 15%");
-        titles2.add("Mua 2 tặng 1");
-        titles2.add("Free Nước");
-        titles2.add("Đi 4 tính tiền 3");
-
-        images.add(R.drawable.rau_ma_mix);
-        images.add(R.drawable.lotteria);
-        images.add(R.drawable.the_alley);
-        images.add(R.drawable.jolibee);
-        images.add(R.drawable.mi_cay_sasin);
-
-    }
 
     private void AddDataForMayBeYouLike()
     {
@@ -542,19 +735,20 @@ public class HomeFragment extends Fragment {
                 district_id = data.getIntExtra("District ID", 0);
                 textView_addressLine.setText(addressLine);
                 nameStreet = data.getStringExtra("Name Street");
+
             }
         }
     }
 
     public void AddDataForPromoImageSlider()
     {
-        slideModels = new ArrayList<>();
-        slideModels.add(new SlideModel("https://scontent-xsp1-1.xx.fbcdn.net/v/t1.6435-9/185300233_2957674807883799_868667496622488565_n.png?_nc_cat=110&ccb=1-3&_nc_sid=730e14&_nc_ohc=8hcDqTC2dI0AX8e9G-x&_nc_ht=scontent-xsp1-1.xx&oh=0144670a64d17d8f9ad030ab3c632fb8&oe=60D12B74", "", ScaleTypes.FIT));
-        slideModels.add(new SlideModel("https://scontent.fsgn5-7.fna.fbcdn.net/v/t1.6435-9/186486539_2962000987451181_5574183893428808477_n.jpg?_nc_cat=104&ccb=1-3&_nc_sid=730e14&_nc_ohc=1E2IX-q2UHsAX-HXkAo&_nc_ht=scontent.fsgn5-7.fna&oh=ad4cea16142bf5a7a9c96a88ffada497&oe=60D8FE8C", "", ScaleTypes.FIT));
-        slideModels.add(new SlideModel("https://scontent-xsp1-3.xx.fbcdn.net/v/t1.6435-9/189654320_2957909371193676_2363560169176149542_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=e3f864&_nc_ohc=M4DNMZxSCvMAX-VPTjq&_nc_ht=scontent-xsp1-3.xx&oh=560db1b6c656d8482f40eeca00a6f027&oe=60D0A310", "", ScaleTypes.FIT));
-        slideModels.add(new SlideModel("https://scontent.fsgn5-5.fna.fbcdn.net/v/t1.6435-9/186629918_2956213878029892_1702674951943422020_n.jpg?_nc_cat=100&ccb=1-3&_nc_sid=730e14&_nc_ohc=-D1lKSojBkgAX-6lvQU&_nc_ht=scontent.fsgn5-5.fna&oh=c721ae5fece413a70dbcd87c4a9b25ad&oe=60D0A1B3", "", ScaleTypes.FIT));
-        slideModels.add(new SlideModel("https://scontent-xsp1-3.xx.fbcdn.net/v/t1.6435-9/187515711_2956744857976794_8796511153691441813_n.jpg?_nc_cat=107&ccb=1-3&_nc_sid=730e14&_nc_ohc=dZ7DvN9Ij9MAX-WBKSZ&_nc_ht=scontent-xsp1-3.xx&oh=aa23cf7817739bab7b053c64a8828f87&oe=60D12A2C", "", ScaleTypes.FIT));
-        imageSlider_promo.setImageList(slideModels,  ScaleTypes.FIT);
+            slideModels = new ArrayList<>();
+            slideModels.add(new SlideModel("https://scontent-xsp1-1.xx.fbcdn.net/v/t1.6435-9/185300233_2957674807883799_868667496622488565_n.png?_nc_cat=110&ccb=1-3&_nc_sid=730e14&_nc_ohc=8hcDqTC2dI0AX8e9G-x&_nc_ht=scontent-xsp1-1.xx&oh=0144670a64d17d8f9ad030ab3c632fb8&oe=60D12B74", "", ScaleTypes.FIT));
+            slideModels.add(new SlideModel("https://scontent.fsgn5-7.fna.fbcdn.net/v/t1.6435-9/186486539_2962000987451181_5574183893428808477_n.jpg?_nc_cat=104&ccb=1-3&_nc_sid=730e14&_nc_ohc=1E2IX-q2UHsAX-HXkAo&_nc_ht=scontent.fsgn5-7.fna&oh=ad4cea16142bf5a7a9c96a88ffada497&oe=60D8FE8C", "", ScaleTypes.FIT));
+            slideModels.add(new SlideModel("https://scontent-xsp1-3.xx.fbcdn.net/v/t1.6435-9/189654320_2957909371193676_2363560169176149542_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=e3f864&_nc_ohc=M4DNMZxSCvMAX-VPTjq&_nc_ht=scontent-xsp1-3.xx&oh=560db1b6c656d8482f40eeca00a6f027&oe=60D0A310", "", ScaleTypes.FIT));
+            slideModels.add(new SlideModel("https://scontent.fsgn5-5.fna.fbcdn.net/v/t1.6435-9/186629918_2956213878029892_1702674951943422020_n.jpg?_nc_cat=100&ccb=1-3&_nc_sid=730e14&_nc_ohc=-D1lKSojBkgAX-6lvQU&_nc_ht=scontent.fsgn5-5.fna&oh=c721ae5fece413a70dbcd87c4a9b25ad&oe=60D0A1B3", "", ScaleTypes.FIT));
+            slideModels.add(new SlideModel("https://scontent-xsp1-3.xx.fbcdn.net/v/t1.6435-9/187515711_2956744857976794_8796511153691441813_n.jpg?_nc_cat=107&ccb=1-3&_nc_sid=730e14&_nc_ohc=dZ7DvN9Ij9MAX-WBKSZ&_nc_ht=scontent-xsp1-3.xx&oh=aa23cf7817739bab7b053c64a8828f87&oe=60D12A2C", "", ScaleTypes.FIT));
+            imageSlider_promo.setImageList(slideModels, ScaleTypes.FIT);
     }
 
     public void ClickPromoItemImageSlider(int i)
@@ -630,7 +824,8 @@ public class HomeFragment extends Fragment {
         slideModels.add(new SlideModel("https://scontent.fsgn5-5.fna.fbcdn.net/v/t1.6435-9/188460271_2955282381456375_7822490260664823430_n.jpg?_nc_cat=102&ccb=1-3&_nc_sid=730e14&_nc_ohc=3kjXuEqXHQAAX-cvzwt&_nc_ht=scontent.fsgn5-5.fna&oh=fcb070d238afbb7b3e35a56739c93421&oe=60D25137", "", ScaleTypes.FIT));
         slideModels.add(new SlideModel("https://scontent.fsgn5-5.fna.fbcdn.net/v/t1.6435-9/182918562_2950431178608162_2329511474755934128_n.jpg?_nc_cat=100&ccb=1-3&_nc_sid=730e14&_nc_ohc=Jgq6I7C60f0AX-2AN7W&_nc_ht=scontent.fsgn5-5.fna&oh=a57d61aef409cdf117feb5ce0d9c096f&oe=60D19B3E", "", ScaleTypes.FIT));
         slideModels.add(new SlideModel("https://scontent.fsgn5-5.fna.fbcdn.net/v/t1.6435-9/183957113_2952210498430230_5664319190676897654_n.jpg?_nc_cat=100&ccb=1-3&_nc_sid=730e14&_nc_ohc=za8BW5IJPXkAX9pLiwy&_nc_ht=scontent.fsgn5-5.fna&oh=9703325e27053340c449dc54a4b119d4&oe=60CFE4AE", "", ScaleTypes.FIT));
-        imageSlider_advertisement.setImageList(slideModels,  ScaleTypes.FIT);
+        imageSlider_advertisement.setImageList(slideModels, ScaleTypes.FIT);
+
     }
 
     public void ClickAdvertisementItemImageSlider(int i)

@@ -397,6 +397,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void delCategory(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String selection = FoodManagementContract.CCategory._ID + " = ?";
+        String[] selectionArgs = { Integer.toString(id) };
+        db.delete(FoodManagementContract.CCategory.TABLE_NAME, selection, selectionArgs);
+        db.close();
+    }
+
     public void addProduct(String name, String description, int category_id, byte[] image) {
         ContentValues values = new ContentValues();
         values.put(FoodManagementContract.CProduct.KEY_NAME, name);

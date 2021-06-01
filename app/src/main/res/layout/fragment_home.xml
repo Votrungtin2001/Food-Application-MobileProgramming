@@ -83,13 +83,26 @@
             app:layout_constraintTop_toBottomOf="@+id/address_Txt"
             android:inputType="text"/>
 
+        <TextView
+            android:id="@+id/textView_DistrictIsUnavailable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/editText_SearchBar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:text="Hiện ở đây chưa có bất kỳ nhà hàng nào"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView_SearchBar"
-            app:layout_constraintTop_toBottomOf="@+id/editText_SearchBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="4dp"
-            android:scrollbars="vertical"/>
+            android:scrollbars="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/textView_DistrictIsUnavailable"
+            tools:layout_editor_absoluteX="-45dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -177,10 +190,10 @@
                 app:layout_constraintTop_toBottomOf="@+id/collection_textView" />
 
             <TextView
-                android:id="@+id/viewHistory_textView"
+                android:id="@+id/AllRestaurants_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Xem gần đây"
+                android:text="Danh sách nhà hàng"
                 android:textColor="#575555"
                 android:textSize="22dp"
                 android:textStyle="bold"
@@ -188,7 +201,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
             <TextView
-                android:id="@+id/viewHistory_more"
+                android:id="@+id/AllRestaurants_more"
                 android:layout_width="wrap_content"
                 android:layout_height="37dp"
                 android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
@@ -208,7 +221,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/collection_recyclerView" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/viewHistory_recyclerView"
+                android:id="@+id/AllRestaurants_recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scrollbarSize="4dp"
@@ -217,13 +230,13 @@
                 android:scrollbars="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/viewHistory_textView" />
+                app:layout_constraintTop_toBottomOf="@+id/AllRestaurants_textView" />
 
             <com.denzcoskun.imageslider.ImageSlider
                 android:id="@+id/advertisement_slider"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
-                android:layout_marginTop="28dp"
+                android:layout_marginTop="10dp"
                 app:iss_auto_cycle="true"
                 app:iss_delay="0"
                 app:iss_period="1500"
@@ -231,7 +244,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/viewHistory_recyclerView">
+                app:layout_constraintTop_toBottomOf="@+id/AllRestaurants_recyclerView">
 
             </com.denzcoskun.imageslider.ImageSlider>
 
@@ -245,10 +258,10 @@
                 app:layout_constraintTop_toBottomOf="@+id/advertisement_slider" />
 
             <TextView
-                android:id="@+id/recentlyEaten_TextView"
+                android:id="@+id/DiscountComboProduct_Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mọi người vừa ăn gì?"
+                android:text="Combo Ưu Đãi"
                 android:textColor="#575555"
                 android:textSize="22dp"
                 android:textStyle="bold"
@@ -256,7 +269,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/txtView" />
 
             <TextView
-                android:id="@+id/recentlyEaten_more"
+                android:id="@+id/DiscountComboProduct_more"
                 android:layout_width="wrap_content"
                 android:layout_height="37dp"
                 android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
@@ -267,7 +280,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/txtView" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recentlyEaten_RecyclerView"
+                android:id="@+id/DiscountComboProduct_RecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scrollbarSize="4dp"
@@ -276,7 +289,7 @@
                 android:scrollbars="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recentlyEaten_TextView"/>
+                app:layout_constraintTop_toBottomOf="@+id/DiscountComboProduct_Title"/>
 
             <TextView
                 android:id="@+id/txtView1"
@@ -285,13 +298,13 @@
                 android:background="#F5EAF1EE"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/recentlyEaten_RecyclerView" />
+                app:layout_constraintTop_toBottomOf="@+id/DiscountComboProduct_RecyclerView" />
 
             <TextView
-                android:id="@+id/maybeYouLike_TextView"
+                android:id="@+id/CheapestProduct_Title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Có thể bạn thích"
+                android:text="Giá Rẻ Bất Ngờ"
                 android:textColor="#575555"
                 android:textSize="22dp"
                 android:textStyle="bold"
@@ -299,7 +312,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/txtView1" />
 
             <TextView
-                android:id="@+id/maybeYouLike_more"
+                android:id="@+id/CheapestProduct_more"
                 android:layout_width="wrap_content"
                 android:layout_height="37dp"
                 android:drawableRight="@drawable/ic_baseline_arrow_forward_ios_24"
@@ -310,7 +323,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/txtView1" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/maybeYouLike_RecyclerView"
+                android:id="@+id/CheapestProduct_RecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scrollbarSize="4dp"
@@ -319,7 +332,7 @@
                 android:scrollbars="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/maybeYouLike_TextView"/>
+                app:layout_constraintTop_toBottomOf="@+id/CheapestProduct_Title"/>
 
             <TextView
                 android:id="@+id/txtView2"
@@ -328,7 +341,7 @@
                 android:background="#F5EAF1EE"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/maybeYouLike_RecyclerView" />
+                app:layout_constraintTop_toBottomOf="@+id/CheapestProduct_RecyclerView" />
 
             <TextView
                 android:id="@+id/FreeshipXtra_TextView"

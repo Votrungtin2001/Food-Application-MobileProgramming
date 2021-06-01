@@ -1,4 +1,4 @@
-package com.example.foodapplication;
+package adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,12 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.foodapplication.Item_Collection;
+import com.example.foodapplication.R;
 
 import java.util.List;
 

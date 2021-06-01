@@ -32,7 +32,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/ProductWithCategory_RecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="655dp"
         android:scrollbarSize="4dp"
         android:scrollbarThumbHorizontal="@color/scrollBackground"
         android:scrollbarTrackHorizontal="@color/scrollTrack"
