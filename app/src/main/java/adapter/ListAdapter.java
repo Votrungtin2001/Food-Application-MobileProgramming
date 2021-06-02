@@ -109,6 +109,14 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
                             category_id = 5;
                             break;
 
+                        case 14:
+                            category_id = 19;
+                            break;
+
+                        case 15:
+                            category_id = 17;
+                            break;
+
 
                     }
                     intent.putExtra("Category ID", category_id);

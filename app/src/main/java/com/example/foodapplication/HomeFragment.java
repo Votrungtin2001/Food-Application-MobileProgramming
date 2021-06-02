@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,12 +35,16 @@ import com.google.android.material.tabs.TabLayout;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import adapter.CollectionAdapter;
 import adapter.DiscountComboProductAdapter;
 import adapter.ListAdapter;
 import adapter.SearchBarAdapter;
 import adapter.AllRestaurantAdapter;
+import fragments.BestRatingRestaurantFragment;
+import fragments.BestSellerRestaurantFragment;
+import fragments.NearMeRestaurantsFragment;
 import models.CollectionModel;
 import models.SearchBarModel;
 import models.AllRestaurantModel;
@@ -59,6 +64,7 @@ public class HomeFragment extends Fragment {
     private TextView textView_space2;
     private TextView textView_space3;
     private TextView textView_space4;
+    private TextView textView_space5;
 
     //RecyclerView SearchBar
     RecyclerView recyclerView_SearchBar;
@@ -71,13 +77,6 @@ public class HomeFragment extends Fragment {
     List<String> titles1;
     List<Integer> images;
     ListAdapter listAdapter;
-
-
-
-    List<String> titles2;
-
-    List<String> prices;
-    List<String> valueOfLike;
 
 
     //RecyclerView Collection
@@ -113,15 +112,12 @@ public class HomeFragment extends Fragment {
     DiscountComboProductAdapter cheapestproductAdapter;
     List<SortOfProductModel> sortOfProductModelList2 = new ArrayList<>();
 
-
-    RecyclerView recyclerView_TypesOfFood;
-    TypesOfFoodAdapter typesOfFoodAdapter;
-
-    TabLayout tabLayout_Categories;
-    ViewPager viewPager_Categories;
+    //TabLayout & ViewPager
+    TabLayout tabLayout_KindOfRestaurant;
+    ViewPager viewPager_KindOfRestaurant;
     ViewPagerAdapter viewPagerAdapter;
 
-    ArrayList<String> title_Categories = new ArrayList<>();
+    ArrayList<String> title_KindOfRestaurant = new ArrayList<>();
 
     int district_id;
     boolean district_isAvailable = false;
@@ -154,43 +150,15 @@ public class HomeFragment extends Fragment {
 
 
 
+
+
+        //EditText Search
         editText_search = view.findViewById(R.id.editText_SearchBar);
-        searchBarAdapter = new SearchBarAdapter(getActivity(), searchBarModels);
+
+        //RecyclerView SearchBar
         recyclerView_SearchBar = view.findViewById(R.id.recyclerView_SearchBar);
-        linearLayoutManager_SearchBar = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        recyclerView_SearchBar.setLayoutManager(linearLayoutManager_SearchBar);
-        editText_search.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String key_search = editText_search.getText().toString();
-                if(district_isAvailable == true) {
-                    if (key_search.trim().equals("")) {
-                        recyclerView_SearchBar.setVisibility(View.GONE);
-
-                    } else {
-                        recyclerView_SearchBar.setVisibility(View.VISIBLE);
-                        filter(s.toString(), district_id);
-
-                    }
-                }
-            }
-        });
-
-
-
-
-
-
+        //ImageView Location
         imageView_Location = (ImageView) view.findViewById(R.id.location_imageView);
         imageView_Location.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -199,28 +167,34 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        imageView_Next = (ImageView) view.findViewById(R.id.next_imageView);
-        imageView_Next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { runFillAddressActivity(); }
-        });
-
-        textView_addressLine = (TextView) view.findViewById(R.id.address_Txt);
+        //Open Fill Address Activity
+        textView_addressLine = view.findViewById(R.id.address_Txt);
         textView_addressLine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) { runFillAddressActivity(); }
         });
 
-        textView_addressLine = (TextView) view.findViewById(R.id.address_Txt);
+        //ImageView Next
+        imageView_Next = (ImageView) view.findViewById(R.id.next_imageView);
+        //Open Fill Address Activity
+        imageView_Next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { runFillAddressActivity(); }
+        });
+
+        //Get address data from previous activity
         Bundle b = getArguments();
         addressLine = b.getString("AddressLine");
         nameStreet = b.getString("NameStreet");
         district_id = b.getInt("District ID");
-        if(district_id >= 0) district_isAvailable = true;
 
+        //TextView AddressLine
+        //Set Address Data
         textView_addressLine.setText(addressLine);
 
+        //TextView Announcement When District Doesn't Have Any Restaurants
         textView_DistrictIsUnavailable = view.findViewById(R.id.textView_DistrictIsUnavailable);
+
         //Promo ImageSlider
         imageSlider_promo = view.findViewById(R.id.promo_slider);
 
@@ -258,124 +232,14 @@ public class HomeFragment extends Fragment {
         CheapestProduct_Title = view.findViewById(R.id.CheapestProduct_Title);
         CheapestProduct_more = view.findViewById(R.id.CheapestProduct_more);
 
+        textView_space5 = view.findViewById(R.id.txtView2);
 
-        if (district_isAvailable == true) {
-            //Promo ImageSlider
-            AddDataForPromoImageSlider();
-            imageSlider_promo.setItemClickListener(new ItemClickListener() {
-                @Override
-                public void onItemSelected(int i) {
-                    ClickPromoItemImageSlider(i);
-                }
-            });
+        //Tab Layout and ViewPager
+        tabLayout_KindOfRestaurant = (TabLayout) view.findViewById(R.id.KindOfRestaurant_TabLayout);
+        viewPager_KindOfRestaurant = (ViewPager) view.findViewById(R.id.KindOfRestaurant_ViewPager);
 
-            //RecyclerView List
-            AddDataForList();
-            listAdapter = new ListAdapter(getActivity(), titles1, images, district_id, district_isAvailable);
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.HORIZONTAL, false);
-            recyclerView_list.setLayoutManager(gridLayoutManager);
-            recyclerView_list.setAdapter(listAdapter);
-
-            //RecyclerView Collection
-            collectionModels = new ArrayList<>();
-            adapter = new CollectionAdapter(collectionModels, getActivity());
-            AddDataForCollection();
-            LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-            recyclerView_Collection.setLayoutManager(linearLayoutManager1);
-            recyclerView_Collection.setAdapter(adapter);
-            textView_MoreCollection.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), ItemList_Collection.class);
-                    startActivity(intent);
-                }
-            });
-
-            //RecyclerView AllRestaurant
-                GetDataForAllRestaurants(district_id);
-                allRestaurantAdapter = new AllRestaurantAdapter(getActivity(), allRestaurantModelList);
-                LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-                recyclerView_AllRestaurants.setLayoutManager(linearLayoutManager2);
-                recyclerView_AllRestaurants.setAdapter(allRestaurantAdapter);
-                AllRestaurant_more.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(getActivity(), RestaurantList.class);
-                        intent.putExtra("Name Activity", "All Restaurants");
-                        intent.putExtra("District ID", district_id);
-                        startActivity(intent);
-                    }
-                });
-
-            // ImageSlider Advertisement
-            AddDataForAdvertisementImageSlider();
-            imageSlider_advertisement.setItemClickListener(new ItemClickListener() {
-                @Override
-                public void onItemSelected(int i) {
-                    ClickAdvertisementItemImageSlider(i);
-                }
-            });
-
-            // RecyclerView Discount Combo Product
-            AddDataForDiscountComboProduct(district_id);
-            discountComboProductAdapter = new DiscountComboProductAdapter(getActivity(), sortOfProductModelList1);
-            LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-            recyclerView_DiscountComboProduct.setLayoutManager(linearLayoutManager3);
-            recyclerView_DiscountComboProduct.setAdapter(discountComboProductAdapter);
-            DiscountComboProduct_more.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), SortOfProductList.class);
-                    intent.putExtra("District ID", district_id);
-                    intent.putExtra("Name Activity", "Discount Combo Product");
-                    startActivity(intent);
-                }
-            });
-
-            //RecyclerView Cheapest Product
-            AddDataForCheapestProduct(district_id);
-           cheapestproductAdapter = new DiscountComboProductAdapter(getActivity(), sortOfProductModelList2);
-            LinearLayoutManager linearLayoutManager4 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-            recyclerView_CheapestProduct.setLayoutManager(linearLayoutManager4);
-            recyclerView_CheapestProduct.setAdapter(cheapestproductAdapter);
-            CheapestProduct_more.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), SortOfProductList.class);
-                    intent.putExtra("District ID", district_id);
-                    intent.putExtra("Name Activity", "Cheapest Product");
-                    startActivity(intent);
-                }
-            });
-
-        }
-
-
-
-
-
-
-        recyclerView_TypesOfFood = view.findViewById(R.id.TypesOfFood_RecyclerView);
-        AddDataForTypesOfFood();
-        typesOfFoodAdapter = new TypesOfFoodAdapter(getActivity(), titles1, images);
-        LinearLayoutManager linearLayoutManager6 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        recyclerView_TypesOfFood.setLayoutManager(linearLayoutManager6);
-        recyclerView_TypesOfFood.setAdapter(typesOfFoodAdapter);
-
-        tabLayout_Categories = (TabLayout) view.findViewById(R.id.Categories_TabLayout);
-        viewPager_Categories = (ViewPager) view.findViewById(R.id.Categories_ViewPager);
-
-        title_Categories.add("Gần tôi");
-        title_Categories.add("Bán chạy");
-        title_Categories.add("Đánh giá");
-        title_Categories.add("Giao nhanh");
-        //Set tab layout
-        tabLayout_Categories.setupWithViewPager(viewPager_Categories);
-
-        //Prepare view pager
-        prepareViewPagerCategories(viewPager_Categories, title_Categories);
-
-
+        if(district_id >= 0) district_isAvailable = true;
+        SetAllData(district_id);
         setUpSreen(district_isAvailable);
 
         return view;
@@ -404,6 +268,9 @@ public class HomeFragment extends Fragment {
             CheapestProduct_Title.setVisibility(View.VISIBLE);
             CheapestProduct_more.setVisibility(View.VISIBLE);
             recyclerView_CheapestProduct.setVisibility(View.VISIBLE);
+            textView_space5.setVisibility(View.VISIBLE);
+            tabLayout_KindOfRestaurant.setVisibility(View.VISIBLE);
+            viewPager_KindOfRestaurant.setVisibility(View.VISIBLE);
         }
         else {
             imageSlider_promo.setVisibility(View.GONE);
@@ -426,6 +293,9 @@ public class HomeFragment extends Fragment {
             CheapestProduct_Title.setVisibility(View.GONE);
             CheapestProduct_more.setVisibility(View.GONE);
             recyclerView_CheapestProduct.setVisibility(View.GONE);
+            textView_space5.setVisibility(View.GONE);
+            tabLayout_KindOfRestaurant.setVisibility(View.GONE);
+            viewPager_KindOfRestaurant.setVisibility(View.GONE);
         }
     }
 
@@ -455,6 +325,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void GetDataForAllRestaurants(int id) {
+        allRestaurantModelList = new ArrayList<>();
             String selectQuery = "SELECT B._id, R.Image, B.NAME, A.Address FROM (RESTAURANT R JOIN BRANCHES B ON R._id = B.Restaurant) JOIN ADDRESS A ON B.Address = A._id WHERE A.District = '" + id + "';";
             Cursor cursor = db.rawQuery(selectQuery, null);
             if (cursor != null) {
@@ -474,6 +345,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void AddDataForDiscountComboProduct(int id) {
+        sortOfProductModelList1 = new ArrayList<>();
         String selectQuery = "SELECT B._id, P.Image, P.Name, B.NAME, M.Price " +
                 "FROM (((PRODUCTS P JOIN MENU M ON P._id = M.Product) " +
                 "JOIN RESTAURANT R ON M.Restaurant = R._id) " +
@@ -502,12 +374,13 @@ public class HomeFragment extends Fragment {
     }
 
     public void AddDataForCheapestProduct(int id) {
+        sortOfProductModelList2 = new ArrayList<>();
         String selectQuery = "SELECT B._id, P.Image, P.Name, B.NAME, M.Price " +
                 "FROM (((PRODUCTS P JOIN MENU M ON P._id = M.Product) " +
                 "JOIN RESTAURANT R ON M.Restaurant = R._id) " +
                 "JOIN BRANCHES B ON R._id = B.Restaurant) " +
                 "JOIN ADDRESS A ON B.Address = A._id  " +
-                "WHERE M.Price <= 25000 AND M.Price >= 15000 AND P.Category != 4 AND P.Category != 12 AND A.District ='" + id + "';";
+                "WHERE M.Price < 20000 AND M.Price >= 15000 AND P.Category != 4 AND P.Category != 12 AND A.District ='" + id + "';";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor != null) {
             cursor.moveToFirst();
@@ -527,32 +400,33 @@ public class HomeFragment extends Fragment {
     }
 
 
-
-
     private void prepareViewPagerCategories(ViewPager viewPager, ArrayList<String> arrayList)
     {
         viewPagerAdapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager());
-        for(int i = 0; i < title_Categories.size(); i++)
+        for(int i = 0; i < arrayList.size(); i++)
         {
             if (i == 0)
             {
-                NearMeCategoriesFragment nearMeCategoriesFragment = new NearMeCategoriesFragment();
-                viewPagerAdapter.addFragment(nearMeCategoriesFragment, title_Categories.get(i));
+                NearMeRestaurantsFragment nearMeRestaurantsFragment = new NearMeRestaurantsFragment(district_id);
+                viewPagerAdapter.addFragment(nearMeRestaurantsFragment, arrayList.get(i));
             }
             if (i == 1)
             {
-                BestSellerCategoriesFragment bestSellerCategoriesFragment = new BestSellerCategoriesFragment();
-                viewPagerAdapter.addFragment(bestSellerCategoriesFragment, title_Categories.get(i));
+                BestSellerRestaurantFragment bestSellerRestaurantFragment = new BestSellerRestaurantFragment(district_id);
+                viewPagerAdapter.addFragment(bestSellerRestaurantFragment, arrayList.get(i));
             }
             if (i == 2)
             {
-                BestRatingCategoriesFragment bestRatingCategoriesFragment = new BestRatingCategoriesFragment();
-                viewPagerAdapter.addFragment(bestRatingCategoriesFragment, title_Categories.get(i));
+                BestRatingRestaurantFragment bestRatingRestaurantFragment = new BestRatingRestaurantFragment(district_id);
+                viewPagerAdapter.addFragment(bestRatingRestaurantFragment, arrayList.get(i));
             }
-            if (i == 3) {
-                FastestDeliveryCategoriesFragment fastestDeliveryCategoriesFragment = new FastestDeliveryCategoriesFragment();
-                viewPagerAdapter.addFragment(fastestDeliveryCategoriesFragment, title_Categories.get(i));
+            if (i == 3)
+            {
+                FastestDeliveryRestaurantFragment fastestDeliveryRestaurantFragment = new FastestDeliveryRestaurantFragment(district_id);
+                viewPagerAdapter.addFragment(fastestDeliveryRestaurantFragment, arrayList.get(i));
             }
+
+
         }
         viewPager.setAdapter(viewPagerAdapter);
     }
@@ -576,6 +450,8 @@ public class HomeFragment extends Fragment {
             titles1.add("Chè");
             titles1.add("Salad");
             titles1.add("Cake");
+            titles1.add("Sushi");
+            titles1.add("Xôi");
 
 
             images.add(R.drawable.rice);
@@ -592,11 +468,14 @@ public class HomeFragment extends Fragment {
             images.add(R.drawable.sweetsoup_icon);
             images.add(R.drawable.salad_icon);
             images.add(R.drawable.cake_icon);
+            images.add(R.drawable.sushi_icon);
+            images.add(R.drawable.xoi_icon);
 
     }
 
     public void AddDataForCollection()
     {
+            collectionModels = new ArrayList<>();
             collectionModels.add(new CollectionModel(R.drawable.banh_mi_0d, "Bánh Mì 0Đ"));
             collectionModels.add(new CollectionModel(R.drawable.bay_ngay_tien_trieu_ve_tui, "7 Ngày Review - \nTiền Triệu Về Túi"));
             collectionModels.add(new CollectionModel(R.drawable.chi_5k, "Chi 5K - \nƯu Đãi Freeship 15k"));
@@ -612,111 +491,6 @@ public class HomeFragment extends Fragment {
     }
 
 
-
-
-    private void AddDataForMayBeYouLike()
-    {
-        titles1 = new ArrayList<>();
-        titles2 = new ArrayList<>();
-        prices = new ArrayList<>();
-        valueOfLike = new ArrayList<>();
-        images = new ArrayList<>();
-
-        titles1.add("Mì cay hải sản");
-        titles1.add("Gà sốt cay Sài Gòn");
-        titles1.add("Hamburger Big Mac");
-        titles1.add("Pizza cá hồi xông khói");
-        titles1.add("Trà ô lông dâu");
-
-        titles2.add("Mì Cay Sasin - Đại Học Khoa Học Tự Nhiên");
-        titles2.add("Jolibee Sư Vạn Thạnh - Quận 5");
-        titles2.add("Mc Donald - Aeon Bình Dương");
-        titles2.add("Pizza Hut - Vincom Thủ Đức");
-        titles2.add("Phúc Long - Võ Văn Ngân");
-
-        prices.add("40,000đ");
-        prices.add("33,000đ");
-        prices.add("69,000đ");
-        prices.add("79,000đ");
-        prices.add("45,000đ");
-
-        valueOfLike.add("10+ lượt thích");
-        valueOfLike.add("100+ lượt thích");
-        valueOfLike.add("200+ lượt thích");
-        valueOfLike.add("50+ lượt thích");
-        valueOfLike.add("500+ lượt thích");
-
-        images.add(R.drawable.mi_cay_hai_san_sasin);
-        images.add(R.drawable.ga_sot_cay_jolibee);
-        images.add(R.drawable.hamburger_mcdonald);
-        images.add(R.drawable.pizza_ca_hoi_xong_khoi_pizzahut);
-        images.add(R.drawable.tra_o_long_dau_pl);
-    }
-
-    public void AddDataForFreeshipXtra()
-    {
-        titles1 = new ArrayList<>();
-        titles2 = new ArrayList<>();
-        images = new ArrayList<>();
-
-        titles1.add("HP Cơm Tấm - Nguyễn Tri Phương");
-        titles1.add("Thái Tuk Tuk - Ẩm Thực Thái");
-        titles1.add("Uncle Tea - Trà Đài Loan");
-        titles1.add("Sushi Cô Chủ Nhỏ");
-        titles1.add("Salad Poki Katuri");
-
-        titles2.add("FREESHIP");
-        titles2.add("Giảm 50%");
-        titles2.add("Giảm món");
-        titles2.add("Giảm 50%");
-        titles2.add("Giảm món");
-
-
-        images.add(R.drawable.hp_com_tam);
-        images.add(R.drawable.thai_tuk_tuk);
-        images.add(R.drawable.uncle_tea);
-        images.add(R.drawable.sushi_cochunho);
-        images.add(R.drawable.salad_poki_katuri);
-
-    }
-
-    public void AddDataForTypesOfFood()
-    {
-        titles1 = new ArrayList<>();
-        images = new ArrayList<>();
-
-        titles1.add("Tất cả");
-        titles1.add("Đồ ăn");
-        titles1.add("Đồ uống");
-        titles1.add("Đồ chay");
-        titles1.add("Bánh kem");
-        titles1.add("Tráng miệng");
-        titles1.add("Homemade");
-        titles1.add("Vỉa hè");
-        titles1.add("Pizza/Burger");
-        titles1.add("Món gà");
-        titles1.add("Món lẩu");
-        titles1.add("Sushi");
-        titles1.add("Mì phở");
-        titles1.add("Cơm hộp");
-
-        images.add(R.drawable.all_types);
-        images.add(R.drawable.general_food);
-        images.add(R.drawable.general_drink);
-        images.add(R.drawable.vegetarian_food);
-        images.add(R.drawable.sweet_cake);
-        images.add(R.drawable.dessert_food);
-        images.add(R.drawable.sweet_soup);
-        images.add(R.drawable.street_food);
-        images.add(R.drawable.pizza);
-        images.add(R.drawable.chicken_food);
-        images.add(R.drawable.hot_pot);
-        images.add(R.drawable.sushi_food);
-        images.add(R.drawable.noodle_food);
-        images.add(R.drawable.bento);
-
-    }
-
     private void runFillAddressActivity()
     {
         Intent intent = new Intent(getActivity(), Fill_Address_Screen.class);
@@ -731,10 +505,18 @@ public class HomeFragment extends Fragment {
         if(requestCode == 1){
             if(resultCode == getActivity().RESULT_OK)
             {
+                boolean sign = false;
                 addressLine = data.getStringExtra("Address Line");
                 district_id = data.getIntExtra("District ID", 0);
                 textView_addressLine.setText(addressLine);
                 nameStreet = data.getStringExtra("Name Street");
+
+                if(district_id >= 0) sign = true;
+                SetAllData(district_id);
+
+                setUpSreen(district_isAvailable);
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.detach(this).attach(this).commit();
 
             }
         }
@@ -883,5 +665,165 @@ public class HomeFragment extends Fragment {
         intent.putExtra("name", sName);
         intent.putExtra("description", sDescription);
         startActivity(intent);
+    }
+
+    public void SetAllData(int a) {
+        district_isAvailable = false;
+        if(a >= 0) district_isAvailable = true;
+
+        //Search Bar Event
+        searchBarAdapter = new SearchBarAdapter(getActivity(), searchBarModels);
+        linearLayoutManager_SearchBar = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        recyclerView_SearchBar.setLayoutManager(linearLayoutManager_SearchBar);
+        editText_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String key_search = editText_search.getText().toString();
+                if(district_isAvailable == true) {
+                    if (key_search.trim().equals("")) {
+                        recyclerView_SearchBar.setVisibility(View.GONE);
+
+                    } else {
+                        recyclerView_SearchBar.setVisibility(View.VISIBLE);
+                        filter(s.toString(), district_id);
+
+                    }
+                }
+            }
+        });
+
+        //Open Fill Address Activity
+        imageView_Location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                runFillAddressActivity();
+            }
+        });
+
+        //Open Fill Address Activity
+        imageView_Next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { runFillAddressActivity(); }
+        });
+
+        //Set Address Data
+        textView_addressLine.setText(addressLine);
+
+        //Open Fill Address Activity
+        textView_addressLine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { runFillAddressActivity(); }
+        });
+
+        if(district_isAvailable == true) {
+            //Promo Image Slider Event
+            AddDataForPromoImageSlider();
+            imageSlider_promo.setItemClickListener(new ItemClickListener() {
+                @Override
+                public void onItemSelected(int i) {
+                    ClickPromoItemImageSlider(i);
+                }
+            });
+
+            //RecyclerView List
+            AddDataForList();
+            listAdapter = new ListAdapter(getActivity(), titles1, images, district_id, district_isAvailable);
+            GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.HORIZONTAL, false);
+            recyclerView_list.setLayoutManager(gridLayoutManager);
+            recyclerView_list.setAdapter(listAdapter);
+
+            //RecyclerView Collection
+            collectionModels = new ArrayList<>();
+            adapter = new CollectionAdapter(collectionModels, getActivity());
+            AddDataForCollection();
+            LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+            recyclerView_Collection.setLayoutManager(linearLayoutManager1);
+            recyclerView_Collection.setAdapter(adapter);
+            textView_MoreCollection.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), ItemList_Collection.class);
+                    startActivity(intent);
+                }
+            });
+
+            //RecyclerView AllRestaurant
+            GetDataForAllRestaurants(district_id);
+            allRestaurantAdapter = new AllRestaurantAdapter(getActivity(), allRestaurantModelList);
+            LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+            recyclerView_AllRestaurants.setLayoutManager(linearLayoutManager2);
+            recyclerView_AllRestaurants.setAdapter(allRestaurantAdapter);
+            AllRestaurant_more.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), RestaurantList.class);
+                    intent.putExtra("Name Activity", "All Restaurants");
+                    intent.putExtra("District ID", district_id);
+                    startActivity(intent);
+                }
+            });
+
+            // ImageSlider Advertisement
+            AddDataForAdvertisementImageSlider();
+            imageSlider_advertisement.setItemClickListener(new ItemClickListener() {
+                @Override
+                public void onItemSelected(int i) {
+                    ClickAdvertisementItemImageSlider(i);
+                }
+            });
+
+            // RecyclerView Discount Combo Product
+            AddDataForDiscountComboProduct(district_id);
+            discountComboProductAdapter = new DiscountComboProductAdapter(getActivity(), sortOfProductModelList1);
+            LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+            recyclerView_DiscountComboProduct.setLayoutManager(linearLayoutManager3);
+            recyclerView_DiscountComboProduct.setAdapter(discountComboProductAdapter);
+            DiscountComboProduct_more.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), SortOfProductList.class);
+                    intent.putExtra("District ID", district_id);
+                    intent.putExtra("Name Activity", "Discount Combo Product");
+                    startActivity(intent);
+                }
+            });
+
+            //RecyclerView Cheapest Product
+            AddDataForCheapestProduct(district_id);
+            cheapestproductAdapter = new DiscountComboProductAdapter(getActivity(), sortOfProductModelList2);
+            LinearLayoutManager linearLayoutManager4 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+            recyclerView_CheapestProduct.setLayoutManager(linearLayoutManager4);
+            recyclerView_CheapestProduct.setAdapter(cheapestproductAdapter);
+            CheapestProduct_more.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), SortOfProductList.class);
+                    intent.putExtra("District ID", district_id);
+                    intent.putExtra("Name Activity", "Cheapest Product");
+                    startActivity(intent);
+                }
+            });
+
+            //Tab Layout & ViewPager
+            title_KindOfRestaurant.add("Gần tôi");
+            title_KindOfRestaurant.add("Bán chạy");
+            title_KindOfRestaurant.add("Đánh giá");
+            title_KindOfRestaurant.add("Giao nhanh");
+            //Set tab layout
+            tabLayout_KindOfRestaurant.setupWithViewPager(viewPager_KindOfRestaurant);
+
+            //Prepare view pager
+            prepareViewPagerCategories(viewPager_KindOfRestaurant, title_KindOfRestaurant);
+        }
     }
 }

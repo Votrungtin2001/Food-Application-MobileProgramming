@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.foodapplication.CategoriesAdapter;
 import com.example.foodapplication.DatabaseHelper;
 import com.example.foodapplication.R;
 
@@ -23,7 +22,6 @@ import java.util.List;
 
 import adapter.MenuAdapter;
 import models.ProductModel;
-import models.SearchBarModel;
 
 
 public class RestaurantInformation_DatDon extends Fragment {

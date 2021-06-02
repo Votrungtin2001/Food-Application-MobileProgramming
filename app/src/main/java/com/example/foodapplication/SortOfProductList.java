@@ -111,7 +111,7 @@ public class SortOfProductList extends AppCompatActivity {
                 "JOIN RESTAURANT R ON M.Restaurant = R._id) " +
                 "JOIN BRANCHES B ON R._id = B.Restaurant) " +
                 "JOIN ADDRESS A ON B.Address = A._id  " +
-                "WHERE M.Price <= 25000 AND M.Price >= 15000 AND P.Category != 4 AND P.Category != 12 AND A.District ='" + id + "';";
+                "WHERE M.Price < 20000 AND M.Price >= 15000 AND P.Category != 4 AND P.Category != 12 AND A.District ='" + id + "';";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor != null) {
             cursor.moveToFirst();

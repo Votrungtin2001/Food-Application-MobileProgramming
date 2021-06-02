@@ -5,14 +5,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.foodapplication.CategoriesAdapter;
 import com.example.foodapplication.DatabaseHelper;
 import com.example.foodapplication.R;
 
