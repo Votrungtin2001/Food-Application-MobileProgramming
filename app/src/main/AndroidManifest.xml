@@ -16,7 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ProductWithCategory"></activity>
+        <activity android:name=".SortOfProductList"></activity>
+        <activity android:name=".RestaurantList" />
+        <activity android:name=".ProductWithCategory" />
         <activity android:name=".RestaurantInformation" />
         <activity android:name=".ItemList_Collection" />
         <activity android:name=".Item_Collection" />

@@ -66,7 +66,7 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/RestaurantInformation_ViewPager"
         android:layout_width="match_parent"
-        android:layout_height="370dp"
+        android:layout_height="375dp"
         android:layout_marginTop="10dp"
         app:layout_constraintTop_toBottomOf="@+id/RestaurantInformation_TabLayout"
         app:layout_constraintEnd_toEndOf="parent"

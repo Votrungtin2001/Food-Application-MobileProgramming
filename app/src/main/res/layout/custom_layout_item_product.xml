@@ -4,12 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="150dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/ConstraintLayout_ProductCategory"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="150dp">
 
         <ImageView
             android:id="@+id/ImageView_ImageProduct_ProductWithCategory"
@@ -26,7 +26,7 @@
 
         <TextView
             android:id="@+id/TextView_NameProduct_ProductWithCategory"
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="10dp"
@@ -39,7 +39,7 @@
 
         <TextView
             android:id="@+id/TextView_ProductDescription_ProductWithCategory"
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginLeft="10dp"
@@ -52,13 +52,13 @@
 
         <TextView
             android:id="@+id/TextView_NameBranch_ProductWithCategory"
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="20dp"
             android:text="Name Restaurant"
             android:textColor="@color/black"
-            android:textSize="20dp"
+            android:textSize="18dp"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@id/TextView_ProductDescription_ProductWithCategory"
             app:layout_constraintStart_toEndOf="@id/ImageView_ImageProduct_ProductWithCategory" />
@@ -72,7 +72,7 @@
             android:background="#F5EAF1EE"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ImageView_ImageProduct_ProductWithCategory"/>
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,7 +2,6 @@ package com.example.foodapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.graphics.Color;
@@ -16,6 +15,7 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 import java.util.List;
 
+import adapter.ItemListCollectionAdapter;
 import models.CollectionModel;
 
 public class ItemList_Collection extends AppCompatActivity {

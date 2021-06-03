@@ -24,6 +24,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -59,6 +60,12 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback,
         GoogleApiClient.OnConnectionFailedListener {
 
     int district_id;
+    Button button_GetLocation;
+    double dLatitude;
+    double dLongitude;
+    String stateName;
+    String addressLine;
+    String placeName;
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
@@ -111,6 +118,20 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback,
         setContentView(R.layout.activity_map);
 
         mGps = findViewById(R.id.ic_gps);
+        button_GetLocation = findViewById(R.id.GetLocation_Button);
+        button_GetLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("Latitude", dLatitude);
+                resultIntent.putExtra("Longitude", dLongitude);
+                resultIntent.putExtra("Place Name", placeName);
+                resultIntent.putExtra("Place Address", addressLine);
+                resultIntent.putExtra("District ID", district_id);
+                setResult(RESULT_OK, resultIntent);
+                finish();
+            }
+        });
 
         getLocationPermission();
         initMap();
@@ -142,20 +163,21 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback,
                 @Override
                 public void onPlaceSelected(@NonNull Place place) {
                     /* TODO: Get info about the selected place. */
-                    String placeName = place.getName();
+                    placeName = place.getName();
                     LatLng placeLatLng = place.getLatLng();
-                    double dLatitude = place.getLatLng().latitude;
-                    double dLongitude = place.getLatLng().longitude;
+                    dLatitude = place.getLatLng().latitude;
+                    dLongitude = place.getLatLng().longitude;
                     String placeAddress = place.getAddress();
 
                         if (placeLatLng != null) {
                             Geocoder geocoder = new Geocoder(Map.this, Locale.getDefault());
                             try {
                                 List<Address> addresses = geocoder.getFromLocation(dLatitude, dLongitude, 1);
-                                String stateName = addresses.get(0).getSubAdminArea();
+                                stateName = addresses.get(0).getSubAdminArea();
                                 if(stateName.trim().equals("Thủ Đức") || stateName.trim().equals("Thu Duc") || stateName.trim().equals("Thành Phố Thủ Đức") || stateName.trim().equals("Quận Thủ Đức")) {
                                     district_id = 14;
                                 }
+                                else district_id = -1;
                             } catch (IOException e) {
                                 e.printStackTrace();
 
@@ -218,9 +240,25 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback,
                         if(task.isSuccessful()){
                             Log.d(TAG, "onComplete: found location!");
                             Location currentLocation = (Location) task.getResult();
+                            dLatitude = currentLocation.getLatitude();
+                            dLongitude = currentLocation.getLongitude();
 
                             if (currentLocation != null) {
                                 moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM,"My Location");
+                                Geocoder geocoder = new Geocoder(Map.this, Locale.getDefault());
+                                try {
+                                    List<Address> addresses = geocoder.getFromLocation(dLatitude, dLongitude, 1);
+                                    stateName = addresses.get(0).getSubAdminArea();
+                                    addressLine = addresses.get(0).getAddressLine(0);
+                                    placeName = addresses.get(0).getFeatureName();
+                                    if(stateName.trim().equals("Thủ Đức") || stateName.trim().equals("Thu Duc") || stateName.trim().equals("Thành Phố Thủ Đức") || stateName.trim().equals("Quận Thủ Đức")) {
+                                        district_id = 14;
+                                    }
+                                    else district_id = -1;
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+
+                                }
                             }
 
                         }else{

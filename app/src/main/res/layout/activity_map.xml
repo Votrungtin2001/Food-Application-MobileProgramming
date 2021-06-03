@@ -41,5 +41,14 @@
         android:id="@+id/ic_gps"
         android:src="@drawable/ic_gps"/>
 
+    <Button
+        android:id="@+id/GetLocation_Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GET LOCATION"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="30dp"
+        android:layout_marginStart="120dp"/>
+
 
 </RelativeLayout>
