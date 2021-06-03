@@ -88,17 +88,17 @@ public class SortOfProductList extends AppCompatActivity {
         if (cursor != null) {
             cursor.moveToFirst();
             do {
-                String key = "Combo";
-                String name_product = cursor.getString(cursor.getColumnIndex("Name"));
-                if(name_product.toLowerCase().contains(key.toLowerCase())) {
-                    byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
-                    int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
-                    Bitmap img_bitmap = BitmapFactory.decodeByteArray(img_byte, 0, img_byte.length);
-                    String name_branch = cursor.getString(cursor.getColumnIndex("NAME"));
-                    int price = cursor.getInt(cursor.getColumnIndex("Price"));
-                    SortOfProductModel sortOfProductModel = new SortOfProductModel(img_bitmap, name_product, name_branch, price, branch_id);
-                    sortOfProductModelList.add(sortOfProductModel);
-                }
+                    String key = "Combo";
+                    String name_product = cursor.getString(cursor.getColumnIndex("Name"));
+                    if (name_product.toLowerCase().contains(key.toLowerCase())) {
+                        byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
+                        int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
+                        Bitmap img_bitmap = BitmapFactory.decodeByteArray(img_byte, 0, img_byte.length);
+                        String name_branch = cursor.getString(cursor.getColumnIndex("NAME"));
+                        int price = cursor.getInt(cursor.getColumnIndex("Price"));
+                        SortOfProductModel sortOfProductModel = new SortOfProductModel(img_bitmap, name_product, name_branch, price, branch_id);
+                        sortOfProductModelList.add(sortOfProductModel);
+                    }
             } while (cursor.moveToNext());
 
         }
@@ -111,7 +111,7 @@ public class SortOfProductList extends AppCompatActivity {
                 "JOIN RESTAURANT R ON M.Restaurant = R._id) " +
                 "JOIN BRANCHES B ON R._id = B.Restaurant) " +
                 "JOIN ADDRESS A ON B.Address = A._id  " +
-                "WHERE M.Price < 20000 AND M.Price >= 15000 AND P.Category != 4 AND P.Category != 12 AND A.District ='" + id + "';";
+                "WHERE M.Price <= 25000 AND M.Price >= 15000 AND P.Category != 4 AND P.Category != 12 AND A.District ='" + id + "';";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor != null) {
             cursor.moveToFirst();
