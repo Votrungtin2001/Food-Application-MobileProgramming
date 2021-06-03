@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // REMEMBER TO ADD 1 TO THIS CONSTANT WHEN YOU MAKE ANY CHANGES TO THE CONTRACT CLASS!
-    public static final int DATABASE_VERSION = 26;
+    public static final int DATABASE_VERSION = 27;
 
     public DatabaseHelper(Context context) {
         super(context, FoodManagementContract.DATABASE_NAME, null, DATABASE_VERSION);
@@ -62,7 +62,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.insertOrThrow(FoodManagementContract.CCustomer.TABLE_NAME, null, values);
-        db.close();
     }
 
     public void updCustomer(int id, String name, int city_id, String phone, String email, String fb, String user, String pass, int gender, Date DoB, String job) {
@@ -83,7 +82,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selection = FoodManagementContract.CCustomer._ID + " = ?";
         String[] selectionArgs = { Integer.toString(id) };
         db.update(FoodManagementContract.CCustomer.TABLE_NAME, values, selection, selectionArgs);
-        db.close();
     }
 
     public void addMaster(String name, String phone, String email, String fb, String user, String pass) {
@@ -97,7 +95,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.insertOrThrow(FoodManagementContract.CMaster.TABLE_NAME, null, values);
-        db.close();
     }
 
     public void updMaster(int id, String name, String phone, String email, String fb, String user, String pass) {
@@ -114,7 +111,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selection = FoodManagementContract.CMaster._ID + " = ?";
         String[] selectionArgs = { Integer.toString(id) };
         db.update(FoodManagementContract.CMaster.TABLE_NAME, values, selection, selectionArgs);
-        db.close();
     }
 
     public void addDelivery(String name, String address, String phone, String email, String fb, String user, String pass, String license) {
@@ -130,7 +126,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.insertOrThrow(FoodManagementContract.CDelivery.TABLE_NAME, null, values);
-        db.close();
     }
 
     public void updDelivery(int id, String name, String address, String phone, String email, String fb, String user, String pass, String license) {
@@ -149,7 +144,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selection = FoodManagementContract.CDelivery._ID + " = ?";
         String[] selectionArgs = { Integer.toString(id) };
         db.update(FoodManagementContract.CDelivery.TABLE_NAME, values, selection, selectionArgs);
-        db.close();
     }
 
     public void addDistrict(String name, int city_id) {
@@ -160,13 +154,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.insertOrThrow(FoodManagementContract.CDistrict.TABLE_NAME, null, values);
-        db.close();
     }
 
     public Cursor getDistricts() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(FoodManagementContract.CDistrict.TABLE_NAME, null, null, null, null, null, null);
-        db.close();
         return cursor;
     }
 
@@ -176,13 +168,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.insertOrThrow(FoodManagementContract.CCity.TABLE_NAME, null, values);
-        db.close();
     }
 
     public Cursor getCities() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(FoodManagementContract.CCity.TABLE_NAME, null, null, null, null, null, null);
-        db.close();
         return cursor;
     }
 
@@ -197,7 +187,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db= this.getWritableDatabase();
         db.insertOrThrow(FoodManagementContract.CAddress.TABLE_NAME, null, values);
-        db.close();
     }
 
     public void updAddress(int id, String address, int district_id, int city_id, int floor, int gate, int label_id) {
@@ -214,7 +203,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selection = FoodManagementContract.CAddress._ID + " = ?";
         String[] selectionArgs = { Integer.toString(id) };
         db.update(FoodManagementContract.CAddress.TABLE_NAME, values, selection, selectionArgs);
-        db.close();
     }
 
     public void delAddress(int id) {
@@ -223,13 +211,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selection = FoodManagementContract.CAddress._ID + " = ?";
         String[] selectionArgs = { Integer.toString(id) };
         db.delete(FoodManagementContract.CAddress.TABLE_NAME, selection, selectionArgs);
-        db.close();
     }
 
     public Cursor getAddress() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(FoodManagementContract.CAddress.TABLE_NAME, null, null, null, null, null, null);
-        db.close();
         return cursor;
     }
 
@@ -239,7 +225,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.insertOrThrow(FoodManagementContract.CAddressLabel.TABLE_NAME, null, values);
-        db.close();
     }
 
     public void updAddressLabel(int id, String type) {
@@ -251,7 +236,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selection = FoodManagementContract.CAddressLabel._ID + " = ?";
         String[] selectionArgs = { Integer.toString(id) };
         db.update(FoodManagementContract.CAddressLabel.TABLE_NAME, values, selection, selectionArgs);
-        db.close();
     }
 
     public void delAddressLabel(int id) {
@@ -260,13 +244,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selection = FoodManagementContract.CAddressLabel._ID + " = ?";
         String[] selectionArgs = { Integer.toString(id) };
         db.delete(FoodManagementContract.CAddressLabel.TABLE_NAME, selection, selectionArgs);
-        db.close();
     }
 
     public Cursor getAddressLabel() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(FoodManagementContract.CAddressLabel.TABLE_NAME, null, null, null, null, null, null);
-        db.close();
         return cursor;
     }
 
@@ -277,7 +259,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.insertOrThrow(FoodManagementContract.CCustomerAddress.TABLE_NAME, null, values);
-        db.close();
     }
 
     public void updCustomerAddress(int id, int customer_id, int address_id) {
@@ -290,7 +271,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selection = FoodManagementContract.CCustomerAddress._ID + " = ?";
         String[] selectionArgs = { Integer.toString(id) };
         db.update(FoodManagementContract.CCustomerAddress.TABLE_NAME, values, selection, selectionArgs);
-        db.close();
     }
 
     public void delCustomerAddress(int id) {
@@ -299,13 +279,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selection = FoodManagementContract.CCustomerAddress._ID + " = ?";
         String[] selectionArgs = { Integer.toString(id) };
         db.delete(FoodManagementContract.CCustomerAddress.TABLE_NAME, selection, selectionArgs);
-        db.close();
     }
 
     public Cursor getCustomerAddress() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(FoodManagementContract.CCustomerAddress.TABLE_NAME, null, null, null, null, null, null);
-        db.close();
         return cursor;
     }
 
@@ -317,13 +295,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.insertOrThrow(FoodManagementContract.CRestaurant.TABLE_NAME, null, values);
-        db.close();
     }
 
     public Cursor getRestaurant() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(FoodManagementContract.CRestaurant.TABLE_NAME, null, null, null, null, null, null);
-        db.close();
+        return cursor;
+    }
+
+    public Cursor getRestaurant(int res_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selection = FoodManagementContract.CRestaurant._ID + " = ?";
+        String[] selectionArgs = { Integer.toString(res_id) };
+
+        Cursor cursor = db.query(FoodManagementContract.CRestaurant.TABLE_NAME, null, selection, selectionArgs, null, null, null);
         return cursor;
     }
 
@@ -338,7 +324,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selection = FoodManagementContract.CRestaurant._ID + " = ?";
         String[] selectionArgs = { Integer.toString(id) };
         db.update(FoodManagementContract.CRestaurant.TABLE_NAME, values, selection, selectionArgs);
-        db.close();
     }
 
     public void delRestaurant(int id) {
@@ -347,7 +332,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selection = FoodManagementContract.CRestaurant._ID + " = ?";
         String[] selectionArgs = { Integer.toString(id) };
         db.delete(FoodManagementContract.CRestaurant.TABLE_NAME, selection, selectionArgs);
-        db.close();
     }
 
     public void addBranch (String name, int restaurant_id, int address_id, int master_id) {
@@ -359,13 +343,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.insertOrThrow(FoodManagementContract.CBranch.TABLE_NAME, null, values);
-        db.close();
     }
 
     public Cursor getBranch() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(FoodManagementContract.CBranch.TABLE_NAME, null, null, null, null, null, null);
-        db.close();
         return cursor;
     }
 
@@ -375,7 +357,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selection = FoodManagementContract.CBranch._ID + " = ?";
         String[] selectionArgs = { Integer.toString(id) };
         db.delete(FoodManagementContract.CBranch.TABLE_NAME, selection, selectionArgs);
-        db.close();
     }
 
     public void updBranch(int id, String name, int restaurant_id, int address_id, int master_id) {
@@ -390,13 +371,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selection = FoodManagementContract.CBranch._ID + " = ?";
         String[] selectionArgs = { Integer.toString(id) };
         db.update(FoodManagementContract.CBranch.TABLE_NAME, values, selection, selectionArgs);
-        db.close();
     }
 
     public Cursor getCategory() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(FoodManagementContract.CCategory.TABLE_NAME, null, null, null, null, null, null);
-        db.close();
         return cursor;
     }
 
@@ -407,7 +386,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.insertOrThrow(FoodManagementContract.CCategory.TABLE_NAME, null, values);
-        db.close();
     }
 
     public void delCategory(int id) {
@@ -416,7 +394,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selection = FoodManagementContract.CCategory._ID + " = ?";
         String[] selectionArgs = { Integer.toString(id) };
         db.delete(FoodManagementContract.CCategory.TABLE_NAME, selection, selectionArgs);
-        db.close();
     }
 
     public void addProduct(String name, String description, int category_id, byte[] image) {
@@ -428,13 +405,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
-        db.close();
     }
 
     public Cursor getProduct() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(FoodManagementContract.CProduct.TABLE_NAME, null, null, null, null, null, null);
-        db.close();
         return cursor;
     }
 
@@ -444,7 +419,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selection = FoodManagementContract.CProduct._ID + " = ?";
         String[] selectionArgs = { Integer.toString(id) };
         db.delete(FoodManagementContract.CProduct.TABLE_NAME, selection, selectionArgs);
-        db.close();
     }
 
     public void updProduct(int id, String name, String description, int category_id, byte[] image) {
@@ -459,7 +433,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selection = FoodManagementContract.CProduct._ID + " = ?";
         String[] selectionArgs = { Integer.toString(id) };
         db.update(FoodManagementContract.CProduct.TABLE_NAME, values, selection, selectionArgs);
-        db.close();
     }
 
     public void addMenu(int res_id, int prod_id, String desc, int price) {
@@ -471,7 +444,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
-        db.close();
     }
 
     public void updMenu(int id, int res_id, int prod_id, String desc, int price) {
@@ -486,7 +458,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selection = FoodManagementContract.CMenu._ID + " = ?";
         String[] selectionArgs = { Integer.toString(id) };
         db.update(FoodManagementContract.CMenu.TABLE_NAME, values, selection, selectionArgs);
-        db.close();
     }
 
     public void delMenu(int id) {
@@ -495,7 +466,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selection = FoodManagementContract.CMenu._ID + " = ?";
         String[] selectionArgs = { Integer.toString(id) };
         db.delete(FoodManagementContract.CMenu.TABLE_NAME, selection, selectionArgs);
-        db.close();
     }
 
     public Cursor getMenu(int res_id) {
@@ -506,7 +476,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String[] columns = { FoodManagementContract.CMenu.KEY_PRODUCT, FoodManagementContract.CMenu.KEY_DESC, FoodManagementContract.CMenu.KEY_PRICE};
 
         Cursor cursor = db.query(FoodManagementContract.CMenu.TABLE_NAME, columns, selection, selectionArgs, null, null, null);
-        db.close();
         return cursor;
     }
 
@@ -521,7 +490,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.insertOrThrow(FoodManagementContract.COrder.TABLE_NAME, null, values);
-        db.close();
     }
 
     public long addOrder(Date date, int customer_id) {
@@ -533,7 +501,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         long id = db.insertOrThrow(FoodManagementContract.COrder.TABLE_NAME, null, values);
-        db.close();
         return id;
     }
 
@@ -546,7 +513,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selection = FoodManagementContract.CMenu._ID + " = ?";
         String[] selectionArgs = {Integer.toString(id)};
         db.update(FoodManagementContract.COrder.TABLE_NAME, values, selection, selectionArgs);
-        db.close();
     }
 
     public void updOrderTotal(int id, int total) {
@@ -558,7 +524,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selection = FoodManagementContract.CMenu._ID + " = ?";
         String[] selectionArgs = {Integer.toString(id)};
         db.update(FoodManagementContract.COrder.TABLE_NAME, values, selection, selectionArgs);
-        db.close();
     }
 
     public void delOrder(int id) {
@@ -567,7 +532,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selection = FoodManagementContract.COrder._ID + " = ?";
         String[] selectionArgs = { Integer.toString(id) };
         db.delete(FoodManagementContract.COrder.TABLE_NAME, selection, selectionArgs);
-        db.close();
     }
 
     public Cursor getOrder(int customer_id) {
@@ -577,7 +541,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String[] selectionArgs = { Integer.toString(customer_id) };
 
         Cursor cursor = db.query(FoodManagementContract.COrder.TABLE_NAME, null, selection, selectionArgs, null, null, null);
-        db.close();
         return cursor;
     }
 
@@ -590,7 +553,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.insertOrThrow(FoodManagementContract.COrderDetails.TABLE_NAME, null, values);
-        db.close();
     }
 
     public void updOrderDetail(int order_id, int item_id, int quantity, int price) {
@@ -606,7 +568,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "AND " + FoodManagementContract.COrderDetails.KEY_MENUITEM + " = ?";
         String[] selectionArgs = { Integer.toString(order_id), Integer.toString(item_id) };
         db.update(FoodManagementContract.COrderDetails.TABLE_NAME, values, selection, selectionArgs);
-        db.close();
     }
 
     public void delOrderDetail(int order_id, int item_id) {
@@ -616,7 +577,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "AND " + FoodManagementContract.COrderDetails.KEY_MENUITEM + " = ?";
         String[] selectionArgs = { Integer.toString(order_id), Integer.toString(item_id) };
         db.delete(FoodManagementContract.COrderDetails.TABLE_NAME, selection, selectionArgs);
-        db.close();
     }
 
     public void delOrderDetail(int order_id) {
@@ -625,7 +585,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selection = FoodManagementContract.COrderDetails.KEY_ORDER + " = ? ";
         String[] selectionArgs = { Integer.toString(order_id)};
         db.delete(FoodManagementContract.COrderDetails.TABLE_NAME, selection, selectionArgs);
-        db.close();
     }
 
     public Cursor getOrderDetail(int order_id) {
@@ -635,7 +594,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String[] selectionArgs = { Integer.toString(order_id) };
 
         Cursor cursor = db.query(FoodManagementContract.COrderDetails.TABLE_NAME, null, selection, selectionArgs, null, null, null);
-        db.close();
         return cursor;
     }
 
@@ -647,7 +605,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String[] selectionArgs = { Integer.toString(order_id), Integer.toString(item_id) };
 
         Cursor cursor = db.query(FoodManagementContract.COrderDetails.TABLE_NAME, null, selection, selectionArgs, null, null, null);
-        db.close();
         return cursor;
     }
 
@@ -663,7 +620,35 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             total += cursor.getInt(cursor.getColumnIndexOrThrow(FoodManagementContract.COrderDetails.KEY_PRICE));
         }
 
+        cursor.close();
         return total;
     }
 
+    public void addFavorites(int cus_id, int res_id) {
+        ContentValues values = new ContentValues();
+        values.put(FoodManagementContract.CFavorites.KEY_CUSTOMER, cus_id);
+        values.put(FoodManagementContract.CFavorites.KEY_RESTAURANT, res_id);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.insertOrThrow(FoodManagementContract.CFavorites.TABLE_NAME, null, values);
+    }
+
+    public void delFavorites(int cus_id, int res_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String selection = FoodManagementContract.CFavorites.KEY_CUSTOMER + " = ? "
+                + "AND " + FoodManagementContract.CFavorites.KEY_RESTAURANT + " = ?";
+        String[] selectionArgs = { Integer.toString(cus_id), Integer.toString(res_id) };
+        db.delete(FoodManagementContract.CFavorites.TABLE_NAME, selection, selectionArgs);
+    }
+
+    public Cursor getFavorites(int cus_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selection = FoodManagementContract.CFavorites.KEY_CUSTOMER + " = ?";
+        String[] selectionArgs = { Integer.toString(cus_id) };
+
+        Cursor cursor = db.query(FoodManagementContract.CFavorites.TABLE_NAME, null, selection, selectionArgs, null, null, null);
+        return cursor;
+    }
 }

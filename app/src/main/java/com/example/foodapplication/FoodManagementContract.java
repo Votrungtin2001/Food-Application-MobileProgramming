@@ -28,10 +28,12 @@ public final class FoodManagementContract {
             CMenu.CREATE_TABLE,
             COrder.CREATE_TABLE,
             COrderDetails.CREATE_TABLE,
-            COffer.CREATE_TABLE
+            COffer.CREATE_TABLE,
+            CFavorites.CREATE_TABLE
     };
 
     public static final String[] SQL_DELETE_TABLE_ARRAY = {
+            CFavorites.DELETE_TABLE,
             CDistrict.DELETE_TABLE,
             CMaster.DELETE_TABLE,
             COffer.DELETE_TABLE,
@@ -407,6 +409,24 @@ public final class FoodManagementContract {
                 + KEY_DATE_ACTIVE_TO + " TEXT,"
                 + KEY_PRICE + " TEXT,"
                 + "FOREIGN KEY (" + KEY_MENUITEM + ") REFERENCES " + CMenu.TABLE_NAME + " (" + CMenu._ID + ")"
+                + ");";
+
+        public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
+    }
+
+    public static final class CFavorites implements BaseColumns {
+        private CFavorites() { }
+
+        public static final String TABLE_NAME = "FAVORITES",
+                KEY_CUSTOMER = "Customer",
+                KEY_RESTAURANT = "Restaurant";
+
+        public static final String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " ("
+                + _ID + " INTEGER PRIMARY KEY,"
+                + KEY_CUSTOMER + " INTEGER NOT NULL,"
+                + KEY_RESTAURANT + " INTEGER NOT NULL,"
+                + "FOREIGN KEY (" + KEY_CUSTOMER + ") REFERENCES " + CCustomer.TABLE_NAME + " (" + COrder._ID + "),"
+                + "FOREIGN KEY (" + KEY_RESTAURANT + ") REFERENCES " + CRestaurant.TABLE_NAME + " (" + CMenu._ID + ")"
                 + ");";
 
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;

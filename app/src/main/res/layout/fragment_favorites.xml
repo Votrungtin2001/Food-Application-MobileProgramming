@@ -22,18 +22,10 @@
         android:textSize="24sp"
         android:textStyle="bold" />
 
-    <Spinner
-        android:id="@+id/spinCategory"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvFavorites"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtFavoritesBanner"
-        android:layout_marginTop="1dp" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvFavorites"
-        android:layout_width="409dp"
-        android:layout_height="593dp"
-        android:layout_below="@+id/spinCategory"
-        android:layout_marginStart="2dp"
         android:layout_marginTop="0dp" />
 </RelativeLayout>

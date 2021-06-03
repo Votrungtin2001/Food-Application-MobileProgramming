@@ -19,39 +19,25 @@ import java.util.ArrayList;
 
 public class FavoritesFragment extends Fragment {
     ArrayList<FavRestaurant> favs;
+    int customer_id = 0; //placeholder value, need to get user id from a passed bundle
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_favorites, container, false);
 
-        DatabaseHelper dbHelper = new DatabaseHelper(getActivity());
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        RecyclerView rvFavorites = (RecyclerView) rootView.findViewById(R.id.rvFavorites);
 
-        String[] projection = {
-                BaseColumns._ID,
-                FoodManagementContract.CCategory.KEY_NAME
-        };
-
-        Spinner spinCategory = (Spinner) rootView.findViewById(R.id.spinCategory);
-        ArrayList<String> result = new ArrayList<>();
-
-        db.beginTransaction();
-        Cursor cursor = db.query(FoodManagementContract.CCategory.KEY_NAME, projection, null, null, null, null, null, null);
-        while (cursor.moveToNext()) {
-            String category = cursor.getString(
-                    cursor.getColumnIndexOrThrow(FoodManagementContract.CCategory.KEY_NAME));
-            result.add(category);
+        DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+        Cursor cursor = dbHelper.getFavorites(customer_id);
+        while(cursor.moveToNext()) {
+            int id = cursor.getInt(cursor.getColumnIndexOrThrow(FoodManagementContract.CFavorites.KEY_RESTAURANT));
+            Cursor resCursor = dbHelper.getRestaurant(id);
+            favs.add(new FavRestaurant(resCursor.getString(resCursor.getColumnIndexOrThrow(FoodManagementContract.CRestaurant.KEY_NAME))));
+            resCursor.close();
         }
         cursor.close();
-        db.endTransaction();
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(),
-                android.R.layout.simple_spinner_item, result);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinCategory.setAdapter(adapter);
-
-        RecyclerView rvFavorites = (RecyclerView) rootView.findViewById(R.id.rvFavorites);
         FavoritesAdapter favAdapter = new FavoritesAdapter(favs);
         rvFavorites.setAdapter(favAdapter);
         rvFavorites.setLayoutManager(new LinearLayoutManager(getActivity()));
