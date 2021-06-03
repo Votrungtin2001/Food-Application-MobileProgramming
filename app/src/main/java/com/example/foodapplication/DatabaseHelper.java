@@ -31,6 +31,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+//    public user getData(int id, String name, String username, String email, String age, String amount, String password){
+//        SQLiteDatabase db = this.getReadableDatabase();
+//        Cursor res = db.rawQuery("select * from users where email='" + email + "'", null);
+//        res.moveToFirst();
+//        while (res.isAfterLast() == false) {
+//            user response = new user(id, name, username, email, age, amount, password);
+//            response.email = res.getString(res.getColumnIndex(Table_Column_2_Email));
+//            response.name = res.getString(res.getColumnIndex(Table_Column_1_Name));
+//            response.username = res.getString(res.getColumnIndex(Table_Column_1_Username));
+//            response.age = res.getString(res.getColumnIndex(Table_Column_3_Age));
+//            response.amount = res.getString(res.getColumnIndex(Table_Column_3_Amount));
+//            return response;
+//        }
+//        return null;
+//    }
     public void addCustomer(String name, int city_id, String phone, String email, String fb, String user, String pass, int gender, Date DoB, String job) {
         ContentValues values = new ContentValues();
         values.put(FoodManagementContract.CCustomer.KEY_NAME, name);

@@ -3,9 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/login_nav_graph"
     app:startDestination="@id/loginFragment">
-<fragment
-    android:id="@+id/loginFragment"
-    android:name="com.">
-
-</fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.foodapplication.auth.LoginFragment"
+        android:label="LoginFragment" />
 </navigation>

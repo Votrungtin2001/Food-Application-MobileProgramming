@@ -29,6 +29,10 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    buildFeatures{
+        viewBinding = true
+         dataBinding = true
+    }
 }
 configurations {
     compile.exclude group: 'com.google.zxing'
@@ -85,6 +89,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-plus:17.0.0'
     implementation 'com.jakewharton:butterknife:7.0.1'
     implementation 'com.google.android.gms:play-services-gcm:17.0.0'
+
+
 
 
 }
