@@ -1,4 +1,4 @@
-package com.example.foodapplication;
+package com.example.foodapplication.Notification;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.fragment.app.Fragment;
+
+import com.example.foodapplication.R;
 
 public class Noti extends Fragment {
     private ImageView nextSale;

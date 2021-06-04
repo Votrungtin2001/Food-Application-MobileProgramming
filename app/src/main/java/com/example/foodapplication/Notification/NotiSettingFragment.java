@@ -1,4 +1,4 @@
-package com.example.foodapplication;
+package com.example.foodapplication.Notification;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +8,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+
+import com.example.foodapplication.R;
+import com.example.foodapplication.SelectProvinceFragment;
 
 
 public class NotiSettingFragment extends Fragment {
