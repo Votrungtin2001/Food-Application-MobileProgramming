@@ -5,21 +5,35 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Date;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // REMEMBER TO ADD 1 TO THIS CONSTANT WHEN YOU MAKE ANY CHANGES TO THE CONTRACT CLASS!
     public static final int DATABASE_VERSION = 26;
+    private static String DB_PATH= "data/data/com.example.foodapplication/databases/";
+    private static String DB_NAME = "foodapp.db";
+    private final Context context;
 
     public DatabaseHelper(Context context) {
         super(context, FoodManagementContract.DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
         for (String s : FoodManagementContract.SQL_CREATE_TABLE_ARRAY)
             db.execSQL(s);
+        try {
+            copyDB();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /* note: this snippet is copied directly from developer.android.com and is meant to be used for online caches;
@@ -46,6 +60,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //        }
 //        return null;
 //    }
+
+    public void copyDB() throws IOException {
+        try {
+            Log.i("inside copyDB.......","start");
+
+            InputStream ip =  context.getAssets().open(DB_NAME+".db");
+            Log.i("Input Stream....",ip+"");
+            String op=  DB_PATH  +  DB_NAME ;
+            OutputStream output = new FileOutputStream( op);
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = ip.read(buffer))>0){
+                output.write(buffer, 0, length);
+                Log.i("Content.... ",length+"");
+            }
+            output.flush();
+            output.close();
+            ip.close();
+        }
+        catch (IOException e) {
+            Log.v("error", e.toString());
+        }
+    }
+
     public void addCustomer(String name, int city_id, String phone, String email, String fb, String user, String pass, int gender, Date DoB, String job) {
         ContentValues values = new ContentValues();
         values.put(FoodManagementContract.CCustomer.KEY_NAME, name);
