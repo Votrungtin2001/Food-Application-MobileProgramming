@@ -3,6 +3,7 @@ package com.example.foodapplication;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -33,6 +34,7 @@ import com.denzcoskun.imageslider.models.SlideModel;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -143,13 +145,14 @@ public class HomeFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
+
         databaseHelper = new DatabaseHelper(getActivity());
         db = databaseHelper.getReadableDatabase();
 
 
 
 
-        //EditText Search
+        /*//EditText Search
         editText_search = view.findViewById(R.id.editText_SearchBar);
 
         //RecyclerView SearchBar
@@ -237,7 +240,7 @@ public class HomeFragment extends Fragment {
 
         if(district_id >= 0) district_isAvailable = true;
         SetAllData(district_id);
-        setUpSreen(district_isAvailable);
+        setUpSreen(district_isAvailable);*/
 
         return view;
     }
