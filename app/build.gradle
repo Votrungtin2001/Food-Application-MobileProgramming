@@ -90,12 +90,7 @@ dependencies {
     implementation 'com.jakewharton:butterknife:7.0.1'
     implementation 'com.google.android.gms:play-services-gcm:17.0.0'
 
-    // push noti
-//    classpath 'com.google.gms:google-services:4.3.8'
-    implementation 'com.google.firebase:firebase-core:11.8.0'
-//Firebase Messaging library for Sending push Notifications
-    implementation 'com.google.firebase:firebase-messaging:11.8.0'
+    compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
 
 
 }
-apply plugin: 'com.google.gms.google-services'

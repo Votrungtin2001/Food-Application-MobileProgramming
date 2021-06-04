@@ -1,5 +1,9 @@
 package com.example.foodapplication;
 
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.provider.BaseColumns;
 
 public final class FoodManagementContract {
@@ -12,20 +16,24 @@ public final class FoodManagementContract {
     public static final String DATABASE_NAME = "foodapp.db";
 
     public static final String[] SQL_CREATE_TABLE_ARRAY = {
-            CDistrict.CREATE_TABLE,
-            CCity.CREATE_TABLE,
-            CMaster.CREATE_TABLE,
             CAddressLabel.CREATE_TABLE,
             CAddressLabel.POPULATE_TABLE,
+            CCity.CREATE_TABLE,
+            CCity.POPULATE_TABLE,
+            CDistrict.CREATE_TABLE,
+            CDistrict.POPULATE_TABLE,
             CCategory.CREATE_TABLE,
-            CDelivery.CREATE_TABLE,
-            CCustomer.CREATE_TABLE,
-            CAddress.CREATE_TABLE,
-            CCustomerAddress.CREATE_TABLE,
+            CCategory.POPULATE_TABLE,
+            CMaster.CREATE_TABLE,
+            CMaster.POPULATE_TABLE,
             CRestaurant.CREATE_TABLE,
+            CAddress.CREATE_TABLE,
             CBranch.CREATE_TABLE,
             CProduct.CREATE_TABLE,
             CMenu.CREATE_TABLE,
+            CDelivery.CREATE_TABLE,
+            CCustomer.CREATE_TABLE,
+            CCustomerAddress.CREATE_TABLE,
             COrder.CREATE_TABLE,
             COrderDetails.CREATE_TABLE,
             COffer.CREATE_TABLE,
@@ -114,6 +122,10 @@ public final class FoodManagementContract {
                 + KEY_PASSWORD + " TEXT NOT NULL"
                 + ");";
 
+        public static final String POPULATE_TABLE = "INSERT INTO " + TABLE_NAME + " (" + KEY_NAME + ", " + KEY_PHONE + ", " + KEY_EMAIL + ", " + KEY_FACEBOOK + ", " + KEY_USERNAME + ", " + KEY_PASSWORD +  ")"
+                + " VALUES "
+                + " (\"A\", \"A\", \"A\", \"A\", \"A\", \"A\");";
+
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
 
@@ -129,6 +141,8 @@ public final class FoodManagementContract {
                 + KEY_NAME + " TEXT"
                 + ");";
 
+        public static final String POPULATE_TABLE = GetDataForCity(TABLE_NAME, KEY_NAME);
+
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
 
@@ -143,6 +157,8 @@ public final class FoodManagementContract {
                 + KEY_CITY + " INTEGER NULL,"
                 + "FOREIGN KEY (" + KEY_CITY + ") REFERENCES " + CCity.TABLE_NAME + " (" + CCity._ID + ")"
                 + ");";
+
+        public static final String POPULATE_TABLE = GetDataForDistrict(TABLE_NAME, KEY_NAME, KEY_CITY);
 
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
@@ -269,6 +285,8 @@ public final class FoodManagementContract {
                 + KEY_NAME + " TEXT,"
                 + KEY_DESC + " TEXT"
                 + ");";
+
+        public static final String POPULATE_TABLE = GetDataForCategory(TABLE_NAME, KEY_NAME, KEY_DESC);
 
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
@@ -431,4 +449,71 @@ public final class FoodManagementContract {
 
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
+
+    public static final String GetDataForCity(String TABLE_NAME, String KEY_NAME) {
+        String string = "INSERT INTO " + TABLE_NAME + " (" + KEY_NAME + ")"
+                + " VALUES "
+                + " (\"Đà Nẵng\"),"
+                + " (\"Hà Nội\"),"
+                + " (\"Thành phố Hồ Chí Minh\");";
+        return  string;
+    }
+
+    public static final String GetDataForDistrict(String TABLE_NAME, String KEY_NAME, String KEY_CITY) {
+        String string = "INSERT INTO " + TABLE_NAME + " (" + KEY_NAME + ", " + KEY_CITY + ")"
+                + " VALUES "
+                + " (\"Quận 1\", \"3\"),"
+                + " (\"Quận 2\", \"3\"),"
+                + " (\"Quận 3\", \"3\"),"
+                + " (\"Quận 4\", \"3\"),"
+                + " (\"Quận 5\", \"3\"),"
+                + " (\"Quận 6\", \"3\"),"
+                + " (\"Quận 7\", \"3\"),"
+                + " (\"Quận 8\", \"3\"),"
+                + " (\"Quận 9\", \"3\"),"
+                + " (\"Quận 10\", \"3\"),"
+                + " (\"Quận 11\", \"3\"),"
+                + " (\"Quận 12\", \"3\"),"
+                + " (\"Quận Bình Thạnh\", \"3\"),"
+                + " (\"Quận Thủ Đức\", \"3\"),"
+                + " (\"Quận Gò Vấp\", \"3\"),"
+                + " (\"Quận Phú Nhuận\", \"3\"),"
+                + " (\"Quận Tân Bình\", \"3\"),"
+                + " (\"Quận Tân Phú\", \"3\"),"
+                + " (\"Quận Bình Tân\", \"3\"),"
+                + " (\"Huyện Nhà Bè\", \"3\"),"
+                + " (\"Huyện Hóc Môn\", \"3\"),"
+                + " (\"Huyện Bình Chánh\", \"3\"),"
+                + " (\"Huyện Củ Chi\", \"3\"),"
+                + " (\"Huyện Cần Giờ\", \"3\");";
+        return  string;
+    }
+
+    public static final String GetDataForCategory(String TABLE_NAME, String KEY_NAME, String KEY_DESC) {
+        String string = "INSERT INTO " + TABLE_NAME + " (" + KEY_NAME + ", " + KEY_DESC + ")"
+                + " VALUES "
+                + " (\"Thức uống\", \"Cà phê\"),"
+                + " (\"Thức uống\", \"Đá xay\"),"
+                + " (\"Thức uống\", \"Trà\"),"
+                + " (\"Thức uống\", \"Khác\"),"
+                + " (\"Bánh\", \"Bánh ngọt\"),"
+                + " (\"Đồ ăn\", \"Gà rán\"),"
+                + " (\"Đồ ăn\", \"Mì\"),"
+                + " (\"Đồ ăn\", \"Cơm\"),"
+                + " (\"Đồ ăn\", \"Hamburger/Sandwich\"),"
+                + " (\"Đồ ăn\", \"Bánh mì\"),"
+                + " (\"Đồ ăn\", \"Món nước\"),"
+                + " (\"Đồ ăn\", \"Khác\"),"
+                + " (\"Thức uống\", \"Trà sữa\"),"
+                + " (\"Thức uống\", \"Nước ép\"),"
+                + " (\"Đồ ăn\", \"Pizza\"),"
+                + " (\"Đồ ăn\", \"Salad\"),"
+                + " (\"Đồ ăn\", \"Xôi\"),"
+                + " (\"Thức uống\", \"Chè\"),"
+                + " (\"Đồ ăn\", \"Sushi\");";
+        return  string;
+    }
+
+
+
 }
