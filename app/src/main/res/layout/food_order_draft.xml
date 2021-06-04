@@ -31,7 +31,7 @@
             android:scaleType="fitXY"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text"
-            app:srcCompat="@drawable/com_tam_phucloctho" />
+            app:srcCompat="@drawable/nowlogo" />
 
         <TextView
             android:id="@+id/text2"
