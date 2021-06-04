@@ -6,6 +6,11 @@ public class FavRestaurant {
     private String sName;
     private float fDistance, fETA;
 
+    public FavRestaurant(String name) {
+        sName = name;
+        fDistance = fETA = 0.0f;
+    }
+
     public FavRestaurant(String name, float dist, float ETA) {
         sName = name;
         fDistance = dist;
