@@ -13,15 +13,15 @@ import android.widget.EditText;
 
 
 public class AccountPaymentTopup extends Fragment {
-    private int DepositAmount;
     Button btnAdd50k, btnAdd100k, btnAdd200k, btnAdd300k, btnAdd500k, btnAdd1M, btnAdd2M, btnAdd5M, btnAdd10M, btnDeposit;
     EditText txtTopupAmount;
+    int cus_id = 0;
 
     public AccountPaymentTopup() {
 
     }
 
-    public static AccountPaymentTopup newInstance(String param1, String param2) {
+    public static AccountPaymentTopup newInstance() {
         AccountPaymentTopup fragment = new AccountPaymentTopup();
         return fragment;
     }
@@ -29,7 +29,6 @@ public class AccountPaymentTopup extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        DepositAmount = 0;
     }
 
     @Override
@@ -55,6 +54,10 @@ public class AccountPaymentTopup extends Fragment {
         btnAdd5M.setOnClickListener(onAmountClickListener);
         btnAdd10M = view.findViewById(R.id.btnAdd10M);
         btnAdd10M.setOnClickListener(onAmountClickListener);
+        btnDeposit = view.findViewById(R.id.btnDeposit);
+        btnDeposit.setOnClickListener(onDepositClick);
+
+        txtTopupAmount = view.findViewById(R.id.txtTopupAmount);
 
         return view;
     }
@@ -62,5 +65,17 @@ public class AccountPaymentTopup extends Fragment {
     View.OnClickListener onAmountClickListener = v -> {
         Button btn = (Button) v;
         txtTopupAmount.setText(btn.getText());
+    };
+
+    View.OnClickListener onDepositClick = v -> {
+        if ((Integer.getInteger(txtTopupAmount.getText().toString()) != 0) && (txtTopupAmount.getText().toString() != null)) {
+            int topup = Integer.parseInt(txtTopupAmount.getText().toString());
+
+            DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+            dbHelper.addTransaction(cus_id, topup);
+            int credits = dbHelper.getCredits(cus_id);
+            credits += topup;
+            dbHelper.updCredits(cus_id, credits);
+        }
     };
 }
