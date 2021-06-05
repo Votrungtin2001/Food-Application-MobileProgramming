@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class AccountPayment extends Fragment {
-    private int credits;
+    private int credits, cus_id = 0;
     TextView txtAccountPaymentCoins, txtAccountPaymentHistory, txtAccountPaymentTopup;
 
     public AccountPayment() {
@@ -38,6 +38,10 @@ public class AccountPayment extends Fragment {
         txtAccountPaymentTopup.setOnClickListener(runTopupFragment);
         txtAccountPaymentHistory = view.findViewById(R.id.txtAccountPaymentHistory);
         txtAccountPaymentHistory.setClickable(true);
+        txtAccountPaymentHistory.setOnClickListener(runHistoryFragment);
+
+        DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+        credits = dbHelper.getCredits(cus_id);
 
         return view;
     }
@@ -50,6 +54,14 @@ public class AccountPayment extends Fragment {
 
     View.OnClickListener runTopupFragment = v -> {
         AccountPaymentTopup fragment = new AccountPaymentTopup();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(((ViewGroup)getView().getParent()).getId(), fragment, null)
+                .addToBackStack(null)
+                .commit();
+    };
+
+    View.OnClickListener runHistoryFragment = v -> {
+        AccountPaymentHistory fragment = new AccountPaymentHistory();
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(((ViewGroup)getView().getParent()).getId(), fragment, null)
                 .addToBackStack(null)
