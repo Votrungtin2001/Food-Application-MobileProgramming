@@ -17,11 +17,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Calendar;
 import java.util.Date;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // REMEMBER TO ADD 1 TO THIS CONSTANT WHEN YOU MAKE ANY CHANGES TO THE CONTRACT CLASS!
-    public static final int DATABASE_VERSION = 43;
+    public static final int DATABASE_VERSION = 44;
     private static String DB_PATH= "data/data/com.example.foodapplication/databases/";
     private static String DB_NAME = "foodapp";
     private final Context context;
@@ -144,6 +145,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         String selection = FoodManagementContract.CCustomer._ID + " = ?";
         String[] selectionArgs = { Integer.toString(id) };
+        db.update(FoodManagementContract.CCustomer.TABLE_NAME, values, selection, selectionArgs);
+    }
+
+    public int getCredits(int cus_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selection = FoodManagementContract.CFavorites.KEY_CUSTOMER + " = ?";
+        String[] selectionArgs = { Integer.toString(cus_id) };
+
+        Cursor cursor = db.query(FoodManagementContract.CCustomer.TABLE_NAME, null, selection, selectionArgs, null, null, null);
+        int credits = cursor.getInt(cursor.getColumnIndexOrThrow(FoodManagementContract.CCustomer.KEY_CREDITS));
+        cursor.close();
+        return credits;
+    }
+
+    public void updCredits(int cus_id, int amount) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(FoodManagementContract.CCustomer.KEY_CREDITS, amount);
+
+        String selection = FoodManagementContract.CCustomer._ID + " = ?";
+        String[] selectionArgs = { Integer.toString(cus_id) };
         db.update(FoodManagementContract.CCustomer.TABLE_NAME, values, selection, selectionArgs);
     }
 
@@ -712,6 +736,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String[] selectionArgs = { Integer.toString(cus_id) };
 
         Cursor cursor = db.query(FoodManagementContract.CFavorites.TABLE_NAME, null, selection, selectionArgs, null, null, null);
+        return cursor;
+    }
+
+    public void addTransaction(int cus_id, int amount) {
+        ContentValues values = new ContentValues();
+        values.put(FoodManagementContract.CTransaction.KEY_CUSTOMER, cus_id);
+        values.put(FoodManagementContract.CTransaction.KEY_DATE, (Calendar.getInstance().getTime()).toString());
+        values.put(FoodManagementContract.CTransaction.KEY_CREDITS, amount);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.insertOrThrow(FoodManagementContract.CTransaction.TABLE_NAME, null, values);
+    }
+
+    public Cursor getTransactions(int cus_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selection = FoodManagementContract.CTransaction.KEY_CUSTOMER + " = ?";
+        String[] selectionArgs = { Integer.toString(cus_id) };
+
+        Cursor cursor = db.query(FoodManagementContract.CTransaction.TABLE_NAME, null, selection, selectionArgs, null, null, null);
         return cursor;
     }
 
