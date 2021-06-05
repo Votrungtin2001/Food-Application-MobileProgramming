@@ -1997,6 +1997,426 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(FoodManagementContract.CBranch.KEY_MASTER, 1);
         db.insertOrThrow(FoodManagementContract.CBranch.TABLE_NAME, null, values);
 
+        img = R.drawable.phuclong_caphelatte;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Cà Phê Latte");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Latte Coffee");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 1);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 4);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 56);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 4 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 40000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.phuclong_caphecappuccino;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Cà Phê Cappuccino");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Cappuccino Coffee");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 1);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 4);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 57);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "500+ đã bán | 10+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 35000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.phuclong_caphecaramellatte;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Cà Phê Caramel Latte");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Caramel Latte Coffee");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 1);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 4);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 58);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 2 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 45000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.phuclong_caphephucbontuhanhnhandaxay;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Cà Phê Phúc Bồn Tử Hạnh Nhân Đá Xay");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Espresso Raspberry Almond");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 2);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 4);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 59);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 6 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 65000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.phuclong_socolacaphedaxay;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Sô Cô La Cà Phê Đá Xay");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Choco Lover");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 2);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 4);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 60);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "999+ đã bán | 10+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 55000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.phuclong_traxanhdaxay;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Trà Xanh Đá Xay");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Green Tea Ice Blended");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 2);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 4);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 61);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "999+ đã bán | 10+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 55000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.phuclong_traolongsua;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Trà Ô Long Sữa");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Oolong Milk Tea");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 13);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 4);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 62);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "999+ đã bán | 100+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 45000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.phuclong_trasuaphuclong;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Trà Sữa Phúc Long");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Phuc Long Tea Latte");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 13);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 4);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 63);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "500+ đã bán | 10+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 45000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.phuclong_hongtrasuaphuclong;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Hồng Trà Sữa Phúc Long");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Phuc Long Black Milk Tea");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 13);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 4);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 64);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "999+ đã bán | 100+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 40000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.phuclong_tradaophuclong;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Trà Đào Phúc Long");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Phuc Long Peach Tea");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 3);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 4);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 65);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "999+ đã bán | 100+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 50000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.phuclong_travailai;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Trà Vải - Lài");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Lychee Tea (Jasmine)");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 3);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 4);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 66);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "999+ đã bán | 100+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 45000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.phuclong_tranhanlai;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Trà Nhãn - Lài");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Longan Tea (Jasmine)");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 3);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 4);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 67);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "999+ đã bán | 100+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 45000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.phuclong_buoiep;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Bưởi Ép");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Pomelo");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 14);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 4);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 68);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "500+ đã bán | 9 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 40000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.phuclong_taoep;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Táo Ép");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Apple");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 14);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 4);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 69);
+        values.put(FoodManagementContract.CMenu.KEY_DESC,  "100+ đã bán | 9 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 40000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.phuclong_dauep;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Dâp Ép");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Strawberry");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 14);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 4);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 70);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 10+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 40000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+
+        img = R.drawable.phuclong_socola;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Sô Cô La");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Chocolate");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 4);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 4);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 71);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "500+ đã bán | 10+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 40000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.phuclong_suachuaphucbontudaccam;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Sữa Chua Phúc Bồn Tử Đác Cam");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Berry Berry Yogurt");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 4);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 4);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 72);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "999+ đã bán | 10+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 65000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.phuclong_chocococobrownie;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Choco Coco Brownie");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Choco Coco Brownie");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 5);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 4);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 73);
+        values.put(FoodManagementContract.CMenu.KEY_DESC,  "100+ đã bán | 3 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 20000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.phuclong_pannacottastrawberry;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Panna Cotta Strawberry");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Panna Cotta Strawberry");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 5);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 4);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 74);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 5 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 38000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.phuclong_tiramisupax;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Tiramisu Pax");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Tiramisu Pax");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 5);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 4);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 75);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "500+ đã bán | 10+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 47000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
 
 
         // KFC
@@ -2030,6 +2450,470 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(FoodManagementContract.CBranch.KEY_MASTER, 1);
         db.insertOrThrow(FoodManagementContract.CBranch.TABLE_NAME, null, values);
 
+        img = R.drawable.kfc_combogarana;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Combo Gà Rán A");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "2 Miếng Gà + 1 Lon Pepsi");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 6);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 5);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 76);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "500+ đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 79000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.kfc_combogaranb;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Combo Gà Rán B");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "3 Miếng Hot Wings + 1 Khoai Tây Chiên + 1 Lon Pepsi");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 6);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 5);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 77);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 79000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.kfc_combogaranc;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Combo Gà Rán C");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Miếng Gà + 1 Burger Tôm + 1 Lon Pepsi");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 6);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 5);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 78);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 85000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.kfc_combonhoma;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Combo Nhóm A");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "2 Miếng Gà + 1 Burger Tôm + 2 Lon Pepsi");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 6);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 5);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 79);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "50+ đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 129000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.kfc_combonhomb;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Combo Nhóm B");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "3 Miếng Gà + 1 Khoai Tây Chiên + 2 Lon Pepsi");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 6);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 5);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 80);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 149000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.kfc_combonhomc;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Combo Nhóm C");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "4 Miếng Gà + 1 Khoai Tây Chiên + 2 Lon Pepsi");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 6);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 5);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 81);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 185000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+
+        img = R.drawable.kfc_garanmotmieng;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Gà Rán (1 Miếng)");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Miếng Gà");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 6);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 5);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 82);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "500+ đã bán | 8 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 68000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.kfc_garanhaimieng;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Gà Rán (2 Miếng)");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "2 Miếng Gà");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 6);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 5);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 83);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "500+ đã bán | 10+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 68000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.kfc_garanbamieng;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Gà Rán (3 Miếng)");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "3 Miếng Gà");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 6);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 5);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 84);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "500+ đã bán | 10+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 99000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.kfc_gaquaymotmieng;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Gà Quay (1 Miếng)");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Miếng Gà Quay");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 6);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 5);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 85);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "500+ đã bán | 4 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 68000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.kfc_hotwingsbamieng;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Gà Hot Wings (3 Miếng)");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "3 Miếng KFC Hot Wings");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 6);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 5);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 86);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 7 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 49000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.kfc_comgagioncay;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Cơm Gà Giòn Cay");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Phần Cơm + 1 Miếng Gà Giòn Cay");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 8);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 5);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 87);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 6 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 41000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.kfc_comgagionkhongcay;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Cơm Gà Giòn Không Cay");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Phần Cơm + 1 Miếng Gà Giòn Không Cay");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 8);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 5);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 88);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 6 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 41000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.kfc_burgertom;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Burger Tôm");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Burger Tôm");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 9);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 5);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 89);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "500+ đã bán | 9 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 42000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.kfc_burgerzinger;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Burger Zinger");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Burger Zinger");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 9);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 5);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 90);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 9 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 51000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.kfc_banhtrungmotcai;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Bánh Trứng (1 Cái)");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Bánh Trứng");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 12);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 5);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 91);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "500+ đã bán | 8 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 17000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.kfc_khoaitaychien;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Khoai Tây Chiên");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Khoai Tây Chiên");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 12);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 5);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 92);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "999+ đã bán | 10+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 27000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.kfc_khoaitaynghien;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Khoai Tây Nghiền");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Khoai Tây Nghiền");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 12);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 5);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 93);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 9 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 22000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.kfc_bapcaitron;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Bắp Cải Trộn");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Bắp Cải Trộn");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 12);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 5);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 94);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 10+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 22000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.kfc_popcorn;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Popcorn");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Popcorn");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 12);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 5);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 95);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 10+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 57000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.kfc_pepsi;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Pepsi Lon");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Lon Pepsi");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 4);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 5);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 96);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 2 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 17000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.kfc_tradao;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Trà Đào");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Ly Trà Đào");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 4);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 5);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 97);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 3 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 24000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+
         // The Pizza Company
         img = R.drawable.thepizzacompany;
         drawable = resources.getDrawable(img);
@@ -2059,6 +2943,427 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(FoodManagementContract.CBranch.KEY_ADDRESS, 6);
         values.put(FoodManagementContract.CBranch.KEY_MASTER, 1);
         db.insertOrThrow(FoodManagementContract.CBranch.TABLE_NAME, null, values);
+
+        img = R.drawable.thepizzacompany_pizzaaloha;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Pizza Aloha");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Thịt nguội, xúc xích tiêu cay và dứa hòa quyện với sốt Thousand Island");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 15);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 6);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 98);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "10+ đã bán | 1 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 199000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thepizzacompany_pizzaganuongdua;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Pizza Gà Nướng Dứa");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Thịt gà mang vị ngọt của dứa kết hợp với vị cay nóng của ớt");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 15);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 6);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 99);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "10+ đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 179000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thepizzacompany_pizzahaisancaocap;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Pizza Hải Sản Cao Cấp");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Tôm, cua, mực và nghêu với sốt Marinara");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 15);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 6);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 100);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "50+ đã bán | 2 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 209000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thepizzacompany_pizzahaisanpestoxanh;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Pizza Hải Sản Pesto Xanh");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Tôm, cua, mực và bông cải xanh tươi ngon trên nền sốt Pesto Xanh");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 15);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 6);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 101);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 10+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 249000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thepizzacompany_pizzathitxongkhoi;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Pizza Thịt Xông Khói");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Thịt giăm bông, thịt xông khói và hai loại rau của ớt xanh, cà chua");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 15);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 6);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 102);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "10+ đã bán | 1 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 199000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thepizzacompany_pizzatomcocktail;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Pizza Tôm Cocktail");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Tôm với nấm, dứa, cà chua và sốt Thousand Island.");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 15);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 6);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 103);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "7 đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 209000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thepizzacompany_pizzaxucxichy;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Pizza Xúc Xích Ý");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Xúc xích cay kiểu Ý trên nền sốt cà chua");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 15);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 6);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 104);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "10+ đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 179000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thepizzacompany_comcanhganuongbbqsupraucu;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Cơm Cánh Gà Nướng BBQ & Súp Rau Củ");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Món cơm truyền thống với cánh gà nướng BBQ và súp rau củ");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 8);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 6);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 105);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "8 đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 69000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thepizzacompany_comduigatambotchiengionsupraucu;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Cơm Cánh Gà Tẩm Chiên Giòn & Súp Rau Củ");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Cánh gà chiên giòn kết hợp với cơm và súp rau củ");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 8);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 6);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 106);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "3 đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 69000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thepizzacompany_canhganuongbbqsaumieng;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Cánh Gà Nướng BBQ (6 Miếng)");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Cánh gà nướng thấm vị với lớp da mỏng giòn");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 6);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 6);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 107);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 1 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 129000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thepizzacompany_gagionkhongxuong;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Gà Giòn Không Xương");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Gà giòn tan với sốt Cocktail thơm ngậy");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 6);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 6);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 108);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "10+ đã bán | 1 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 99000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thepizzacompany_miythitbobam;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Mì Ý Thịt Bò Bằm");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Sốt thịt bò bằm đặc trưng kết hợp cùng mỳ Ý");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 7);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 6);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 109);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 1 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 129000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thepizzacompany_miytomsotkemccachua;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Mì Ý Tôm Sốt Kem Cà Chua");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Sự tươi ngon của tôm kết hợp với sốt kem cà chua");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 7);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 6);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 110);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "10+ đã bán | 1 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 129000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thepizzacompany_miycaythitxongkhoi;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Mì Ý Cay Với Thịt Xông Khối");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Mỳ Ý cay nồng và ngậy hương thơm của thịt xông khói");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 7);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 6);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 111);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "10+ đã bán | 1 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 99000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thepizzacompany_saladgagionkhongxuong;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Salad Gà Giòn Không Xương");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Salad Gà giòn với trứng cút, thịt xông khói, phô mai parmesan và sốt Thousand Island");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 16);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 6);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 112);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "50+ đã bán | 2 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 69000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thepizzacompany_saladtronsotcaesar;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Salad Trộn Sốt Caesar");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Rau tươi trộn với sốt Caesar");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 16);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 6);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 113);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "50+ đã bán | 8 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 69000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thepizzacompany_giokhoaitaychien;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Giỏ Khoai Tây Chiên");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Sự kết hợp của nhiều kiểu chế biến khoai tây");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 12);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 6);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 114);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 5 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 79000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thepizzacompany_banhkepnuongmexico;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Bánh Kẹp Nướng Mêxicô");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Phô mai, sốt cà chua, nhân gà nướng bơ tỏi, ớt sừng dùng kèm sốt cocktail");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 12);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 6);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 115);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "50+ đã bán | 2 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 109000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thepizzacompany_pepsi;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Pepsi Lon");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Lon Pepsi");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 4);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 6);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 116);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "50+ đã bán | 1 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 29000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thepizzacompany_strongbow;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Strongbow Các Loại");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Red Berries, Honey, Dark Fruit, ...");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 4);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 6);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 117);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "10+ đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 49000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
 
         // Pho 24 - Nguyen Tri Phuong
         img = R.drawable.pho24;
@@ -2090,6 +3395,405 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(FoodManagementContract.CBranch.KEY_MASTER, 1);
         db.insertOrThrow(FoodManagementContract.CBranch.TABLE_NAME, null, values);
 
+        img = R.drawable.pho24_phodacbiettovua;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Combo Phở Tô Vừa (R) + Thức Uống");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Phở Tô Vừa + 1 Coca Cola Light");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 11);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 7);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 118);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "3 đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 68000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.pho24_phodacbiettolon;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Combo Phở Tô Lớn (L) + Thức Uống");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Phở Tô Lớn + 1 Coca Cola Light");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 11);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 7);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 119);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "6 đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 79000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.pho24_phobotai;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Phở Bò Tái");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Phở Bò Tái");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 11);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 7);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 120);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "10+ đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 49000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.pho24_phobochin;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Phở Bò Chín");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Phở Bò Chín");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 11);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 7);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 121);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "10+ đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 49000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.pho24_phodacbiet;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "1 Phở Đặc Biệt");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Phở Đặc Biệt");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 11);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 7);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 122);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "50+ đã bán | 1 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 59000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.pho24_phobovien;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Phở Bò Viên");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Phở Bò Viên");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 11);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 7);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 123);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "6 đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 49000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.pho24_phoga;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Phở Gà");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Phở Gà");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 11);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 7);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 124);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "8 đã bán | 1 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 49000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.pho24_comduiga;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Cơm Đùi Gà");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Cơm Đùi Gà");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 8);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 7);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 125);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "10+ đã bán | 3 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 52000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.pho24_comsuonopla;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Cơm Sườn Ốp La");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Cơm Sườn Ốp La");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 8);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 7);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 126);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "4 đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 52000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.pho24_xoidacbiet;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Xôi Đặc Biệt");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Xôi Đặc Biệt");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 17);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 7);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 127);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "6 đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 24000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.pho24_banhuot;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Bánh Ướt");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Phần Bánh Ướt");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 12);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 7);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 128);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "4 đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 24000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.pho24_bunboxaoxa;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Bún Bò Xào Xả");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Bún Bò Xào Xả");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 11);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 7);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 129);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "10+ đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 45000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.pho24_bunchagio;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Bún Chả Giò");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Bún Chả Giò");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 7);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 7);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 130);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "1 đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 39000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.pho24_goicuon;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Gỏi Cuốn");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Gỏi Cuốn");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 12);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 7);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 131);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "5 đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 19000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.pho24_chagio;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Chả Giò");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Chả Giò");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 12);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 7);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 132);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "1 đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 29000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.pho24_cocacola;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Coca Cola Light");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Coca Cola Light");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 4);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 7);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 133);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "5 đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 19000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.pho24_suadaunanh;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Sữa Đậu Nành");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Sữa Đậu Nành");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 4);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 7);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 134);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "10+ đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 19000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.pho24_nuocdua;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Nước Dừa");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Nước Dừa");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 4);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 7);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 135);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "10+ đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 29000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.pho24_dachanh;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Đá Chanh");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Đá Chanh");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 4);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 7);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 136);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "3 đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 19000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
         // Tuan Bay Keo - Banh Mi- Xoi - Che
         img = R.drawable.tuanbaykeo;
         drawable = resources.getDrawable(img);
@@ -2119,6 +3823,322 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(FoodManagementContract.CBranch.KEY_ADDRESS, 8);
         values.put(FoodManagementContract.CBranch.KEY_MASTER, 1);
         db.insertOrThrow(FoodManagementContract.CBranch.TABLE_NAME, null, values);
+
+        img = R.drawable.tuanbaykeo_banhmithapcam;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Bánh Mì Thập Cẩm");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Bánh Mì Thập Cẩm");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 10);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 8);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 137);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "999+ đã bán | 100+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 25000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.tuanbaykeo_banhmiphalaulotaiheo;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Bánh Mì Phá Lấu Lỗ Tai Heo");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Bánh Mì Phá Lấu Lỗ Tai Heo");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 10);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 8);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 138);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "999+ đã bán | 10+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 25000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.tuanbaykeo_banhmigaxe;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Bánh Mì Gà Xé");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Bánh Mì Gà Xé");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 10);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 8);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 139);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "999+ đã bán | 10+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 25000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.tuanbaykeo_banhmichabong;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Bánh Mì Chà Bông");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Bánh Mì Chà Bông");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 10);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 8);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 140);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 10+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 25000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.tuanbaykeo_comboxoithapcam;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Combo 1: Xôi Thập Cẩm(đặc biệt) + Chè");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Xôi Thập Cẩm Đặc Biệt + 1 Chè");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 17);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 8);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 141);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "50+ đã bán | 4 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 55000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.tuanbaykeo_xoithapcam;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Xôi Thập Cẩm Tuấn 7 Kẹo");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Xôi Thập Cẩm");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 17);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 8);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 142);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "999+ đã bán | 100+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 30000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.tuanbaykeo_xoigaxe;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Xôi Gà Xé");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Xôi Gà Xé");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 17);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 8);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 143);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "999+ đã bán | 10+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 30000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.tuanbaykeo_xoixaxiu;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Xôi Xá Xíu");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Xôi Xá Xíu");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 17);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 8);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 144);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 10+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 30000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.tuanbaykeo_chethapcam;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Chè Thập Cẩm");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Chè Thập Cẩm");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 18);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 8);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 145);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 10+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 18000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.tuanbaykeo_chehatsencunang;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Chè Hạt Sen Củ Năng");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Chè Hạt Sen Củ Năng");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 18);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 8);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 146);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 2 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 20000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.tuanbaykeo_chesamboluong;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Chè Sâm Bổ Lượng");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Chè Sâm Bổ Lượng");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 18);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 8);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 147);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "10+ đã bán | 9 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 20000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.tuanbaykeo_chethai;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Chè Thái");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Chè Thái");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 18);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 8);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 148);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 10+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 20000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.tuanbaykeo_banhplan;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Bánh Plan");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Bánh Plan");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 12);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 8);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 149);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 10+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 10000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.tuanbaykeo_cocacola;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Coca Tươi");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Coca Cola");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 4);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 8);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 150);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 3 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 15000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.tuanbaykeo_samduasua;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Sâm Dứa Sữa");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Sâm Dứa Sữa");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 4);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 8);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 151);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 10+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 15000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
 
         // Mi Quang 3 Anh Em
         img = R.drawable.miquangbaanhem;
@@ -2150,6 +4170,343 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(FoodManagementContract.CBranch.KEY_MASTER, 1);
         db.insertOrThrow(FoodManagementContract.CBranch.TABLE_NAME, null, values);
 
+        img = R.drawable.miquangbaanhem_miquangchacuachatom;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Mì Quảng Chả Cua Chả Tôm");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Giá đã bao gồm 3.000đ tiền hộp");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 11);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 9);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 152);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "10+ đã bán | 1 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 43000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.miquangbaanhem_miquangdacbiet;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Mì Quảng Đặc Biệt");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Giá đã bao gồm 3.000đ tiền hộp");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 11);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 9);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 153);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "50+ đã bán | 1 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 63000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.miquangbaanhem_miquanggachoirutxuong;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Mì Quảng Gà Chọi Rút Xương");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Giá đã bao gồm 3.000đ tiền hộp");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 11);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 9);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 154);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "10+ đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 53000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.miquangbaanhem_miquanggata;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Mì Quảng Gà Ta");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Giá đã bao gồm 3.000đ tiền hộp");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 11);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 9);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 155);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 3 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 43000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.miquangbaanhem_miquangsuon;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Mì Quảng Sườn");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Giá đã bao gồm 3.000đ tiền hộp");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 11);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 9);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 156);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 43000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.miquangbaanhem_miquangthittrungcut;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Mì Quảng Thịt Trứng Cút");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Giá đã bao gồm 3.000đ tiền hộp");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 11);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 9);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 157);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 6 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 43000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.miquangbaanhem_miquangtom;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Mì Quảng Tôm");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Giá đã bao gồm 3.000đ tiền hộp");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 11);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 9);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 158);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "10+ đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 43000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.miquangbaanhem_miquangtomthit;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Mì Quảng Tôm Thịt");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Giá đã bao gồm 3.000đ tiền hộp");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 11);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 9);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 159);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "50+ đã bán | 2 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 43000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.miquangbaanhem_tomithem;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Tô Mì Thêm");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Giá đã bao gồm 3.000đ tiền hộp");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 12);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 9);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 160);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "10+ đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 13000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.miquangbaanhem_others;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Chén Nhân Thêm");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Giá đã bao gồm 3.000đ tiền hộp");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 12);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 9);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 161);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "10+ đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 33000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.miquangbaanhem_others;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Chén Nhân Gà Chọi");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Giá đã bao gồm 3.000đ tiền hộp");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 12);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 9);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 162);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "5 đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 43000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.miquangbaanhem_others;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Chén Nhân Thập Cẩm");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Giá đã bao gồm 3.000đ tiền hộp");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 12);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 9);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 163);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "12 đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 43000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.miquangbaanhem_others;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Chén Nhân Bắp Bò Tái");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Giá đã bao gồm 3.000đ tiền hộp");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 12);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 9);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 164);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "1 đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 43000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.miquangbaanhem_pepsi;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Pepsi Lon");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Lon Pepsi");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 4);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 9);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 165);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "5 đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 15000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.miquangbaanhem_sting;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Sting Lon");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Lon Sting");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 4);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 9);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 166);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "5 đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 15000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.miquangbaanhem_olong;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Trà Ô Long");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Chai Ô Long");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 4);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 9);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 167);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "1 đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 15000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+
         // Tra Sua The Alley
         img = R.drawable.thealley;
         drawable = resources.getDrawable(img);
@@ -2180,6 +4537,364 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(FoodManagementContract.CBranch.KEY_MASTER, 1);
         db.insertOrThrow(FoodManagementContract.CBranch.TABLE_NAME, null, values);
 
+        img = R.drawable.thealley_acquy;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Ác Quỷ");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Size L");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 13);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 10);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 168);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "6 đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 72000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thealley_thienthan;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Thiên Thần");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Size L");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 13);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 10);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 169);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "10+ đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 72000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thealley_dalgonatranchauduongden;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Dalgona Trân Châu Đường Đen");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Đường / Đá cố định");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 13);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 10);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 170);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 7 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 65000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thealley_hongtrasuamatongkemtuoioccho;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Hồng Trà Sữa Mật Ong Kem Tươi Óc Chó");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Walnut Cream Honey Black Milk Tea");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 13);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 10);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 171);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 2 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 58000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thealley_luctrasuakemtuoioccho;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Lục Trà Sữa Kem Tươi Óc Chó");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Walnut Cream Green Milk Tea");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 13);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 10);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 172);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 2 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 58000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thealley_trasuakemcheeseduongden;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Trà Sữa Kem Cheese Đường Đen");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Brown Sugar Cream Cheese Milk Tea");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 13);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 10);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 173);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "999+ đã bán | 10+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 58000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thealley_trasuamamcay;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Trà Sữa Mầm Cây");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Potted Plant Milk Tea");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 13);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 10);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 174);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "500+ đã bán | 6 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 59000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thealley_trasuathietquanam;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Trà Sữa Thiết Quan Âm");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Tiaguanyin Milk Tea");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 13);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 10);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 175);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 3 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 52000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thealley_trasuathaomoc;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Trà Sữa Thảo Mộc");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Earl Grey Milk Tea");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 13);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 10);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 176);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "50+ đã bán | 5 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 52000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thealley_trasuathaomockemtuoioccho;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Trà Sữa Thảo Mộc Kem Tươi Óc Chó");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Walnut Cream Earl Grey Milk Tea");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 13);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 10);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 177);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 10+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 58000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thealley_luctrachanhdaythachdua;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Lục Trà Chanh Dây + Thạch Dừa");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Tropical Passion Fruit Green Tea");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 3);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 10);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 178);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "999+ đã bán | 10+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 59000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thealley_trachanhbidao;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Trà Chanh Bí Đao");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Lemon Winter Melon Tea");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 3);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 10);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 179);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 6 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 52000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thealley_trathaomockemcheese;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Trà Thảo Mộc Kem Cheese");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Cream Cheese Earl Grey Tea");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 3);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 10);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 180);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 3 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 55000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thealley_nuocepchanhoi;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Nước Ép Chanh Ổi");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Lemon Guava Juice");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 14);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 10);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 181);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 8 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 55000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thealley_suachanhtrauchau;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Sữa Chanh Trân Châu");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Lemon Milk");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 4);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 10);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 182);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 1 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 59000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thealley_suachuatranchauduongden;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Sữa Chua Trân Châu Đường Đen");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Mức giá cố định");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 4);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 10);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 183);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "500+ đã bán | 10+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 65000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.thealley_suatuoitrauchauduongden;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Sữa Tươi Chân Trâu Đường Đen");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Brown Sugar Deerioca Milk");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 4);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 10);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 184);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "999+ đã bán | 100+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 62000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+
         // Greeci - Nuoc Ep Detox, Sinh to, Tea & Coffee
         img = R.drawable.greeci;
         drawable = resources.getDrawable(img);
@@ -2209,6 +4924,469 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(FoodManagementContract.CBranch.KEY_ADDRESS, 11);
         values.put(FoodManagementContract.CBranch.KEY_MASTER, 1);
         db.insertOrThrow(FoodManagementContract.CBranch.TABLE_NAME, null, values);
+
+        img = R.drawable.greeci_combovitaminc;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Combo Vitamin C, Tăng Đề Kháng");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Ly Cóc Táo Ổi + 1 Ly Bưởi Cam Chanh");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 14);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 11);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 185);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "10+ đã bán | 3 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 52000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.greeci_combodetoxbanchay;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Combo Detox Bán Chạy, Bổ Và Ngon");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Ly Táo Thơm Chanh Dây + 1 Ly Cóc Táo Ổi");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 14);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 11);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 186);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "10+ đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 52000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.greeci_combogiamcan;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Combo Giảm Cân Greeci");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Ly Cóc Táo Cần Tây + 1 Ly Táo Thơm Cần Tây");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 14);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 11);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 187);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "10+ đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 65000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.greeci_combogiaikhaitraicaynhietdoi;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Combo Giải Khát Trái Cây Nhiệt Đới");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "1 Ly Trà Dâu Nam Mỹ + 1 Ly Nước Ép Chanh Dây");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 14);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 11);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 188);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "7 đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 45000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.greeci_buoiduahauchanhbacha;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Bưởi, Dưa Hấu, Chanh, Bạc Hà");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Đẹp Da, Bổ Máu, Nhiều Vitamin");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 14);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 11);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 189);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "50+ đã bán | 7 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 31000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.greeci_coctaooi;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Cóc, Táo, Ổi");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Đẹp Da, Giảm Cân, Tăng Hệ Miễn Dịch");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 14);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 11);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 190);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 10+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 26000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.greeci_taodualecantaychanh;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Táo, Dưa Lê, Cần Tây, Chanh");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Giảm Cân, Thải Độc, Thanh Lọc Cơ Thể");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 14);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 11);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 191);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "10+ đã bán | 5 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 31000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.greeci_taothomchanhday;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Táo, Thơm, Chanh Dây");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Giảm Tiểu Đường, Đẹp Da, Giảm Cân");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 14);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 11);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 192);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 5 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 26000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.greeci_thomcamcantaybacha;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Thơm, Cam, Cần Tây, Bạc Hà");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Giảm Cân, Thải Độc, Tăng Miễn Dịch, Chống Lão Hóa");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 14);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 11);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 193);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "10+ đã bán | 7 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 31000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.greeci_thomcarotcam;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Thơm, Cà Rốt, Cam");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Giảm Cân, Thải Độc, Chống Lão Hóa");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 14);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 11);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 194);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 5 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 26000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.greeci_mixdautayvietquatchuoisuachua;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Mix Dâu Tây, Việt Quất, Chuối, Sữa Chua");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Đẹp Da, Giữ Dáng, Sáng Mắt, Tốt Trong Quá Trình Trao Đổi Chất");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 14);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 11);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 195);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 8 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 41000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.greeci_sinhtobo;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Sinh Tố Bơ");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Đẹp Da");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 14);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 11);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 196);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 10+ lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 33000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.greeci_sinhtodau;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Sinh Tố Dâu");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Đẹp Da");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 14);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 11);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 197);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 5 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 33000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.greeci_sinhtoduacacao;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Sinh Tố Dừa Cacao");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Đẹp Da");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 14);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 11);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 198);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "100+ đã bán | 9 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 26000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.greeci_sinhtomangcautay;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Sinh Tố Mãng Cầu Tây");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Đẹp Da");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 14);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 11);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 199);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "50+ đã bán | 6 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 29000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.greeci_sinhtovietquat;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Sinh Tố Việt Quất");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Đẹp Da");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 14);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 11);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 200);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "50+ đã bán | 4 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 29000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.greeci_tradao;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Trà Đào");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Ngon");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 3);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 11);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 201);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "10+ đã bán | 2 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 25000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.greeci_travai;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Trà Vải");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Ngon");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 3);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 11);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 202);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "10+ đã bán | 2 lượt thích");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 25000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.greeci_tradaunammy;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Trà Dâu Nam Mỹ");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Ngọt Dịu Vị Chua Thanh, Vị Dâu Lẫn Vào Vị Trà Lài");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 3);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 11);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 203);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "10+ đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 25000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.greeci_caphedenda;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Cà Phê Đen Đá");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Đắng");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 1);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 11);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 204);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "5 đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 16000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.greeci_caphesuada;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Cà Phê Sữa Đá");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Ngọt");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 1);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 11);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 205);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "8 đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 20000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
+        img = R.drawable.greeci_bacxiu;
+        drawable = resources.getDrawable(img);
+        bitmap =  ((BitmapDrawable)drawable).getBitmap();
+        stream = new ByteArrayOutputStream();
+        bitmap.compress( Bitmap.CompressFormat.PNG, 100, stream);
+        bitmapData = stream.toByteArray();
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CProduct.KEY_NAME, "Bạc Xỉu Đá");
+        values.put(FoodManagementContract.CProduct.KEY_DESC, "Ngọt");
+        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, 1);
+        values.put(FoodManagementContract.CProduct.KEY_IMAGE, bitmapData);
+        db.insertOrThrow(FoodManagementContract.CProduct.TABLE_NAME, null, values);
+
+        values = new ContentValues();
+        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, 11);
+        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, 206);
+        values.put(FoodManagementContract.CMenu.KEY_DESC, "5 đã bán");
+        values.put(FoodManagementContract.CMenu.KEY_PRICE, 25000);
+        db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
+
 
         // Ut Nguyen Quan - Bun - Banh Canh
         img = R.drawable.utnguyenquan;
