@@ -243,9 +243,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insertOrThrow(FoodManagementContract.CDistrict.TABLE_NAME, null, values);
     }
 
-    public Cursor getDistricts() {
+    public Cursor getDistricts(int city_id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(FoodManagementContract.CDistrict.TABLE_NAME, null, null, null, null, null, null);
+
+        String selection = FoodManagementContract.CDistrict.KEY_CITY + " = ?";
+        String[] selectionArgs = { Integer.toString(city_id) };
+
+        Cursor cursor = db.query(FoodManagementContract.CDistrict.TABLE_NAME, null, selection, selectionArgs, null, null, null);
         return cursor;
     }
 
@@ -306,12 +310,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public void addAddressLabel(String type) {
+    public long addAddressLabel(String type) {
         ContentValues values = new ContentValues();
         values.put(FoodManagementContract.CAddressLabel.KEY_TYPE, type);
 
         SQLiteDatabase db = this.getWritableDatabase();
-        db.insertOrThrow(FoodManagementContract.CAddressLabel.TABLE_NAME, null, values);
+        return db.insertOrThrow(FoodManagementContract.CAddressLabel.TABLE_NAME, null, values);
     }
 
     public void updAddressLabel(int id, String type) {
