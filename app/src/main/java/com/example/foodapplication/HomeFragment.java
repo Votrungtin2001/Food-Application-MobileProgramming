@@ -152,7 +152,7 @@ public class HomeFragment extends Fragment {
 
 
 
-        /*//EditText Search
+        //EditText Search
         editText_search = view.findViewById(R.id.editText_SearchBar);
 
         //RecyclerView SearchBar
@@ -240,7 +240,7 @@ public class HomeFragment extends Fragment {
 
         if(district_id >= 0) district_isAvailable = true;
         SetAllData(district_id);
-        setUpSreen(district_isAvailable);*/
+        setUpSreen(district_isAvailable);
 
         return view;
     }
