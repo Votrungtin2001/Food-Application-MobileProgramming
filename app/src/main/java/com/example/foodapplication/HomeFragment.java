@@ -3,11 +3,9 @@ package com.example.foodapplication;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
@@ -34,22 +32,20 @@ import com.denzcoskun.imageslider.models.SlideModel;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
+import adapter.AllRestaurantAdapter;
 import adapter.CollectionAdapter;
 import adapter.DiscountComboProductAdapter;
 import adapter.ListAdapter;
 import adapter.SearchBarAdapter;
-import adapter.AllRestaurantAdapter;
 import fragments.BestRatingRestaurantFragment;
 import fragments.BestSellerRestaurantFragment;
 import fragments.NearMeRestaurantsFragment;
+import models.AllRestaurantModel;
 import models.CollectionModel;
 import models.SearchBarModel;
-import models.AllRestaurantModel;
 import models.SortOfProductModel;
 
 
@@ -236,6 +232,7 @@ public class HomeFragment extends Fragment {
         tabLayout_KindOfRestaurant = (TabLayout) view.findViewById(R.id.KindOfRestaurant_TabLayout);
         viewPager_KindOfRestaurant = (ViewPager) view.findViewById(R.id.KindOfRestaurant_ViewPager);
 
+        district_id = 14;
         if(district_id >= 0) district_isAvailable = true;
         SetAllData(district_id);
         setUpSreen(district_isAvailable);

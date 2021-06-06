@@ -14,9 +14,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class AccountSettingsInfoFragment extends Fragment {
     TextView txtAccountSettingsInfoAvatar, txtAccountSettingsInfoPhone, txtAccountSettingsInfoName, txtAccountSettingsInfoEmail, txtAccountSettingsInfoGender, txtAccountSettingsInfoDoB, txtAccountSettingsInfoOccupation;
+    int cus_id = 0; //again, need to pass user id
 
     public AccountSettingsInfoFragment() {}
 
@@ -56,6 +58,7 @@ public class AccountSettingsInfoFragment extends Fragment {
         SingleEditTextUpdateFragment fragment = new SingleEditTextUpdateFragment();
 
         Bundle args = new Bundle();
+        args.putInt("CUSTOMER_ID", cus_id);
         switch (v.getId()) {
             case R.id.txtAccountSettingsInfoPhone:
                 args.putString("SINGLE_EDIT_TEXT", "EditPhone");
@@ -80,18 +83,39 @@ public class AccountSettingsInfoFragment extends Fragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setItems(gender, (dialog, which) -> {
-            // need events when user taps on gender[which] here
+            DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+            switch (gender[which]) {
+                case "Male":
+                    dbHelper.updUserGender(cus_id, 0);
+                    break;
+                case "Female":
+                    dbHelper.updUserGender(cus_id, 1);
+                    break;
+                case "None":
+                    dbHelper.updUserGender(cus_id, 2);
+                    break;
+            }
+            dbHelper.close();
+            Toast.makeText(getContext(), "Gender updated!", Toast.LENGTH_SHORT).show();
         });
         builder.show();
     };
 
     View.OnClickListener openDateFragment = v -> {
         DialogFragment dateFragment = new DateFragment();
+
+        Bundle args = new Bundle();
+        args.putInt("CUSTOMER_ID", cus_id);
+        dateFragment.setArguments(args);
+
         dateFragment.show(getChildFragmentManager(), "DatePicker");
     };
 
     View.OnClickListener openOccupationFragment = v-> {
         AccountSettingsInfoOccupationFragment newFragment = new AccountSettingsInfoOccupationFragment();
+        Bundle args = new Bundle();
+        args.putInt("CUSTOMER_ID", cus_id);
+        newFragment.setArguments(args);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
                 .addToBackStack(null)
