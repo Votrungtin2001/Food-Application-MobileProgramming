@@ -6,8 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,7 +14,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.foodapplication.AccountFragment;
+import com.example.foodapplication.DatabaseHelper;
 import com.example.foodapplication.R;
+import com.example.foodapplication.databinding.FragmentLoginBinding;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -41,7 +41,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import org.json.JSONObject;
@@ -50,20 +49,21 @@ import java.util.Arrays;
 
 
 public class LoginFragment extends Fragment  {
+
     private final String TAG = "LoginFragment";
     AccountFragment accountFragment = new AccountFragment();
     private static final int RC_SIGN_IN = 9001 ;
-   // public User user = new User();
     private AccessTokenTracker accessTokenTracker;
-
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private GoogleSignInClient mGoogleSignInClient;
-    private final int FACEBOOK_LOG_IN_REQUEST_CODE = 64206;
+
     private GoogleApiClient mGoogleApiClient; // for google sign in
     private CallbackManager mFacebookCallbackManager; // for facebook log in
     LoginButton mFacebookLoginButton;
-
+    private DatabaseHelper databaseHelper;
+    private user user;
+    private FragmentLoginBinding binding;
     public LoginFragment() { }
 
     public static LoginFragment newInstance() {
@@ -76,36 +76,39 @@ public class LoginFragment extends Fragment  {
         super.onCreate(savedInstanceState);
 
         googleSignIn();
-        initFBAuthentication();
-        initFBAuthState();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
+        binding = FragmentLoginBinding.inflate(inflater, container, false);
 
-        Button googlesignInButton = view.findViewById(R.id.signin_gg);
-        googlesignInButton.setOnClickListener(new View.OnClickListener() {
+        binding.signinGg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 signInWithGoogleSignIn();
             }
         });
-        mFacebookLoginButton = (LoginButton) view.findViewById(R.id.signin_fb);
-        Button signinUsername = (Button) view.findViewById(R.id.signin_username);
-        signinUsername.setOnClickListener(new View.OnClickListener() {
+
+        binding.signinUsername.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signInWithEmailAndPassword();
+                boolean isExist = databaseHelper.checkUser(binding.username.getText().toString().trim(),binding.password.getText().toString().trim());
+
+                if(isExist){
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.frame_container, accountFragment);
+            transaction.addToBackStack(null);
+            transaction.commit();
+                } else {
+                    binding.password.setText(null);
+                    Toast.makeText(getActivity(), "Login failed. Invalid username or password.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
-
-        TextView signUp = view.findViewById(R.id.signup);
-        signUp.setOnClickListener(runSignUpFragment);
-
-        return view;
+        binding.signup.setOnClickListener(runSignUpFragment);
+        return binding.getRoot();
     }
 
     View.OnClickListener runSignUpFragment = v -> {
@@ -115,6 +118,12 @@ public class LoginFragment extends Fragment  {
                 .addToBackStack(null)
                 .commit();
     };
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initObjects();
+    }
 
     @Override
     public void onStart() {
@@ -162,64 +171,30 @@ public class LoginFragment extends Fragment  {
         }
     }
     // [START auth_with_email_and_password]
-    private void initFBAuthentication() {
-        mFirebaseAuth = FirebaseAuth.getInstance();
+    private void initObjects() {
+        databaseHelper = new DatabaseHelper(getActivity());
+
     }
-
-    private void initFBAuthState() {
-        mAuthStateListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-                String message;
-                if (firebaseUser != null) {
-                    message = "onAuthStateChanged signed in : " + firebaseUser.getUid();
-                } else {
-                    message = "onAuthStateChanged signed out";
-                }
-                Toast.makeText(getActivity(),message,Toast.LENGTH_SHORT).show();
-                // mAuthStateTextview.setText(message);
-            }
-        };
-    }
-
-    private void createUserWithEmailAndPassword() {
-        String email = "oemilk@naver.com"; // email address format
-        String password = "123456"; // at least 6 characters
-        mFirebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
-    private void signInWithEmailAndPassword() {
-        String email = "test@test.com";
-        String password = "123456";
-        mFirebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                e.printStackTrace();
-            }
-        });
-    }
-
-    private void signOut() {
-        if (mFirebaseAuth != null) {
-            mFirebaseAuth.signOut();
-        }
+//    private void verifyFromSQLite() {
+//        String emailString = Objects.requireNonNull(binding.username.getText()).toString().trim();
+//        String retypePasswordString = Objects.requireNonNull(binding.password.getText()).toString().trim();
+//        if (databaseHelper.checkUser(emailString, retypePasswordString)) {
+//            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+//            transaction.replace(R.id.frame_container, accountFragment);
+//            transaction.addToBackStack(null);
+//            transaction.commit();
+////            Intent accountsIntent = new Intent(getActivity(), AccountFragment.class);
+////            accountsIntent.putExtra("EMAIL", binding.username.getText().toString().trim());
+//            emptyInputEditText();
+// //           startActivity(accountsIntent);
+//        } else {
+//            // Snack Bar to show success message that record is wrong
+//            //Snackbar.make(nestedScrollView, getString(R.string.error_valid_email_password), Snackbar.LENGTH_LONG).show();
+//        }
+//    }
+    private void emptyInputEditText() {
+        binding.username.setText(null);
+        binding.password.setText(null);
     }
     // [END auth_with_email_and_password]
     // [START auth_with_google]
@@ -300,8 +275,8 @@ public class LoginFragment extends Fragment  {
   // [START auth_with_facebook]
 
     private void facebookLogin() {
-        mFacebookLoginButton.setReadPermissions(Arrays.asList("email"));
-        mFacebookLoginButton.setFragment(this);
+        binding.signinFb.setReadPermissions(Arrays.asList("email"));
+        binding.signinFb.setFragment(this);
         mFacebookCallbackManager = CallbackManager.Factory.create();
         LoginManager.getInstance().registerCallback(mFacebookCallbackManager,
                 new FacebookCallback<LoginResult>() {
@@ -326,7 +301,7 @@ public class LoginFragment extends Fragment  {
                     }
                 });
 
-        accessTokenTracker = new AccessTokenTracker() {
+         accessTokenTracker = new AccessTokenTracker() {
             @Override
             protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken,
                                                        AccessToken currentAccessToken) {

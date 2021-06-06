@@ -1,4 +1,4 @@
-package com.example.foodapplication;
+package com.example.foodapplication.Order;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;

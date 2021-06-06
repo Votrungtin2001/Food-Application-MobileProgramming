@@ -12,23 +12,20 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
-import com.example.foodapplication.R;
+import com.example.foodapplication.DatabaseHelper;
 import com.example.foodapplication.databinding.FragmentSignUpBinding;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Objects;
 
 
 public class SignUpFragment extends Fragment {
-    private FirebaseAuth mFirebaseAuth;
-    private static final String TAG = SignUpFragment.class.getName();
-    private FragmentSignUpBinding binding;
+
+    private static final String TAG = "SignUpFragment";
+        private FragmentSignUpBinding binding;
+    user user = new user();
+    private DatabaseHelper databaseHelper ;
+    private LoginFragment loginFragment;
 
     public SignUpFragment() {
         // Required empty public constructor
@@ -48,7 +45,7 @@ public class SignUpFragment extends Fragment {
         binding.btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createUserWithEmailAndPassword();
+                postDataToSQLite();
             }
         });
         return binding.getRoot();
@@ -58,8 +55,13 @@ public class SignUpFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         textChangeCheck();
+        initObjects();
     }
-
+    private void initObjects() {
+        // inputValidation = new InputValidation(activity);
+        databaseHelper = new DatabaseHelper(getActivity());
+        user = new user();
+    }
     private void textChangeCheck() {
         //region password
         //kiểm tra 2 password có giống nhau không
@@ -131,25 +133,26 @@ public class SignUpFragment extends Fragment {
         return true;
     }
 
-    private void createUserWithEmailAndPassword() {
-        String email = "oemilk@naver.com"; // email address format
-        String password = "123456"; // at least 6 characters
-        LoginFragment loginFragment = new LoginFragment();
-        mFirebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        Toast.makeText(getContext(), "Đăng ký thành công", Toast.LENGTH_SHORT).show();
-                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.frame_container, loginFragment);
-                        transaction.addToBackStack(null);
-                        transaction.commit();
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                e.printStackTrace();
-            }
-        });
+    private void postDataToSQLite() {
+       //if (!databaseHelper.checkUser(binding.email.getText().toString().trim())) {
+            user.setName(binding.displayName.getText().toString().trim());
+            user.setEmail(binding.email.getText().toString().trim());
+            user.setPassword(binding.password.getText().toString().trim());
+
+            databaseHelper.addCustomer(user);
+            // Snack Bar to show success message that record saved successfully
+//        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+//        transaction.replace(R.id.frame_container, loginFragment);
+//        transaction.addToBackStack(null);
+//        transaction.commit();
+            //Toast.makeText(TAG,"S", Toast.LENGTH_LONG).show();
+            emptyInputEditText();
+      //  }
+    }
+    private void emptyInputEditText() {
+        binding.displayName.setText(null);
+        binding.email.setText(null);
+        binding.password.setText(null);
+        binding.password2.setText(null);
     }
 }

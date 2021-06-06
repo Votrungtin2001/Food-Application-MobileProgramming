@@ -1,9 +1,5 @@
 package com.example.foodapplication;
 
-import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.provider.BaseColumns;
 
 public final class FoodManagementContract {
@@ -68,6 +64,7 @@ public final class FoodManagementContract {
         private CCustomer() { }
 
         public static final String TABLE_NAME = "CUSTOMER",
+                KEY_ID ="ID",
                 KEY_NAME = "Name",
                 KEY_CITY = "City",
                 KEY_PHONE = "Phone",
@@ -130,7 +127,6 @@ public final class FoodManagementContract {
 
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
-
 
 
     public static final class CCity implements BaseColumns {

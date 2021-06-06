@@ -24,6 +24,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.foodapplication.Notification.Noti;
 import com.example.foodapplication.Notification.NotiSettingFragment;
+import com.example.foodapplication.Order.OrderFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.security.MessageDigest;

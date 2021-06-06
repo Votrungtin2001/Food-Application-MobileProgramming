@@ -4,21 +4,23 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.res.Resources;
 import android.database.Cursor;
-import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
+
+import com.example.foodapplication.auth.user;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Calendar;
 import java.util.Date;
+
+import static com.example.foodapplication.FoodManagementContract.CCustomer.KEY_EMAIL;
+import static com.example.foodapplication.FoodManagementContract.CCustomer.KEY_ID;
+import static com.example.foodapplication.FoodManagementContract.CCustomer.KEY_NAME;
+import static com.example.foodapplication.FoodManagementContract.CCustomer.KEY_PASSWORD;
+import static com.example.foodapplication.FoodManagementContract.CCustomer.TABLE_NAME;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // REMEMBER TO ADD 1 TO THIS CONSTANT WHEN YOU MAKE ANY CHANGES TO THE CONTRACT CLASS!
@@ -27,6 +29,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static String DB_NAME = "foodapp";
     private final Context context;
     private SQLiteDatabase db;
+
+
 
     public DatabaseHelper(Context context) {
         super(context, FoodManagementContract.DATABASE_NAME, null, DATABASE_VERSION);
@@ -110,22 +114,91 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //        }
 //        return null;
 //    }
-    public void addCustomer(String name, int city_id, String phone, String email, String fb, String user, String pass, int gender, Date DoB, String job) {
-        ContentValues values = new ContentValues();
-        values.put(FoodManagementContract.CCustomer.KEY_NAME, name);
-        values.put(FoodManagementContract.CCustomer.KEY_CITY, city_id);
-        values.put(FoodManagementContract.CCustomer.KEY_PHONE, phone);
-        values.put(FoodManagementContract.CCustomer.KEY_EMAIL, email);
-        values.put(FoodManagementContract.CCustomer.KEY_FACEBOOK, fb);
-        values.put(FoodManagementContract.CCustomer.KEY_USERNAME, user);
-        values.put(FoodManagementContract.CCustomer.KEY_PASSWORD, pass);
-        values.put(FoodManagementContract.CCustomer.KEY_GENDER, gender);
-        values.put(FoodManagementContract.CCustomer.KEY_DOB, DoB.toString());
-        values.put(FoodManagementContract.CCustomer.KEY_OCCUPATION, job);
-        values.put(FoodManagementContract.CCustomer.KEY_CREDITS, 0);
-
+    public void addCustomer(user user) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.insertOrThrow(FoodManagementContract.CCustomer.TABLE_NAME, null, values);
+
+        ContentValues values = new ContentValues();
+        values.put(FoodManagementContract.CCustomer.KEY_NAME, user.name);
+        values.put(FoodManagementContract.CCustomer.KEY_CITY, user.getCity_id());
+        values.put(FoodManagementContract.CCustomer.KEY_PHONE, user.getPhone());
+        values.put(FoodManagementContract.CCustomer.KEY_EMAIL, user.email);
+        values.put(FoodManagementContract.CCustomer.KEY_FACEBOOK, user.getFb());
+        values.put(FoodManagementContract.CCustomer.KEY_USERNAME, user.getUsername());
+        values.put(FoodManagementContract.CCustomer.KEY_PASSWORD, user.password);
+        values.put(FoodManagementContract.CCustomer.KEY_GENDER, user.getGender());
+        values.put(FoodManagementContract.CCustomer.KEY_DOB, user.getDoB());
+        values.put(FoodManagementContract.CCustomer.KEY_OCCUPATION, user.getJob());
+
+        db.insert(FoodManagementContract.CCustomer.TABLE_NAME, null, values);
+        db.close();
+
+    }
+
+    public boolean checkUser(String email) {
+        // array of columns to fetch
+        String[] columns = {
+                KEY_ID
+        };
+        SQLiteDatabase db = this.getReadableDatabase();
+        // selection criteria
+        String selection = KEY_EMAIL + " = ?";
+        // selection argument
+        String[] selectionArgs = {email};
+        // query user table with condition
+        /**
+         * Here query function is used to fetch records from user table this function works like we use sql query.
+         * SQL query equivalent to this query function is
+         * SELECT user_id FROM user WHERE user_email = 'jack@androidtutorialshub.com';
+         */
+        Cursor cursor = db.query(TABLE_NAME, //Table to query
+                columns,                    //columns to return
+                selection,                  //columns for the WHERE clause
+                selectionArgs,              //The values for the WHERE clause
+                null,                       //group the rows
+                null,                      //filter by row groups
+                null);                      //The sort order
+        int cursorCount = cursor.getCount();
+        cursor.close();
+        db.close();
+        if (cursorCount > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean checkUser(String email, String password) {
+        // array of columns to fetch
+        String[] columns = {
+                KEY_NAME
+        };
+        SQLiteDatabase db = this.getReadableDatabase();
+        // selection criteria
+        String selection = KEY_EMAIL + " = ?" + " AND " + KEY_PASSWORD + " = ?";
+        // selection arguments
+        String[] selectionArgs = {email, password};
+        // query user table with conditions
+        /**
+         * Here query function is used to fetch records from user table this function works like we use sql query.
+         * SQL query equivalent to this query function is
+         * SELECT user_id FROM user WHERE user_email = 'jack@androidtutorialshub.com' AND user_password = 'qwerty';
+         */
+        Cursor cursor = db.query(TABLE_NAME, //Table to query
+                columns,                    //columns to return
+                selection,                  //columns for the WHERE clause
+                selectionArgs,              //The values for the WHERE clause
+                null,                       //group the rows
+                null,                       //filter by row groups
+                null);                      //The sort order
+        int cursorCount = cursor.getCount();
+        cursor.close();
+        db.close();
+
+        if (cursorCount > 0) {
+            return true;
+        }
+        else {
+        return false;
+        }
     }
 
     public void updCustomer(int id, String name, int city_id, String phone, String email, String fb, String user, String pass, int gender, Date DoB, String job) {
@@ -135,7 +208,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(FoodManagementContract.CCustomer.KEY_NAME, name);
         values.put(FoodManagementContract.CCustomer.KEY_CITY, city_id);
         values.put(FoodManagementContract.CCustomer.KEY_PHONE, phone);
-        values.put(FoodManagementContract.CCustomer.KEY_EMAIL, email);
+        values.put(KEY_EMAIL, email);
         values.put(FoodManagementContract.CCustomer.KEY_FACEBOOK, fb);
         values.put(FoodManagementContract.CCustomer.KEY_USERNAME, user);
         values.put(FoodManagementContract.CCustomer.KEY_PASSWORD, pass);

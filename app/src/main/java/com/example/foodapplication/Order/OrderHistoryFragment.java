@@ -1,4 +1,4 @@
-package com.example.foodapplication;
+package com.example.foodapplication.Order;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
@@ -11,6 +11,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+
+import com.example.foodapplication.DatePickerFragment;
+import com.example.foodapplication.R;
 
 import java.text.DateFormat;
 import java.util.Calendar;

@@ -234,6 +234,7 @@ public class HomeFragment extends Fragment {
         tabLayout_KindOfRestaurant = (TabLayout) view.findViewById(R.id.KindOfRestaurant_TabLayout);
         viewPager_KindOfRestaurant = (ViewPager) view.findViewById(R.id.KindOfRestaurant_ViewPager);
 
+        district_id = 14;
         if(district_id >= 0) district_isAvailable = true;
         SetAllData(district_id);
         setUpSreen(district_isAvailable);
