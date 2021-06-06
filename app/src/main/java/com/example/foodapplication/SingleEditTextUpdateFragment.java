@@ -10,9 +10,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SingleEditTextUpdateFragment extends Fragment {
     private String type;
+    private int cus_id;
 
     TextView txtSingleEditTitle;
     EditText txtEditText;
@@ -33,6 +35,7 @@ public class SingleEditTextUpdateFragment extends Fragment {
 
         Bundle args = getArguments();
         type = args.getString("SINGLE_EDIT_TEXT");
+        cus_id = args.getInt("CUSTOMER_ID");
     }
 
     @Override
@@ -59,6 +62,17 @@ public class SingleEditTextUpdateFragment extends Fragment {
                 break;
         }
 
+        btnConfirmEdit.setOnClickListener(onConfirmEditClick);
+
         return view;
     }
+
+    View.OnClickListener onConfirmEditClick = v -> {
+        if (txtEditText.getText().toString() != null) {
+            DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+            dbHelper.updUserInfoWithKey(cus_id, txtEditText.getText().toString(), type);
+            dbHelper.close();
+            Toast.makeText(getContext(), "User data updated!", Toast.LENGTH_SHORT).show();
+        }
+    };
 }

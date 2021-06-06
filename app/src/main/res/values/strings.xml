@@ -23,7 +23,7 @@
     <string name="activity_account_shopowner">For Shop Owners</string>
     <string name="activity_account_policy">User Policy</string>
     <string name="activity_account_settings">Settings</string>
-    <string name="activity_account_about">About us...</string>
+    <string name="activity_account_about">About us…</string>
     <string name="activity_account_logout">LOGOUT</string>
     <string name="activity_account_version">Version 0.00.01</string>
 
@@ -42,7 +42,7 @@
     <string name="activity_account_support_report_photo">Upload photos</string>
     <string name="activity_account_support_report_photo_desc">You may upload multiple files. Images and PDF only.</string>
     <string name="activity_account_support_report_contact">Contact info</string>
-    <string name="activity_account_support_report_contact_hint">Name, email, phone number...</string>
+    <string name="activity_account_support_report_contact_hint">Name, email, phone number…</string>
     <string name="activity_account_support_report_issue">Describe the issue</string>
     <string name="activity_account_support_report_send">Send report</string>
 
@@ -123,7 +123,7 @@
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
     <string name="large_text">
-         "FoodManagementApp is an e-commerce traiding floor, providing multiple utility services"
+         "FoodManagementApp is an e-commerce trading floor, providing multiple utility services"
     "including: food &amp; drink delivery, shopping on both desktop and mobile platforms."
     "No matter what time of the day it is, FoodManagementApp can satisfy your needs with just"
     "a few simple steps."

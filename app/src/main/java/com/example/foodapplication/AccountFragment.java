@@ -53,13 +53,7 @@ public class AccountFragment extends Fragment {
         txtlogin.setOnClickListener(runLoginFragment);
 
         btnLogout = view.findViewById(R.id.btnLogout);
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                FirebaseAuth.getInstance().signOut();
-            }
-        });
+        btnLogout.setOnClickListener(v -> FirebaseAuth.getInstance().signOut());
 
         return view;
     }
