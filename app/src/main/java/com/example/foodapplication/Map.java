@@ -177,6 +177,9 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback,
                                 if(stateName.trim().equals("Thủ Đức") || stateName.trim().equals("Thu Duc") || stateName.trim().equals("Thành Phố Thủ Đức") || stateName.trim().equals("Quận Thủ Đức")) {
                                     district_id = 14;
                                 }
+                                else if(stateName.trim().equals("Quận 5") || stateName.trim().equals("Quan 5")) {
+                                    district_id = 5;
+                                }
                                 else district_id = -1;
                             } catch (IOException e) {
                                 e.printStackTrace();
@@ -253,6 +256,9 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback,
                                     placeName = addresses.get(0).getFeatureName();
                                     if(stateName.trim().equals("Thủ Đức") || stateName.trim().equals("Thu Duc") || stateName.trim().equals("Thành Phố Thủ Đức") || stateName.trim().equals("Quận Thủ Đức")) {
                                         district_id = 14;
+                                    }
+                                    else if(stateName.trim().equals("Quận 5") || stateName.trim().equals("Quan 5")) {
+                                        district_id = 5;
                                     }
                                     else district_id = -1;
                                 } catch (IOException e) {
