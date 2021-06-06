@@ -152,10 +152,84 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.update(FoodManagementContract.CCustomer.TABLE_NAME, values, selection, selectionArgs);
     }
 
+    public void updUserInfoWithKey(int cus_id, String string, String key) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        switch (key) {
+            case "EditPhone":
+                values.put(FoodManagementContract.CCustomer.KEY_PHONE, string);
+                break;
+            case "EditName":
+                values.put(FoodManagementContract.CCustomer.KEY_USERNAME, string);
+                break;
+            case "EditEmail":
+                values.put(FoodManagementContract.CCustomer.KEY_EMAIL, string);
+                break;
+        }
+
+        String selection = FoodManagementContract.CCustomer._ID + " = ?";
+        String[] selectionArgs = { Integer.toString(cus_id) };
+        db.update(FoodManagementContract.CCustomer.TABLE_NAME, values, selection, selectionArgs);
+    }
+
+    public void updUserGender(int cus_id, int gender) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(FoodManagementContract.CCustomer.KEY_GENDER, gender);
+
+        String selection = FoodManagementContract.CCustomer._ID + " = ?";
+        String[] selectionArgs = { Integer.toString(cus_id) };
+        db.update(FoodManagementContract.CCustomer.TABLE_NAME, values, selection, selectionArgs);
+    }
+
+    public void updUserDoB(int cus_id, Date DoB) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(FoodManagementContract.CCustomer.KEY_DOB, DoB.toString());
+
+        String selection = FoodManagementContract.CCustomer._ID + " = ?";
+        String[] selectionArgs = { Integer.toString(cus_id) };
+        db.update(FoodManagementContract.CCustomer.TABLE_NAME, values, selection, selectionArgs);
+    }
+
+    public void updUserOccupation(int cus_id, String job) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(FoodManagementContract.CCustomer.KEY_OCCUPATION, job);
+
+        String selection = FoodManagementContract.CCustomer._ID + " = ?";
+        String[] selectionArgs = { Integer.toString(cus_id) };
+        db.update(FoodManagementContract.CCustomer.TABLE_NAME, values, selection, selectionArgs);
+    }
+
+    public void updUserPassword(int cus_id, String password) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(FoodManagementContract.CCustomer.KEY_PASSWORD, password);
+
+        String selection = FoodManagementContract.CCustomer._ID + " = ?";
+        String[] selectionArgs = { Integer.toString(cus_id) };
+        db.update(FoodManagementContract.CCustomer.TABLE_NAME, values, selection, selectionArgs);
+    }
+
+    public Cursor getCustomerById(int cus_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selection = FoodManagementContract.CCustomer._ID + " = ?";
+        String[] selectionArgs = { Integer.toString(cus_id) };
+
+        return db.query(FoodManagementContract.CCustomer.TABLE_NAME, null, selection, selectionArgs, null, null, null);
+    }
+
     public int getCredits(int cus_id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String selection = FoodManagementContract.CFavorites.KEY_CUSTOMER + " = ?";
+        String selection = FoodManagementContract.CCustomer._ID + " = ?";
         String[] selectionArgs = { Integer.toString(cus_id) };
 
         Cursor cursor = db.query(FoodManagementContract.CCustomer.TABLE_NAME, null, selection, selectionArgs, null, null, null);
