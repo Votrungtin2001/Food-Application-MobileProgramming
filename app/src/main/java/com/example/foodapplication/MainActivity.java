@@ -30,7 +30,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class MainActivity extends AppCompatActivity implements CommunicationInterface{
+public class MainActivity extends AppCompatActivity implements CommunicationInterface, UserIdPassInterface{
 
     NotiSettingFragment NotiSettingFrag;
 
@@ -47,9 +47,6 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Intent intent = getIntent();
-        user_id = intent.getIntExtra("CUSTOMER_ID", 0);
 
         //Transparent Status and Navigation Bar
         transparentStatusAndNavigation();
@@ -196,5 +193,10 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
             {
             Toast.makeText(this, "Khong tim thay, hoac fragment khong hien", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void passId(int user_id) {
+        this.user_id = user_id;
     }
 }

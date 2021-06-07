@@ -27,12 +27,6 @@ public class AccountFragment extends Fragment {
 
         Bundle args = getArguments();
         user_id = args.getInt("CUSTOMER_ID");
-
-        //since LoginFragment leads to AccountFragment, there needs to be a way to transfer the user_id to the MainActivity,
-        // so the BottomNavItemChanged event in Main can work properly
-        //source: https://stackoverflow.com/questions/16036572/how-to-pass-values-between-fragments
-        Intent intent = new Intent(getActivity().getBaseContext(), MainActivity.class);
-        intent.putExtra("CUSTOMER_ID", user_id);
     }
 
     @Override
