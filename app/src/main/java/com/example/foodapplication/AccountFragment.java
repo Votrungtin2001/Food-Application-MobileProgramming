@@ -1,5 +1,6 @@
 package com.example.foodapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,23 @@ public class AccountFragment extends Fragment {
     Button btnVoucher, btnShopee, btnPayment, btnAddress, btnInvite, btnSupport, btnShop, btnPolicy, btnSettings, btnAbout, btnLogout;
     Fragment newFragment;
     TextView txtlogin;
+
+    int user_id;
+    Bundle importArgs;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Bundle args = getArguments();
+        user_id = args.getInt("CUSTOMER_ID");
+
+        //since LoginFragment leads to AccountFragment, there needs to be a way to transfer the user_id to the MainActivity,
+        // so the BottomNavItemChanged event in Main can work properly
+        //source: https://stackoverflow.com/questions/16036572/how-to-pass-values-between-fragments
+        Intent intent = new Intent(getActivity().getBaseContext(), MainActivity.class);
+        intent.putExtra("CUSTOMER_ID", user_id);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,11 +73,15 @@ public class AccountFragment extends Fragment {
         btnLogout = view.findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(v -> FirebaseAuth.getInstance().signOut());
 
+        importArgs = new Bundle();
+        importArgs.putInt("CUSTOMER_ID", user_id);
+
         return view;
     }
 
     View.OnClickListener runAddressFragment = v -> {
         newFragment = new AccountAddressFragment();
+        newFragment.setArguments(importArgs);
         // source: https://stackoverflow.com/questions/21028786/how-do-i-open-a-new-fragment-from-another-fragment
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
@@ -93,6 +115,7 @@ public class AccountFragment extends Fragment {
 
     View.OnClickListener runPaymentFragment = v -> {
         newFragment = new AccountPayment();
+        newFragment.setArguments(importArgs);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
                 .addToBackStack(null)
@@ -109,6 +132,7 @@ public class AccountFragment extends Fragment {
 
     View.OnClickListener runSettingsFragment = v -> {
         newFragment = new AccountSettings();
+        newFragment.setArguments(importArgs);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
                 .addToBackStack(null)

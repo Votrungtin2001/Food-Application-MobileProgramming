@@ -39,6 +39,9 @@ public class AccountAddressFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle args = getArguments();
+        cus_id = args.getInt("CUSTOMER_ID");
     }
 
     @Override
@@ -150,11 +153,12 @@ public class AccountAddressFragment extends Fragment {
                 break;
         }
 
-        dbHelper.addAddress(txtAccountAddressInput.getText().toString(),
+        long address_id = dbHelper.addAddress(txtAccountAddressInput.getText().toString(),
                 dist_id,
                 city_id,
                 Integer.parseInt(txtAccountAddressFloor.getText().toString()),
                 Integer.parseInt(txtAccountAddressGate.getText().toString()),
                 (int) address_label);
+        dbHelper.addCustomerAddress(cus_id, (int)address_id);
     };
 }

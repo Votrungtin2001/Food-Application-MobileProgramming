@@ -1,5 +1,6 @@
 package com.example.foodapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 
 public class AccountSettings extends Fragment {
     TextView txtAccountSettingsInfo, txtAccountSettingsPassword, txtAccountAppLanguage, txtAccountAppNotif;
+    int user_id;
+    Bundle importArgs;
 
     public AccountSettings() {
 
@@ -22,7 +25,12 @@ public class AccountSettings extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Bundle args = getArguments();
+        user_id = args.getInt("CUSTOMER_ID");
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,19 +45,26 @@ public class AccountSettings extends Fragment {
         txtAccountAppNotif= view.findViewById(R.id.txtAccountAppNotif);
         txtAccountAppNotif.setOnClickListener(openNotifFragment);
 
+        importArgs = new Bundle();
+        importArgs.putInt("CUSTOMER_ID", user_id);
+
         return view;
     }
 
     View.OnClickListener openUserInfoFragment = v -> {
+        Fragment fragment = new AccountSettingsInfoFragment();
+        fragment.setArguments(importArgs);
         getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(((ViewGroup)getView().getParent()).getId(), new AccountSettingsInfoFragment(), null)
+                .replace(((ViewGroup)getView().getParent()).getId(), fragment, null)
                 .addToBackStack(null)
                 .commit();
     };
 
     View.OnClickListener openPasswordFragment = v -> {
+        Fragment fragment = new AccountSettingsPasswordFragment();
+        fragment.setArguments(importArgs);
         getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(((ViewGroup)getView().getParent()).getId(), new AccountSettingsPasswordFragment(), null)
+                .replace(((ViewGroup)getView().getParent()).getId(), fragment, null)
                 .addToBackStack(null)
                 .commit();
     };

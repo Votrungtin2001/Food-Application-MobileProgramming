@@ -15,7 +15,7 @@ import android.widget.Toast;
 public class AccountSettingsPasswordFragment extends Fragment {
     EditText txtCurrentPassword, txtNewPassword, txtConfirmPassword;
     Button btnSavePassword;
-    int cus_id = 0;//pass this in
+    int cus_id;
 
     public AccountSettingsPasswordFragment() { }
 
@@ -25,7 +25,12 @@ public class AccountSettingsPasswordFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Bundle args = getArguments();
+        cus_id = args.getInt("CUSTOMER_ID");
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -1,5 +1,6 @@
 package com.example.foodapplication;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -31,6 +32,14 @@ public class RestaurantFragment extends Fragment {
     Button btnCheckout;
 
     DatabaseHelper dbHelper;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Bundle args = getArguments();
+        cus_id = args.getInt("CUSTOMER_ID");
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
