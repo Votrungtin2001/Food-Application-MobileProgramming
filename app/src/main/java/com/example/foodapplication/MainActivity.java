@@ -36,7 +36,8 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
 
     private String addressLine;
     private String nameStreet;
-    private int district_id;
+    private int district_id, user_id;
+    Bundle importArgs;
 
     FragmentManager fragmentManager = getSupportFragmentManager();
     final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -46,6 +47,9 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Intent intent = getIntent();
+        user_id = intent.getIntExtra("CUSTOMER_ID", 0);
 
         //Transparent Status and Navigation Bar
         transparentStatusAndNavigation();
@@ -58,10 +62,13 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
         b.putString("AddressLine", addressLine);
         b.putString("NameStreet", nameStreet);
         b.putInt("District ID", district_id);
+        b.putInt("CUSTOMER_ID", user_id);
         homeFragment.setArguments(b);
         fragmentTransaction.add(R.id.frame_container, homeFragment);
         fragmentTransaction.commit();
 
+        importArgs = new Bundle();
+        importArgs.putInt("CUSTOMER_ID", user_id);
 
         BottomNavigationView navigation = findViewById(R.id.bottom_nav_bar);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -94,24 +101,29 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
             switch(item.getItemId()) {
                 case R.id.nav_home:
                     fragment = homeFragment;
+                    fragment.setArguments(importArgs);
                     loadFragment(fragment);
                     break;
 
                 case R.id.nav_favorites:
                     fragment = new FavoritesFragment();
+                    fragment.setArguments(importArgs);
                     loadFragment(fragment);
                     break;
                 case R.id.nav_account:
                     fragment = new AccountFragment();
+                    fragment.setArguments(importArgs);
                     loadFragment(fragment);
                     break;
                 case R.id.nav_notif:
                     fragment = new Noti();
+                    fragment.setArguments(importArgs);
                     loadFragment(fragment);
                     break;
 
                 case R.id.nav_order:
                     fragment=new OrderFragment();
+                    fragment.setArguments(importArgs);
                     loadFragment(fragment);
                     break;
                 default:

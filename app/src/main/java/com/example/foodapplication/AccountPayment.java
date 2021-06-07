@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class AccountPayment extends Fragment {
-    private int credits, cus_id = 0;
+    private int credits, cus_id ;
     TextView txtAccountPaymentCoins, txtAccountPaymentHistory, txtAccountPaymentTopup;
 
     public AccountPayment() {
@@ -25,6 +25,9 @@ public class AccountPayment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle args = getArguments();
+        cus_id = args.getInt("CUSTOMER_ID");
     }
 
     @Override
@@ -54,6 +57,9 @@ public class AccountPayment extends Fragment {
 
     View.OnClickListener runTopupFragment = v -> {
         AccountPaymentTopup fragment = new AccountPaymentTopup();
+        Bundle args = new Bundle();
+        args.putInt("CUSTOMER_ID", cus_id);
+        fragment.setArguments(args);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(((ViewGroup)getView().getParent()).getId(), fragment, null)
                 .addToBackStack(null)
@@ -62,6 +68,9 @@ public class AccountPayment extends Fragment {
 
     View.OnClickListener runHistoryFragment = v -> {
         AccountPaymentHistory fragment = new AccountPaymentHistory();
+        Bundle args = new Bundle();
+        args.putInt("CUSTOMER_ID", cus_id);
+        fragment.setArguments(args);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(((ViewGroup)getView().getParent()).getId(), fragment, null)
                 .addToBackStack(null)

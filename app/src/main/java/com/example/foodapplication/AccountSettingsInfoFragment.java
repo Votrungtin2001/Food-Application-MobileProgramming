@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 public class AccountSettingsInfoFragment extends Fragment {
     TextView txtAccountSettingsInfoAvatar, txtAccountSettingsInfoPhone, txtAccountSettingsInfoName, txtAccountSettingsInfoEmail, txtAccountSettingsInfoGender, txtAccountSettingsInfoDoB, txtAccountSettingsInfoOccupation;
-    int cus_id = 0; //again, need to pass user id
+    int cus_id;
 
     public AccountSettingsInfoFragment() {}
 
@@ -30,6 +30,9 @@ public class AccountSettingsInfoFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle args = getArguments();
+        cus_id = args.getInt("CUSTOMER_ID");
     }
 
     @Override

@@ -17,20 +17,16 @@ import java.util.Calendar;
 import java.util.Date;
 
 import static com.example.foodapplication.FoodManagementContract.CCustomer.KEY_EMAIL;
-import static com.example.foodapplication.FoodManagementContract.CCustomer.KEY_ID;
 import static com.example.foodapplication.FoodManagementContract.CCustomer.KEY_NAME;
 import static com.example.foodapplication.FoodManagementContract.CCustomer.KEY_PASSWORD;
 import static com.example.foodapplication.FoodManagementContract.CCustomer.TABLE_NAME;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // REMEMBER TO ADD 1 TO THIS CONSTANT WHEN YOU MAKE ANY CHANGES TO THE CONTRACT CLASS!
-    public static final int DATABASE_VERSION = 45;
+    public static final int DATABASE_VERSION = 46;
     private static String DB_PATH= "data/data/com.example.foodapplication/databases/";
     private static String DB_NAME = "foodapp";
     private final Context context;
-    private SQLiteDatabase db;
-
-
 
     public DatabaseHelper(Context context) {
         super(context, FoodManagementContract.DATABASE_NAME, null, DATABASE_VERSION);
@@ -141,7 +137,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean checkUser(String email) {
         // array of columns to fetch
         String[] columns = {
-                KEY_ID
+                FoodManagementContract.CCustomer._ID
         };
         SQLiteDatabase db = this.getReadableDatabase();
         // selection criteria
@@ -299,6 +295,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.query(FoodManagementContract.CCustomer.TABLE_NAME, null, selection, selectionArgs, null, null, null);
     }
 
+    public int getIdByUsername(String username) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selection = FoodManagementContract.CCustomer.KEY_USERNAME + " = ?";
+        String[] selectionArgs = { username };
+
+        Cursor cursor = db.query(FoodManagementContract.CCustomer.TABLE_NAME, null, selection, selectionArgs, null, null, null);
+        int id = cursor.getInt(cursor.getColumnIndexOrThrow(FoodManagementContract.CCustomer._ID));
+        cursor.close();
+        return id;
+    }
+
     public int getCredits(int cus_id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -418,7 +426,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public void addAddress(String address, int district_id, int city_id, int floor, int gate, int label_id) {
+    public long addAddress(String address, int district_id, int city_id, int floor, int gate, int label_id) {
         ContentValues values = new ContentValues();
         values.put(FoodManagementContract.CAddress.KEY_ADDRESS, address);
         values.put(FoodManagementContract.CAddress.KEY_DISTRICT, district_id);
@@ -428,7 +436,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(FoodManagementContract.CAddress.KEY_LABEL, label_id);
 
         SQLiteDatabase db= this.getWritableDatabase();
-        db.insertOrThrow(FoodManagementContract.CAddress.TABLE_NAME, null, values);
+        return db.insertOrThrow(FoodManagementContract.CAddress.TABLE_NAME, null, values);
     }
 
     public void updAddress(int id, String address, int district_id, int city_id, int floor, int gate, int label_id) {

@@ -15,7 +15,7 @@ import android.widget.EditText;
 public class AccountPaymentTopup extends Fragment {
     Button btnAdd50k, btnAdd100k, btnAdd200k, btnAdd300k, btnAdd500k, btnAdd1M, btnAdd2M, btnAdd5M, btnAdd10M, btnDeposit;
     EditText txtTopupAmount;
-    int cus_id = 0;
+    int cus_id;
 
     public AccountPaymentTopup() {
 
@@ -29,6 +29,9 @@ public class AccountPaymentTopup extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle args = getArguments();
+        cus_id = args.getInt("CUSTOMER_ID");
     }
 
     @Override
