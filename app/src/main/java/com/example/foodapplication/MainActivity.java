@@ -40,7 +40,9 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
 
     FragmentManager fragmentManager = getSupportFragmentManager();
     final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-    final HomeFragment homeFragment = new HomeFragment();
+
+    HomeFragment homeFragment = new HomeFragment();
+    OrderFragment orderFragment = new OrderFragment();
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -54,11 +56,8 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
         addressLine = getIntent().getExtras().getString("AddressLine");
         nameStreet = getIntent().getExtras().getString("NameStreet");
         district_id = getIntent().getExtras().getInt("District ID");
-        Bundle b = new Bundle();
-        b.putString("AddressLine", addressLine);
-        b.putString("NameStreet", nameStreet);
-        b.putInt("District ID", district_id);
-        homeFragment.setArguments(b);
+
+        homeFragment.setKeyValue(addressLine, nameStreet, district_id);
         fragmentTransaction.add(R.id.frame_container, homeFragment);
         fragmentTransaction.commit();
 
@@ -111,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
                     break;
 
                 case R.id.nav_order:
-                    fragment=new OrderFragment();
+                    fragment= new OrderFragment();
                     loadFragment(fragment);
                     break;
                 default:
