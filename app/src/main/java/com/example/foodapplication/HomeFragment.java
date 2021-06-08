@@ -150,6 +150,7 @@ public class HomeFragment extends Fragment {
 
 
 
+
         //EditText Search
         editText_search = view.findViewById(R.id.editText_SearchBar);
 
