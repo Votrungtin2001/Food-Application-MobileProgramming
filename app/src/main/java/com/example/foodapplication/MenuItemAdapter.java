@@ -1,24 +1,22 @@
 package com.example.foodapplication;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHolder> {
+
     private ArrayList<MenuItem> lMenuItems;
     private Context context;
     private OnItemClickListener listener;
-
+    DatabaseHelper databaseHelper;
     public interface OnItemClickListener {
         void onItemClick(View itemView, int position);
     }
@@ -39,7 +37,6 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
             txtMenuPrice = itemView.findViewById(R.id.txtMenuPrice);
 
             btnOrder = itemView.findViewById(R.id.btnOrder);
-
             btnOrder.setOnClickListener(v -> {
                 if (listener != null) {
                     int position = getAdapterPosition();
@@ -51,7 +48,10 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
         }
     }
 
-    public MenuItemAdapter(ArrayList<MenuItem> lMenuItems, Context context) { this.lMenuItems = lMenuItems; this.context = context;}
+    public MenuItemAdapter(ArrayList<MenuItem> lMenuItems, Context context) {
+        this.lMenuItems = lMenuItems;
+        this.context = context;
+    }
 
     @Override
     public MenuItemAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -65,7 +65,6 @@ public class MenuItemAdapter extends RecyclerView.Adapter<MenuItemAdapter.ViewHo
     @Override
     public void onBindViewHolder(MenuItemAdapter.ViewHolder holder, int pos) {
         MenuItem item = lMenuItems.get(pos);
-
         holder.txtMenuName.setText(item.getName());
         holder.txtMenuDesc.setText(item.getDesc());
         holder.txtMenuPrice.setText(item.getPrice());

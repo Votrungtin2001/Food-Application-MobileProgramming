@@ -9,10 +9,11 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.foodapplication.Order.OrderModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,6 +33,7 @@ public class RestaurantFragment extends Fragment {
 
     DatabaseHelper dbHelper;
 
+    OrderModel orderModel;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -56,7 +58,7 @@ public class RestaurantFragment extends Fragment {
             if (order_id == -1) {
                 order_id = dbHelper.addOrder(Calendar.getInstance().getTime(), cus_id);
                 MenuItem item = items.get(position);
-                dbHelper.addOrderDetail((int)order_id, item.getId(), 1, item.getPrice());
+                 dbHelper.addOrderDetail((int)order_id, item.getId(), 1, item.getPrice());
 
                 checkoutBar.setVisibility(RelativeLayout.VISIBLE);
                 txtCheckoutNoOfItems.setText(Integer.toString(1));
@@ -70,9 +72,7 @@ public class RestaurantFragment extends Fragment {
                     int quantity = cursor.getInt(cursor.getColumnIndexOrThrow(FoodManagementContract.COrderDetails.KEY_QUANTITY)) + 1;
                     dbHelper.updOrderDetail((int)order_id, item.getId(), quantity, item.getPrice() * quantity);
                 }
-                else
-                    dbHelper.addOrderDetail((int)order_id, item.getId(), 1, item.getPrice());
-
+                else dbHelper.addOrderDetail((int)order_id, item.getId(), 1, item.getPrice());
                 txtCheckoutNoOfItems.setText(Integer.toString(Integer.parseInt(txtCheckoutNoOfItems.getText().toString()) + 1));
                 int total = dbHelper.calcOrderTotal((int)order_id);
                 txtCheckoutTotal.setText(Integer.toString(total));
@@ -89,7 +89,7 @@ public class RestaurantFragment extends Fragment {
     public void onStop() {
         super.onStop();
 
-        dbHelper.delOrderDetail((int)order_id);
+       // dbHelper.delOrderDetail((int)order_id);
         dbHelper.delOrder((int)order_id);
         order_id = -1;
         checkoutBar.setVisibility(RelativeLayout.GONE);

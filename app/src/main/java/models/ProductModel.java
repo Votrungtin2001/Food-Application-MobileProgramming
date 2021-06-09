@@ -6,7 +6,7 @@ public class ProductModel {
     private Bitmap image_product;
     private String name_product;
     private String description_product;
-    private String valueOfSell_product;
+    private String  valueOfSell_product;
     private int price;
 
     public ProductModel(Bitmap Image, String Name, String Description_Product, String Value, int Price) {
@@ -17,9 +17,7 @@ public class ProductModel {
         this.price = Price;
     }
 
-    public Bitmap getImage() {
-        return image_product;
-    }
+    public Bitmap getImage() { return image_product; }
 
     public String getNameProduct() {
         return name_product;
@@ -32,4 +30,6 @@ public class ProductModel {
     public String getValueOfSell() {return valueOfSell_product;}
 
     public int getPrice() { return price;}
+
+
 }

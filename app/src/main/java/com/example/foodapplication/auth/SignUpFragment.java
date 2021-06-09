@@ -134,7 +134,7 @@ public class SignUpFragment extends Fragment {
     }
 
     private void postDataToSQLite() {
-       //if (!databaseHelper.checkUser(binding.email.getText().toString().trim())) {
+       if (!databaseHelper.checkUser(binding.email.getText().toString().trim())) {
             user.setName(binding.displayName.getText().toString().trim());
             user.setEmail(binding.email.getText().toString().trim());
             user.setPassword(binding.password.getText().toString().trim());
@@ -145,9 +145,11 @@ public class SignUpFragment extends Fragment {
 //        transaction.replace(R.id.frame_container, loginFragment);
 //        transaction.addToBackStack(null);
 //        transaction.commit();
-            //Toast.makeText(TAG,"S", Toast.LENGTH_LONG).show();
+            Toast.makeText(getActivity(),"Đăng kí thành công", Toast.LENGTH_LONG).show();
             emptyInputEditText();
-      //  }
+        } else {
+           Toast.makeText(getActivity(),"Lỗi đăng kí, vui lòng kiểm tra email ", Toast.LENGTH_LONG).show();
+       }
     }
     private void emptyInputEditText() {
         binding.displayName.setText(null);

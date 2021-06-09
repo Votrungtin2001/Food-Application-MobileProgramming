@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.foodapplication.DatabaseHelper;
+import com.example.foodapplication.FoodManagementContract;
 import com.example.foodapplication.R;
 
 import java.util.List;
@@ -22,6 +24,12 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     Context context;
     LayoutInflater inflater;
 
+    // Minh Thi code
+    String orderId= "";
+    FoodManagementContract order;
+    // OrderModel orderModel = new OrderModel();
+    DatabaseHelper databaseHelper;
+
     public MenuAdapter(Context ctx, List<ProductModel> ItemList) {
         this.context = ctx;
         this.itemList = ItemList;
@@ -32,6 +40,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.custom_layout_item_menu, parent, false);
+
         return new ViewHolder(view);
     }
 
@@ -44,7 +53,18 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         holder.textView_ValueOfSell.setText(currentItem.getValueOfSell());
         String price = Integer.toString(currentItem.getPrice());
         holder.textView_Price.setText(price);
+
+        //
+
         holder.imageView_ImageProduct.setImageBitmap(currentItem.getImage());
+
+        holder.imageView_addItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                 // new DatabaseHelper(context).addOrderDetail(orderModel);
+            }
+        });
+
     }
 
     @Override
@@ -60,6 +80,8 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         TextView textView_Price;
         ImageView imageView_ImageProduct;
 
+        ImageView imageView_addItem;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -68,6 +90,8 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
            textView_ValueOfSell = itemView.findViewById(R.id.TextView_ValueOfSell_Menu);
            textView_Price = itemView.findViewById(R.id.TextView_PriceProduct_Menu);
            imageView_ImageProduct = itemView.findViewById(R.id.ImageView_ImageProduct_Menu);
+
+           imageView_addItem = itemView.findViewById(R.id.ImageView_Plus_Menu);
         }
     }
 }

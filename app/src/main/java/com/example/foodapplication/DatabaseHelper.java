@@ -6,18 +6,21 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
+import com.example.foodapplication.Order.OrderModel;
 import com.example.foodapplication.auth.user;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import static com.example.foodapplication.FoodManagementContract.CCustomer.KEY_EMAIL;
-import static com.example.foodapplication.FoodManagementContract.CCustomer.KEY_ID;
 import static com.example.foodapplication.FoodManagementContract.CCustomer.KEY_NAME;
 import static com.example.foodapplication.FoodManagementContract.CCustomer.KEY_PASSWORD;
 import static com.example.foodapplication.FoodManagementContract.CCustomer.TABLE_NAME;
@@ -29,8 +32,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static String DB_NAME = "foodapp";
     private final Context context;
     private SQLiteDatabase db;
-
-
 
     public DatabaseHelper(Context context) {
         super(context, FoodManagementContract.DATABASE_NAME, null, DATABASE_VERSION);
@@ -138,10 +139,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    //check user when reg
     public boolean checkUser(String email) {
         // array of columns to fetch
         String[] columns = {
-                KEY_ID
+                KEY_EMAIL
         };
         SQLiteDatabase db = this.getReadableDatabase();
         // selection criteria
@@ -170,6 +172,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return false;
     }
 
+    //check user when login
     public boolean checkUser(String email, String password) {
         // array of columns to fetch
         String[] columns = {
@@ -651,7 +654,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getProduct() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(FoodManagementContract.CProduct.TABLE_NAME, null, null, null, null, null, null);
+        Cursor cursor = db.query(FoodManagementContract.CProduct.TABLE_NAME,null, null, null, null, null, null);
         return cursor;
     }
 
@@ -721,7 +724,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public void addOrder(Date date, int customer_id, int delivery_id, int address_id, int total) {
+    public void addOrder(String date, int customer_id, int delivery_id, int address_id, int total) {
         ContentValues values = new ContentValues();
         values.put(FoodManagementContract.COrder.KEY_DATETIME, date.toString());
         values.put(FoodManagementContract.COrder.KEY_CUSTOMER, customer_id);
@@ -821,12 +824,45 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.delete(FoodManagementContract.COrderDetails.TABLE_NAME, selection, selectionArgs);
     }
 
-    public void delOrderDetail(int order_id) {
+    public void delOrderDetail(OrderModel orderModel) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         String selection = FoodManagementContract.COrderDetails.KEY_ORDER + " = ? ";
-        String[] selectionArgs = { Integer.toString(order_id)};
+        String[] selectionArgs = { Integer.toString(orderModel.getOrderId())};
         db.delete(FoodManagementContract.COrderDetails.TABLE_NAME, selection, selectionArgs);
+    }
+
+    public List<OrderModel> getCart() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
+
+        String[] sqlSlect = {"OrderID","Item","Qty","Price"};
+        String sqlTable = "ORDER_DETAILS";
+
+        qb.setTables(sqlTable);
+        Cursor cursor = qb.query(db,sqlSlect,null, null, null, null, null);
+
+        final List<OrderModel> res = new ArrayList<>();
+        if(cursor.moveToFirst())
+        {
+            do{
+                res.add(new OrderModel(cursor.getInt(cursor.getColumnIndex("OrderID")),
+                        cursor.getString(cursor.getColumnIndex("Item")),
+                        cursor.getInt(cursor.getColumnIndex("Qty")),
+                        cursor.getInt(cursor.getColumnIndex("Price"))
+                ));
+            }while (cursor.moveToNext());
+        }
+        return res;
+    }
+
+    public void addToCart(OrderModel orderModel){
+        SQLiteDatabase db = getReadableDatabase();
+        String query = String.format("INSERT INTO ORDER_DETAILS(Item,Qty,Price) VALUES('%s','%s','%s');",
+                orderModel.getProductName(),
+                orderModel.getQuantity(),
+                orderModel.getPrice());
+        db.execSQL(query);
     }
 
     public Cursor getOrderDetail(int order_id) {

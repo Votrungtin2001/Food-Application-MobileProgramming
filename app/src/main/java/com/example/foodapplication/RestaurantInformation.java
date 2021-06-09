@@ -1,8 +1,5 @@
 package com.example.foodapplication;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.viewpager.widget.ViewPager;
-
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -15,7 +12,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 
@@ -23,7 +22,6 @@ import java.util.ArrayList;
 
 import fragments.RestaurantInformation_DatDon;
 import fragments.RestaurantInformation_ThongTin;
-import models.SearchBarModel;
 
 public class RestaurantInformation extends AppCompatActivity {
 
@@ -42,6 +40,9 @@ public class RestaurantInformation extends AppCompatActivity {
     SQLiteDatabase db;
     DatabaseHelper databaseHelper;
     Bitmap bitmap_restaurant;
+
+    //Code Minh Thi
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +80,9 @@ public class RestaurantInformation extends AppCompatActivity {
         tabLayout_RestaurantInformation.setupWithViewPager(viewPager_RestaurantInformation);
         //Prepare viewpager
         prepareViewPagerRestaurantInformation(viewPager_RestaurantInformation, title_TabLayout);
+
+        //Code Minh Thi
+
 
     }
 

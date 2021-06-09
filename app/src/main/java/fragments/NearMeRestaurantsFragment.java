@@ -5,14 +5,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.foodapplication.DatabaseHelper;
 import com.example.foodapplication.R;
@@ -25,8 +24,6 @@ import models.KindOfRestaurantModel;
 
 public class NearMeRestaurantsFragment extends Fragment {
 
-
-
     RecyclerView recyclerView_KindOfRestaurant;
     KindOfRestaurantAdapter kindOfRestaurantAdapter;
     List<KindOfRestaurantModel> kindOfRestaurantModelList;
@@ -35,7 +32,8 @@ public class NearMeRestaurantsFragment extends Fragment {
     SQLiteDatabase db;
     DatabaseHelper databaseHelper;
 
-
+    public NearMeRestaurantsFragment() {
+    }
     public NearMeRestaurantsFragment(int id) {
         this.district_id = id;
     }

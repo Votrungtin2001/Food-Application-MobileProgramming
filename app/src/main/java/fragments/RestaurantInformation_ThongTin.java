@@ -3,13 +3,12 @@ package fragments;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import com.example.foodapplication.DatabaseHelper;
 import com.example.foodapplication.R;
@@ -33,6 +32,8 @@ public class RestaurantInformation_ThongTin extends Fragment {
 
     }
 
+    public RestaurantInformation_ThongTin() {
+    }
 
 
     @Override
