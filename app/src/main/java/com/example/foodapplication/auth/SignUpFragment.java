@@ -27,8 +27,14 @@ public class SignUpFragment extends Fragment {
     private DatabaseHelper databaseHelper ;
     private LoginFragment loginFragment;
 
+    int role = 0;
+
     public SignUpFragment() {
         // Required empty public constructor
+    }
+
+    public SignUpFragment(int a) {
+        this.role = a;
     }
 
     @Override
@@ -134,20 +140,33 @@ public class SignUpFragment extends Fragment {
     }
 
     private void postDataToSQLite() {
-       //if (!databaseHelper.checkUser(binding.email.getText().toString().trim())) {
-            user.setName(binding.displayName.getText().toString().trim());
-            user.setEmail(binding.email.getText().toString().trim());
-            user.setPassword(binding.password.getText().toString().trim());
-            user.setUsername(binding.email.getText().toString().trim());
+       //if (!databaseHelper.checkUser(binding.email.getText().toString().trim()))
 
-            databaseHelper.addCustomer(user);
-            // Snack Bar to show success message that record saved successfully
+            if(role == 2) {
+                user.setName(binding.displayName.getText().toString().trim());
+                user.setEmail(binding.email.getText().toString().trim());
+                user.setPassword(binding.password.getText().toString().trim());
+                user.setUsername(binding.email.getText().toString().trim());
+
+                databaseHelper.addMaster(user);
+            }
+
+            else {
+                user.setName(binding.displayName.getText().toString().trim());
+                user.setEmail(binding.email.getText().toString().trim());
+                user.setPassword(binding.password.getText().toString().trim());
+                user.setUsername(binding.email.getText().toString().trim());
+
+                databaseHelper.addCustomer(user);
+                // Snack Bar to show success message that record saved successfully
 //        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
 //        transaction.replace(R.id.frame_container, loginFragment);
 //        transaction.addToBackStack(null);
 //        transaction.commit();
-            //Toast.makeText(TAG,"S", Toast.LENGTH_LONG).show();
-            emptyInputEditText();
+                //Toast.makeText(TAG,"S", Toast.LENGTH_LONG).show();
+                emptyInputEditText();
+            }
+        emptyInputEditText();
       //  }
     }
     private void emptyInputEditText() {

@@ -9,6 +9,7 @@
     <string name="nav_label_favorites">Favorites</string>
     <string name="nav_label_notif">Notifications</string>
     <string name="nav_label_account">Account</string>
+    <string name="nav_label_update">Update</string>
     <!--nav bar end-->
 
     <string name="activity_fav">Favorites</string>

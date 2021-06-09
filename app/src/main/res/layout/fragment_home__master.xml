@@ -1,0 +1,41 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="fragments.HomeFragment_Master">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:id="@+id/TextView_Announcement_Master"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Hiện tại bạn chưa sở hữu nhà hàng nào. \n \n Vui lòng tạo nhà hàng cho riêng mình!!!" 
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:layout_marginTop="100dp"
+        app:layout_constraintTop_toTopOf="parent"/>
+    
+    <ImageView
+        android:id="@+id/ImageView_NoRestaurant_Master"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/no_restaurant"
+        android:layout_marginTop="50dp"
+        app:layout_constraintTop_toBottomOf="@+id/TextView_Announcement_Master"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/TextView_Master"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Đã có nhà hàng!!!"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        android:layout_marginTop="100dp"
+        app:layout_constraintTop_toBottomOf="@+id/ImageView_NoRestaurant_Master"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

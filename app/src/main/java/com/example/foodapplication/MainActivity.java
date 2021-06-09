@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
     private String nameStreet;
     private int district_id, user_id;
     Bundle importArgs;
+    BottomNavigationView navigation;
 
     FragmentManager fragmentManager = getSupportFragmentManager();
     final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
         importArgs = new Bundle();
         importArgs.putInt("CUSTOMER_ID", user_id);
 
-        BottomNavigationView navigation = findViewById(R.id.bottom_nav_bar);
+        navigation = findViewById(R.id.bottom_nav_bar);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         //Default fragment
         loadFragment(homeFragment);
@@ -88,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
         }
 
     }
+
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -199,4 +201,5 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
     public void passId(int user_id) {
         this.user_id = user_id;
     }
+
 }

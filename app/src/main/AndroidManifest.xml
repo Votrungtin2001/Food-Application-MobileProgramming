@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FoodApplication"
         android:usesCleartextTraffic="true">
-        <activity android:name=".SortOfProductList"></activity>
+        <activity android:name=".Master_MainActivity"></activity>
+        <activity android:name=".SortOfProductList" />
         <activity android:name=".RestaurantList" />
         <activity android:name=".ProductWithCategory" />
         <activity android:name=".RestaurantInformation" />
@@ -71,13 +72,13 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <service android:name=".NotificationService"
+        <service
+            android:name=".NotificationService"
             tools:ignore="MissingClass">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
     </application>
 
 </manifest>
