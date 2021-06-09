@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.Editable;
@@ -117,7 +118,7 @@ public class HomeFragment extends Fragment {
 
     ArrayList<String> title_KindOfRestaurant = new ArrayList<>();
 
-    int district_id;
+    private int district_id;
     boolean district_isAvailable = false;
 
     DatabaseHelper databaseHelper;
@@ -134,6 +135,7 @@ public class HomeFragment extends Fragment {
 
     }
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -144,6 +146,7 @@ public class HomeFragment extends Fragment {
 
         databaseHelper = new DatabaseHelper(getActivity());
         db = databaseHelper.getReadableDatabase();
+
 
 
 
@@ -178,11 +181,6 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) { runFillAddressActivity(); }
         });
 
-        //Get address data from previous activity
-        Bundle b = getArguments();
-        addressLine = b.getString("AddressLine");
-        nameStreet = b.getString("NameStreet");
-        district_id = b.getInt("District ID");
 
         //TextView AddressLine
         //Set Address Data
@@ -234,7 +232,6 @@ public class HomeFragment extends Fragment {
         tabLayout_KindOfRestaurant = (TabLayout) view.findViewById(R.id.KindOfRestaurant_TabLayout);
         viewPager_KindOfRestaurant = (ViewPager) view.findViewById(R.id.KindOfRestaurant_ViewPager);
 
-        district_id = 14;
         if(district_id >= 0) district_isAvailable = true;
         SetAllData(district_id);
         setUpSreen(district_isAvailable);
@@ -831,4 +828,11 @@ public class HomeFragment extends Fragment {
             prepareViewPagerCategories(viewPager_KindOfRestaurant, title_KindOfRestaurant);
         }
     }
+
+    public void setKeyValue(String AddressLine, String NameStreet, int District_ID) {
+        this.addressLine = AddressLine;
+        this.nameStreet = NameStreet;
+        this.district_id = District_ID;
+    }
+
 }

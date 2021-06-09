@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 public class AccountSettingsInfoOccupationFragment extends Fragment {
     TextView txtOccupationOffice, txtOccupationFree, txtOccupationStudent, txtOccupationHome, txtOccupationOther;
-    int cus_id; //pass customer id
+    int cus_id;
 
     public AccountSettingsInfoOccupationFragment() {
 

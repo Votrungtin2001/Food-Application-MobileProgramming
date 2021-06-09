@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
@@ -20,7 +21,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import models.SortOfProductModel;
+
 import static com.example.foodapplication.FoodManagementContract.CCustomer.KEY_EMAIL;
+import static com.example.foodapplication.FoodManagementContract.CCustomer.KEY_ID;
 import static com.example.foodapplication.FoodManagementContract.CCustomer.KEY_NAME;
 import static com.example.foodapplication.FoodManagementContract.CCustomer.KEY_PASSWORD;
 import static com.example.foodapplication.FoodManagementContract.CCustomer.TABLE_NAME;
@@ -139,11 +143,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    //check user when reg
     public boolean checkUser(String email) {
         // array of columns to fetch
         String[] columns = {
-                KEY_EMAIL
+                FoodManagementContract.CCustomer._ID
         };
         SQLiteDatabase db = this.getReadableDatabase();
         // selection criteria
@@ -172,7 +175,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return false;
     }
 
-    //check user when login
     public boolean checkUser(String email, String password) {
         // array of columns to fetch
         String[] columns = {
@@ -654,7 +656,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getProduct() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(FoodManagementContract.CProduct.TABLE_NAME,null, null, null, null, null, null);
+        Cursor cursor = db.query(FoodManagementContract.CProduct.TABLE_NAME, null, null, null, null, null, null);
         return cursor;
     }
 
@@ -724,7 +726,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public void addOrder(String date, int customer_id, int delivery_id, int address_id, int total) {
+    public void addOrder(Date date, int customer_id, int delivery_id, int address_id, int total) {
         ContentValues values = new ContentValues();
         values.put(FoodManagementContract.COrder.KEY_DATETIME, date.toString());
         values.put(FoodManagementContract.COrder.KEY_CUSTOMER, customer_id);
@@ -824,11 +826,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.delete(FoodManagementContract.COrderDetails.TABLE_NAME, selection, selectionArgs);
     }
 
-    public void delOrderDetail(OrderModel orderModel) {
+    public void delOrderDetail(int order_id) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         String selection = FoodManagementContract.COrderDetails.KEY_ORDER + " = ? ";
-        String[] selectionArgs = { Integer.toString(orderModel.getOrderId())};
+        String[] selectionArgs = { Integer.toString(order_id)};
         db.delete(FoodManagementContract.COrderDetails.TABLE_NAME, selection, selectionArgs);
     }
 

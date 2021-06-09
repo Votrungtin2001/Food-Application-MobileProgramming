@@ -64,7 +64,6 @@ public final class FoodManagementContract {
         private CCustomer() { }
 
         public static final String TABLE_NAME = "CUSTOMER",
-                KEY_ID ="ID",
                 KEY_NAME = "Name",
                 KEY_CITY = "City",
                 KEY_PHONE = "Phone",

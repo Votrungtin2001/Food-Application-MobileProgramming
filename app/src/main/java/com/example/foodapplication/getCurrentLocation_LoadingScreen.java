@@ -111,6 +111,9 @@ public class getCurrentLocation_LoadingScreen extends AppCompatActivity {
                             if(disctrict.trim().equals("Thủ Đức") || disctrict.trim().equals("Thu Duc") || disctrict.trim().equals("Thành Phố Thủ Đức") || disctrict.trim().equals("Quận Thủ Đức")) {
                                 district_id = 14;
                             }
+                            else if(disctrict.trim().equals("Quận 5") || disctrict.trim().equals("Quan 5")) {
+                                district_id = 5;
+                            }
                             else district_id = -1;
 
                         } catch (IOException e) {

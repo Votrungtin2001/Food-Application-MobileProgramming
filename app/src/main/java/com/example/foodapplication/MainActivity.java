@@ -30,17 +30,18 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class MainActivity extends AppCompatActivity implements CommunicationInterface{
+public class MainActivity extends AppCompatActivity implements CommunicationInterface, UserIdPassInterface{
 
     NotiSettingFragment NotiSettingFrag;
 
     private String addressLine;
     private String nameStreet;
-    private int district_id;
+    private int district_id, user_id;
+    Bundle importArgs;
 
     FragmentManager fragmentManager = getSupportFragmentManager();
     final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-    final HomeFragment homeFragment = new HomeFragment();
+    HomeFragment homeFragment = new HomeFragment();
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -54,14 +55,17 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
         addressLine = getIntent().getExtras().getString("AddressLine");
         nameStreet = getIntent().getExtras().getString("NameStreet");
         district_id = getIntent().getExtras().getInt("District ID");
+
+        homeFragment.setKeyValue(addressLine, nameStreet, district_id);
+
         Bundle b = new Bundle();
-        b.putString("AddressLine", addressLine);
-        b.putString("NameStreet", nameStreet);
-        b.putInt("District ID", district_id);
+        b.putInt("CUSTOMER_ID", user_id);
         homeFragment.setArguments(b);
         fragmentTransaction.add(R.id.frame_container, homeFragment);
         fragmentTransaction.commit();
 
+        importArgs = new Bundle();
+        importArgs.putInt("CUSTOMER_ID", user_id);
 
         BottomNavigationView navigation = findViewById(R.id.bottom_nav_bar);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -94,24 +98,29 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
             switch(item.getItemId()) {
                 case R.id.nav_home:
                     fragment = homeFragment;
+                    fragment.setArguments(importArgs);
                     loadFragment(fragment);
                     break;
 
                 case R.id.nav_favorites:
                     fragment = new FavoritesFragment();
+                    fragment.setArguments(importArgs);
                     loadFragment(fragment);
                     break;
                 case R.id.nav_account:
                     fragment = new AccountFragment();
+                    fragment.setArguments(importArgs);
                     loadFragment(fragment);
                     break;
                 case R.id.nav_notif:
                     fragment = new Noti();
+                    fragment.setArguments(importArgs);
                     loadFragment(fragment);
                     break;
 
                 case R.id.nav_order:
                     fragment=new OrderFragment();
+                    fragment.setArguments(importArgs);
                     loadFragment(fragment);
                     break;
                 default:
@@ -184,5 +193,10 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
             {
             Toast.makeText(this, "Khong tim thay, hoac fragment khong hien", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void passId(int user_id) {
+        this.user_id = user_id;
     }
 }

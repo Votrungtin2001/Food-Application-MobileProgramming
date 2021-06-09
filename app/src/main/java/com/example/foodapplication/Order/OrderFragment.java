@@ -13,6 +13,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.example.foodapplication.R;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
+import com.google.gson.internal.$Gson$Preconditions;
 
 
 public class OrderFragment extends Fragment {
@@ -21,6 +22,7 @@ public class OrderFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     TabLayout tabLayout;
     ViewPager vp;
+
     public OrderFragment() {
         // Required empty public constructor
     }

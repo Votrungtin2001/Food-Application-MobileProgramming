@@ -1,5 +1,6 @@
 package com.example.foodapplication;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -19,7 +20,15 @@ import java.util.ArrayList;
 
 public class FavoritesFragment extends Fragment {
     ArrayList<FavRestaurant> favs;
-    int customer_id = 0; //placeholder value, need to get user id from a passed bundle
+    int customer_id;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Bundle args = getArguments();
+        customer_id = args.getInt("CUSTOMER_ID");
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

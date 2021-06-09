@@ -20,7 +20,7 @@ import adapter.TransactionAdapter;
 
 public class AccountPaymentHistory extends Fragment {
     ArrayList<Transaction> transactions;
-    int cus_id = 0; // again, need a way to pass in user id
+    int cus_id;
 
     public AccountPaymentHistory() { }
 
@@ -32,6 +32,9 @@ public class AccountPaymentHistory extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Bundle args = getArguments();
+        cus_id = args.getInt("CUSTOMER_ID");
     }
 
     @Override
