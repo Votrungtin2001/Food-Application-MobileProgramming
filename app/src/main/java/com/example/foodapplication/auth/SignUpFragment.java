@@ -138,6 +138,7 @@ public class SignUpFragment extends Fragment {
             user.setName(binding.displayName.getText().toString().trim());
             user.setEmail(binding.email.getText().toString().trim());
             user.setPassword(binding.password.getText().toString().trim());
+            user.setUsername(binding.email.getText().toString().trim());
 
             databaseHelper.addCustomer(user);
             // Snack Bar to show success message that record saved successfully

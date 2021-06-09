@@ -103,15 +103,12 @@ public class LoginFragment extends Fragment  {
 
                 if(isExist){
                     int user_id = databaseHelper.getIdByUsername(binding.username.getText().toString().trim());
-                    dataPasser.passId(user_id);
+                    accountFragment.setUser_id(user_id);
 
-                    Bundle args = new Bundle();
-                    args.putInt("CUSTOMER_ID", user_id);
-                    accountFragment.setArguments(args);
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.frame_container, accountFragment);
-            transaction.addToBackStack(null);
-            transaction.commit();
+                    transaction.replace(R.id.frame_container, accountFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
                 } else {
                     binding.password.setText(null);
                     Toast.makeText(getActivity(), "Login failed. Invalid username or password.", Toast.LENGTH_SHORT).show();

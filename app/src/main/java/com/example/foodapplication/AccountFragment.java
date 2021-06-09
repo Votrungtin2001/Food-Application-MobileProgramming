@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -20,7 +21,7 @@ public class AccountFragment extends Fragment {
     Fragment newFragment;
     TextView txtlogin;
 
-    int user_id;
+    int user_id = -1;
     Bundle importArgs;
 
     Dialog LoginDialog;
@@ -29,8 +30,6 @@ public class AccountFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Bundle args = getArguments();
-        user_id = args.getInt("CUSTOMER_ID");
     }
 
     @Override
@@ -172,7 +171,6 @@ public class AccountFragment extends Fragment {
     };
 
     public void ShowPopUpLogin(View v) {
-
         TextView textView_Close;
         textView_Close = (TextView) LoginDialog.findViewById(R.id.Close_PopUpLogin);
         textView_Close.setOnClickListener(new View.OnClickListener() {
@@ -187,5 +185,9 @@ public class AccountFragment extends Fragment {
         imageView_CustomerOption.setOnClickListener(runLoginFragment);
 
         LoginDialog.show();
+    }
+
+    public void setUser_id (int user_id) {
+        this.user_id = user_id;
     }
 }

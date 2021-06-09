@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
@@ -15,6 +16,8 @@ import com.example.foodapplication.auth.user;
 import java.io.ByteArrayOutputStream;
 import java.util.Calendar;
 import java.util.Date;
+
+import models.SortOfProductModel;
 
 import static com.example.foodapplication.FoodManagementContract.CCustomer.KEY_EMAIL;
 import static com.example.foodapplication.FoodManagementContract.CCustomer.KEY_NAME;
@@ -298,13 +301,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public int getIdByUsername(String username) {
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String selection = FoodManagementContract.CCustomer.KEY_USERNAME + " = ?";
-        String[] selectionArgs = { username };
+        int id_user = -1;
 
-        Cursor cursor = db.query(FoodManagementContract.CCustomer.TABLE_NAME, null, selection, selectionArgs, null, null, null);
-        int id = cursor.getInt(cursor.getColumnIndexOrThrow(FoodManagementContract.CCustomer._ID));
+        String selectQuery = "SELECT _id FROM CUSTOMER WHERE USERNAME='" + username +"';";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            do {
+               int id = cursor.getInt(cursor.getColumnIndex("_id"));
+               id_user = id;
+            } while (cursor.moveToNext());
+
+        }
         cursor.close();
-        return id;
+
+        return id_user;
     }
 
     public int getCredits(int cus_id) {

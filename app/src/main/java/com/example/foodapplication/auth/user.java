@@ -60,5 +60,9 @@ public user(){}
     public String getJob(){return job;}
     public String getFb(){return Fb;}
 
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
 
 }
