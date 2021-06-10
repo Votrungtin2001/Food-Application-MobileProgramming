@@ -129,6 +129,7 @@ public class LoginFragment extends Fragment  {
                     if(isExist){
                         int user_id = databaseHelper.getIdByUsername(binding.username.getText().toString().trim());
                         accountFragment.setUser_id(user_id);
+                        dataPasser.passId(user_id);
 
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.frame_container, accountFragment);
@@ -216,23 +217,7 @@ public class LoginFragment extends Fragment  {
         databaseHelper = new DatabaseHelper(getActivity());
 
     }
-//    private void verifyFromSQLite() {
-//        String emailString = Objects.requireNonNull(binding.username.getText()).toString().trim();
-//        String retypePasswordString = Objects.requireNonNull(binding.password.getText()).toString().trim();
-//        if (databaseHelper.checkUser(emailString, retypePasswordString)) {
-//            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-//            transaction.replace(R.id.frame_container, accountFragment);
-//            transaction.addToBackStack(null);
-//            transaction.commit();
-////            Intent accountsIntent = new Intent(getActivity(), AccountFragment.class);
-////            accountsIntent.putExtra("EMAIL", binding.username.getText().toString().trim());
-//            emptyInputEditText();
-// //           startActivity(accountsIntent);
-//        } else {
-//            // Snack Bar to show success message that record is wrong
-//            //Snackbar.make(nestedScrollView, getString(R.string.error_valid_email_password), Snackbar.LENGTH_LONG).show();
-//        }
-//    }
+
     private void emptyInputEditText() {
         binding.username.setText(null);
         binding.password.setText(null);

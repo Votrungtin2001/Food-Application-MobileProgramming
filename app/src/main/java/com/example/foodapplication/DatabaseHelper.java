@@ -6,18 +6,20 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
+import com.example.foodapplication.Order.OrderModel;
 import com.example.foodapplication.auth.user;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-
-import models.SortOfProductModel;
+import java.util.List;
 
 import static com.example.foodapplication.FoodManagementContract.CCustomer.KEY_EMAIL;
 import static com.example.foodapplication.FoodManagementContract.CCustomer.KEY_NAME;
@@ -26,10 +28,11 @@ import static com.example.foodapplication.FoodManagementContract.CCustomer.TABLE
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // REMEMBER TO ADD 1 TO THIS CONSTANT WHEN YOU MAKE ANY CHANGES TO THE CONTRACT CLASS!
-    public static final int DATABASE_VERSION = 46;
+    public static final int DATABASE_VERSION = 45;
     private static String DB_PATH= "data/data/com.example.foodapplication/databases/";
     private static String DB_NAME = "foodapp";
     private final Context context;
+    private SQLiteDatabase db;
 
     public DatabaseHelper(Context context) {
         super(context, FoodManagementContract.DATABASE_NAME, null, DATABASE_VERSION);
@@ -102,21 +105,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.i("open DB......",db.toString());
     }*/
 
-//    public user getData(int id, String name, String username, String email, String age, String amount, String password){
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        Cursor res = db.rawQuery("select * from users where email='" + email + "'", null);
-//        res.moveToFirst();
-//        while (res.isAfterLast() == false) {
-//            user response = new user(id, name, username, email, age, amount, password);
-//            response.email = res.getString(res.getColumnIndex(Table_Column_2_Email));
-//            response.name = res.getString(res.getColumnIndex(Table_Column_1_Name));
-//            response.username = res.getString(res.getColumnIndex(Table_Column_1_Username));
-//            response.age = res.getString(res.getColumnIndex(Table_Column_3_Age));
-//            response.amount = res.getString(res.getColumnIndex(Table_Column_3_Amount));
-//            return response;
-//        }
-//        return null;
-//    }
+
     public void addCustomer(user user) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -203,7 +192,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return false;
         }
     }
-
     public boolean checkMaster(String email, String password) {
         // array of columns to fetch
         String[] columns = {
@@ -238,7 +226,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
         }
     }
-
     public void updCustomer(int id, String name, int city_id, String phone, String email, String fb, String user, String pass, int gender, Date DoB, String job) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -352,7 +339,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return id_user;
     }
-
     public int getIdMasterByUsername(String username) {
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -372,7 +358,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return id_master;
     }
-
     public int getCredits(int cus_id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -395,7 +380,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String[] selectionArgs = { Integer.toString(cus_id) };
         db.update(FoodManagementContract.CCustomer.TABLE_NAME, values, selection, selectionArgs);
     }
-
     public void addMaster(user user) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -410,6 +394,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(FoodManagementContract.CMaster.TABLE_NAME, null, values);
         db.close();
 
+    }
+    public void addMaster(String name, String phone, String email, String fb, String user, String pass) {
+        ContentValues values = new ContentValues();
+        values.put(FoodManagementContract.CMaster.KEY_NAME, name);
+        values.put(FoodManagementContract.CMaster.KEY_PHONE, phone);
+        values.put(FoodManagementContract.CMaster.KEY_EMAIL, email);
+        values.put(FoodManagementContract.CMaster.KEY_FACEBOOK, fb);
+        values.put(FoodManagementContract.CMaster.KEY_USERNAME, user);
+        values.put(FoodManagementContract.CMaster.KEY_PASSWORD, pass);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.insertOrThrow(FoodManagementContract.CMaster.TABLE_NAME, null, values);
     }
 
     public void updMaster(int id, String name, String phone, String email, String fb, String user, String pass) {

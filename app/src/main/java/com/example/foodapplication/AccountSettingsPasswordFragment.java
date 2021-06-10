@@ -15,7 +15,7 @@ import android.widget.Toast;
 public class AccountSettingsPasswordFragment extends Fragment {
     EditText txtCurrentPassword, txtNewPassword, txtConfirmPassword;
     Button btnSavePassword;
-    int cus_id;
+    int user_id = -1;
 
     public AccountSettingsPasswordFragment() { }
 
@@ -28,8 +28,8 @@ public class AccountSettingsPasswordFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Bundle args = getArguments();
-        cus_id = args.getInt("CUSTOMER_ID");
+        if ((getArguments() != null) && (getArguments().containsKey("CUSTOMER_ID")))
+            user_id = getArguments().getInt("CUSTOMER_ID");
     }
 
     @Override
@@ -48,20 +48,27 @@ public class AccountSettingsPasswordFragment extends Fragment {
 
     View.OnClickListener onPasswordSave = v -> {
         DatabaseHelper dbHelper = new DatabaseHelper(getContext());
-        Cursor cursor = dbHelper.getCustomerById(cus_id);
+        Cursor cursor = dbHelper.getCustomerById(user_id);
         String currentPassword = cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CCustomer.KEY_PASSWORD));
         cursor.close();
 
         if (txtCurrentPassword.getText().toString().equals(currentPassword)) {
             if (txtConfirmPassword.getText().toString().equals(txtNewPassword.getText().toString())) {
-                dbHelper.updUserPassword(cus_id, txtNewPassword.getText().toString());
+                dbHelper.updUserPassword(user_id, txtNewPassword.getText().toString());
                 Toast.makeText(getContext(), "Password updated!!", Toast.LENGTH_SHORT).show();
             }
-            else
+            else {
+                txtNewPassword.setText("");
+                txtConfirmPassword.setText("");
                 Toast.makeText(getContext(), "Password fields do not match!", Toast.LENGTH_SHORT).show();
+            }
         }
-        else
+        else {
+            txtCurrentPassword.setText("");
+            txtNewPassword.setText("");
+            txtConfirmPassword.setText("");
             Toast.makeText(getContext(), "Incorrect password!", Toast.LENGTH_SHORT).show();
+        }
 
         dbHelper.close();
     };

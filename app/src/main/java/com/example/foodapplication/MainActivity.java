@@ -43,6 +43,10 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
     FragmentManager fragmentManager = getSupportFragmentManager();
     final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
     HomeFragment homeFragment = new HomeFragment();
+    FavoritesFragment favFragment = new FavoritesFragment();
+    AccountFragment accFragment = new AccountFragment();
+    Noti notifFragment = new Noti();
+    OrderFragment orderFragment = new OrderFragment();
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -65,8 +69,12 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
         fragmentTransaction.add(R.id.frame_container, homeFragment);
         fragmentTransaction.commit();
 
+        // setting up navigation bar events and fragments
         importArgs = new Bundle();
         importArgs.putInt("CUSTOMER_ID", user_id);
+
+        favFragment.setArguments(importArgs);
+        accFragment.setArguments(importArgs);
 
         navigation = findViewById(R.id.bottom_nav_bar);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -96,39 +104,26 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
 
         @Override
         public boolean onNavigationItemSelected(@NonNull android.view.MenuItem item) {
-            Fragment fragment;
             switch(item.getItemId()) {
                 case R.id.nav_home:
-                    fragment = homeFragment;
-                    fragment.setArguments(importArgs);
-                    loadFragment(fragment);
+                    homeFragment.setArguments(importArgs);
+                    loadFragment(homeFragment);
                     break;
-
                 case R.id.nav_favorites:
-                    fragment = new FavoritesFragment();
-                    fragment.setArguments(importArgs);
-                    loadFragment(fragment);
+                    loadFragment(favFragment);
                     break;
                 case R.id.nav_account:
-                    fragment = new AccountFragment();
-                    fragment.setArguments(importArgs);
-                    loadFragment(fragment);
+                    loadFragment(accFragment);
                     break;
                 case R.id.nav_notif:
-                    fragment = new Noti();
-                    fragment.setArguments(importArgs);
-                    loadFragment(fragment);
+                    loadFragment(notifFragment);
                     break;
-
                 case R.id.nav_order:
-                    fragment=new OrderFragment();
-                    fragment.setArguments(importArgs);
-                    loadFragment(fragment);
+                    loadFragment(orderFragment);
                     break;
                 default:
                     return false;
             }
-
             return true;
         }
     };

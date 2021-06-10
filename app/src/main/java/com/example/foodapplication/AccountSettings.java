@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 public class AccountSettings extends Fragment {
     TextView txtAccountSettingsInfo, txtAccountSettingsPassword, txtAccountAppLanguage, txtAccountAppNotif;
-    int user_id;
+    int user_id = -1;
     Bundle importArgs;
 
     public AccountSettings() {
@@ -28,8 +28,8 @@ public class AccountSettings extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Bundle args = getArguments();
-        user_id = args.getInt("CUSTOMER_ID");
+        if ((getArguments() != null) && (getArguments().containsKey("CUSTOMER_ID")))
+            user_id = getArguments().getInt("CUSTOMER_ID");
     }
 
     @Override

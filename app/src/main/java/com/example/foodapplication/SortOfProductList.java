@@ -1,9 +1,5 @@
 package com.example.foodapplication;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -13,11 +9,13 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import adapter.DiscountComboProductAdapter;
-import adapter.RestaurantListAdapter;
 import adapter.SortOfProductAdapter;
 import models.SortOfProductModel;
 
@@ -73,8 +71,6 @@ public class SortOfProductList extends AppCompatActivity {
             recyclerView_SortOfProductList.setLayoutManager(gridLayoutManager);
             recyclerView_SortOfProductList.setAdapter(adapter);
         }
-
-
     }
 
     public void AddDataForDiscountComboProduct(int id) {
