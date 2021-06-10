@@ -142,10 +142,10 @@ public class SignUpFragment extends Fragment {
 
             databaseHelper.addCustomer(user);
             // Snack Bar to show success message that record saved successfully
-//        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-//        transaction.replace(R.id.frame_container, loginFragment);
-//        transaction.addToBackStack(null);
-//        transaction.commit();
+//           FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+//           transaction.replace(R.id.frame_container, loginFragment);
+//           transaction.addToBackStack(null);
+//           transaction.commit();
             Toast.makeText(getActivity(),"Đăng kí thành công", Toast.LENGTH_LONG).show();
             emptyInputEditText();
         } else {
