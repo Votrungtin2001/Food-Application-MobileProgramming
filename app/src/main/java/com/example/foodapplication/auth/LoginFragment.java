@@ -129,6 +129,7 @@ public class LoginFragment extends Fragment  {
                     if(isExist){
                         int user_id = databaseHelper.getIdByUsername(binding.username.getText().toString().trim());
                         accountFragment.setUser_id(user_id);
+                        dataPasser.passId(user_id);
 
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.frame_container, accountFragment);

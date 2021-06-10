@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 public class AccountSettingsInfoOccupationFragment extends Fragment {
     TextView txtOccupationOffice, txtOccupationFree, txtOccupationStudent, txtOccupationHome, txtOccupationOther;
-    int cus_id;
+    int user_id = -1;
 
     public AccountSettingsInfoOccupationFragment() {
 
@@ -26,8 +26,8 @@ public class AccountSettingsInfoOccupationFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Bundle args = getArguments();
-        cus_id = args.getInt("CUSTOMER_ID");
+        if ((getArguments() != null) && (getArguments().containsKey("CUSTOMER_ID")))
+            user_id = getArguments().getInt("CUSTOMER_ID");
     }
 
     @Override
@@ -52,7 +52,7 @@ public class AccountSettingsInfoOccupationFragment extends Fragment {
     View.OnClickListener onTextViewClick = v -> {
         DatabaseHelper dbHelper = new DatabaseHelper(getContext());
         TextView view = (TextView) v;
-        dbHelper.updUserOccupation(cus_id, view.getText().toString());
+        dbHelper.updUserOccupation(user_id, view.getText().toString());
         dbHelper.close();
     };
 

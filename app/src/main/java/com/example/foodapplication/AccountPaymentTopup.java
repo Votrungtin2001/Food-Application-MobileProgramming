@@ -15,7 +15,7 @@ import android.widget.EditText;
 public class AccountPaymentTopup extends Fragment {
     Button btnAdd50k, btnAdd100k, btnAdd200k, btnAdd300k, btnAdd500k, btnAdd1M, btnAdd2M, btnAdd5M, btnAdd10M, btnDeposit;
     EditText txtTopupAmount;
-    int cus_id;
+    int user_id = -1;
 
     public AccountPaymentTopup() {
 
@@ -30,8 +30,8 @@ public class AccountPaymentTopup extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Bundle args = getArguments();
-        cus_id = args.getInt("CUSTOMER_ID");
+        if ((getArguments() != null) && (getArguments().containsKey("CUSTOMER_ID")))
+            user_id = getArguments().getInt("CUSTOMER_ID");
     }
 
     @Override
@@ -75,10 +75,10 @@ public class AccountPaymentTopup extends Fragment {
             int topup = Integer.parseInt(txtTopupAmount.getText().toString());
 
             DatabaseHelper dbHelper = new DatabaseHelper(getContext());
-            dbHelper.addTransaction(cus_id, topup);
-            int credits = dbHelper.getCredits(cus_id);
+            dbHelper.addTransaction(user_id, topup);
+            int credits = dbHelper.getCredits(user_id);
             credits += topup;
-            dbHelper.updCredits(cus_id, credits);
+            dbHelper.updCredits(user_id, credits);
         }
     };
 }

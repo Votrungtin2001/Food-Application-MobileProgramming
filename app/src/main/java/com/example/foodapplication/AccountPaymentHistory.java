@@ -20,7 +20,7 @@ import adapter.TransactionAdapter;
 
 public class AccountPaymentHistory extends Fragment {
     ArrayList<Transaction> transactions;
-    int cus_id;
+    int user_id = -1;
 
     public AccountPaymentHistory() { }
 
@@ -33,8 +33,8 @@ public class AccountPaymentHistory extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Bundle args = getArguments();
-        cus_id = args.getInt("CUSTOMER_ID");
+        if ((getArguments() != null) && (getArguments().containsKey("CUSTOMER_ID")))
+            user_id = getArguments().getInt("CUSTOMER_ID");
     }
 
     @Override
@@ -45,7 +45,7 @@ public class AccountPaymentHistory extends Fragment {
         RecyclerView rvTransactionHistory = view.findViewById(R.id.rvTransactionHistory);
 
         DatabaseHelper dbHelper = new DatabaseHelper(getContext());
-        Cursor cursor = dbHelper.getTransactions(cus_id);
+        Cursor cursor = dbHelper.getTransactions(user_id);
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
         while (cursor.moveToNext()) {
             Date date = null;
