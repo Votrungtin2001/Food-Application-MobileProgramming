@@ -146,10 +146,12 @@ public class HomeFragment extends Fragment {
 
         databaseHelper = new DatabaseHelper(getActivity());
         db = databaseHelper.getReadableDatabase();
-
-
-
-
+        
+        databaseHelper.delBranch(43);
+        databaseHelper.delAddress(43);
+        databaseHelper.delRestaurant(43);
+        databaseHelper.delProduct(582);
+        databaseHelper.delMenu(591);
 
         //EditText Search
         editText_search = view.findViewById(R.id.editText_SearchBar);

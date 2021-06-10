@@ -1,0 +1,315 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="fragments.UpdateFragment_Master">
+
+    <TextView
+        android:id="@+id/Title_UpdateFragment"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:text="TẠO NHÀ HÀNG"
+        android:textSize="30dp"
+        android:textColor="#FFF59D"
+        android:gravity="center"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/title_master_background"/>
+
+    <ScrollView
+        android:id="@+id/ScrollView_UpdateFragment"
+        android:layout_width="380dp"
+        android:layout_height="575dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Title_UpdateFragment"
+        android:background="@drawable/black_border">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/Label_NameRestaurant_UpdateFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tên nhà hàng: "
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="10dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <EditText
+                android:id="@+id/EditText_NameRestaurant_UpdateFragment"
+                android:layout_width="210dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:textSize="20dp"
+                android:maxLines="1"
+                android:hint="Nhập tên nhà hàng..."
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/Label_NameRestaurant_UpdateFragment"/>
+
+            <TextView
+                android:id="@+id/Label_OpeningTime_UpdateFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Giờ mở cửa: "
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/Label_NameRestaurant_UpdateFragment"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <EditText
+                android:id="@+id/EditText_OpeningTime_UpdateFragment"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="30dp"
+                android:textSize="20dp"
+                android:hint="Time..."
+                android:maxLines="1"
+                android:inputType="time"
+                android:layout_marginTop="15dp"
+                app:layout_constraintTop_toBottomOf="@+id/Label_NameRestaurant_UpdateFragment"
+                app:layout_constraintStart_toEndOf="@+id/Label_OpeningTime_UpdateFragment"/>
+
+            <TextView
+                android:id="@+id/Label_Sign_OpeningTime_UpdateFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="AM"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="15dp"
+                app:layout_constraintTop_toBottomOf="@+id/Label_NameRestaurant_UpdateFragment"
+                app:layout_constraintStart_toEndOf="@+id/EditText_OpeningTime_UpdateFragment"/>
+
+            <TextView
+                android:id="@+id/Label_ClosingTime_UpdateFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Giờ đóng cửa: "
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/Label_OpeningTime_UpdateFragment"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <EditText
+                android:id="@+id/EditText_ClosingTime_UpdateFragment"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="15dp"
+                android:textSize="20dp"
+                android:hint="Time..."
+                android:maxLines="1"
+                android:inputType="time"
+                android:layout_marginTop="15dp"
+                app:layout_constraintTop_toBottomOf="@+id/Label_OpeningTime_UpdateFragment"
+                app:layout_constraintStart_toEndOf="@+id/Label_ClosingTime_UpdateFragment"/>
+
+            <TextView
+                android:id="@+id/Label_Sign_ClosingTime_UpdateFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PM"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="15dp"
+                app:layout_constraintTop_toBottomOf="@+id/Label_OpeningTime_UpdateFragment"
+                app:layout_constraintStart_toEndOf="@+id/EditText_ClosingTime_UpdateFragment"/>
+
+
+            <TextView
+                android:id="@+id/Label_ImageRestaurant_UpdateFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ảnh nhà hàng:"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="80dp"
+                app:layout_constraintTop_toBottomOf="@+id/Label_ClosingTime_UpdateFragment"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <ImageView
+                android:id="@+id/ImageView_ImageRestaurant_UpdateFragment"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:src="@drawable/android"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="20dp"
+                app:layout_constraintStart_toEndOf="@+id/Label_ImageRestaurant_UpdateFragment"
+                app:layout_constraintTop_toBottomOf="@+id/Label_ClosingTime_UpdateFragment"/>
+
+            <Button
+                android:id="@+id/Button_ImageRestaurant_UpdateFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CHOOOSE IMAGE"
+                android:layout_marginLeft="160dp"
+                app:layout_constraintTop_toBottomOf="@+id/ImageView_ImageRestaurant_UpdateFragment"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/Label_NameBranch_UpdateFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tên chi nhánh: "
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/Button_ImageRestaurant_UpdateFragment"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <EditText
+                android:id="@+id/EditText_NameBranch_UpdateFragment"
+                android:layout_width="200dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="15dp"
+                android:textSize="20dp"
+                android:hint="Nhập tên chi nhánh..."
+                android:maxLines="1"
+                android:layout_marginTop="65dp"
+                app:layout_constraintTop_toBottomOf="@+id/ImageView_ImageRestaurant_UpdateFragment"
+                app:layout_constraintStart_toEndOf="@+id/Label_NameBranch_UpdateFragment"/>
+
+            <TextView
+                android:id="@+id/Label_Address_UpdateFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Địa chỉ: "
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/Label_NameBranch_UpdateFragment"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <EditText
+                android:id="@+id/EditText_Address_UpdateFragment"
+                android:layout_width="260dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="20dp"
+                android:textSize="20dp"
+                android:hint="Số nhà, tên đường, xã..."
+                android:maxLines="1"
+                android:layout_marginTop="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/Label_NameBranch_UpdateFragment"
+                app:layout_constraintStart_toEndOf="@+id/Label_Address_UpdateFragment"/>
+
+
+            <TextView
+                android:id="@+id/Label_City_UpdateFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Thành phố: "
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginLeft="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/Label_Address_UpdateFragment"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ConstraintLayout_Spinner1_UpdateFragment"
+                android:layout_width="220dp"
+                android:layout_height="50dp"
+                android:background="@drawable/black_border"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintStart_toEndOf="@+id/Label_District_UpdateFragment"
+                app:layout_constraintTop_toBottomOf="@id/EditText_Address_UpdateFragment">
+
+                <Spinner
+                    android:id="@+id/Spinner_City_UpdateFragment"
+                    android:layout_width="210dp"
+                    android:layout_height="40dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+            <TextView
+                android:id="@+id/Label_District_UpdateFragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quận/Huyện: "
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginLeft="10dp"
+                app:layout_constraintTop_toBottomOf="@+id/Label_City_UpdateFragment"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/ConstraintLayout_Spinner2_UpdateFragment"
+                android:layout_width="220dp"
+                android:layout_height="50dp"
+                android:background="@drawable/black_border"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="35dp"
+                app:layout_constraintStart_toEndOf="@+id/Label_City_UpdateFragment"
+                app:layout_constraintTop_toBottomOf="@id/Label_City_UpdateFragment">
+
+                <Spinner
+                    android:id="@+id/Spinner_District_UpdateFragment"
+                    android:layout_width="210dp"
+                    android:layout_height="40dp"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <Button
+                android:id="@+id/Button_CreateRestaurant_UpdateFragment"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:layout_marginBottom="30dp"
+                android:text="CREATE"
+                android:enabled="false"
+                app:layout_constraintTop_toBottomOf="@id/Label_District_UpdateFragment"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
