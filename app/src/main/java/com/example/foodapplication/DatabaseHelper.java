@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
@@ -286,6 +287,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.query(FoodManagementContract.CCustomer.TABLE_NAME, null, selection, selectionArgs, null, null, null);
     }
 
+    public int getIdByUsername(String username) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        int id_user = -1;
+
+        String selectQuery = "SELECT _id FROM CUSTOMER WHERE USERNAME='" + username +"';";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            do {
+               int id = cursor.getInt(cursor.getColumnIndex("_id"));
+               id_user = id;
+            } while (cursor.moveToNext());
+
+        }
+        cursor.close();
+
+        return id_user;
+    }
+
     public int getCredits(int cus_id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -405,7 +426,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public void addAddress(String address, int district_id, int city_id, int floor, int gate, int label_id) {
+    public long addAddress(String address, int district_id, int city_id, int floor, int gate, int label_id) {
         ContentValues values = new ContentValues();
         values.put(FoodManagementContract.CAddress.KEY_ADDRESS, address);
         values.put(FoodManagementContract.CAddress.KEY_DISTRICT, district_id);
@@ -415,7 +436,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(FoodManagementContract.CAddress.KEY_LABEL, label_id);
 
         SQLiteDatabase db= this.getWritableDatabase();
-        db.insertOrThrow(FoodManagementContract.CAddress.TABLE_NAME, null, values);
+        return db.insertOrThrow(FoodManagementContract.CAddress.TABLE_NAME, null, values);
     }
 
     public void updAddress(int id, String address, int district_id, int city_id, int floor, int gate, int label_id) {
@@ -814,17 +835,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selection = FoodManagementContract.COrderDetails.KEY_ORDER + " = ? ";
         String[] selectionArgs = { Integer.toString(order_id)};
         db.delete(FoodManagementContract.COrderDetails.TABLE_NAME, selection, selectionArgs);
-    }
-
-
-
-    public void addToCart(OrderModel orderModel){
-        SQLiteDatabase db = getReadableDatabase();
-        String query = String.format("INSERT INTO ORDER_DETAILS(Item,Qty,Price) VALUES('%s','%s','%s');",
-                orderModel.getProductName(),
-                orderModel.getQuantity(),
-                orderModel.getPrice());
-        db.execSQL(query);
     }
 
     public Cursor getOrderDetail(int order_id) {

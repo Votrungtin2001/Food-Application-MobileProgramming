@@ -16,6 +16,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.foodapplication.AccountFragment;
 import com.example.foodapplication.DatabaseHelper;
+import com.example.foodapplication.MainActivity;
+import com.example.foodapplication.Master_MainActivity;
 import com.example.foodapplication.R;
 import com.example.foodapplication.UserIdPassInterface;
 import com.example.foodapplication.databinding.FragmentLoginBinding;
@@ -68,7 +70,15 @@ public class LoginFragment extends Fragment  {
     private FragmentLoginBinding binding;
     UserIdPassInterface dataPasser;
 
+    MainActivity mainActivity = new MainActivity();
+
+    int role = 0;
+
     public LoginFragment() { }
+
+    public LoginFragment(int choose_role) {
+        this.role = choose_role;
+    }
 
     public static LoginFragment newInstance() {
         LoginFragment fragment = new LoginFragment();
@@ -98,20 +108,38 @@ public class LoginFragment extends Fragment  {
         binding.signinUsername.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isExist = databaseHelper.checkUser(binding.username.getText().toString().trim(),binding.password.getText().toString().trim());
+                if (role == 2) {
+                    boolean isExist = databaseHelper.checkMaster(binding.username.getText().toString().trim(),binding.password.getText().toString().trim());
 
-                if(isExist){
-//                    int user_id = databaseHelper.getIdByUsername(binding.username.getText().toString().trim());
-//                    accountFragment.setUser_id(user_id);
+                    if(isExist){
+                        int master_id = databaseHelper.getIdMasterByUsername(binding.username.getText().toString().trim());
+                        Intent intent = new Intent(getActivity(), Master_MainActivity.class);
+                        intent.putExtra("Master ID",master_id);
+                        startActivity(intent);
 
-                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.frame_container, accountFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
-                } else {
-                    binding.password.setText(null);
-                    Toast.makeText(getActivity(), "Login failed. Invalid username or password.", Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        binding.password.setText(null);
+                        Toast.makeText(getActivity(), "Login failed. Invalid username or password.", Toast.LENGTH_SHORT).show();
+                    }
                 }
+                else {
+                    boolean isExist = databaseHelper.checkUser(binding.username.getText().toString().trim(),binding.password.getText().toString().trim());
+
+                    if(isExist){
+                        int user_id = databaseHelper.getIdByUsername(binding.username.getText().toString().trim());
+                        accountFragment.setUser_id(user_id);
+
+                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.frame_container, accountFragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+                    } else {
+                        binding.password.setText(null);
+                        Toast.makeText(getActivity(), "Login failed. Invalid username or password.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
             }
         });
         binding.signup.setOnClickListener(runSignUpFragment);
@@ -119,7 +147,7 @@ public class LoginFragment extends Fragment  {
     }
 
     View.OnClickListener runSignUpFragment = v -> {
-        SignUpFragment newFragment = new SignUpFragment();
+        SignUpFragment newFragment = new SignUpFragment(role);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
                 .addToBackStack(null)
@@ -228,10 +256,10 @@ public class LoginFragment extends Fragment  {
     private void signInWithGoogleSignIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
-        // int user_id = databaseHelper.getIdByUsername(binding.username.getText().toString().trim());
+        int user_id = databaseHelper.getIdByUsername(binding.username.getText().toString().trim());
         Bundle args = new Bundle();
-       // args.putInt("CUSTOMER_ID", user_id);
-     //   dataPasser.passId(user_id);
+        args.putInt("CUSTOMER_ID", user_id);
+        dataPasser.passId(user_id);
         accountFragment.setArguments(args);
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container, accountFragment);
@@ -286,10 +314,10 @@ public class LoginFragment extends Fragment  {
                     public void onSuccess(LoginResult loginResult) {
                         String accessToken = loginResult.getAccessToken().getToken();
                         getFacebookDetails(loginResult.getAccessToken());
-                      //  int user_id = databaseHelper.getIdByUsername(binding.username.getText().toString().trim());
+                        int user_id = databaseHelper.getIdByUsername(binding.username.getText().toString().trim());
                         Bundle args = new Bundle();
-                     //   args.putInt("CUSTOMER_ID", user_id);
-                     //   dataPasser.passId(user_id);
+                        args.putInt("CUSTOMER_ID", user_id);
+                        dataPasser.passId(user_id);
                         accountFragment.setArguments(args);
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.frame_container, accountFragment);

@@ -3,6 +3,7 @@ package com.example.foodapplication;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,9 +23,12 @@ public class AccountFragment extends Fragment {
     TextView txtlogin;
 
     int user_id = -1;
+
     Bundle importArgs;
 
     Dialog LoginDialog;
+
+    int choose_role = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -182,7 +186,33 @@ public class AccountFragment extends Fragment {
 
         ImageView imageView_CustomerOption;
         imageView_CustomerOption = (ImageView) LoginDialog.findViewById(R.id.ImageView_Customer_PopUpLogin);
-        imageView_CustomerOption.setOnClickListener(runLoginFragment);
+        imageView_CustomerOption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                choose_role = 1;
+                newFragment = new LoginFragment(choose_role);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
+                        .addToBackStack(null)
+                        .commit();
+                LoginDialog.dismiss();
+            }
+        });
+
+        ImageView imageView_MasterOption;
+        imageView_MasterOption = (ImageView) LoginDialog.findViewById(R.id.ImageView_Master_PopUpLogin);
+        imageView_MasterOption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                choose_role = 2;
+                newFragment = new LoginFragment(choose_role);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
+                        .addToBackStack(null)
+                        .commit();
+                LoginDialog.dismiss();
+            }
+        });
 
         LoginDialog.show();
     }
@@ -190,4 +220,5 @@ public class AccountFragment extends Fragment {
     public void setUser_id (int user_id) {
         this.user_id = user_id;
     }
+
 }
