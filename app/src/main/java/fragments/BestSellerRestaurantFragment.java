@@ -31,7 +31,7 @@ public class BestSellerRestaurantFragment extends Fragment {
     RecyclerView recyclerView_KindOfRestaurant;
     KindOfRestaurantAdapter kindOfRestaurantAdapter;
 
-    int district_id;
+    int district_id = 14;
 
     SQLiteDatabase db;
     DatabaseHelper databaseHelper;

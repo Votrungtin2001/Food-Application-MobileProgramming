@@ -27,7 +27,7 @@ public class NearMeRestaurantsFragment extends Fragment {
     RecyclerView recyclerView_KindOfRestaurant;
     KindOfRestaurantAdapter kindOfRestaurantAdapter;
     List<KindOfRestaurantModel> kindOfRestaurantModelList;
-    int district_id;
+    int district_id = 14;
 
     SQLiteDatabase db;
     DatabaseHelper databaseHelper;

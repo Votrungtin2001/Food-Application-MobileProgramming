@@ -2,10 +2,6 @@ package com.example.foodapplication;
 
 import android.database.Cursor;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
+
+import androidx.fragment.app.Fragment;
 
 import java.util.ArrayList;
 
@@ -153,12 +150,12 @@ public class AccountAddressFragment extends Fragment {
                 break;
         }
 
-        long address_id = dbHelper.addAddress(txtAccountAddressInput.getText().toString(),
-                dist_id,
-                city_id,
-                Integer.parseInt(txtAccountAddressFloor.getText().toString()),
-                Integer.parseInt(txtAccountAddressGate.getText().toString()),
-                (int) address_label);
-        dbHelper.addCustomerAddress(cus_id, (int)address_id);
+//        long address_id = dbHelper.addAddress(txtAccountAddressInput.getText().toString(),
+//                dist_id,
+//                city_id,
+//                Integer.parseInt(txtAccountAddressFloor.getText().toString()),
+//                Integer.parseInt(txtAccountAddressGate.getText().toString()),
+//                (int) address_label);
+//        dbHelper.addCustomerAddress(cus_id, (int)address_id);
     };
 }

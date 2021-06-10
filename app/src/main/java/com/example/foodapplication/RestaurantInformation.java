@@ -1,5 +1,6 @@
 package com.example.foodapplication;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -16,6 +17,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.foodapplication.Cart.Cart;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -82,6 +85,14 @@ public class RestaurantInformation extends AppCompatActivity {
         prepareViewPagerRestaurantInformation(viewPager_RestaurantInformation, title_TabLayout);
 
         //Code Minh Thi
+        FloatingActionButton cart = findViewById(R.id.btnCart);
+        cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplication(), Cart.class);
+                startActivity(intent);
+            }
+        });
 
 
     }

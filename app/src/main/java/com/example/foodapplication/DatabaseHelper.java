@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
@@ -21,10 +20,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import models.SortOfProductModel;
-
 import static com.example.foodapplication.FoodManagementContract.CCustomer.KEY_EMAIL;
-import static com.example.foodapplication.FoodManagementContract.CCustomer.KEY_ID;
 import static com.example.foodapplication.FoodManagementContract.CCustomer.KEY_NAME;
 import static com.example.foodapplication.FoodManagementContract.CCustomer.KEY_PASSWORD;
 import static com.example.foodapplication.FoodManagementContract.CCustomer.TABLE_NAME;
@@ -108,21 +104,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Log.i("open DB......",db.toString());
     }*/
 
-//    public user getData(int id, String name, String username, String email, String age, String amount, String password){
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        Cursor res = db.rawQuery("select * from users where email='" + email + "'", null);
-//        res.moveToFirst();
-//        while (res.isAfterLast() == false) {
-//            user response = new user(id, name, username, email, age, amount, password);
-//            response.email = res.getString(res.getColumnIndex(Table_Column_2_Email));
-//            response.name = res.getString(res.getColumnIndex(Table_Column_1_Name));
-//            response.username = res.getString(res.getColumnIndex(Table_Column_1_Username));
-//            response.age = res.getString(res.getColumnIndex(Table_Column_3_Age));
-//            response.amount = res.getString(res.getColumnIndex(Table_Column_3_Amount));
-//            return response;
-//        }
-//        return null;
-//    }
+
     public void addCustomer(user user) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -834,29 +816,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.delete(FoodManagementContract.COrderDetails.TABLE_NAME, selection, selectionArgs);
     }
 
-    public List<OrderModel> getCart() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 
-        String[] sqlSlect = {"OrderID","Item","Qty","Price"};
-        String sqlTable = "ORDER_DETAILS";
-
-        qb.setTables(sqlTable);
-        Cursor cursor = qb.query(db,sqlSlect,null, null, null, null, null);
-
-        final List<OrderModel> res = new ArrayList<>();
-        if(cursor.moveToFirst())
-        {
-            do{
-                res.add(new OrderModel(cursor.getInt(cursor.getColumnIndex("OrderID")),
-                        cursor.getString(cursor.getColumnIndex("Item")),
-                        cursor.getInt(cursor.getColumnIndex("Qty")),
-                        cursor.getInt(cursor.getColumnIndex("Price"))
-                ));
-            }while (cursor.moveToNext());
-        }
-        return res;
-    }
 
     public void addToCart(OrderModel orderModel){
         SQLiteDatabase db = getReadableDatabase();

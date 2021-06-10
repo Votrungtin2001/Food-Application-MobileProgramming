@@ -16,7 +16,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.example.foodapplication.AccountFragment;
 import com.example.foodapplication.DatabaseHelper;
-import com.example.foodapplication.MainActivity;
 import com.example.foodapplication.R;
 import com.example.foodapplication.UserIdPassInterface;
 import com.example.foodapplication.databinding.FragmentLoginBinding;
@@ -102,8 +101,8 @@ public class LoginFragment extends Fragment  {
                 boolean isExist = databaseHelper.checkUser(binding.username.getText().toString().trim(),binding.password.getText().toString().trim());
 
                 if(isExist){
-                    int user_id = databaseHelper.getIdByUsername(binding.username.getText().toString().trim());
-                    accountFragment.setUser_id(user_id);
+//                    int user_id = databaseHelper.getIdByUsername(binding.username.getText().toString().trim());
+//                    accountFragment.setUser_id(user_id);
 
                     FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.frame_container, accountFragment);
@@ -229,10 +228,10 @@ public class LoginFragment extends Fragment  {
     private void signInWithGoogleSignIn() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
-        int user_id = databaseHelper.getIdByUsername(binding.username.getText().toString().trim());
+        // int user_id = databaseHelper.getIdByUsername(binding.username.getText().toString().trim());
         Bundle args = new Bundle();
-        args.putInt("CUSTOMER_ID", user_id);
-        dataPasser.passId(user_id);
+       // args.putInt("CUSTOMER_ID", user_id);
+     //   dataPasser.passId(user_id);
         accountFragment.setArguments(args);
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container, accountFragment);
@@ -287,10 +286,10 @@ public class LoginFragment extends Fragment  {
                     public void onSuccess(LoginResult loginResult) {
                         String accessToken = loginResult.getAccessToken().getToken();
                         getFacebookDetails(loginResult.getAccessToken());
-                        int user_id = databaseHelper.getIdByUsername(binding.username.getText().toString().trim());
+                      //  int user_id = databaseHelper.getIdByUsername(binding.username.getText().toString().trim());
                         Bundle args = new Bundle();
-                        args.putInt("CUSTOMER_ID", user_id);
-                        dataPasser.passId(user_id);
+                     //   args.putInt("CUSTOMER_ID", user_id);
+                     //   dataPasser.passId(user_id);
                         accountFragment.setArguments(args);
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.frame_container, accountFragment);

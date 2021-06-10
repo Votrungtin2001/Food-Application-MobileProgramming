@@ -2,7 +2,7 @@ package com.example.foodapplication.Order;
 
 public class OrderModel {
 
-    public int OrderId, Quantity, Price;
+    public int OrderId, Quantity, Price, ProductId;
     public String ProductName;
 
 

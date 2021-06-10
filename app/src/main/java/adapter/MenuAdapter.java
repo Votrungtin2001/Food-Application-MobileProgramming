@@ -1,19 +1,23 @@
 package adapter;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodapplication.DatabaseHelper;
 import com.example.foodapplication.FoodManagementContract;
+import com.example.foodapplication.Order.OrderModel;
 import com.example.foodapplication.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import models.ProductModel;
@@ -25,10 +29,17 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     LayoutInflater inflater;
 
     // Minh Thi code
-    String orderId= "";
+
+    String orderId = "";
     FoodManagementContract order;
-    // OrderModel orderModel = new OrderModel();
+    OrderModel orderModel ;
     DatabaseHelper databaseHelper;
+    ProductModel productModel;
+    SQLiteDatabase db;
+    //
+
+    public static List<ProductModel> productModelList = new ArrayList<>();
+
 
     public MenuAdapter(Context ctx, List<ProductModel> ItemList) {
         this.context = ctx;
@@ -61,7 +72,8 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         holder.imageView_addItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 // new DatabaseHelper(context).addOrderDetail(orderModel);
+                productModelList.add(new ProductModel(currentItem.getNameProduct(),currentItem.getQuantity(), currentItem.getPrice()));
+                Toast.makeText(context,"Thêm vào giỏ hàng thành công!",Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -90,8 +102,9 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
            textView_ValueOfSell = itemView.findViewById(R.id.TextView_ValueOfSell_Menu);
            textView_Price = itemView.findViewById(R.id.TextView_PriceProduct_Menu);
            imageView_ImageProduct = itemView.findViewById(R.id.ImageView_ImageProduct_Menu);
-
            imageView_addItem = itemView.findViewById(R.id.ImageView_Plus_Menu);
         }
     }
+
+
 }
