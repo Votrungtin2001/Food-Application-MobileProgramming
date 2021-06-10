@@ -192,7 +192,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return false;
         }
     }
+    public boolean checkMaster(String email, String password) {
+        // array of columns to fetch
+        String[] columns = {
+                KEY_NAME
+        };
+        SQLiteDatabase db = this.getReadableDatabase();
+        // selection criteria
+        String selection = KEY_EMAIL + " = ?" + " AND " + KEY_PASSWORD + " = ?";
+        // selection arguments
+        String[] selectionArgs = {email, password};
+        // query user table with conditions
+        /**
+         * Here query function is used to fetch records from user table this function works like we use sql query.
+         * SQL query equivalent to this query function is
+         * SELECT user_id FROM user WHERE user_email = 'jack@androidtutorialshub.com' AND user_password = 'qwerty';
+         */
+        Cursor cursor = db.query(FoodManagementContract.CMaster.TABLE_NAME, //Table to query
+                columns,                    //columns to return
+                selection,                  //columns for the WHERE clause
+                selectionArgs,              //The values for the WHERE clause
+                null,                       //group the rows
+                null,                       //filter by row groups
+                null);                      //The sort order
+        int cursorCount = cursor.getCount();
+        cursor.close();
+        db.close();
 
+        if (cursorCount > 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
     public void updCustomer(int id, String name, int city_id, String phone, String email, String fb, String user, String pass, int gender, Date DoB, String job) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -306,7 +339,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return id_user;
     }
+    public int getIdMasterByUsername(String username) {
+        SQLiteDatabase db = this.getReadableDatabase();
 
+        int id_master = -1;
+
+        String selectQuery = "SELECT _id FROM MASTER WHERE USERNAME='" + username +"';";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            do {
+                int id = cursor.getInt(cursor.getColumnIndex("_id"));
+                id_master = id;
+            } while (cursor.moveToNext());
+
+        }
+        cursor.close();
+
+        return id_master;
+    }
     public int getCredits(int cus_id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -329,7 +380,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String[] selectionArgs = { Integer.toString(cus_id) };
         db.update(FoodManagementContract.CCustomer.TABLE_NAME, values, selection, selectionArgs);
     }
+    public void addMaster(user user) {
+        SQLiteDatabase db = this.getWritableDatabase();
 
+        ContentValues values = new ContentValues();
+        values.put(FoodManagementContract.CCustomer.KEY_NAME, user.name);
+        values.put(FoodManagementContract.CCustomer.KEY_PHONE, user.getPhone());
+        values.put(FoodManagementContract.CCustomer.KEY_EMAIL, user.email);
+        values.put(FoodManagementContract.CCustomer.KEY_FACEBOOK, user.getFb());
+        values.put(FoodManagementContract.CCustomer.KEY_USERNAME, user.getUsername());
+        values.put(FoodManagementContract.CCustomer.KEY_PASSWORD, user.password);
+
+        db.insert(FoodManagementContract.CMaster.TABLE_NAME, null, values);
+        db.close();
+
+    }
     public void addMaster(String name, String phone, String email, String fb, String user, String pass) {
         ContentValues values = new ContentValues();
         values.put(FoodManagementContract.CMaster.KEY_NAME, name);
