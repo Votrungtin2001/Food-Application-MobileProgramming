@@ -60,6 +60,8 @@ public class UpdateFragment_Master extends Fragment {
     DatabaseHelper databaseHelper;
     SQLiteDatabase db;
 
+    boolean sign_update = false;
+
     TextView textView_Title_UpdateFragment;
 
     ImageView imageView_ImageRestaurant_UpdateFragment;
@@ -89,6 +91,10 @@ public class UpdateFragment_Master extends Fragment {
     int restaurant_id;
     int branch_id;
     int address_id;
+    String opening_time;
+    String closing_time;
+    String branch_name;
+    String address_name;
 
     private static final int IMAGE_PICK_CODE = 1000;
     private static final int REQUEST_STORAGE = 1001;
@@ -202,9 +208,6 @@ public class UpdateFragment_Master extends Fragment {
             textView_Title_UpdateFragment.setText("TẠO NHÀ HÀNG");
             button_CreateRestaurant_UpdateFragment.setText("CREATE");
             Run1();
-            if(textView_Title_UpdateFragment.getText().toString().trim().equals("CẬP NHẬT NHÀ HÀNG")) {
-                Run2();
-            }
         }
 
 
@@ -282,6 +285,21 @@ public class UpdateFragment_Master extends Fragment {
         return id;
     }
 
+    public String getBranchName(int branch_id) {
+        String branch_nane = "";
+        String selectQuery = "SELECT * FROM BRANCHES WHERE _id='" + branch_id + "';";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            do {
+                branch_nane = cursor.getString(cursor.getColumnIndex("NAME"));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return branch_nane;
+    }
+
     public int getAddressID(int branch_id) {
         int id = -1;
         String selectQuery = "SELECT * FROM BRANCHES WHERE _id='" + branch_id + "';";
@@ -295,6 +313,21 @@ public class UpdateFragment_Master extends Fragment {
         cursor.close();
 
         return id;
+    }
+
+    public String getAddressName(int address_id) {
+        String address_name = "";
+        String selectQuery = "SELECT * FROM ADDRESS WHERE _id='" + address_id + "';";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            do {
+                address_name = cursor.getString(cursor.getColumnIndex("Address"));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return address_name;
     }
 
     public int getCityID(int address_id) {
@@ -387,6 +420,21 @@ public class UpdateFragment_Master extends Fragment {
         cursor.close();
 
         return id;
+    }
+
+    public String getOpeningTime(int restaurant_id) {
+        String opening_time = "";
+        String selectQuery = "SELECT * FROM RESTAURANT WHERE _id='" + restaurant_id + "';";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            do {
+                opening_time = cursor.getString(cursor.getColumnIndex("Opening_Times"));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+
+        return opening_time;
     }
 
     public String getRestaurantName(int restaurant_id) {
@@ -671,6 +719,15 @@ public class UpdateFragment_Master extends Fragment {
 
                 textView_Title_UpdateFragment.setText("CẬP NHẬT NHÀ HÀNG");
                 button_CreateRestaurant_UpdateFragment.setText("UPDATE");
+                editText_NameRestaurant_UpdateFragment.setText("");
+                editText_OpeningTime_UpdateFragment.setText("");
+                editText_ClosingTime_UpdateFragment.setText("");
+                editText_NameBranch_UpdateFragment.setText("");
+                editText_Address_UpdateFragment.setText("");
+                Toast.makeText(getActivity(), "Đã tạo thành công", Toast.LENGTH_SHORT);
+                button_CreateRestaurant_UpdateFragment.setEnabled(false);
+                sign_update = true;
+                if(sign_update == true) Run2();
 
             }
         });
@@ -701,6 +758,7 @@ public class UpdateFragment_Master extends Fragment {
                     districtList = getAllDistrictInSQLite(position + 1);
                     districtAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, districtList);
                     spinner_District_UpdateFragment.setAdapter(districtAdapter);
+                    spinner_District_UpdateFragment.setSelection(districtAdapter.getPosition(district_name));
 
                     if(!editText_NameRestaurant_UpdateFragment.getText().toString().trim().equals("") &&
                             !editText_OpeningTime_UpdateFragment.getText().toString().trim().equals("") &&
@@ -724,9 +782,7 @@ public class UpdateFragment_Master extends Fragment {
 
             }
         });
-        districtList = getAllDistrictInSQLite(city_id);
-        districtAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, districtList);
-        spinner_District_UpdateFragment.setSelection(districtAdapter.getPosition(district_name));
+
         spinner_District_UpdateFragment.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -790,7 +846,7 @@ public class UpdateFragment_Master extends Fragment {
                 }
             }
         });
-        int restaurant_id = getRestaurantID(branch_id);
+
         String name_restaurant = getRestaurantName(restaurant_id);
         editText_NameRestaurant_UpdateFragment.setText(name_restaurant);
         editText_NameRestaurant_UpdateFragment.addTextChangedListener(new TextWatcher() {
@@ -820,6 +876,13 @@ public class UpdateFragment_Master extends Fragment {
             }
         });
 
+
+        String opening_closing_time = getOpeningTime(restaurant_id);
+        String[] string_split = opening_closing_time.split(" AM - ");
+        opening_time = string_split[0];
+        closing_time = string_split[1];
+
+        editText_OpeningTime_UpdateFragment.setText(opening_time);
         editText_OpeningTime_UpdateFragment.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -849,6 +912,9 @@ public class UpdateFragment_Master extends Fragment {
 
         editText_OpeningTime_UpdateFragment.setKeyListener(DigitsKeyListener.getInstance("0123456789:"));
 
+        String[] string_split2 = closing_time.split(" PM");
+        closing_time = string_split2[0];
+        editText_ClosingTime_UpdateFragment.setText(closing_time);
         editText_ClosingTime_UpdateFragment.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -877,6 +943,9 @@ public class UpdateFragment_Master extends Fragment {
         });
         editText_ClosingTime_UpdateFragment.setKeyListener(DigitsKeyListener.getInstance("0123456789:"));
 
+
+        branch_name = getBranchName(branch_id);
+        editText_NameBranch_UpdateFragment.setText(branch_name);
         editText_NameBranch_UpdateFragment.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -904,6 +973,11 @@ public class UpdateFragment_Master extends Fragment {
             }
         });
 
+        address_name = getAddressName(address_id);
+        String[] string_split3 = address_name.split(", ");
+        address_name = string_split3[0];
+
+        editText_Address_UpdateFragment.setText(address_name);
         editText_Address_UpdateFragment.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -936,19 +1010,19 @@ public class UpdateFragment_Master extends Fragment {
             public void onClick(View v) {
                 String name_restaurant = editText_NameRestaurant_UpdateFragment.getText().toString();
                 String opening_time = editText_OpeningTime_UpdateFragment.getText().toString() + " AM - " + editText_ClosingTime_UpdateFragment.getText().toString() + " PM";
-                databaseHelper.addRestaurant(name_restaurant, opening_time, imageViewToByte(imageView_ImageRestaurant_UpdateFragment));
+                databaseHelper.updRestaurant(restaurant_id,name_restaurant, opening_time, imageViewToByte(imageView_ImageRestaurant_UpdateFragment));
 
                 String address = editText_Address_UpdateFragment.getText().toString() + ", " + name_district + ", " + name_city;
-                databaseHelper.addAddress(address, district_id, city_id, 0, 0, 4);
+                databaseHelper.updAddress(address_id, address, district_id, city_id, 0, 0, 4);
 
                 int new_id_restaurant = getCountRestaurant();
                 int new_id_address = getCountAddress();
                 String name_branch = editText_NameBranch_UpdateFragment.getText().toString();
-                databaseHelper.addBranch(name_branch, new_id_restaurant, new_id_address, master_id);
+                databaseHelper.updBranch(branch_id,name_branch, new_id_restaurant, new_id_address, master_id);
 
-                textView_Title_UpdateFragment.setText("CẬP NHẬT NHÀ HÀNG");
-                button_CreateRestaurant_UpdateFragment.setText("UPDATE");
-
+                Toast.makeText(getActivity(), "Đã cập nhật thành công", Toast.LENGTH_SHORT);
+                button_CreateRestaurant_UpdateFragment.setEnabled(false);
+                Run2();
             }
         });
     }

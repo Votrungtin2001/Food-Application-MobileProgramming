@@ -151,6 +151,8 @@ public class HomeFragment extends Fragment {
         databaseHelper.delRestaurant(43);
         databaseHelper.delProduct(582);
         databaseHelper.delMenu(591);
+        databaseHelper.delProduct(583);
+        databaseHelper.delMenu(592);
 
         //EditText Search
         editText_search = view.findViewById(R.id.editText_SearchBar);
@@ -233,7 +235,6 @@ public class HomeFragment extends Fragment {
         tabLayout_KindOfRestaurant = (TabLayout) view.findViewById(R.id.KindOfRestaurant_TabLayout);
         viewPager_KindOfRestaurant = (ViewPager) view.findViewById(R.id.KindOfRestaurant_ViewPager);
 
-        district_id = 14;
         if(district_id >= 0) district_isAvailable = true;
         SetAllData(district_id);
         setUpSreen(district_isAvailable);

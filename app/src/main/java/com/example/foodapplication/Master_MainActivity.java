@@ -13,6 +13,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import fragments.FoodFragment_Master;
 import fragments.HomeFragment_Master;
+import fragments.HomeFragment_Master_DatDon;
+import fragments.RestaurantInformation_ThongTin;
 import fragments.UpdateFragment_Master;
 
 public class Master_MainActivity extends AppCompatActivity {
@@ -21,6 +23,9 @@ public class Master_MainActivity extends AppCompatActivity {
     HomeFragment_Master homeFragment;
     UpdateFragment_Master updateFragment;
     FoodFragment_Master foodFragment;
+
+    public static HomeFragment_Master_DatDon fragment1;
+    public static RestaurantInformation_ThongTin fragment2;
 
     int master_id;
 
@@ -48,6 +53,7 @@ public class Master_MainActivity extends AppCompatActivity {
             Fragment fragment;
             switch(item.getItemId()) {
                 case R.id.nav_home:
+                    homeFragment = new HomeFragment_Master(master_id);
                     fragment = homeFragment;
                     loadFragment(fragment);
                     break;

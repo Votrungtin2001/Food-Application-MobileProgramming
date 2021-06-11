@@ -46,6 +46,8 @@ public class HomeFragment_Master extends Fragment {
     ArrayList<String> title_TabLayout = new ArrayList<>();
     ViewPagerAdapter viewPagerAdapter;
 
+
+
     int branch_id = 0;
 
     public HomeFragment_Master() {

@@ -31,6 +31,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.foodapplication.DatabaseHelper;
 import com.example.foodapplication.R;
@@ -408,6 +409,9 @@ public class FoodFragment_Master extends Fragment {
                 editText_NameProduct_FoodFragment.setText("");
                 editText_Description_FoodFragment.setText("");
                 editText_Price_FoodFragment.setText("");
+
+                Toast.makeText(getActivity(), "Đã thêm món thành công", Toast.LENGTH_SHORT);
+
                 button_AddFood_FoodFragment.setEnabled(false);
 
             }

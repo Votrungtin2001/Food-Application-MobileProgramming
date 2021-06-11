@@ -32,7 +32,7 @@ public class HomeFragment_Master_DatDon extends Fragment {
     private int branch_id;
 
     RecyclerView recyclerView_HomeFragment_Master_DatDon;
-    RecyclerView.Adapter adapter;
+    MenuAdapter_HomeFragment_Master_DatDon adapter;
 
     SQLiteDatabase db;
     DatabaseHelper databaseHelper;
