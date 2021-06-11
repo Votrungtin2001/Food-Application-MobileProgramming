@@ -498,6 +498,10 @@ public class Fill_Address_Screen extends AppCompatActivity {
             }
         });
 
+        TextView textView_Text;
+        textView_Text = (TextView) AnnouncementDialog.findViewById(R.id.TextView_PopUp_RequireLogin);
+        textView_Text.setText("Vui lòng đăng nhập với vai trò là khách hàng!!!");
+
         AnnouncementDialog.show();
     }
 

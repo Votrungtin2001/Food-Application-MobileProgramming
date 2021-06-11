@@ -2,6 +2,7 @@ package adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,12 +37,14 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     String orderId = "";
     FoodManagementContract order;
     OrderModel orderModel ;
-    DatabaseHelper databaseHelper;
     ProductModel productModel;
-    SQLiteDatabase db;
+
     //
 
     Dialog AnnouncementDialog;
+
+    SQLiteDatabase db;
+    DatabaseHelper databaseHelper;
 
     public static List<ProductModel> productModelList = new ArrayList<>();
 
@@ -56,6 +59,9 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.custom_layout_item_menu, parent, false);
+
+        databaseHelper = new DatabaseHelper(context);
+        db = databaseHelper.getReadableDatabase();
 
         return new ViewHolder(view);
     }
@@ -76,8 +82,12 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
                 if (customer_id > 0) {
-                    productModelList.add(new ProductModel(currentItem.getNameProduct(), currentItem.getQuantity(), currentItem.getPrice()));
-                    Toast.makeText(context, "Thêm vào giỏ hàng thành công!", Toast.LENGTH_SHORT).show();
+                    boolean checkCustomerHasAddress = CheckCustomerHasAddress(customer_id);
+                    if(checkCustomerHasAddress == true) {
+                        productModelList.add(new ProductModel(currentItem.getNameProduct(), currentItem.getQuantity(), currentItem.getPrice()));
+                        Toast.makeText(context, "Thêm vào giỏ hàng thành công!", Toast.LENGTH_SHORT).show();
+                    }
+                    else ShowPopUpRequireAddress();
                 }
                 else ShowPopUpRequireLogin();
             }
@@ -125,7 +135,47 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
             }
         });
 
+        TextView textView_Text;
+        textView_Text = (TextView) AnnouncementDialog.findViewById(R.id.TextView_PopUp_RequireLogin);
+        textView_Text.setText("Vui lòng đăng nhập với vai trò là khách hàng!!!");
+
         AnnouncementDialog.show();
+    }
+
+    public void ShowPopUpRequireAddress() {
+        TextView textView_Close;
+        textView_Close = (TextView) AnnouncementDialog.findViewById(R.id.Close_PopUpLogin);
+        textView_Close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AnnouncementDialog.dismiss();
+            }
+        });
+
+        TextView textView_Text;
+        textView_Text = (TextView) AnnouncementDialog.findViewById(R.id.TextView_PopUp_RequireLogin);
+        textView_Text.setText("Vui lòng thêm địa chỉ giao hàng!!!   ");
+
+        AnnouncementDialog.show();
+    }
+
+    public boolean CheckCustomerHasAddress(int customer_id) {
+        int count = 0;
+
+        String selectQuery = "SELECT * FROM CUSTOMER_ADDRESS WHERE Customer='" + customer_id + "';";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            do {
+
+            } while (cursor.moveToNext());
+
+        }
+        count = cursor.getCount();
+        cursor.close();
+        if(count > 0) return true;
+        else return false;
+
     }
 
 

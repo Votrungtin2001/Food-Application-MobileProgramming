@@ -118,8 +118,12 @@ public class RestaurantInformation extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(customer_id > 0) {
-                    Intent intent = new Intent(getApplication(), Cart.class);
-                    startActivity(intent);
+                    boolean checkCustomerHasAddress = CheckCustomerHasAddress(customer_id);
+                    if(checkCustomerHasAddress == true) {
+                        Intent intent = new Intent(getApplication(), Cart.class);
+                        startActivity(intent);
+                    }
+                    else ShowPopUpRequireAddress();
                 }
                 else ShowPopUpRequireLogin();
             }
@@ -216,6 +220,46 @@ public class RestaurantInformation extends AppCompatActivity {
             }
         });
 
+        TextView textView_Text;
+        textView_Text = (TextView) AnnouncementDialog.findViewById(R.id.TextView_PopUp_RequireLogin);
+        textView_Text.setText("Vui lòng đăng nhập với vai trò là khách hàng!!!");
+
         AnnouncementDialog.show();
+    }
+
+    public void ShowPopUpRequireAddress() {
+        TextView textView_Close;
+        textView_Close = (TextView) AnnouncementDialog.findViewById(R.id.Close_PopUpLogin);
+        textView_Close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AnnouncementDialog.dismiss();
+            }
+        });
+
+        TextView textView_Text;
+        textView_Text = (TextView) AnnouncementDialog.findViewById(R.id.TextView_PopUp_RequireLogin);
+        textView_Text.setText("Vui lòng thêm địa chỉ giao hàng!!!    ");
+
+        AnnouncementDialog.show();
+    }
+
+    public boolean CheckCustomerHasAddress(int customer_id) {
+        int count = 0;
+
+        String selectQuery = "SELECT * FROM CUSTOMER_ADDRESS WHERE Customer='" + customer_id + "';";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            do {
+
+            } while (cursor.moveToNext());
+
+        }
+        count = cursor.getCount();
+        cursor.close();
+        if(count > 0) return true;
+        else return false;
+
     }
 }
