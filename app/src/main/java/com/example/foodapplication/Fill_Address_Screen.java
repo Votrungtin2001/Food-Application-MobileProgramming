@@ -4,8 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
@@ -15,6 +18,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -23,6 +27,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.foodapplication.auth.LoginFragment;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.common.api.Status;
@@ -40,6 +45,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+
+import static com.example.foodapplication.MainActivity.customer_id;
 
 
 public class Fill_Address_Screen extends AppCompatActivity {
@@ -80,6 +87,11 @@ public class Fill_Address_Screen extends AppCompatActivity {
 
     private int district_id;
 
+    Dialog AnnouncementDialog;
+
+    DatabaseHelper databaseHelper;
+    SQLiteDatabase db;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,16 +102,52 @@ public class Fill_Address_Screen extends AppCompatActivity {
 
         setContentView(R.layout.activity_fill__address__screen);
 
-        nameStreet = getIntent().getExtras().getString("NameStreet");
+        databaseHelper = new DatabaseHelper(this);
+        db = databaseHelper.getReadableDatabase();
+
+        initComponents();
+
+        Run();
+
+
+    }
+
+    public void initComponents() {
         textView_nameStreet = findViewById(R.id.nameStreet_textView);
+        textView_addressLine = findViewById(R.id.fullAddress_textView);
+        textView_HomeAddress = findViewById(R.id.addHomeAddress_textView);
+        textView_CompanyAddress = findViewById(R.id.addCompanyAddress_textView);
+        textView_FullAddress1 = findViewById(R.id.FullAddress_FillAddress1);
+        textView_NameContact1 = findViewById(R.id.NameContact_FillAddress1);
+        textView_PhoneContact1 = findViewById(R.id.PhoneContact_FillAddress1);
+        textView_Note1 = findViewById(R.id.Note_FillAddress1);
+        textView_FullAddress2 = findViewById(R.id.FullAddress_FillAddress2);
+        textView_NameContact2 = findViewById(R.id.NameContact_FillAddress2);
+        textView_PhoneContact2 = findViewById(R.id.PhoneContact_FillAddress2);
+        textView_Note2 = findViewById(R.id.Note_FillAddress2);
+
+        back_imageView = findViewById(R.id.Back_imageView);
+        map_imageView = findViewById(R.id.Map_imageView);
+        imageView_Home = findViewById(R.id.home_imageView);
+        imageView_HomeNext = findViewById(R.id.next1_imageView);
+        imageView_BriefCase = findViewById(R.id.briefCase_imageView);
+        imageView_CompanyNext = findViewById(R.id.next2_imageView);
+
+        editText_AddressBar = findViewById(R.id.searchAddressBar_editText);
+
+        button_NewAddress = findViewById(R.id.addNewAddress_button);
+
+        AnnouncementDialog = new Dialog(this);
+        AnnouncementDialog.setContentView(R.layout.custom_popup_require_login);
+    }
+
+    public void Run() {
+        nameStreet = getIntent().getExtras().getString("NameStreet");
         textView_nameStreet.setText(nameStreet);
 
         addressLine = getIntent().getExtras().getString("AddressLine");
-        textView_addressLine = findViewById(R.id.fullAddress_textView);
         textView_addressLine.setText(addressLine);
 
-
-        back_imageView = findViewById(R.id.Back_imageView);
         back_imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,7 +155,6 @@ public class Fill_Address_Screen extends AppCompatActivity {
             }
         });
 
-        map_imageView = findViewById(R.id.Map_imageView);
         map_imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,7 +162,6 @@ public class Fill_Address_Screen extends AppCompatActivity {
             }
         });
 
-        editText_AddressBar = findViewById(R.id.searchAddressBar_editText);
         Places.initialize(getApplicationContext(), apiKey);
         editText_AddressBar.setFocusable(false);
         editText_AddressBar.setOnClickListener(new View.OnClickListener() {
@@ -123,7 +169,7 @@ public class Fill_Address_Screen extends AppCompatActivity {
             public void onClick(View v) {
                 //Initialize place field list
                 List<Place.Field> fieldList = Arrays.asList(Place.Field.ADDRESS
-                    , Place.Field.LAT_LNG, Place.Field.NAME);
+                        , Place.Field.LAT_LNG, Place.Field.NAME);
                 //Create intent
                 Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY
                         , fieldList).setCountry("VN").build(Fill_Address_Screen.this);
@@ -132,7 +178,6 @@ public class Fill_Address_Screen extends AppCompatActivity {
             }
         });
 
-        imageView_Home = findViewById(R.id.home_imageView);
         imageView_Home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,7 +185,6 @@ public class Fill_Address_Screen extends AppCompatActivity {
             }
         });
 
-        textView_HomeAddress = findViewById(R.id.addHomeAddress_textView);
         textView_HomeAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -148,7 +192,6 @@ public class Fill_Address_Screen extends AppCompatActivity {
             }
         });
 
-        imageView_HomeNext = findViewById(R.id.next1_imageView);
         imageView_HomeNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,7 +199,6 @@ public class Fill_Address_Screen extends AppCompatActivity {
             }
         });
 
-        imageView_BriefCase = findViewById(R.id.briefCase_imageView);
         imageView_BriefCase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -164,7 +206,6 @@ public class Fill_Address_Screen extends AppCompatActivity {
             }
         });
 
-        textView_CompanyAddress = findViewById(R.id.addCompanyAddress_textView);
         textView_CompanyAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -172,7 +213,6 @@ public class Fill_Address_Screen extends AppCompatActivity {
             }
         });
 
-        imageView_CompanyNext = findViewById(R.id.next2_imageView);
         imageView_CompanyNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -180,23 +220,40 @@ public class Fill_Address_Screen extends AppCompatActivity {
             }
         });
 
-        textView_FullAddress1 = findViewById(R.id.FullAddress_FillAddress1);
-        textView_NameContact1 = findViewById(R.id.NameContact_FillAddress1);
-        textView_PhoneContact1 = findViewById(R.id.PhoneContact_FillAddress1);
-        textView_Note1 = findViewById(R.id.Note_FillAddress1);
-
-        textView_FullAddress2 = findViewById(R.id.FullAddress_FillAddress2);
-        textView_NameContact2 = findViewById(R.id.NameContact_FillAddress2);
-        textView_PhoneContact2 = findViewById(R.id.PhoneContact_FillAddress2);
-        textView_Note2 = findViewById(R.id.Note_FillAddress2);
-
-        button_NewAddress = findViewById(R.id.addNewAddress_button);
         button_NewAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openCreateAddressActivityWithNewAddressOption();
             }
         });
+
+        boolean checkCustomerHasAddress = CheckCustomerHasAddress(customer_id);
+        if(checkCustomerHasAddress == true) {
+            String phone = getCustomerPhone(customer_id);
+            String name = getCustomerName(customer_id);
+            boolean checkCustomerHasHomeAddress = CheckCustomerHasRightAddressLabel(customer_id, 1);
+            if (checkCustomerHasHomeAddress == true) {
+                String full_address_HOME = getFullAddress(customer_id, 1);
+                if (!full_address_HOME.trim().equals("")) {
+                    textView_HomeAddress.setText("Nhà");
+                    textView_FullAddress1.setText(full_address_HOME);
+                }
+                if(phone != null) textView_PhoneContact1.setText(phone);
+                if(name != null) textView_NameContact1.setText(name);
+            }
+
+            boolean checkCustomerHasWorkAddress = CheckCustomerHasRightAddressLabel(customer_id, 2);
+            if(checkCustomerHasWorkAddress == true) {
+                String full_address_WORK = getFullAddress(customer_id, 2);
+                if (!full_address_WORK.trim().equals("")) {
+                    textView_CompanyAddress.setText("Công ty");
+                    textView_FullAddress2.setText(full_address_WORK);
+                }
+                if(phone != null) textView_PhoneContact2.setText(phone);
+                if(name != null) textView_NameContact2.setText(name);
+            }
+
+        }
     }
 
     @Override
@@ -359,27 +416,34 @@ public class Fill_Address_Screen extends AppCompatActivity {
 
     }
 
-
-
     private void openCreateAddressActivityWithHomeOption()
     {
-        Intent intent = new Intent(Fill_Address_Screen.this, CreateAddressScreen.class);
-        intent.putExtra("Option", "Home");
-        startActivityForResult(intent, 1);
+        if(customer_id > 0 ) {
+            Intent intent = new Intent(Fill_Address_Screen.this, CreateAddressScreen.class);
+            intent.putExtra("Option", "Home");
+            startActivityForResult(intent, 1);
+        }
+        else ShowPopUpRequireLogin();
     }
 
     private void openCreateAddressActivityWithCompanyOption()
     {
-        Intent intent = new Intent(Fill_Address_Screen.this, CreateAddressScreen.class);
-        intent.putExtra("Option", "Company");
-        startActivityForResult(intent, 1);
+        if(customer_id > 0) {
+            Intent intent = new Intent(Fill_Address_Screen.this, CreateAddressScreen.class);
+            intent.putExtra("Option", "Company");
+            startActivityForResult(intent, 1);
+        }
+        else ShowPopUpRequireLogin();
     }
 
     private void openCreateAddressActivityWithNewAddressOption()
     {
-        Intent intent = new Intent(Fill_Address_Screen.this, CreateAddressScreen.class);
-        intent.putExtra("Option", "New Address");
-        startActivityForResult(intent, 1);
+        if(customer_id > 0) {
+            Intent intent = new Intent(Fill_Address_Screen.this, CreateAddressScreen.class);
+            intent.putExtra("Option", "New Address");
+            startActivityForResult(intent, 1);
+        }
+        else ShowPopUpRequireLogin();
     }
 
 
@@ -422,5 +486,121 @@ public class Fill_Address_Screen extends AppCompatActivity {
             winParams.flags &= ~bits;
         }
         win.setAttributes(winParams);
+    }
+
+    public void ShowPopUpRequireLogin() {
+        TextView textView_Close;
+        textView_Close = (TextView) AnnouncementDialog.findViewById(R.id.Close_PopUpLogin);
+        textView_Close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AnnouncementDialog.dismiss();
+            }
+        });
+
+        AnnouncementDialog.show();
+    }
+
+    public boolean CheckCustomerHasAddress(int customer_id) {
+        int count = 0;
+
+        String selectQuery = "SELECT * FROM CUSTOMER_ADDRESS WHERE Customer='" + customer_id + "';";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            do {
+
+            } while (cursor.moveToNext());
+
+        }
+        count = cursor.getCount();
+        cursor.close();
+        if(count > 0) return true;
+        else return false;
+
+    }
+
+    public String getFullAddress(int customer_id, int label) {
+        String full_address = "";
+        String address_name = "";
+        int floor = 0;
+        int gate = 0;
+        String selectQuery = "SELECT A.ADDRESS, A.Floor, A.Gate FROM (CUSTOMER_ADDRESS C JOIN ADDRESS A ON C.Address = A._id) " +
+                "JOIN ADDRESS_LABEL AL ON A.Label = AL._id " +
+                "WHERE C.Customer ='" + customer_id + "' AND A.Label =' " + label + "';";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            do {
+                address_name = cursor.getString(cursor.getColumnIndex("Address"));
+                floor = cursor.getInt(cursor.getColumnIndex("Floor"));
+                gate = cursor.getInt(cursor.getColumnIndex("Gate"));
+            } while (cursor.moveToNext());
+
+        }
+        cursor.close();
+
+        if(!address_name.trim().equals("")) {
+            if(floor > 0 && gate > 0) {
+                full_address = "[" + floor + ", " + gate + "] " + address_name;
+            }
+            else if(floor > 0) full_address = "[" + floor + ", " + 0 + "] " + address_name;
+            else if(gate > 0) full_address = "[" + 0 + ", " + gate + "] " + address_name;
+            else full_address = address_name;
+        }
+        return full_address;
+    }
+
+    public boolean CheckCustomerHasRightAddressLabel(int customer_id, int label) {
+        int count = 0;
+        String selectQuery =  "SELECT A.ADDRESS, A.Floor, A.Gate FROM (CUSTOMER_ADDRESS C JOIN ADDRESS A ON C.Address = A._id) " +
+                "JOIN ADDRESS_LABEL AL ON A.Label = AL._id " +
+                "WHERE C.Customer ='" + customer_id + "' AND A.Label =' " + label + "';";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            do {
+
+            } while (cursor.moveToNext());
+
+        }
+        count = cursor.getCount();
+        cursor.close();
+        if(count > 0) return true;
+        else return false;
+    }
+
+    public String getCustomerPhone(int customer_id) {
+        String phone = "";
+
+        String selectQuery = "SELECT Phone FROM CUSTOMER WHERE _id='" + customer_id + "';";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            do {
+               phone = cursor.getString(cursor.getColumnIndex("Phone"));
+            } while (cursor.moveToNext());
+
+        }
+        cursor.close();
+
+       return phone;
+    }
+
+    public String getCustomerName(int customer_id) {
+        String name = "";
+
+        String selectQuery = "SELECT Name FROM CUSTOMER WHERE _id='" + customer_id + "';";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            do {
+                name = cursor.getString(cursor.getColumnIndex("Name"));
+            } while (cursor.moveToNext());
+
+        }
+        cursor.close();
+
+        return name;
     }
 }

@@ -311,6 +311,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.update(FoodManagementContract.CCustomer.TABLE_NAME, values, selection, selectionArgs);
     }
 
+    public void updCustomerPhone(int cus_id, String phone) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(FoodManagementContract.CCustomer.KEY_PHONE, phone);
+
+        String selection = FoodManagementContract.CCustomer._ID + " = ?";
+        String[] selectionArgs = { Integer.toString(cus_id) };
+        db.update(FoodManagementContract.CCustomer.TABLE_NAME, values, selection, selectionArgs);
+    }
+
+    public void updCustomerName(int cus_id, String name) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(FoodManagementContract.CCustomer.KEY_NAME, name);
+
+        String selection = FoodManagementContract.CCustomer._ID + " = ?";
+        String[] selectionArgs = { Integer.toString(cus_id) };
+        db.update(FoodManagementContract.CCustomer.TABLE_NAME, values, selection, selectionArgs);
+    }
+
     public Cursor getCustomerById(int cus_id) {
         SQLiteDatabase db = this.getReadableDatabase();
 

@@ -1,5 +1,6 @@
 package adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -27,6 +28,8 @@ public class MenuAdapter_HomeFragment_Master_DatDon extends RecyclerView.Adapter
 
     SQLiteDatabase db;
     DatabaseHelper databaseHelper;
+
+    Dialog AnnouncementDialog;
 
     public MenuAdapter_HomeFragment_Master_DatDon(Context ctx, List<ProductModel> ItemList) {
         this.context = ctx;
@@ -65,6 +68,7 @@ public class MenuAdapter_HomeFragment_Master_DatDon extends RecyclerView.Adapter
                 notifyDataSetChanged();
                 databaseHelper.delMenu(menu_id);
                 databaseHelper.delProduct(product_id);
+                ShowPopDeleteSuccesfully();
 
             }
         });
@@ -93,6 +97,8 @@ public class MenuAdapter_HomeFragment_Master_DatDon extends RecyclerView.Adapter
             textView_Price = itemView.findViewById(R.id.TextView_PriceProduct_Menu_HomeFragment_Master);
             imageView_ImageProduct = itemView.findViewById(R.id.ImageView_ImageProduct_Menu_HomeFragment_Master);
             imageView_Delete = itemView.findViewById(R.id.ImageView_Delete_Menu_HomeFragment_Master);
+            AnnouncementDialog = new Dialog(context);
+            AnnouncementDialog.setContentView(R.layout.custom_popup_require_login);
         }
     }
 
@@ -109,5 +115,22 @@ public class MenuAdapter_HomeFragment_Master_DatDon extends RecyclerView.Adapter
         cursor.close();
 
         return id;
+    }
+
+    public void ShowPopDeleteSuccesfully() {
+        TextView textView_Close;
+        textView_Close = (TextView) AnnouncementDialog.findViewById(R.id.Close_PopUpLogin);
+        textView_Close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AnnouncementDialog.dismiss();
+            }
+        });
+
+        TextView textView_Text;
+        textView_Text = (TextView) AnnouncementDialog.findViewById(R.id.TextView_PopUp_RequireLogin);
+        textView_Text.setText("Bạn đã xóa món thành công!!!");
+
+        AnnouncementDialog.show();
     }
 }

@@ -1,6 +1,7 @@
 package fragments;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -99,6 +100,7 @@ public class UpdateFragment_Master extends Fragment {
     private static final int IMAGE_PICK_CODE = 1000;
     private static final int REQUEST_STORAGE = 1001;
 
+    Dialog AnnouncementDialog;
 
     public UpdateFragment_Master() {
         // Required empty public constructor
@@ -148,6 +150,11 @@ public class UpdateFragment_Master extends Fragment {
         editText_ClosingTime_UpdateFragment = (EditText) view.findViewById(R.id.EditText_ClosingTime_UpdateFragment);
         editText_NameBranch_UpdateFragment = (EditText) view.findViewById(R.id.EditText_NameBranch_UpdateFragment);
         editText_Address_UpdateFragment = (EditText) view.findViewById(R.id.EditText_Address_UpdateFragment);
+
+
+        AnnouncementDialog = new Dialog(getActivity());
+        View view1  = LayoutInflater.from(getActivity()).inflate(R.layout.custom_popup_require_login, null);
+        AnnouncementDialog.setContentView(view1);
     }
 
     public boolean CheckMasterHasRestaurant_Is_Right(int id) {
@@ -728,6 +735,7 @@ public class UpdateFragment_Master extends Fragment {
                 button_CreateRestaurant_UpdateFragment.setEnabled(false);
                 sign_update = true;
                 if(sign_update == true) Run2();
+                ShowPopUpCreateSuccesfully();
 
             }
         });
@@ -1023,7 +1031,42 @@ public class UpdateFragment_Master extends Fragment {
                 Toast.makeText(getActivity(), "Đã cập nhật thành công", Toast.LENGTH_SHORT);
                 button_CreateRestaurant_UpdateFragment.setEnabled(false);
                 Run2();
+                ShowPopUpUpdateSuccesfully();
             }
         });
+    }
+
+    public void ShowPopUpCreateSuccesfully() {
+        TextView textView_Close;
+        textView_Close = (TextView) AnnouncementDialog.findViewById(R.id.Close_PopUpLogin);
+        textView_Close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AnnouncementDialog.dismiss();
+            }
+        });
+
+        TextView textView_Text;
+        textView_Text = (TextView) AnnouncementDialog.findViewById(R.id.TextView_PopUp_RequireLogin);
+        textView_Text.setText("Bạn đã tạo nhà hàng thành công!!!       ");
+
+        AnnouncementDialog.show();
+    }
+
+    public void ShowPopUpUpdateSuccesfully() {
+        TextView textView_Close;
+        textView_Close = (TextView) AnnouncementDialog.findViewById(R.id.Close_PopUpLogin);
+        textView_Close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AnnouncementDialog.dismiss();
+            }
+        });
+
+        TextView textView_Text;
+        textView_Text = (TextView) AnnouncementDialog.findViewById(R.id.TextView_PopUp_RequireLogin);
+        textView_Text.setText("Bạn đã cập nhật nhà hàng thành công!!!");
+
+        AnnouncementDialog.show();
     }
 }

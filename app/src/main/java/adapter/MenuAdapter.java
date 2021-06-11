@@ -1,5 +1,6 @@
 package adapter;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
@@ -22,6 +23,8 @@ import java.util.List;
 
 import models.ProductModel;
 
+import static com.example.foodapplication.MainActivity.customer_id;
+
 public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
 
     List<ProductModel> itemList;
@@ -37,6 +40,8 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     ProductModel productModel;
     SQLiteDatabase db;
     //
+
+    Dialog AnnouncementDialog;
 
     public static List<ProductModel> productModelList = new ArrayList<>();
 
@@ -65,15 +70,16 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         String price = Integer.toString(currentItem.getPrice());
         holder.textView_Price.setText(price);
 
-        //
-
         holder.imageView_ImageProduct.setImageBitmap(currentItem.getImage());
 
         holder.imageView_addItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                productModelList.add(new ProductModel(currentItem.getNameProduct(),currentItem.getQuantity(), currentItem.getPrice()));
-                Toast.makeText(context,"Thêm vào giỏ hàng thành công!",Toast.LENGTH_SHORT).show();
+                if (customer_id > 0) {
+                    productModelList.add(new ProductModel(currentItem.getNameProduct(), currentItem.getQuantity(), currentItem.getPrice()));
+                    Toast.makeText(context, "Thêm vào giỏ hàng thành công!", Toast.LENGTH_SHORT).show();
+                }
+                else ShowPopUpRequireLogin();
             }
         });
 
@@ -103,7 +109,23 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
            textView_Price = itemView.findViewById(R.id.TextView_PriceProduct_Menu);
            imageView_ImageProduct = itemView.findViewById(R.id.ImageView_ImageProduct_Menu);
            imageView_addItem = itemView.findViewById(R.id.ImageView_Plus_Menu);
+
+            AnnouncementDialog = new Dialog(context);
+            AnnouncementDialog.setContentView(R.layout.custom_popup_require_login);
         }
+    }
+
+    public void ShowPopUpRequireLogin() {
+        TextView textView_Close;
+        textView_Close = (TextView) AnnouncementDialog.findViewById(R.id.Close_PopUpLogin);
+        textView_Close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AnnouncementDialog.dismiss();
+            }
+        });
+
+        AnnouncementDialog.show();
     }
 
 

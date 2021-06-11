@@ -1,5 +1,6 @@
 package com.example.foodapplication;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -26,11 +27,15 @@ import java.util.ArrayList;
 import fragments.RestaurantInformation_DatDon;
 import fragments.RestaurantInformation_ThongTin;
 
+import static com.example.foodapplication.MainActivity.customer_id;
+
 public class RestaurantInformation extends AppCompatActivity {
 
     ImageView imageView_RestaurantInformation;
     TextView textView_BranchName;
     ImageView imageView_Back;
+
+    FloatingActionButton cart;
 
     TabLayout tabLayout_RestaurantInformation;
     ArrayList<String> title_TabLayout = new ArrayList<>();
@@ -44,6 +49,8 @@ public class RestaurantInformation extends AppCompatActivity {
     DatabaseHelper databaseHelper;
     Bitmap bitmap_restaurant;
 
+    Dialog AnnouncementDialog;
+
     //Code Minh Thi
 
 
@@ -56,7 +63,32 @@ public class RestaurantInformation extends AppCompatActivity {
         databaseHelper = new DatabaseHelper(this);
         db = databaseHelper.getReadableDatabase();
 
+        initComponents();
+
+        Run();
+
+
+
+
+    }
+
+    public void initComponents() {
+        textView_BranchName = findViewById(R.id.BranchName_RestaurantInformation);
+
         imageView_Back = findViewById(R.id.Back_RestaurantInformation);
+        imageView_RestaurantInformation = findViewById(R.id.imageView_RestaurantInformation);
+
+        tabLayout_RestaurantInformation = (TabLayout) findViewById(R.id.RestaurantInformation_TabLayout);
+
+        viewPager_RestaurantInformation = (ViewPager) findViewById(R.id.RestaurantInformation_ViewPager);
+
+        cart = findViewById(R.id.btnCart);
+
+        AnnouncementDialog = new Dialog(this);
+        AnnouncementDialog.setContentView(R.layout.custom_popup_require_login);
+    }
+
+    public void Run() {
         imageView_Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,18 +96,14 @@ public class RestaurantInformation extends AppCompatActivity {
             }
         });
 
-        imageView_RestaurantInformation = findViewById(R.id.imageView_RestaurantInformation);
         branch_id = getIntent().getIntExtra("Branch ID", 0);
         image_restaurant = getRestaurantImage(branch_id);
         bitmap_restaurant = BitmapFactory.decodeByteArray(image_restaurant, 0, image_restaurant.length);
         imageView_RestaurantInformation.setImageBitmap(bitmap_restaurant);
 
-        textView_BranchName = findViewById(R.id.BranchName_RestaurantInformation);
         branch_name = getBranchName(branch_id);
         textView_BranchName.setText(branch_name);
 
-        tabLayout_RestaurantInformation = (TabLayout) findViewById(R.id.RestaurantInformation_TabLayout);
-        viewPager_RestaurantInformation = (ViewPager) findViewById(R.id.RestaurantInformation_ViewPager);
         title_TabLayout.add("Đặt đơn");
         title_TabLayout.add("Thông tin");
 
@@ -85,16 +113,17 @@ public class RestaurantInformation extends AppCompatActivity {
         prepareViewPagerRestaurantInformation(viewPager_RestaurantInformation, title_TabLayout);
 
         //Code Minh Thi
-        FloatingActionButton cart = findViewById(R.id.btnCart);
+
         cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplication(), Cart.class);
-                startActivity(intent);
+                if(customer_id > 0) {
+                    Intent intent = new Intent(getApplication(), Cart.class);
+                    startActivity(intent);
+                }
+                else ShowPopUpRequireLogin();
             }
         });
-
-
     }
 
     private void prepareViewPagerRestaurantInformation(ViewPager viewPager_restaurantInformation, ArrayList<String> title_tabLayout) {
@@ -175,5 +204,18 @@ public class RestaurantInformation extends AppCompatActivity {
             winParams.flags &= ~bits;
         }
         win.setAttributes(winParams);
+    }
+
+    public void ShowPopUpRequireLogin() {
+        TextView textView_Close;
+        textView_Close = (TextView) AnnouncementDialog.findViewById(R.id.Close_PopUpLogin);
+        textView_Close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AnnouncementDialog.dismiss();
+            }
+        });
+
+        AnnouncementDialog.show();
     }
 }

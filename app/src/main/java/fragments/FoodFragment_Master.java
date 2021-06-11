@@ -1,6 +1,7 @@
 package fragments;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -20,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.method.DigitsKeyListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -85,6 +87,8 @@ public class FoodFragment_Master extends Fragment {
     int branch_id;
     int restaurant_id;
 
+    Dialog AnnouncementDialog;
+
 
     public FoodFragment_Master() {
         // Required empty public constructor
@@ -142,6 +146,10 @@ public class FoodFragment_Master extends Fragment {
 
         constraintLayout = (ConstraintLayout) view.findViewById(R.id.ConstraintLayout_Spinner_FoodFragment);
         constraintLayout1 = (ConstraintLayout) view.findViewById(R.id.ConstraintLayout_Components_FoodFragment);
+
+        AnnouncementDialog = new Dialog(getActivity());
+        View view1  = LayoutInflater.from(getActivity()).inflate(R.layout.custom_popup_require_login, null);
+        AnnouncementDialog.setContentView(view1);
     }
 
     public boolean CheckMasterHasRestaurant_Is_Right(int id) {
@@ -371,6 +379,7 @@ public class FoodFragment_Master extends Fragment {
 
             }
         });
+        editText_Price_FoodFragment.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
 
         spinner_Category_FoodFragment.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -413,6 +422,8 @@ public class FoodFragment_Master extends Fragment {
                 Toast.makeText(getActivity(), "Đã thêm món thành công", Toast.LENGTH_SHORT);
 
                 button_AddFood_FoodFragment.setEnabled(false);
+
+                ShowPopUpAddFoodSuccesfully();
 
             }
         });
@@ -472,6 +483,23 @@ public class FoodFragment_Master extends Fragment {
         cursor.close();
         return count;
 
+    }
+
+    public void ShowPopUpAddFoodSuccesfully() {
+        TextView textView_Close;
+        textView_Close = (TextView) AnnouncementDialog.findViewById(R.id.Close_PopUpLogin);
+        textView_Close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AnnouncementDialog.dismiss();
+            }
+        });
+
+        TextView textView_Text;
+        textView_Text = (TextView) AnnouncementDialog.findViewById(R.id.TextView_PopUp_RequireLogin);
+        textView_Text.setText("Bạn đã thêm món thành công!!!     ");
+
+        AnnouncementDialog.show();
     }
 
 }
