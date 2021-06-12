@@ -32,4 +32,6 @@
     <style name="Theme.FoodApplication.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.FoodApplication.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
 </resources>

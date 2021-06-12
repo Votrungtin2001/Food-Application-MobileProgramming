@@ -22,12 +22,25 @@
                 android:id="@+id/imageView5"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_marginTop="70dp"
+                android:layout_marginTop="60dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/nowlogo"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ĐĂNG NHẬP"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView5" />
 
             <EditText
                 android:id="@+id/username"
@@ -43,7 +56,7 @@
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+                app:layout_constraintTop_toBottomOf="@+id/textView" />
 
             <EditText
                 android:id="@+id/password"
@@ -60,7 +73,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/username" />
-
 
             <TextView
                 android:id="@+id/textView2"
@@ -81,10 +93,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="95dp"
-                android:text="Đăng kí"
+                android:text="Đăng ký"
                 android:textColor="#2884FF"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView2"
                 app:layout_constraintTop_toBottomOf="@+id/signin_username" />
 
@@ -95,14 +106,28 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/vector_1"
+                android:backgroundTint="#CF2127"
                 android:gravity="center"
                 android:text="Tiếp tục"
+                app:cornerRadius="18dp"
                 android:textAllCaps="false"
-                android:textSize="25sp"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/password" />
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="#9B9B9B"
+                android:layout_marginStart="24dp"
+                app:layout_constraintEnd_toStartOf="@+id/textView4"
+                app:layout_constraintTop_toTopOf="@+id/textView4"
+                app:layout_constraintVertical_bias="0.555"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintBottom_toBottomOf="@+id/textView4"
+                app:layout_constraintStart_toStartOf="parent"/>
 
             <TextView
                 android:id="@+id/textView4"
@@ -113,23 +138,10 @@
                 android:paddingRight="4dp"
                 android:text="Hoặc"
                 android:textColor="#9B9B9B"
-                android:textSize="20dp"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/view2"
-                app:layout_constraintTop_toBottomOf="@+id/signin_username" />
-
-            <View
-                android:id="@+id/view2"
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_marginEnd="24dp"
-                android:background="#9B9B9B"
-                app:layout_constraintBottom_toBottomOf="@+id/textView4"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/textView4"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintVertical_bias="0.555"
-                app:layout_constraintHorizontal_bias="0.5"/>
+                app:layout_constraintTop_toBottomOf="@+id/signin_username" />
 
             <View
                 android:id="@+id/view"
@@ -150,32 +162,49 @@
                 android:layout_height="45dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:background="@drawable/rectangle_3"
                 android:gravity="center"
-                android:layout_marginTop="35dp"
+                android:layout_marginTop="40dp"
                 android:text="Tiếp tục với Google"
+                android:drawableLeft="@drawable/icongg"
+                android:backgroundTint="@color/white"
                 android:textAllCaps="false"
-                android:textColor="#ffffff"
+                app:cornerRadius="18dp"
+                android:textColor="#9B9B9B"
                 android:textSize="16sp"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/signup" />
 
-            <com.facebook.login.widget.LoginButton
-                android:id="@+id/signin_fb"
-                android:layout_width="369dp"
-                android:layout_height="45dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:background="@drawable/rectangle_3"
-                android:gravity="center"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:layout_marginTop="10dp"
-               android:text="Tiếp tục với face"
-                android:textColor="#ffffff"
-                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/signin_gg" />
+                app:layout_constraintTop_toBottomOf="@+id/signin_gg">
+
+                <Button
+                    android:id="@+id/facebookView"
+                    android:layout_width="369dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="12dp"
+                    android:gravity="center"
+                    android:textAllCaps="false"
+                    android:text="Tiếp tục với Facebook"
+                    android:drawableLeft="@drawable/iconfb"
+                    android:backgroundTint="#1660f5"
+                    app:cornerRadius="18dp"
+                    android:textSize="16sp"/>
+
+                <com.facebook.login.widget.LoginButton
+                    android:id="@+id/signin_fb"
+                    android:layout_width="369dp"
+                    android:layout_height="45dp"
+                    android:visibility="invisible" />
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

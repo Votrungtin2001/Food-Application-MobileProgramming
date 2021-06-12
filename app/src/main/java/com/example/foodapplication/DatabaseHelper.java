@@ -6,20 +6,17 @@ import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.database.sqlite.SQLiteQueryBuilder;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
-import com.example.foodapplication.Order.OrderModel;
 import com.example.foodapplication.auth.user;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
+
+import models.Request;
 
 import static com.example.foodapplication.FoodManagementContract.CCustomer.KEY_EMAIL;
 import static com.example.foodapplication.FoodManagementContract.CCustomer.KEY_NAME;
@@ -794,13 +791,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public void addOrder(Date date, int customer_id, int delivery_id, int address_id, int total) {
+    public void addOrder(Request request) {
         ContentValues values = new ContentValues();
-        values.put(FoodManagementContract.COrder.KEY_DATETIME, date.toString());
-        values.put(FoodManagementContract.COrder.KEY_CUSTOMER, customer_id);
-        values.put(FoodManagementContract.COrder.KEY_DELIVERY, delivery_id);
-        values.put(FoodManagementContract.COrder.KEY_ADDRESS, address_id);
-        values.put(FoodManagementContract.COrder.KEY_TOTAL, total);
+        values.put(FoodManagementContract.COrder.KEY_DATETIME, request.getDateTime().toString());
+        values.put(FoodManagementContract.COrder.KEY_CUSTOMER, request.getCustomerId());
+        // values.put(FoodManagementContract.COrder.KEY_DELIVERY, delivery_id);
+        values.put(FoodManagementContract.COrder.KEY_ADDRESS, request.getAddressId());
+        values.put(FoodManagementContract.COrder.KEY_TOTAL, request.getTotal());
         values.put(FoodManagementContract.COrder.KEY_STATUS, 0);
 
         SQLiteDatabase db = this.getWritableDatabase();

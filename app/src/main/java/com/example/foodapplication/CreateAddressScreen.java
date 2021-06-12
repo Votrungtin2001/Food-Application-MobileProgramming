@@ -1,7 +1,5 @@
 package com.example.foodapplication;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -11,6 +9,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class CreateAddressScreen extends AppCompatActivity {
 
@@ -118,6 +118,7 @@ public class CreateAddressScreen extends AppCompatActivity {
                 if (state == 1)
                 {
                     SaveButtonEvent();
+
                 }
             }
         });

@@ -11,6 +11,14 @@
        android:layout_width="match_parent"
        android:layout_height="match_parent">
 
+      <androidx.recyclerview.widget.RecyclerView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@+id/imageView3">
+
+      </androidx.recyclerview.widget.RecyclerView>
       <ImageView
           android:id="@+id/imageView3"
           android:layout_width="414dp"
@@ -22,30 +30,35 @@
           app:layout_constraintTop_toTopOf="parent"
           app:srcCompat="@drawable/sale66" />
 
-      <TextView
-          android:id="@+id/textView21"
+      <LinearLayout
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:text="Quên chưa đặt món rồi nè bạn ơi?"
-          android:textSize="20sp"
-          android:textStyle="bold"
+          android:orientation="vertical"
           app:layout_constraintBottom_toBottomOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+          app:layout_constraintTop_toBottomOf="@+id/imageView3">
 
-      <TextView
-          android:id="@+id/address1"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:gravity="center"
-          android:lines="3"
-          android:maxLines="3"
-          android:text="Những đơn hàng đã được xác nhận, đang được chuẩn bị và giao đi đều sẽ được hiển thị ở đây để bạn có thể theo dõi nhé!"
-          android:textSize="17dp"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintTop_toBottomOf="@+id/textView21"/>
+         <TextView
+             android:id="@+id/txtOrderNow"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:text="Quên chưa đặt món rồi nè bạn ơi?"
+             android:textSize="20sp"
+             android:textStyle="bold"
+             android:gravity="center" />
+
+         <TextView
+             android:id="@+id/txtDetail"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:gravity="center"
+             android:lines="3"
+             android:maxLines="3"
+             android:text="Những đơn hàng đã được xác nhận, đang được chuẩn bị và giao đi đều sẽ được hiển thị ở đây để bạn có thể theo dõi nhé!"
+             android:textSize="20sp" />
+      </LinearLayout>
+
    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

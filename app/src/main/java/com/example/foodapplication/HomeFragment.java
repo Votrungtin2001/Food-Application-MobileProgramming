@@ -146,10 +146,6 @@ public class HomeFragment extends Fragment {
         databaseHelper = new DatabaseHelper(getActivity());
         db = databaseHelper.getReadableDatabase();
 
-
-
-
-
         //EditText Search
         editText_search = view.findViewById(R.id.editText_SearchBar);
 

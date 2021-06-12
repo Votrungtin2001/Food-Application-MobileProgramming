@@ -97,6 +97,14 @@ public class LoginFragment extends Fragment  {
                              Bundle savedInstanceState) {
 
         binding = FragmentLoginBinding.inflate(inflater, container, false);
+        binding.facebookView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v.getId() == R.id.facebookView){
+                    binding.signinFb.performClick();
+                }
+            }
+        });
 
         binding.signinGg.setOnClickListener(new View.OnClickListener() {
             @Override

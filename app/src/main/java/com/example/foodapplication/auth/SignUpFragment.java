@@ -12,8 +12,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.example.foodapplication.DatabaseHelper;
+import com.example.foodapplication.R;
 import com.example.foodapplication.databinding.FragmentSignUpBinding;
 
 import java.util.Objects;
@@ -22,15 +24,15 @@ import java.util.Objects;
 public class SignUpFragment extends Fragment {
 
     private static final String TAG = "SignUpFragment";
-        private FragmentSignUpBinding binding;
+    private FragmentSignUpBinding binding;
     user user = new user();
     private DatabaseHelper databaseHelper ;
-    private LoginFragment loginFragment;
+    private LoginFragment loginFragment = new LoginFragment();
 
     int role = 0;
 
     public SignUpFragment() {
-        // Required empty public constructor
+
     }
 
     public SignUpFragment(int a) {
@@ -40,18 +42,30 @@ public class SignUpFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         binding = FragmentSignUpBinding.inflate(inflater, container, false);
         binding.btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                validateData(binding.displayName.getText().toString().trim(),
+                        binding.email.getText().toString().trim(),
+                        binding.password.getText().toString().trim(),
+                        binding.password2.getText().toString().trim());
                 postDataToSQLite();
+            }
+        });
+        binding.loginText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frame_container, loginFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
         return binding.getRoot();
@@ -64,8 +78,9 @@ public class SignUpFragment extends Fragment {
         initObjects();
     }
     private void initObjects() {
-        // inputValidation = new InputValidation(activity);
+
         databaseHelper = new DatabaseHelper(getActivity());
+
         user = new user();
     }
     private void textChangeCheck() {
@@ -88,7 +103,6 @@ public class SignUpFragment extends Fragment {
                     binding.password2.setError(null);
                 }
             }
-
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -119,11 +133,9 @@ public class SignUpFragment extends Fragment {
                     binding.email.setError("Email không hợp lệ");
                 } else {
                     binding.email.setError(null);
-
                 }
             }
         });
-        //endregion
     }
 
     private boolean validateData(String retypePasswordString, String displayNameString, String emailString, String passwordString) {
@@ -140,8 +152,8 @@ public class SignUpFragment extends Fragment {
     }
 
     private void postDataToSQLite() {
-       //if (!databaseHelper.checkUser(binding.email.getText().toString().trim()))
-
+       if (!databaseHelper.checkUser(binding.email.getText().toString().trim()))
+       {
             if(role == 2) {
                 user.setName(binding.displayName.getText().toString().trim());
                 user.setEmail(binding.email.getText().toString().trim());
@@ -149,8 +161,8 @@ public class SignUpFragment extends Fragment {
                 user.setUsername(binding.email.getText().toString().trim());
 
                 databaseHelper.addMaster(user);
+                Toast.makeText(getActivity(),"Đăng kí thành công! ", Toast.LENGTH_LONG).show();
             }
-
             else {
                 user.setName(binding.displayName.getText().toString().trim());
                 user.setEmail(binding.email.getText().toString().trim());
@@ -158,17 +170,13 @@ public class SignUpFragment extends Fragment {
                 user.setUsername(binding.email.getText().toString().trim());
 
                 databaseHelper.addCustomer(user);
-                // Snack Bar to show success message that record saved successfully
-//        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-//        transaction.replace(R.id.frame_container, loginFragment);
-//        transaction.addToBackStack(null);
-//        transaction.commit();
-                //Toast.makeText(TAG,"S", Toast.LENGTH_LONG).show();
-                emptyInputEditText();
+                Toast.makeText(getActivity(),"Đăng kí thành công! ", Toast.LENGTH_LONG).show();
             }
+       }
+
         emptyInputEditText();
-      //  }
     }
+
     private void emptyInputEditText() {
         binding.displayName.setText(null);
         binding.email.setText(null);

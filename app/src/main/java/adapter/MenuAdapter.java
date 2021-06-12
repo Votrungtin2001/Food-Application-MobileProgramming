@@ -1,7 +1,6 @@
 package adapter;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,9 +11,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.foodapplication.DatabaseHelper;
-import com.example.foodapplication.FoodManagementContract;
-import com.example.foodapplication.Order.OrderModel;
 import com.example.foodapplication.R;
 
 import java.util.ArrayList;
@@ -27,16 +23,6 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     List<ProductModel> itemList;
     Context context;
     LayoutInflater inflater;
-
-    // Minh Thi code
-
-    String orderId = "";
-    FoodManagementContract order;
-    OrderModel orderModel ;
-    DatabaseHelper databaseHelper;
-    ProductModel productModel;
-    SQLiteDatabase db;
-    //
 
     public static List<ProductModel> productModelList = new ArrayList<>();
 
@@ -64,15 +50,12 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         holder.textView_ValueOfSell.setText(currentItem.getValueOfSell());
         String price = Integer.toString(currentItem.getPrice());
         holder.textView_Price.setText(price);
-
-        //
-
         holder.imageView_ImageProduct.setImageBitmap(currentItem.getImage());
 
         holder.imageView_addItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                productModelList.add(new ProductModel(currentItem.getNameProduct(),currentItem.getQuantity(), currentItem.getPrice()));
+                productModelList.add(new ProductModel(currentItem.getNameProduct(),currentItem.getQuantity(),currentItem.getPrice(),currentItem.getProduct_id()));
                 Toast.makeText(context,"Thêm vào giỏ hàng thành công!",Toast.LENGTH_SHORT).show();
             }
         });

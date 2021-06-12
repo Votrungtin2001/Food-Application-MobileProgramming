@@ -127,7 +127,6 @@ public final class FoodManagementContract {
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
 
-
     public static final class CCity implements BaseColumns {
         private CCity() { }
 
