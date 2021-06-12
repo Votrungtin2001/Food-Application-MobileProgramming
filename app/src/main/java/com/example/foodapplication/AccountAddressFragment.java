@@ -23,7 +23,7 @@ public class AccountAddressFragment extends Fragment {
     Button btnAccountAddressSave;
 
     DatabaseHelper dbHelper;
-    int cus_id;
+    int user_id = -1;
 
     public AccountAddressFragment() {
         // Required empty public constructor
@@ -37,8 +37,8 @@ public class AccountAddressFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Bundle args = getArguments();
-        cus_id = args.getInt("CUSTOMER_ID");
+        if ((getArguments() != null) && (getArguments().containsKey("CUSTOMER_ID")))
+            user_id = getArguments().getInt("CUSTOMER_ID");
     }
 
     @Override

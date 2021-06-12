@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class AccountPayment extends Fragment {
-    private int credits, cus_id ;
+    private int credits, user_id = -1;
     TextView txtAccountPaymentCoins, txtAccountPaymentHistory, txtAccountPaymentTopup;
 
     public AccountPayment() {
@@ -26,8 +26,8 @@ public class AccountPayment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Bundle args = getArguments();
-        cus_id = args.getInt("CUSTOMER_ID");
+        if ((getArguments() != null) && (getArguments().containsKey("CUSTOMER_ID")))
+            user_id = getArguments().getInt("CUSTOMER_ID");
     }
 
     @Override
@@ -44,7 +44,7 @@ public class AccountPayment extends Fragment {
         txtAccountPaymentHistory.setOnClickListener(runHistoryFragment);
 
         DatabaseHelper dbHelper = new DatabaseHelper(getContext());
-        credits = dbHelper.getCredits(cus_id);
+        credits = dbHelper.getCredits(user_id);
 
         return view;
     }
@@ -58,7 +58,7 @@ public class AccountPayment extends Fragment {
     View.OnClickListener runTopupFragment = v -> {
         AccountPaymentTopup fragment = new AccountPaymentTopup();
         Bundle args = new Bundle();
-        args.putInt("CUSTOMER_ID", cus_id);
+        args.putInt("CUSTOMER_ID", user_id);
         fragment.setArguments(args);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(((ViewGroup)getView().getParent()).getId(), fragment, null)
@@ -69,7 +69,7 @@ public class AccountPayment extends Fragment {
     View.OnClickListener runHistoryFragment = v -> {
         AccountPaymentHistory fragment = new AccountPaymentHistory();
         Bundle args = new Bundle();
-        args.putInt("CUSTOMER_ID", cus_id);
+        args.putInt("CUSTOMER_ID", user_id);
         fragment.setArguments(args);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(((ViewGroup)getView().getParent()).getId(), fragment, null)

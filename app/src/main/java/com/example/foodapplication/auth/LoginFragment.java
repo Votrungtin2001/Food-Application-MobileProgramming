@@ -51,6 +51,8 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 
+import static com.example.foodapplication.MainActivity.customer_id;
+
 // DataPasser reference: https://stackoverflow.com/questions/9343241/passing-data-between-a-fragment-and-its-container-activity
 
 public class LoginFragment extends Fragment  {
@@ -68,7 +70,7 @@ public class LoginFragment extends Fragment  {
     private DatabaseHelper databaseHelper;
     private user user;
     private FragmentLoginBinding binding;
-    UserIdPassInterface dataPasser;
+    //UserIdPassInterface dataPasser;
 
     MainActivity mainActivity = new MainActivity();
 
@@ -136,7 +138,8 @@ public class LoginFragment extends Fragment  {
 
                     if(isExist){
                         int user_id = databaseHelper.getIdByUsername(binding.username.getText().toString().trim());
-                        accountFragment.setUser_id(user_id);
+                        customer_id = user_id;
+                        //dataPasser.passId(user_id);
 
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.frame_container, accountFragment);
@@ -201,7 +204,7 @@ public class LoginFragment extends Fragment  {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        dataPasser = (UserIdPassInterface) context;
+        //dataPasser = (UserIdPassInterface) context;
     }
 
     @Override
@@ -267,7 +270,7 @@ public class LoginFragment extends Fragment  {
         int user_id = databaseHelper.getIdByUsername(binding.username.getText().toString().trim());
         Bundle args = new Bundle();
         args.putInt("CUSTOMER_ID", user_id);
-        dataPasser.passId(user_id);
+        //dataPasser.passId(user_id);
         accountFragment.setArguments(args);
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container, accountFragment);
@@ -325,7 +328,7 @@ public class LoginFragment extends Fragment  {
                         int user_id = databaseHelper.getIdByUsername(binding.username.getText().toString().trim());
                         Bundle args = new Bundle();
                         args.putInt("CUSTOMER_ID", user_id);
-                        dataPasser.passId(user_id);
+                        //dataPasser.passId(user_id);
                         accountFragment.setArguments(args);
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.frame_container, accountFragment);

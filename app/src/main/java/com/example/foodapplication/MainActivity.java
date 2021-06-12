@@ -30,19 +30,27 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class MainActivity extends AppCompatActivity implements CommunicationInterface, UserIdPassInterface{
+public class MainActivity extends AppCompatActivity implements CommunicationInterface/*, UserIdPassInterface*/{
 
     NotiSettingFragment NotiSettingFrag;
 
     private String addressLine;
     private String nameStreet;
-    private int district_id, user_id;
-    Bundle importArgs;
+    private int district_id;
+
+    public static int customer_id = -1;
+
+    //Bundle importArgs;
+
     BottomNavigationView navigation;
 
     FragmentManager fragmentManager = getSupportFragmentManager();
     final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
     HomeFragment homeFragment = new HomeFragment();
+    FavoritesFragment favFragment = new FavoritesFragment();
+    AccountFragment accFragment = new AccountFragment();
+    Noti notifFragment = new Noti();
+    OrderFragment orderFragment = new OrderFragment();
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -59,14 +67,19 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
 
         homeFragment.setKeyValue(addressLine, nameStreet, district_id);
 
-        Bundle b = new Bundle();
+        /*Bundle b = new Bundle();
         b.putInt("CUSTOMER_ID", user_id);
-        homeFragment.setArguments(b);
+        homeFragment.setArguments(b);*/
+
         fragmentTransaction.add(R.id.frame_container, homeFragment);
         fragmentTransaction.commit();
 
+       /* // setting up navigation bar events and fragments
         importArgs = new Bundle();
         importArgs.putInt("CUSTOMER_ID", user_id);
+
+        favFragment.setArguments(importArgs);
+        accFragment.setArguments(importArgs);*/
 
         navigation = findViewById(R.id.bottom_nav_bar);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -96,39 +109,26 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
 
         @Override
         public boolean onNavigationItemSelected(@NonNull android.view.MenuItem item) {
-            Fragment fragment;
             switch(item.getItemId()) {
                 case R.id.nav_home:
-                    fragment = homeFragment;
-                    fragment.setArguments(importArgs);
-                    loadFragment(fragment);
+                    //homeFragment.setArguments(importArgs);
+                    loadFragment(homeFragment);
                     break;
-
                 case R.id.nav_favorites:
-                    fragment = new FavoritesFragment();
-                    fragment.setArguments(importArgs);
-                    loadFragment(fragment);
+                    loadFragment(favFragment);
                     break;
                 case R.id.nav_account:
-                    fragment = new AccountFragment();
-                    fragment.setArguments(importArgs);
-                    loadFragment(fragment);
+                    loadFragment(accFragment);
                     break;
                 case R.id.nav_notif:
-                    fragment = new Noti();
-                    fragment.setArguments(importArgs);
-                    loadFragment(fragment);
+                    loadFragment(notifFragment);
                     break;
-
                 case R.id.nav_order:
-                    fragment=new OrderFragment();
-                    fragment.setArguments(importArgs);
-                    loadFragment(fragment);
+                    loadFragment(orderFragment);
                     break;
                 default:
                     return false;
             }
-
             return true;
         }
     };
@@ -197,9 +197,9 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
         }
     }
 
-    @Override
+   /* @Override
     public void passId(int user_id) {
         this.user_id = user_id;
-    }
+    }*/
 
 }

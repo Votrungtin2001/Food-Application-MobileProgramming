@@ -1,0 +1,221 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="fragments.FoodFragment_Master">
+
+    <TextView
+        android:id="@+id/TextView_Announcement_FoodFragment"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:gravity="center"
+        android:text="Hiện tại bạn chưa sở hữu nhà hàng nào. \n \n Vui lòng tạo nhà hàng cho riêng mình!!!"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ImageView
+        android:id="@+id/ImageView_NoRestaurant_FoodFragment"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/no_restaurant"
+        android:layout_marginTop="250dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/Title_FoodFragment"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:text="THÊM MÓN ĂN"
+        android:textSize="30dp"
+        android:textColor="#FFF59D"
+        android:gravity="center"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@drawable/title_master_background"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ConstraintLayout_Components_FoodFragment"
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/Title_FoodFragment"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/black_border">
+
+        <TextView
+            android:id="@+id/Label_NameProduct_FoodFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tên món ăn: "
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <EditText
+            android:id="@+id/EditText_NameProduct_FoodFragment"
+            android:layout_width="230dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:textSize="20dp"
+            android:maxLines="1"
+            android:hint="Nhập tên món ăn ở đây..."
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/Label_NameProduct_FoodFragment"/>
+
+        <TextView
+            android:id="@+id/Label_Description_FoodFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Phần mô tả: "
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/Label_NameProduct_FoodFragment"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <EditText
+            android:id="@+id/EditText_Description_FoodFragment"
+            android:layout_width="230dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:textSize="20dp"
+            android:maxLines="1"
+            android:hint="Nhập phần mô tả món ăn..."
+            app:layout_constraintTop_toBottomOf="@+id/Label_NameProduct_FoodFragment"
+            app:layout_constraintStart_toEndOf="@+id/Label_NameProduct_FoodFragment"/>
+
+        <TextView
+            android:id="@+id/Label_Category_FoodFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Loại món ăn: "
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="10dp"
+            app:layout_constraintTop_toBottomOf="@+id/Label_Description_FoodFragment"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/ConstraintLayout_Spinner_FoodFragment"
+            android:layout_width="230dp"
+            android:layout_height="50dp"
+            android:background="@drawable/black_border"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintTop_toBottomOf="@+id/Label_Description_FoodFragment"
+            app:layout_constraintStart_toEndOf="@+id/Label_Category_FoodFragment">
+
+            <Spinner
+                android:id="@+id/Spinner_Category_FoodFragment"
+                android:layout_width="220dp"
+                android:layout_height="45dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/Label_Price_FoodFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Giá: "
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="60dp"
+            app:layout_constraintTop_toBottomOf="@+id/Label_Category_FoodFragment"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <EditText
+            android:id="@+id/EditText_Price_FoodFragment"
+            android:layout_width="190dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="35dp"
+            android:textSize="20dp"
+            android:maxLines="1"
+            android:inputType="number"
+            android:hint="Nhập giá..."
+            app:layout_constraintTop_toBottomOf="@+id/Label_Category_FoodFragment"
+            app:layout_constraintStart_toEndOf="@+id/Label_Price_FoodFragment"/>
+
+        <TextView
+            android:id="@+id/Label_Price_Unit_FoodFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="đồng"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginLeft="5dp"
+            app:layout_constraintTop_toBottomOf="@+id/Label_Category_FoodFragment"
+            app:layout_constraintStart_toEndOf="@+id/EditText_Price_FoodFragment"/>
+
+
+        <TextView
+            android:id="@+id/Label_ImageProduct_FoodFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ảnh món ăn:"
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="100dp"
+            app:layout_constraintTop_toBottomOf="@+id/Label_Price_FoodFragment"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <ImageView
+            android:id="@+id/ImageView_ImageProduct_FoodFragment"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/android"
+            android:layout_marginTop="40dp"
+            android:layout_marginLeft="60dp"
+            app:layout_constraintStart_toEndOf="@+id/Label_ImageProduct_FoodFragment"
+            app:layout_constraintTop_toBottomOf="@+id/Label_Price_FoodFragment"/>
+
+        <Button
+            android:id="@+id/Button_ImageProduct_FoodFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CHOOOSE IMAGE"
+            android:layout_marginLeft="180dp"
+            app:layout_constraintTop_toBottomOf="@+id/ImageView_ImageProduct_FoodFragment"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <Button
+            android:id="@+id/Button_AddFood_FoodFragment"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="30dp"
+            android:text="ADD"
+            android:enabled="false"
+            app:layout_constraintTop_toBottomOf="@id/Button_ImageProduct_FoodFragment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

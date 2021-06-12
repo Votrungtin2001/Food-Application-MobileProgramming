@@ -1,185 +1,183 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:background="#E8E8E8"
+    tools:context=".AccountFragment">
 
-    <RelativeLayout
+    <TextView
+        android:id="@+id/txtVersion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="149dp"
+        android:layout_marginEnd="149dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="@string/activity_account_version"
+        android:textAlignment="gravity" />
+
+    <ImageView
+        android:id="@+id/imgUser"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="155dp"
+        android:layout_marginEnd="155dp" />
+
+    <TextView
+        android:id="@+id/txtName"
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"
+        android:layout_below="@+id/imgUser"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="135dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="135dp"
+        android:gravity="center"
+        android:text="Đăng nhập/Đăng kí" />
+
+    <Button
+        android:id="@+id/btnPayment"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/txtName"
+        android:layout_marginTop="20dp"
+        android:drawableLeft="@drawable/ic_baseline_credit_card_24"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="@string/activity_account_payment"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/white"
+        app:cornerRadius="0dp" />
+
+    <Button
+        android:id="@+id/btnLogout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#E8E8E8"
-        tools:context=".AccountFragment">
+        android:layout_below="@+id/btnAbout"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="4dp"
+        android:text="@string/activity_account_logout"
+        app:backgroundTint="@color/scrollBackground"
+        app:cornerRadius="0dp" />
 
-        <TextView
-            android:id="@+id/txtVersion"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/btnLogout"
-            android:layout_marginTop="0dp"
-            android:gravity="center"
-            android:text="@string/activity_account_version"
-            android:textAlignment="gravity" />
+    <Button
+        android:id="@+id/btnSupport"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/btnInvite"
+        android:layout_marginTop="2dp"
+        android:drawableLeft="@drawable/ic_baseline_help_center_24"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="@string/activity_account_support"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/white"
+        app:cornerRadius="0dp" />
 
-        <ImageView
-            android:id="@+id/imgUser"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginStart="155dp"
-            android:layout_marginEnd="155dp" />
+    <Button
+        android:id="@+id/btnShop"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/btnSupport"
+        android:layout_marginTop="20dp"
+        android:drawableLeft="@drawable/ic_baseline_store_24"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="@string/activity_account_shopowner"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/white"
+        app:cornerRadius="0dp" />
 
-        <TextView
-            android:id="@+id/txtName"
-            android:layout_width="wrap_content"
-            android:layout_height="28dp"
-            android:layout_below="@+id/imgUser"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="135dp"
-            android:layout_marginTop="1dp"
-            android:layout_marginEnd="135dp"
-            android:text="Đăng nhập/Đăng kí"
-            android:gravity="center"/>
+    <Button
+        android:id="@+id/btnPolicy"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/btnShop"
+        android:layout_marginTop="20dp"
+        android:drawableLeft="@drawable/ic_baseline_policy_24"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="@string/activity_account_policy"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/white"
+        app:cornerRadius="0dp" />
 
-        <Button
-            android:id="@+id/btnVoucher"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@+id/txtName"
-            android:layout_marginTop="12dp"
-            android:drawableLeft="@drawable/tag"
-            android:text="@string/activity_account_vouchers"
-            android:textAlignment="viewStart"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            app:backgroundTint="@color/white" />
+    <Button
+        android:id="@+id/btnSettings"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/btnPolicy"
+        android:layout_marginTop="2dp"
+        android:drawableLeft="@drawable/ic_baseline_settings_24"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="@string/activity_account_settings"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/white"
+        app:cornerRadius="0dp" />
 
-        <Button
-            android:id="@+id/btnShopee"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@+id/btnVoucher"
-            android:layout_marginTop="0dp"
-            android:drawableLeft="@drawable/ic_outline_monetization_on_24"
-            android:text="@string/activity_account_shopee"
-            android:textAlignment="viewStart"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            app:backgroundTint="@color/white" />
+    <Button
+        android:id="@+id/btnAbout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/btnSettings"
+        android:layout_marginTop="2dp"
+        android:drawableLeft="@drawable/ic_baseline_info_24"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="@string/activity_account_about"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/white"
+        app:cornerRadius="0dp" />
 
-        <Button
-            android:id="@+id/btnPayment"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@+id/btnShopee"
-            android:layout_marginTop="0dp"
-            android:drawableLeft="@drawable/ic_baseline_credit_card_24"
-            android:text="@string/activity_account_payment"
-            android:textAlignment="viewStart"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            app:backgroundTint="@color/white" />
+    <Button
+        android:id="@+id/btnAddress"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/btnPayment"
+        android:layout_marginTop="2dp"
+        android:drawableLeft="@drawable/ic_baseline_place_24"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="@string/activity_account_address"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/white"
+        app:cornerRadius="0dp" />
 
-        <Button
-            android:id="@+id/btnLogout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/btnAbout"
-            android:layout_marginTop="9dp"
-            android:layout_marginBottom="4dp"
-            android:text="@string/activity_account_logout"
-            app:backgroundTint="@color/scrollBackground" />
+    <Button
+        android:id="@+id/btnInvite"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/btnAddress"
+        android:layout_marginTop="20dp"
+        android:drawableLeft="@drawable/ic_baseline_person_add_24"
+        android:insetTop="0dp"
+        android:insetBottom="0dp"
+        android:text="@string/activity_account_invite"
+        android:textAlignment="viewStart"
+        android:textAllCaps="false"
+        android:textColor="@color/black"
+        app:backgroundTint="@color/white"
+        app:cornerRadius="0dp" />
 
-        <Button
-            android:id="@+id/btnSupport"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@+id/btnInvite"
-            android:layout_marginTop="0dp"
-            android:drawableLeft="@drawable/ic_baseline_help_center_24"
-            android:text="@string/activity_account_support"
-            android:textAlignment="viewStart"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            app:backgroundTint="@color/white" />
-
-        <Button
-            android:id="@+id/btnShop"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@+id/btnSupport"
-            android:layout_marginTop="5dp"
-            android:drawableLeft="@drawable/ic_baseline_store_24"
-            android:text="@string/activity_account_shopowner"
-            android:textAlignment="viewStart"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            app:backgroundTint="@color/white" />
-
-        <Button
-            android:id="@+id/btnPolicy"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@+id/btnShop"
-            android:layout_marginTop="5dp"
-            android:drawableLeft="@drawable/ic_baseline_policy_24"
-            android:text="@string/activity_account_policy"
-            android:textAlignment="viewStart"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            app:backgroundTint="@color/white" />
-
-        <Button
-            android:id="@+id/btnSettings"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@+id/btnPolicy"
-            android:layout_marginTop="0dp"
-            android:drawableLeft="@drawable/ic_baseline_settings_24"
-            android:text="@string/activity_account_settings"
-            android:textAlignment="viewStart"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            app:backgroundTint="@color/white" />
-
-        <Button
-            android:id="@+id/btnAbout"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@+id/btnSettings"
-            android:layout_marginTop="0dp"
-            android:drawableLeft="@drawable/ic_baseline_info_24"
-            android:text="@string/activity_account_about"
-            android:textAlignment="viewStart"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            app:backgroundTint="@color/white" />
-
-        <Button
-            android:id="@+id/btnAddress"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@+id/btnPayment"
-            android:layout_marginTop="0dp"
-            android:drawableLeft="@drawable/ic_baseline_place_24"
-            android:text="@string/activity_account_address"
-            android:textAlignment="viewStart"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            app:backgroundTint="@color/white" />
-
-        <Button
-            android:id="@+id/btnInvite"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_below="@+id/btnAddress"
-            android:layout_marginTop="5dp"
-            android:drawableLeft="@drawable/ic_baseline_person_add_24"
-            android:text="@string/activity_account_invite"
-            android:textAlignment="viewStart"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            app:backgroundTint="@color/white" />
-
-    </RelativeLayout>
-</ScrollView>
+</RelativeLayout>

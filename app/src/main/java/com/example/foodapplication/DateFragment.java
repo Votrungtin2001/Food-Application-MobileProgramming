@@ -14,12 +14,13 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class DateFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener{
-    int cus_id;
+    int user_id = -1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        cus_id = getArguments().getInt("CUSTOMER_ID");
+        if ((getArguments() != null) && (getArguments().containsKey("CUSTOMER_ID")))
+            user_id = getArguments().getInt("CUSTOMER_ID");
     }
 
     @NotNull
@@ -45,7 +46,7 @@ public class DateFragment extends DialogFragment implements DatePickerDialog.OnD
         calendar.set(Calendar.HOUR_OF_DAY, 0);
 
         Date date = calendar.getTime();
-        dbHelper.updUserDoB(cus_id, date);
+        dbHelper.updUserDoB(user_id, date);
         dbHelper.close();
     }
 }

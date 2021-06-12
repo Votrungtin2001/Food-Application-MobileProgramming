@@ -18,7 +18,7 @@ import com.example.foodapplication.auth.LoginFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class AccountFragment extends Fragment {
-    Button btnVoucher, btnShopee, btnPayment, btnAddress, btnInvite, btnSupport, btnShop, btnPolicy, btnSettings, btnAbout, btnLogout;
+    Button btnPayment, btnAddress, btnInvite, btnSupport, btnShop, btnPolicy, btnSettings, btnAbout, btnLogout;
     Fragment newFragment;
     TextView txtlogin;
 
@@ -34,6 +34,8 @@ public class AccountFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if ((getArguments() != null) && (getArguments().containsKey("CUSTOMER_ID")))
+            user_id = getArguments().getInt("CUSTOMER_ID");
     }
 
     @Override
@@ -43,12 +45,6 @@ public class AccountFragment extends Fragment {
 
         LoginDialog = new Dialog(getActivity());
         LoginDialog.setContentView(R.layout.custom_pop_up_login);
-
-        btnVoucher = view.findViewById(R.id.btnVoucher);
-        btnVoucher.setOnClickListener(runVoucherFragment);
-
-        btnShopee = view.findViewById(R.id.btnShopee);
-        btnShopee.setOnClickListener(runShopeeFragment);
 
         btnPayment = view.findViewById(R.id.btnPayment);
         btnPayment.setOnClickListener(runPaymentFragment);
@@ -92,22 +88,6 @@ public class AccountFragment extends Fragment {
         newFragment = new AccountAddressFragment();
         newFragment.setArguments(importArgs);
         // source: https://stackoverflow.com/questions/21028786/how-do-i-open-a-new-fragment-from-another-fragment
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
-                .addToBackStack(null)
-                .commit();
-    };
-
-    View.OnClickListener runShopeeFragment = v -> {
-        newFragment = new AccountShopeeFragment();
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
-                .addToBackStack(null)
-                .commit();
-    };
-
-    View.OnClickListener runVoucherFragment = v -> {
-        newFragment = new AccountVoucherFragment();
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
                 .addToBackStack(null)
@@ -217,8 +197,5 @@ public class AccountFragment extends Fragment {
         LoginDialog.show();
     }
 
-    public void setUser_id (int user_id) {
-        this.user_id = user_id;
-    }
 
 }

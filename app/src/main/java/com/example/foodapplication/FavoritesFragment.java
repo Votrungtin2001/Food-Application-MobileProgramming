@@ -20,14 +20,14 @@ import java.util.ArrayList;
 
 public class FavoritesFragment extends Fragment {
     ArrayList<FavRestaurant> favs;
-    int customer_id;
+    int user_id = -1;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Bundle args = getArguments();
-        customer_id = args.getInt("CUSTOMER_ID");
+        if ((getArguments() != null) && (getArguments().containsKey("CUSTOMER_ID")))
+            user_id = getArguments().getInt("CUSTOMER_ID");
     }
 
     @Override
@@ -38,7 +38,7 @@ public class FavoritesFragment extends Fragment {
         RecyclerView rvFavorites = (RecyclerView) rootView.findViewById(R.id.rvFavorites);
 
         DatabaseHelper dbHelper = new DatabaseHelper(getContext());
-        Cursor cursor = dbHelper.getFavorites(customer_id);
+        Cursor cursor = dbHelper.getFavorites(user_id);
         while(cursor.moveToNext()) {
             int id = cursor.getInt(cursor.getColumnIndexOrThrow(FoodManagementContract.CFavorites.KEY_RESTAURANT));
             Cursor resCursor = dbHelper.getRestaurant(id);

@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 public class AccountSettingsInfoFragment extends Fragment {
     TextView txtAccountSettingsInfoAvatar, txtAccountSettingsInfoPhone, txtAccountSettingsInfoName, txtAccountSettingsInfoEmail, txtAccountSettingsInfoGender, txtAccountSettingsInfoDoB, txtAccountSettingsInfoOccupation;
-    int cus_id;
+    int user_id = -1;
 
     public AccountSettingsInfoFragment() {}
 
@@ -31,8 +31,8 @@ public class AccountSettingsInfoFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Bundle args = getArguments();
-        cus_id = args.getInt("CUSTOMER_ID");
+        if ((getArguments() != null) && (getArguments().containsKey("CUSTOMER_ID")))
+            user_id = getArguments().getInt("CUSTOMER_ID");
     }
 
     @Override
@@ -61,7 +61,7 @@ public class AccountSettingsInfoFragment extends Fragment {
         SingleEditTextUpdateFragment fragment = new SingleEditTextUpdateFragment();
 
         Bundle args = new Bundle();
-        args.putInt("CUSTOMER_ID", cus_id);
+        args.putInt("CUSTOMER_ID", user_id);
         switch (v.getId()) {
             case R.id.txtAccountSettingsInfoPhone:
                 args.putString("SINGLE_EDIT_TEXT", "EditPhone");
@@ -89,13 +89,13 @@ public class AccountSettingsInfoFragment extends Fragment {
             DatabaseHelper dbHelper = new DatabaseHelper(getContext());
             switch (gender[which]) {
                 case "Male":
-                    dbHelper.updUserGender(cus_id, 0);
+                    dbHelper.updUserGender(user_id, 0);
                     break;
                 case "Female":
-                    dbHelper.updUserGender(cus_id, 1);
+                    dbHelper.updUserGender(user_id, 1);
                     break;
                 case "None":
-                    dbHelper.updUserGender(cus_id, 2);
+                    dbHelper.updUserGender(user_id, 2);
                     break;
             }
             dbHelper.close();
@@ -108,7 +108,7 @@ public class AccountSettingsInfoFragment extends Fragment {
         DialogFragment dateFragment = new DateFragment();
 
         Bundle args = new Bundle();
-        args.putInt("CUSTOMER_ID", cus_id);
+        args.putInt("CUSTOMER_ID", user_id);
         dateFragment.setArguments(args);
 
         dateFragment.show(getChildFragmentManager(), "DatePicker");
@@ -117,7 +117,7 @@ public class AccountSettingsInfoFragment extends Fragment {
     View.OnClickListener openOccupationFragment = v-> {
         AccountSettingsInfoOccupationFragment newFragment = new AccountSettingsInfoOccupationFragment();
         Bundle args = new Bundle();
-        args.putInt("CUSTOMER_ID", cus_id);
+        args.putInt("CUSTOMER_ID", user_id);
         newFragment.setArguments(args);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
