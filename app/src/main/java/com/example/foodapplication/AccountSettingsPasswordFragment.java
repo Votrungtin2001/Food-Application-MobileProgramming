@@ -20,16 +20,15 @@ public class AccountSettingsPasswordFragment extends Fragment {
     public AccountSettingsPasswordFragment() { }
 
     public static AccountSettingsPasswordFragment newInstance() {
-        AccountSettingsPasswordFragment fragment = new AccountSettingsPasswordFragment();
-        return fragment;
+        return new AccountSettingsPasswordFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if ((getArguments() != null) && (getArguments().containsKey("CUSTOMER_ID")))
-            user_id = getArguments().getInt("CUSTOMER_ID");
+        if (MainActivity.customer_id > 0)
+            user_id = MainActivity.customer_id;
     }
 
     @Override
@@ -47,29 +46,32 @@ public class AccountSettingsPasswordFragment extends Fragment {
     }
 
     View.OnClickListener onPasswordSave = v -> {
-        DatabaseHelper dbHelper = new DatabaseHelper(getContext());
-        Cursor cursor = dbHelper.getCustomerById(user_id);
-        String currentPassword = cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CCustomer.KEY_PASSWORD));
-        cursor.close();
+        if (user_id != -1) {
+            DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+            Cursor cursor = dbHelper.getCustomerById(user_id);
+            if (cursor.moveToFirst()) {
+                String currentPassword = cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CCustomer.KEY_PASSWORD));
 
-        if (txtCurrentPassword.getText().toString().equals(currentPassword)) {
-            if (txtConfirmPassword.getText().toString().equals(txtNewPassword.getText().toString())) {
-                dbHelper.updUserPassword(user_id, txtNewPassword.getText().toString());
-                Toast.makeText(getContext(), "Password updated!!", Toast.LENGTH_SHORT).show();
+                if (txtCurrentPassword.getText().toString().equals(currentPassword)) {
+                    if (txtConfirmPassword.getText().toString().equals(txtNewPassword.getText().toString())) {
+                        dbHelper.updUserPassword(user_id, txtNewPassword.getText().toString());
+                        Toast.makeText(getContext(), "Password updated!!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        txtNewPassword.setText("");
+                        txtConfirmPassword.setText("");
+                        Toast.makeText(getContext(), "Password fields do not match!", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    txtCurrentPassword.setText("");
+                    txtNewPassword.setText("");
+                    txtConfirmPassword.setText("");
+                    Toast.makeText(getContext(), "Incorrect password!", Toast.LENGTH_SHORT).show();
+                }
             }
-            else {
-                txtNewPassword.setText("");
-                txtConfirmPassword.setText("");
-                Toast.makeText(getContext(), "Password fields do not match!", Toast.LENGTH_SHORT).show();
-            }
+            dbHelper.close();
+            cursor.close();
         }
-        else {
-            txtCurrentPassword.setText("");
-            txtNewPassword.setText("");
-            txtConfirmPassword.setText("");
-            Toast.makeText(getContext(), "Incorrect password!", Toast.LENGTH_SHORT).show();
-        }
-
-        dbHelper.close();
+        else
+            Toast.makeText(getContext(), "Unknown user. Did you forget to log in?", Toast.LENGTH_LONG).show();
     };
 }

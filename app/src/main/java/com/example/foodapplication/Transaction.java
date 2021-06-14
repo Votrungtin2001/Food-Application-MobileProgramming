@@ -4,13 +4,13 @@ import java.util.Date;
 
 public class Transaction {
     private int credits;
-    private Date date;
+    private String date;
 
-    public Transaction(int credits, Date date) {
+    public Transaction(int credits, String date) {
         this.credits = credits;
         this.date = date;
     }
 
     public int getCredits() { return credits;}
-    public Date getDate() { return date;}
+    public String getDate() { return date; }
 }

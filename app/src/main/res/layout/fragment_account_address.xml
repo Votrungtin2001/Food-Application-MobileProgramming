@@ -9,7 +9,7 @@
     <Spinner
         android:id="@+id/spinCityInput"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_below="@+id/textView2"
         android:layout_marginTop="3dp"
         android:background="#FFFFFF" />
@@ -17,7 +17,7 @@
     <Spinner
         android:id="@+id/spinDistrictInput"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_below="@+id/spinCityInput"
         android:layout_marginTop="3dp"
         android:background="#FFFFFF" />
@@ -25,7 +25,7 @@
     <EditText
         android:id="@+id/txtAccountAddressInput"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_below="@+id/spinDistrictInput"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="3dp"
@@ -39,10 +39,10 @@
     <EditText
         android:id="@+id/txtAccountAddressGate"
         android:layout_width="410dp"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_below="@+id/txtAccountAddressFloor"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="3dp"
         android:layout_marginEnd="-1dp"
         android:background="#FFFFFF"
         android:ems="10"
@@ -52,8 +52,8 @@
     <EditText
         android:id="@+id/txtAccountAddressFloor"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/spinDistrictInput"
+        android:layout_height="45dp"
+        android:layout_below="@+id/txtAccountAddressInput"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="3dp"
         android:layout_marginEnd="1dp"
@@ -64,13 +64,14 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="62dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="3dp"
         android:layout_marginEnd="343dp"
-        android:text="@string/activity_account_address" />
+        android:text="@string/activity_account_address"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/textView4"
@@ -78,7 +79,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtAccountAddressGate"
         android:layout_marginTop="3dp"
-        android:text="@string/activity_account_address_label" />
+        android:text="@string/activity_account_address_label"
+        android:textSize="18sp" />
 
     <RadioGroup
         android:id="@+id/rbGroup"
@@ -92,6 +94,7 @@
             android:id="@+id/rbHome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="0.33"
             android:background="#FFFFFF"
             android:text="@string/nav_label_home" />
 
@@ -99,7 +102,7 @@
             android:id="@+id/rbWork"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="0.33"
             android:background="#FFFFFF"
             android:text="@string/activity_account_address_label_work" />
 
@@ -107,7 +110,7 @@
             android:id="@+id/rbOther"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.33"
             android:background="#FFFFFF"
             android:checked="false"
             android:text="@string/activity_account_address_label_other" />
@@ -116,7 +119,7 @@
     <EditText
         android:id="@+id/txtOtherLabelName"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_below="@+id/rbGroup"
         android:background="#FFFFFF"
         android:ems="10"

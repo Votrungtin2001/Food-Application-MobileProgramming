@@ -23,10 +23,12 @@
 
     <ImageView
         android:id="@+id/imgUser"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="155dp"
-        android:layout_marginEnd="155dp" />
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="130dp"
+        android:layout_marginEnd="130dp" />
 
     <Button
         android:id="@+id/txtName"
@@ -42,11 +44,12 @@
         android:text="Đăng nhập/Đăng ký"
         android:textAllCaps="false"
         app:cornerRadius="18dp"/>
+        android:textAlignment="center" />
 
     <Button
         android:id="@+id/btnPayment"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="60dp"
         android:layout_below="@+id/txtName"
         android:layout_marginTop="20dp"
         android:drawableLeft="@drawable/ic_baseline_credit_card_24"
@@ -56,6 +59,7 @@
         android:textAlignment="viewStart"
         android:textAllCaps="false"
         android:textColor="@color/black"
+        android:textSize="18sp"
         app:backgroundTint="@color/white"
         app:cornerRadius="0dp" />
 
@@ -74,22 +78,6 @@
         android:layout_marginEnd="149dp"/>
 
     <Button
-        android:id="@+id/btnSupport"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_below="@+id/btnInvite"
-        android:layout_marginTop="2dp"
-        android:drawableLeft="@drawable/ic_baseline_help_center_24"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:text="@string/activity_account_support"
-        android:textAlignment="viewStart"
-        android:textAllCaps="false"
-        android:textColor="@color/black"
-        app:backgroundTint="@color/white"
-        app:cornerRadius="0dp" />
-
-    <Button
         android:id="@+id/btnShop"
         android:layout_width="match_parent"
         android:layout_height="40dp"
@@ -104,12 +92,13 @@
         android:textColor="@color/black"
         app:backgroundTint="@color/white"
         app:cornerRadius="0dp" />
+        app:cornerRadius="0dp" />
 
     <Button
         android:id="@+id/btnPolicy"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_below="@+id/btnShop"
+        android:layout_height="60dp"
+        android:layout_below="@+id/btnAddress"
         android:layout_marginTop="20dp"
         android:drawableLeft="@drawable/ic_baseline_policy_24"
         android:insetTop="0dp"
@@ -118,13 +107,14 @@
         android:textAlignment="viewStart"
         android:textAllCaps="false"
         android:textColor="@color/black"
+        android:textSize="18sp"
         app:backgroundTint="@color/white"
         app:cornerRadius="0dp" />
 
     <Button
         android:id="@+id/btnSettings"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="60dp"
         android:layout_below="@+id/btnPolicy"
         android:layout_marginTop="2dp"
         android:drawableLeft="@drawable/ic_baseline_settings_24"
@@ -134,13 +124,14 @@
         android:textAlignment="viewStart"
         android:textAllCaps="false"
         android:textColor="@color/black"
+        android:textSize="18sp"
         app:backgroundTint="@color/white"
         app:cornerRadius="0dp" />
 
     <Button
         android:id="@+id/btnAbout"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="60dp"
         android:layout_below="@+id/btnSettings"
         android:layout_marginTop="2dp"
         android:drawableLeft="@drawable/ic_baseline_info_24"
@@ -150,13 +141,14 @@
         android:textAlignment="viewStart"
         android:textAllCaps="false"
         android:textColor="@color/black"
+        android:textSize="18sp"
         app:backgroundTint="@color/white"
         app:cornerRadius="0dp" />
 
     <Button
         android:id="@+id/btnAddress"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="60dp"
         android:layout_below="@+id/btnPayment"
         android:layout_marginTop="2dp"
         android:drawableLeft="@drawable/ic_baseline_place_24"
@@ -166,22 +158,7 @@
         android:textAlignment="viewStart"
         android:textAllCaps="false"
         android:textColor="@color/black"
-        app:backgroundTint="@color/white"
-        app:cornerRadius="0dp" />
-
-    <Button
-        android:id="@+id/btnInvite"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_below="@+id/btnAddress"
-        android:layout_marginTop="20dp"
-        android:drawableLeft="@drawable/ic_baseline_person_add_24"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:text="@string/activity_account_invite"
-        android:textAlignment="viewStart"
-        android:textAllCaps="false"
-        android:textColor="@color/black"
+        android:textSize="18sp"
         app:backgroundTint="@color/white"
         app:cornerRadius="0dp" />
 

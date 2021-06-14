@@ -14,16 +14,18 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="72dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="339dp" />
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="100dp"
+        android:textSize="18sp" />
 
     <EditText
         android:id="@+id/txtEditText"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_below="@+id/txtSingleEditTitle"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="5dp"
+        android:background="#FFFFFF"
         android:ems="10"
         android:inputType="textPersonName" />
 
@@ -32,6 +34,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtEditText"
-        android:layout_marginTop="49dp"
+        android:layout_marginTop="5dp"
         app:backgroundTint="#F44336" />
 </RelativeLayout>

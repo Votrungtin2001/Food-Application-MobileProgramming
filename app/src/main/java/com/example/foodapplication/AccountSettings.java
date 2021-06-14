@@ -1,6 +1,5 @@
 package com.example.foodapplication;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,25 +10,19 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class AccountSettings extends Fragment {
-    TextView txtAccountSettingsInfo, txtAccountSettingsPassword, txtAccountAppLanguage, txtAccountAppNotif;
-    int user_id = -1;
-    Bundle importArgs;
+    TextView txtAccountSettingsInfo, txtAccountSettingsPassword;
 
     public AccountSettings() {
 
     }
 
-    public static AccountSettings newInstance(String param1, String param2) {
-        AccountSettings fragment = new AccountSettings();
-        return fragment;
+    public static AccountSettings newInstance() {
+        return new AccountSettings();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if ((getArguments() != null) && (getArguments().containsKey("CUSTOMER_ID")))
-            user_id = getArguments().getInt("CUSTOMER_ID");
     }
 
     @Override
@@ -41,19 +34,12 @@ public class AccountSettings extends Fragment {
         txtAccountSettingsInfo.setOnClickListener(openUserInfoFragment);
         txtAccountSettingsPassword = view.findViewById(R.id.txtAccountSettingsPassword);
         txtAccountSettingsPassword.setOnClickListener(openPasswordFragment);
-        txtAccountAppLanguage = view.findViewById(R.id.txtAccountAppLanguage);
-        txtAccountAppNotif= view.findViewById(R.id.txtAccountAppNotif);
-        txtAccountAppNotif.setOnClickListener(openNotifFragment);
-
-        importArgs = new Bundle();
-        importArgs.putInt("CUSTOMER_ID", user_id);
 
         return view;
     }
 
     View.OnClickListener openUserInfoFragment = v -> {
         Fragment fragment = new AccountSettingsInfoFragment();
-        fragment.setArguments(importArgs);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(((ViewGroup)getView().getParent()).getId(), fragment, null)
                 .addToBackStack(null)
@@ -62,16 +48,8 @@ public class AccountSettings extends Fragment {
 
     View.OnClickListener openPasswordFragment = v -> {
         Fragment fragment = new AccountSettingsPasswordFragment();
-        fragment.setArguments(importArgs);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(((ViewGroup)getView().getParent()).getId(), fragment, null)
-                .addToBackStack(null)
-                .commit();
-    };
-
-    View.OnClickListener openNotifFragment = v -> {
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(((ViewGroup)getView().getParent()).getId(), new AccountSettingsNotifFragment(), null)
                 .addToBackStack(null)
                 .commit();
     };

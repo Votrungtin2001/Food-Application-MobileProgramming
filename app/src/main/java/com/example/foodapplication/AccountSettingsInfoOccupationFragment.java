@@ -1,33 +1,37 @@
 package com.example.foodapplication;
 
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class AccountSettingsInfoOccupationFragment extends Fragment {
     TextView txtOccupationOffice, txtOccupationFree, txtOccupationStudent, txtOccupationHome, txtOccupationOther;
     int user_id = -1;
+
+    DatabaseHelper dbHelper;
 
     public AccountSettingsInfoOccupationFragment() {
 
     }
 
     public static AccountSettingsInfoOccupationFragment newInstance() {
-        AccountSettingsInfoOccupationFragment fragment = new AccountSettingsInfoOccupationFragment();
-        return fragment;
+        return new AccountSettingsInfoOccupationFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if ((getArguments() != null) && (getArguments().containsKey("CUSTOMER_ID")))
-            user_id = getArguments().getInt("CUSTOMER_ID");
+        if (MainActivity.customer_id > 0)
+            user_id = MainActivity.customer_id;
     }
 
     @Override
@@ -46,14 +50,42 @@ public class AccountSettingsInfoOccupationFragment extends Fragment {
         txtOccupationOther= view.findViewById(R.id.txtOccupationOther);
         txtOccupationOther.setOnClickListener(onTextViewClick);
 
+        dbHelper = new DatabaseHelper(getContext());
+        Cursor cursor = dbHelper.getCustomerById(user_id);
+        if (cursor.moveToFirst()) {
+            String occupation = cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CCustomer.KEY_OCCUPATION));
+
+            switch (occupation) {
+                case "Office State/Professional":
+                    txtOccupationOffice.setBackgroundColor(getResources().getColor(R.color.quantum_bluegrey400));
+                    break;
+                case "Self-Employed/Freelancer":
+                    txtOccupationFree.setBackgroundColor(getResources().getColor(R.color.quantum_bluegrey400));
+                    break;
+                case "Student":
+                    txtOccupationStudent.setBackgroundColor(getResources().getColor(R.color.quantum_bluegrey400));
+                    break;
+                case "At Home":
+                    txtOccupationHome.setBackgroundColor(getResources().getColor(R.color.quantum_bluegrey400));
+                    break;
+                case "Other":
+                    txtOccupationOther.setBackgroundColor(getResources().getColor(R.color.quantum_bluegrey400));
+                    break;
+            }
+        }
+        cursor.close();
+
         return view;
     }
 
     View.OnClickListener onTextViewClick = v -> {
-        DatabaseHelper dbHelper = new DatabaseHelper(getContext());
-        TextView view = (TextView) v;
-        dbHelper.updUserOccupation(user_id, view.getText().toString());
-        dbHelper.close();
+        if (user_id != -1) {
+            TextView view = (TextView) v;
+            dbHelper.updUserOccupation(user_id, view.getText().toString());
+            Toast.makeText(getContext(), "Occupation updated!", Toast.LENGTH_SHORT).show();
+            FragmentManager fragmentManager = getParentFragmentManager();
+            fragmentManager.popBackStack(null, 0);
+        }
     };
 
 }

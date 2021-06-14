@@ -17,22 +17,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class AccountSettingsInfoFragment extends Fragment {
-    TextView txtAccountSettingsInfoAvatar, txtAccountSettingsInfoPhone, txtAccountSettingsInfoName, txtAccountSettingsInfoEmail, txtAccountSettingsInfoGender, txtAccountSettingsInfoDoB, txtAccountSettingsInfoOccupation;
+    TextView txtAccountSettingsInfoPhone, txtAccountSettingsInfoName, txtAccountSettingsInfoEmail, txtAccountSettingsInfoGender, txtAccountSettingsInfoDoB, txtAccountSettingsInfoOccupation;
     int user_id = -1;
 
     public AccountSettingsInfoFragment() {}
 
     public static AccountSettingsInfoFragment newInstance() {
-        AccountSettingsInfoFragment fragment = new AccountSettingsInfoFragment();
-        return fragment;
+        return new AccountSettingsInfoFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if ((getArguments() != null) && (getArguments().containsKey("CUSTOMER_ID")))
-            user_id = getArguments().getInt("CUSTOMER_ID");
+        if (MainActivity.customer_id > 0)
+            user_id = MainActivity.customer_id;
     }
 
     @Override
@@ -40,7 +39,6 @@ public class AccountSettingsInfoFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_account_settings_info, container, false);
 
-        txtAccountSettingsInfoAvatar = view.findViewById(R.id.txtAccountSettingsInfoAvatar);
         txtAccountSettingsInfoPhone = view.findViewById(R.id.txtAccountSettingsInfoPhone);
         txtAccountSettingsInfoPhone.setOnClickListener(openSingleEditFragment);
         txtAccountSettingsInfoName = view.findViewById(R.id.txtAccountSettingsInfoName);
@@ -61,7 +59,6 @@ public class AccountSettingsInfoFragment extends Fragment {
         SingleEditTextUpdateFragment fragment = new SingleEditTextUpdateFragment();
 
         Bundle args = new Bundle();
-        args.putInt("CUSTOMER_ID", user_id);
         switch (v.getId()) {
             case R.id.txtAccountSettingsInfoPhone:
                 args.putString("SINGLE_EDIT_TEXT", "EditPhone");
@@ -82,43 +79,39 @@ public class AccountSettingsInfoFragment extends Fragment {
     };
 
     View.OnClickListener openGenderDialogBox = v -> {
-        String[] gender = { "Male", "Female", "None" };
+        if (user_id != -1) {
+            String[] gender = {"Male", "Female", "None"};
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setItems(gender, (dialog, which) -> {
-            DatabaseHelper dbHelper = new DatabaseHelper(getContext());
-            switch (gender[which]) {
-                case "Male":
-                    dbHelper.updUserGender(user_id, 0);
-                    break;
-                case "Female":
-                    dbHelper.updUserGender(user_id, 1);
-                    break;
-                case "None":
-                    dbHelper.updUserGender(user_id, 2);
-                    break;
-            }
-            dbHelper.close();
-            Toast.makeText(getContext(), "Gender updated!", Toast.LENGTH_SHORT).show();
-        });
-        builder.show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setItems(gender, (dialog, which) -> {
+                DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+                switch (gender[which]) {
+                    case "Male":
+                        dbHelper.updUserGender(user_id, 0);
+                        break;
+                    case "Female":
+                        dbHelper.updUserGender(user_id, 1);
+                        break;
+                    case "None":
+                        dbHelper.updUserGender(user_id, 2);
+                        break;
+                }
+                dbHelper.close();
+                Toast.makeText(getContext(), "Gender updated!", Toast.LENGTH_SHORT).show();
+            });
+            builder.show();
+        }
+        else
+            Toast.makeText(getContext(), "Unknown user. Did you forget to log in?", Toast.LENGTH_LONG).show();
     };
 
     View.OnClickListener openDateFragment = v -> {
         DialogFragment dateFragment = new DateFragment();
-
-        Bundle args = new Bundle();
-        args.putInt("CUSTOMER_ID", user_id);
-        dateFragment.setArguments(args);
-
         dateFragment.show(getChildFragmentManager(), "DatePicker");
     };
 
     View.OnClickListener openOccupationFragment = v-> {
         AccountSettingsInfoOccupationFragment newFragment = new AccountSettingsInfoOccupationFragment();
-        Bundle args = new Bundle();
-        args.putInt("CUSTOMER_ID", user_id);
-        newFragment.setArguments(args);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
                 .addToBackStack(null)
