@@ -78,23 +78,6 @@
         android:layout_marginEnd="149dp"/>
 
     <Button
-        android:id="@+id/btnShop"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_below="@+id/btnSupport"
-        android:layout_marginTop="20dp"
-        android:drawableLeft="@drawable/ic_baseline_store_24"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:text="@string/activity_account_shopowner"
-        android:textAlignment="viewStart"
-        android:textAllCaps="false"
-        android:textColor="@color/black"
-        app:backgroundTint="@color/white"
-        app:cornerRadius="0dp" />
-        app:cornerRadius="0dp" />
-
-    <Button
         android:id="@+id/btnPolicy"
         android:layout_width="match_parent"
         android:layout_height="60dp"

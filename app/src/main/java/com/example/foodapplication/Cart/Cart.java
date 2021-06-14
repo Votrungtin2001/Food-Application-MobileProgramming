@@ -87,8 +87,6 @@ public class Cart extends AppCompatActivity {
                 finish();
             }
         });
-
-
     }
 
     private void loadListFood() {

@@ -73,20 +73,18 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                 int qty = currentItem.getQuantity();
                 if (customer_id > 0) {
                     boolean checkCustomerHasAddress = CheckCustomerHasAddress(customer_id);
-                    if(checkCustomerHasAddress == true) {
+                    if(checkCustomerHasAddress == true ) {
                         productModelList.add(new ProductModel(currentItem.getNameProduct(), qty, currentItem.getPrice(),currentItem.getProduct_id()));
                         Toast.makeText(context, "Thêm vào giỏ hàng thành công!", Toast.LENGTH_SHORT).show();
                     }
-                    else ShowPopUpRequireAddress();
+                    else {
+                        ShowPopUpRequireAddress();
+                    }
+
                 }
                 else ShowPopUpRequireLogin();
-                if(checkProduct(currentItem.getProduct_id())) {
-                    qty++;
-                    Toast.makeText(context, "Thêm vào giỏ hàng thành công!", Toast.LENGTH_SHORT).show();
-                }
             }
         });
-
     }
 
     @Override
@@ -155,9 +153,9 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     public boolean checkProduct(int product_id) {
         int count = 0;
 
-        String selectQuery = "SELECT * FROM Product WHERE _id = '" + product_id + "';";
+        String selectQuery = "SELECT * FROM PRODUCT WHERE _id = '" + product_id + "';";
         Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor != null) {
+        if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             do {
 
