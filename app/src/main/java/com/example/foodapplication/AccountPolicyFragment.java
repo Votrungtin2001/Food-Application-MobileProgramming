@@ -7,58 +7,82 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AccountPolicyFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class AccountPolicyFragment extends Fragment {
+    TextView txtPayment, txtPaymentAnswer, txtPrivacy, txtPrivacyAnswer, txtRegulation, txtRegulationAnswer, txtToS, txtToSAnswer, txtDispute, txtDisputeAnswer;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    public AccountPolicyFragment() { }
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public AccountPolicyFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AccountPolicyFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AccountPolicyFragment newInstance(String param1, String param2) {
-        AccountPolicyFragment fragment = new AccountPolicyFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public static AccountPolicyFragment newInstance() {
+        return new AccountPolicyFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_account_policy, container, false);
+        View view = inflater.inflate(R.layout.fragment_account_policy, container, false);
+
+        txtPayment = view.findViewById(R.id.txtPaymentGuide);
+        txtPayment.setOnClickListener(onPaymentClick);
+        txtPaymentAnswer = view.findViewById(R.id.txtPaymentGuideAnswer);
+
+        txtPrivacy = view.findViewById(R.id.txtPrivacyPolicy);
+        txtPrivacy.setOnClickListener(onPrivacyClick);
+        txtPrivacyAnswer = view.findViewById(R.id.txtPrivacyPolicyAnswer);
+
+        txtRegulation = view.findViewById(R.id.txtRegulation);
+        txtRegulation.setOnClickListener(onRegulationClick);
+        txtRegulationAnswer= view.findViewById(R.id.txtRegulationAnswer);
+
+        txtToS = view.findViewById(R.id.txtToS);
+        txtToS.setOnClickListener(onToSClick);
+        txtToSAnswer = view.findViewById(R.id.txtToSAnswer);
+
+        txtDispute= view.findViewById(R.id.txtDisputePolicy);
+        txtDispute.setOnClickListener(onDisputeClick);
+        txtDisputeAnswer = view.findViewById(R.id.txtDisputePolicyAnswer);
+
+        return view;
     }
+
+    View.OnClickListener onPaymentClick = v -> {
+        if (txtPaymentAnswer.getVisibility() == View.GONE)
+            txtPaymentAnswer.setVisibility(View.VISIBLE);
+        else
+            txtPaymentAnswer.setVisibility(View.GONE);
+    };
+
+    View.OnClickListener onPrivacyClick = v -> {
+        if (txtPrivacyAnswer.getVisibility() == View.GONE)
+            txtPrivacyAnswer.setVisibility(View.VISIBLE);
+        else
+            txtPrivacyAnswer.setVisibility(View.GONE);
+    };
+
+    View.OnClickListener onRegulationClick = v -> {
+        if (txtRegulationAnswer.getVisibility() == View.GONE)
+            txtRegulationAnswer.setVisibility(View.VISIBLE);
+        else
+            txtRegulationAnswer.setVisibility(View.GONE);
+    };
+
+    View.OnClickListener onToSClick = v -> {
+        if (txtToSAnswer.getVisibility() == View.GONE)
+            txtToSAnswer.setVisibility(View.VISIBLE);
+        else
+            txtToSAnswer.setVisibility(View.GONE);
+    };
+
+    View.OnClickListener onDisputeClick = v -> {
+        if (txtDisputeAnswer.getVisibility() == View.GONE)
+            txtDisputeAnswer.setVisibility(View.VISIBLE);
+        else
+            txtDisputeAnswer.setVisibility(View.GONE);
+    };
 }
