@@ -41,9 +41,8 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="100dp"
         android:gravity="center"
-        android:text="Đăng nhập/Đăng ký"
         android:textAllCaps="false"
-        app:cornerRadius="18dp"/>
+        app:cornerRadius="18dp" />
         android:textAlignment="center" />
 
     <Button
@@ -65,17 +64,17 @@
 
     <Button
         android:id="@+id/btnLogout"
-        android:layout_width="150dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btnAbout"
+        android:layout_marginStart="140dp"
         android:layout_marginTop="17dp"
+        android:layout_marginEnd="140dp"
         android:layout_marginBottom="4dp"
-        android:text="Logout"
-        app:backgroundTint="@color/scrollBackground"
-        app:cornerRadius="18dp"
+        android:text="@string/activity_account_logout"
         android:textAllCaps="false"
-        android:layout_marginStart="149dp"
-        android:layout_marginEnd="149dp"/>
+        app:backgroundTint="@color/scrollBackground"
+        app:cornerRadius="18dp" />
 
     <Button
         android:id="@+id/btnPolicy"

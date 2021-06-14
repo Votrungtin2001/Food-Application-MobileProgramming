@@ -25,7 +25,7 @@ import static com.example.foodapplication.FoodManagementContract.CCustomer.TABLE
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // REMEMBER TO ADD 1 TO THIS CONSTANT WHEN YOU MAKE ANY CHANGES TO THE CONTRACT CLASS!
-    public static final int DATABASE_VERSION = 47;
+    public static final int DATABASE_VERSION = 48;
     private static String DB_PATH= "data/data/com.example.foodapplication/databases/";
     private static String DB_NAME = "foodapp";
     private final Context context;

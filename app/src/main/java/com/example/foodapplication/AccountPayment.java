@@ -46,9 +46,9 @@ public class AccountPayment extends Fragment {
             DatabaseHelper dbHelper = new DatabaseHelper(getContext());
             credits = dbHelper.getCredits(user_id);
             if (credits > 0)
-                txtAccountPaymentCoins.setText("Your Credits: " + credits);
+                txtAccountPaymentCoins.setText("Tiền trong tài khoản: " + credits);
             else
-                txtAccountPaymentCoins.setText("Your Credits: 0");
+                txtAccountPaymentCoins.setText("Tiền trong tài khoản: 0");
         }
 
         return view;

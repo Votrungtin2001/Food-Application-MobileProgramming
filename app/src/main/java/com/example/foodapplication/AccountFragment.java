@@ -78,7 +78,7 @@ user user = new user();
             cursor.close();
         }
         else
-            txtlogin.setText("Đăng nhập/Đăng kí");
+            txtlogin.setText(getResources().getString(R.string.activity_account_login_name));
         txtlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

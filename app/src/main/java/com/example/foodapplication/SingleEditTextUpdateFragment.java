@@ -28,8 +28,7 @@ public class SingleEditTextUpdateFragment extends Fragment {
     }
 
     public static SingleEditTextUpdateFragment newInstance() {
-        SingleEditTextUpdateFragment fragment = new SingleEditTextUpdateFragment();
-        return fragment;
+        return new SingleEditTextUpdateFragment();
     }
 
     @Override
@@ -56,20 +55,20 @@ public class SingleEditTextUpdateFragment extends Fragment {
 
             switch (type) {
                 case "EditPhone":
-                    txtSingleEditTitle.setText("Edit phone number");
-                    btnConfirmEdit.setText("Update phone number");
+                    txtSingleEditTitle.setText("Cập nhật số điện thoại");
+                    btnConfirmEdit.setText("Cập nhật");
                     if (cursor.moveToFirst())
                         txtEditText.setHint(cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CCustomer.KEY_PHONE)));
                     break;
                 case "EditName":
-                    txtSingleEditTitle.setText("Change name");
-                    btnConfirmEdit.setText("Save name");
+                    txtSingleEditTitle.setText("Cập nhật tên");
+                    btnConfirmEdit.setText("Cập nhật");
                     if (cursor.moveToFirst())
                         txtEditText.setHint(cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CCustomer.KEY_NAME)));
                     break;
                 case "EditEmail":
-                    txtSingleEditTitle.setText("Update email");
-                    btnConfirmEdit.setText("Save and update email");
+                    txtSingleEditTitle.setText("Cập nhật email");
+                    btnConfirmEdit.setText("Cập nhật");
                     if (cursor.moveToFirst())
                         txtEditText.setHint(cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CCustomer.KEY_EMAIL)));
                     break;
@@ -87,7 +86,7 @@ public class SingleEditTextUpdateFragment extends Fragment {
                 DatabaseHelper dbHelper = new DatabaseHelper(getContext());
                 dbHelper.updUserInfoWithKey(user_id, txtEditText.getText().toString(), type);
                 dbHelper.close();
-                Toast.makeText(getContext(), "User data updated!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Cập nhật dữ liệu thành công!", Toast.LENGTH_SHORT).show();
             }
         }
         else

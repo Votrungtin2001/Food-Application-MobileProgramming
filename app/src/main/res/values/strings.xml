@@ -15,41 +15,18 @@
     <string name="activity_fav">Favorites</string>
 
     <!--account screen strings start-->
-    <string name="activity_account_vouchers">My Vouchers</string>
-    <string name="activity_account_shopee">My Shopee Coins</string>
-    <string name="activity_account_payment">Payment Method</string>
-    <string name="activity_account_address">Address</string>
-    <string name="activity_account_invite">Invite Friends</string>
-    <string name="activity_account_support">Customer Support</string>
-    <string name="activity_account_shopowner">For Shop Owners</string>
-    <string name="activity_account_policy">User Policy</string>
-    <string name="activity_account_settings">Settings</string>
-    <string name="activity_account_about">About us…</string>
-    <string name="activity_account_logout">LOGOUT</string>
-    <string name="activity_account_version">Version 0.00.01</string>
-
-    <!-- Account -> Vouchers strings -->
-    <string name="activity_account_vouchers_valid">Valid</string>
-    <string name="activity_account_vouchers_invalid">Invalid</string>
-    <string name="activity_account_vouchers_used">>Used</string>
-
-    <!-- Account -> Shopee strings -->
-    <string name="activity_account_shopee_faq">How to earn</string>
-    <string name="activity_account_shopee_link">Link Shopee Account</string>
-
-    <!-- Account -> Support strings -->
-    <string name="activity_account_support_search">Search your issues</string>
-    <string name="activity_account_support_report">Report a problem</string>
-    <string name="activity_account_support_report_photo">Upload photos</string>
-    <string name="activity_account_support_report_photo_desc">You may upload multiple files. Images and PDF only.</string>
-    <string name="activity_account_support_report_contact">Contact info</string>
-    <string name="activity_account_support_report_contact_hint">Name, email, phone number…</string>
-    <string name="activity_account_support_report_issue">Describe the issue</string>
-    <string name="activity_account_support_report_send">Send report</string>
+    <string name="activity_account_login_name">Đăng nhập/Đăng ký</string>
+    <string name="activity_account_payment">Nạp tiền</string>
+    <string name="activity_account_address">Thêm địa chỉ</string>
+    <string name="activity_account_policy">Chính sách Người dùng</string>
+    <string name="activity_account_settings">Cài đặt</string>
+    <string name="activity_account_about">Giới thiệu</string>
+    <string name="activity_account_logout">ĐĂNG XUẤT</string>
+    <string name="activity_account_version">Version 0.20.00</string>
 
     <!-- Account -> Payment strings -->
-    <string name="activity_account_payment_topup">Top up Credits</string>
-    <string name="activity_account_payment_history">View Transaction History</string>
+    <string name="activity_account_payment_topup">Nạp tiền</string>
+    <string name="activity_account_payment_history">Xem lịch sử giao dịch</string>
     <string name="activity_account_payment_50000">50000</string>
     <string name="activity_account_payment_100000">100000</string>
     <string name="activity_account_payment_200000">200000</string>
@@ -59,53 +36,37 @@
     <string name="activity_account_payment_2000000">2000000</string>
     <string name="activity_account_payment_5000000">5000000</string>
     <string name="activity_account_payment_10000000">10000000</string>
-    <string name="activity_account_payment_deposit">Deposit</string>
+    <string name="activity_account_payment_deposit">Nạp</string>
 
     <!-- Account -> Address strings -->
-    <string name="activity_account_address_input">Enter address</string>
-    <string name="activity_account_address_floor">Building Floor No. (Optional)</string>
-    <string name="activity_account_address_gate">Gate (Optional)</string>
-    <string name="activity_account_address_label">Address Label (Optional)</string>
-    <string name="activity_account_address_label_work">Work</string>
-    <string name="activity_account_address_label_other">Other</string>
-    <string name="activity_account_address_label_other_spec">Label name, e.g. School, Gym</string>
-    <string name="activity_account_address_contact">Contact information</string>
-    <string name="activity_account_address_contact_name">Contact name</string>
-    <string name="activity_account_address_contact_number">Number</string>
-    <string name="activity_account_address_delivery">Delivery note (Optional)</string>
+    <string name="activity_account_address_input">Nhập địa chỉ</string>
+    <string name="activity_account_address_floor">Tầng (tự chọn)</string>
+    <string name="activity_account_address_gate">Cổng (tự chọn)</string>
+    <string name="activity_account_address_label">Nhãn địa chỉ</string>
+    <string name="activity_account_address_label_work">Nơi làm việc</string>
+    <string name="activity_account_address_label_other">Khác</string>
+    <string name="activity_account_address_label_other_spec">Tên nhãn (vd Trường, Phòng tập, v.v)</string>
 
     <!-- Account -> Settings strings -->
-    <string name="activity_account_settings_account">Account Settings</string>
-    <string name="activity_account_settings_account_info">Information &amp; Contact</string>
-    <string name="activity_account_settings_account_password">Password</string>
-    <string name="activity_account_settings_app">App Settings</string>
-    <string name="activity_account_settings_app_lang">Change Language</string>
-    <string name="activity_account_settings_app_notif">Notifications</string>
-    <string name="activity_account_settings_account_info_avatar">Change avatar</string>
-    <string name="activity_account_settings_account_info_phone">Change phone number</string>
-    <string name="activity_account_settings_account_info_name">Change name</string>
-    <string name="activity_account_settings_account_info_email">Change email</string>
-    <string name="activity_account_settings_account_info_gender">Set gender</string>
-    <string name="activity_account_settings_account_info_dob">Set date of birth</string>
-    <string name="activity_account_settings_account_info_occupation">Set occupation</string>
-    <string name="activity_account_settings_account_info_occupation_desc">Select an Occupation</string>
-    <string name="activity_account_settings_account_info_occupation_office">Office State/Professional</string>
-    <string name="activity_account_settings_account_info_occupation_free">Self-Employed/Freelancer</string>
-    <string name="activity_account_settings_account_info_occupation_student">Student</string>
-    <string name="activity_account_settings_account_info_occupation_home">At Home</string>
-    <string name="activity_account_settings_account_info_occupation_other">Other</string>
-    <string name="activity_account_settings_account_password_desc">Update password</string>
-    <string name="activity_account_settings_account_password_old">Enter Current Password</string>
-    <string name="activity_account_settings_account_password_new">New Password</string>
-    <string name="activity_account_settings_account_password_confirm">Confirm New Password</string>
-    <string name="activity_account_settings_notif_push">Push Notifications</string>
-    <string name="activity_account_settings_notif_push_desc">Highly recommended to keep it on, so that you will be notified for all order status updates</string>
-    <string name="activity_account_settings_notif_promo">Promotions</string>
-    <string name="activity_account_settings_notif_promo_desc">Notify me when there are promotions in the selected province/city</string>
-    <string name="activity_account_settings_notif_province">Province/City</string>
-    <string name="activity_account_settings_invite_sms">Send to SMS</string>
-    <string name="activity_account_settings_invite_email">Send to Email</string>
-    <string name="activity_account_settings_invite_link">Copy app download link</string>
+    <string name="activity_account_settings_account">Cài đặt Tài khoản</string>
+    <string name="activity_account_settings_account_info">Thông tin liên lạc</string>
+    <string name="activity_account_settings_account_password">Mật khẩu</string>
+    <string name="activity_account_settings_account_info_phone">Cập nhật số điện thoạt</string>
+    <string name="activity_account_settings_account_info_name">Cập nhật tên</string>
+    <string name="activity_account_settings_account_info_email">Cập nhật email</string>
+    <string name="activity_account_settings_account_info_gender">Cập nhật giới tính</string>
+    <string name="activity_account_settings_account_info_dob">Cập nhật ngày sinh</string>
+    <string name="activity_account_settings_account_info_occupation">Cập nhật việc làm</string>
+    <string name="activity_account_settings_account_info_occupation_desc">Chọn việc làm</string>
+    <string name="activity_account_settings_account_info_occupation_office">Văn phòng</string>
+    <string name="activity_account_settings_account_info_occupation_free">Tự kinh doanh/Tự do</string>
+    <string name="activity_account_settings_account_info_occupation_student">Sinh viên</string>
+    <string name="activity_account_settings_account_info_occupation_home">Ở nhà</string>
+    <string name="activity_account_settings_account_info_occupation_other">Khác</string>
+    <string name="activity_account_settings_account_password_desc">Cập nhật mật khẩu</string>
+    <string name="activity_account_settings_account_password_old">Nhập mật khẩu hiện tại</string>
+    <string name="activity_account_settings_account_password_new">Mật khẩu mới</string>
+    <string name="activity_account_settings_account_password_confirm">Xác nhận mật khẩu mới</string>
 
     <!-- Account -> Policy strings -->
     <string name="activity_account_policy_payment">Hướng dẫn thanh toán</string>

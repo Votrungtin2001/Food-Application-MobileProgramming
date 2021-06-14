@@ -80,24 +80,24 @@ public class AccountSettingsInfoFragment extends Fragment {
 
     View.OnClickListener openGenderDialogBox = v -> {
         if (user_id != -1) {
-            String[] gender = {"Male", "Female", "None"};
+            String[] gender = {"Nam", "Nữ", "Chưa rõ"};
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setItems(gender, (dialog, which) -> {
                 DatabaseHelper dbHelper = new DatabaseHelper(getContext());
                 switch (gender[which]) {
-                    case "Male":
+                    case "Nam":
                         dbHelper.updUserGender(user_id, 0);
                         break;
-                    case "Female":
+                    case "Nữ":
                         dbHelper.updUserGender(user_id, 1);
                         break;
-                    case "None":
+                    case "Chưa rõ":
                         dbHelper.updUserGender(user_id, 2);
                         break;
                 }
                 dbHelper.close();
-                Toast.makeText(getContext(), "Gender updated!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Đã cập nhật giới tính!", Toast.LENGTH_SHORT).show();
             });
             builder.show();
         }
