@@ -15,8 +15,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodapplication.DatabaseHelper;
-import com.example.foodapplication.FoodManagementContract;
-import com.example.foodapplication.Order.OrderModel;
 import com.example.foodapplication.R;
 
 import java.util.ArrayList;
@@ -31,15 +29,6 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     List<ProductModel> itemList;
     Context context;
     LayoutInflater inflater;
-
-    // Minh Thi code
-
-    String orderId = "";
-    FoodManagementContract order;
-    OrderModel orderModel ;
-    ProductModel productModel;
-
-    //
 
     Dialog AnnouncementDialog;
 
@@ -81,25 +70,27 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         holder.imageView_addItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int qty = currentItem.getQuantity();
                 if (customer_id > 0) {
                     boolean checkCustomerHasAddress = CheckCustomerHasAddress(customer_id);
-                    if(checkCustomerHasAddress == true) {
-                        productModelList.add(new ProductModel(currentItem.getNameProduct(), currentItem.getQuantity(), currentItem.getPrice()));
+                    if(checkCustomerHasAddress == true ) {
+                        productModelList.add(new ProductModel(currentItem.getNameProduct(), qty, currentItem.getPrice(),currentItem.getProduct_id()));
                         Toast.makeText(context, "Thêm vào giỏ hàng thành công!", Toast.LENGTH_SHORT).show();
                     }
-                    else ShowPopUpRequireAddress();
+                    else {
+                        ShowPopUpRequireAddress();
+                    }
+
                 }
                 else ShowPopUpRequireLogin();
             }
         });
-
     }
 
     @Override
     public int getItemCount() {
         return itemList.size();
     }
-
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView textView_NameProduct;
@@ -159,24 +150,36 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         AnnouncementDialog.show();
     }
 
-    public boolean CheckCustomerHasAddress(int customer_id) {
+    public boolean checkProduct(int product_id) {
         int count = 0;
 
-        String selectQuery = "SELECT * FROM CUSTOMER_ADDRESS WHERE Customer='" + customer_id + "';";
+        String selectQuery = "SELECT * FROM PRODUCT WHERE _id = '" + product_id + "';";
         Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor != null) {
+        if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             do {
 
             } while (cursor.moveToNext());
-
         }
         count = cursor.getCount();
         cursor.close();
         if(count > 0) return true;
         else return false;
-
     }
+        public boolean CheckCustomerHasAddress(int customer_id) {
+            int count = 0;
 
+            String selectQuery = "SELECT * FROM CUSTOMER_ADDRESS WHERE Customer ='" + customer_id + "';";
+            Cursor cursor = db.rawQuery(selectQuery, null);
+            if (cursor != null) {
+                cursor.moveToFirst();
+                do {
 
+                } while (cursor.moveToNext());
+            }
+            count = cursor.getCount();
+            cursor.close();
+            if(count > 0) return true;
+            else return false;
+        }
 }

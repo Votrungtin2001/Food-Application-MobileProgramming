@@ -13,7 +13,9 @@ public class user {
     public String job;
     public String Fb;
 
-public user(){}
+
+    public user(){}
+
     public user (int id, int city_id,String name, String username, String phone,String email,int gender, String password, String DoB,String job,String Fb){
         this.id = id;
         this.city_id = city_id;
@@ -28,7 +30,7 @@ public user(){}
         this.Fb = Fb;
     }
 
-    public int getId(){return id; }
+    public int getId(){ return id; }
     public int getCity_id(){return city_id; }
     public String getName() {
         return name;

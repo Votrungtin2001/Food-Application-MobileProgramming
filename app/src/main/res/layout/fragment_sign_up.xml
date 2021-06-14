@@ -33,7 +33,7 @@
                 android:id="@+id/textView20"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/sign_up"
+                android:text="ĐĂNG KÝ"
                 android:textAllCaps="true"
                 android:textColor="#000000"
                 android:textSize="25sp"
@@ -48,6 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Tên hiển thị"
+                android:inputType="textPersonName"
                 android:layout_marginTop="25dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -58,6 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Email"
+                android:inputType="textEmailAddress"
                 android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -90,8 +92,9 @@
                 android:layout_width="181dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="20dp"
-                android:text="@string/sign_up"
+                android:text="Đăng ký "
                 android:textAllCaps="false"
+                android:backgroundTint="#CF2127"
                 app:cornerRadius="18dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -112,8 +115,8 @@
                 android:layout_height="wrap_content"
                 android:text="Đăng nhập"
                 android:textColor="#2884FF"
-                android:layout_marginEnd="105dp"
-                app:layout_constraintEnd_toEndOf="parent"
+
+                app:layout_constraintStart_toEndOf="@+id/textView26"
                 app:layout_constraintTop_toBottomOf="@+id/btnSignUp" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

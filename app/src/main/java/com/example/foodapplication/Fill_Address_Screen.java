@@ -30,6 +30,9 @@ import android.widget.Toast;
 import com.example.foodapplication.auth.LoginFragment;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLng;
@@ -146,8 +149,11 @@ public class Fill_Address_Screen extends AppCompatActivity {
         textView_nameStreet.setText(nameStreet);
 
         addressLine = getIntent().getExtras().getString("AddressLine");
+        textView_addressLine = findViewById(R.id.fullAddress_textView);
         textView_addressLine.setText(addressLine);
 
+
+        back_imageView = findViewById(R.id.Back_imageView);
         back_imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,6 +161,7 @@ public class Fill_Address_Screen extends AppCompatActivity {
             }
         });
 
+        map_imageView = findViewById(R.id.Map_imageView);
         map_imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -162,6 +169,7 @@ public class Fill_Address_Screen extends AppCompatActivity {
             }
         });
 
+        editText_AddressBar = findViewById(R.id.searchAddressBar_editText);
         Places.initialize(getApplicationContext(), apiKey);
         editText_AddressBar.setFocusable(false);
         editText_AddressBar.setOnClickListener(new View.OnClickListener() {
@@ -415,6 +423,8 @@ public class Fill_Address_Screen extends AppCompatActivity {
         }
 
     }
+
+
 
     private void openCreateAddressActivityWithHomeOption()
     {

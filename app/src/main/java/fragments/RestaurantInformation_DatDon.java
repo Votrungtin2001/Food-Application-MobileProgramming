@@ -65,7 +65,7 @@ public class RestaurantInformation_DatDon extends Fragment {
                 "FROM ((RESTAURANT R JOIN BRANCHES B ON R._id = B.Restaurant) JOIN MENU M ON R._id = M.Restaurant) JOIN PRODUCTS P ON M.Product = P._id " +
                 "WHERE B._id ='" + id + "';";
         Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor != null) {
+        if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             do {
                 int product_id = cursor.getInt(cursor.getColumnIndex("_id"));

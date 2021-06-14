@@ -145,7 +145,7 @@ public class HomeFragment extends Fragment {
 
         databaseHelper = new DatabaseHelper(getActivity());
         db = databaseHelper.getReadableDatabase();
-        
+
        /* databaseHelper.delBranch(43);
         databaseHelper.delAddress(43);
         databaseHelper.delRestaurant(43);
@@ -242,6 +242,7 @@ public class HomeFragment extends Fragment {
         tabLayout_KindOfRestaurant = (TabLayout) view.findViewById(R.id.KindOfRestaurant_TabLayout);
         viewPager_KindOfRestaurant = (ViewPager) view.findViewById(R.id.KindOfRestaurant_ViewPager);
 
+        district_id = 14;
         if(district_id >= 0) district_isAvailable = true;
         SetAllData(district_id);
         setUpSreen(district_isAvailable);

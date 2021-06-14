@@ -12,10 +12,11 @@ public class ProductModel {
     public int quantity = 1;
     private int product_id;
 
-    public ProductModel( String Name, int Quantity, int Price) {
-        this.name_product= Name;
+    public ProductModel( String Name, int Quantity, int Price, int product_id) {
+        this.name_product = Name;
         this.quantity = Quantity;
         this.price = Price;
+        this.product_id = product_id;
     }
 
     public ProductModel(Bitmap Image, String Name, String Description_Product, String Value, int Price, int Product_ID) {

@@ -60,7 +60,7 @@ public class RestaurantInformation_ThongTin extends Fragment {
         String branch_address = "";
         String selectQuery = "SELECT A.Address FROM BRANCHES B JOIN ADDRESS A ON B.Address = A._id WHERE B._id ='" + id + "';";
         Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor != null) {
+        if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             do {
                 branch_address = cursor.getString(cursor.getColumnIndex("Address"));
@@ -74,7 +74,7 @@ public class RestaurantInformation_ThongTin extends Fragment {
         String branch_openingtime = "";
         String selectQuery = "SELECT R.Opening_Times FROM BRANCHES B JOIN RESTAURANT R ON B.Restaurant = R._id WHERE B._id ='" + id + "';";
         Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor != null) {
+        if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             do {
                 branch_openingtime = cursor.getString(cursor.getColumnIndex("Opening_Times"));

@@ -97,6 +97,14 @@ public class LoginFragment extends Fragment  {
                              Bundle savedInstanceState) {
 
         binding = FragmentLoginBinding.inflate(inflater, container, false);
+        binding.facebookView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v.getId() == R.id.facebookView){
+                    binding.signinFb.performClick();
+                }
+            }
+        });
 
         binding.signinGg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,8 +124,6 @@ public class LoginFragment extends Fragment  {
                         Intent intent = new Intent(getActivity(), Master_MainActivity.class);
                         intent.putExtra("Master ID",master_id);
                         startActivity(intent);
-
-
                     } else {
                         binding.password.setText(null);
                         Toast.makeText(getActivity(), "Login failed. Invalid username or password.", Toast.LENGTH_SHORT).show();
