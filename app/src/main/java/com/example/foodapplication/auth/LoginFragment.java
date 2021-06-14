@@ -19,7 +19,6 @@ import com.example.foodapplication.DatabaseHelper;
 import com.example.foodapplication.MainActivity;
 import com.example.foodapplication.Master_MainActivity;
 import com.example.foodapplication.R;
-import com.example.foodapplication.UserIdPassInterface;
 import com.example.foodapplication.databinding.FragmentLoginBinding;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -126,8 +125,6 @@ public class LoginFragment extends Fragment  {
                         Intent intent = new Intent(getActivity(), Master_MainActivity.class);
                         intent.putExtra("Master ID",master_id);
                         startActivity(intent);
-
-
                     } else {
                         binding.password.setText(null);
                         Toast.makeText(getActivity(), "Login failed. Invalid username or password.", Toast.LENGTH_SHORT).show();

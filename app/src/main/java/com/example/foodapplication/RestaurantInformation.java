@@ -27,8 +27,6 @@ import java.util.ArrayList;
 import fragments.RestaurantInformation_DatDon;
 import fragments.RestaurantInformation_ThongTin;
 
-import static com.example.foodapplication.MainActivity.customer_id;
-
 public class RestaurantInformation extends AppCompatActivity {
 
     ImageView imageView_RestaurantInformation;
@@ -66,10 +64,6 @@ public class RestaurantInformation extends AppCompatActivity {
         initComponents();
 
         Run();
-
-
-
-
     }
 
     public void initComponents() {
@@ -117,16 +111,16 @@ public class RestaurantInformation extends AppCompatActivity {
         cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(customer_id > 0) {
-                    boolean checkCustomerHasAddress = CheckCustomerHasAddress(customer_id);
-                    if(checkCustomerHasAddress == true) {
+               // if(customer_id > 0) {
+                    // boolean checkCustomerHasAddress = CheckCustomerHasAddress(customer_id);
+                    // if(checkCustomerHasAddress == true) {
                         Intent intent = new Intent(getApplication(), Cart.class);
                         startActivity(intent);
-                    }
-                    else ShowPopUpRequireAddress();
+                        // }
+                //  else ShowPopUpRequireAddress();
                 }
-                else ShowPopUpRequireLogin();
-            }
+//                else ShowPopUpRequireLogin();
+//            }
         });
     }
 

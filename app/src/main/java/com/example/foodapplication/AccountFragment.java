@@ -1,26 +1,24 @@
 package com.example.foodapplication;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.foodapplication.auth.LoginFragment;
+import com.example.foodapplication.auth.user;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class AccountFragment extends Fragment {
     Button btnPayment, btnAddress, btnInvite, btnSupport, btnShop, btnPolicy, btnSettings, btnAbout, btnLogout;
     Fragment newFragment;
-    TextView txtlogin;
+    Button txtlogin;
 
     int user_id = -1;
 
@@ -29,7 +27,7 @@ public class AccountFragment extends Fragment {
     Dialog LoginDialog;
 
     int choose_role = 0;
-
+user user = new user();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +70,7 @@ public class AccountFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ShowPopUpLogin(v);
+
             }
         });
 
@@ -176,6 +175,7 @@ public class AccountFragment extends Fragment {
                         .addToBackStack(null)
                         .commit();
                 LoginDialog.dismiss();
+
             }
         });
 
@@ -195,6 +195,7 @@ public class AccountFragment extends Fragment {
         });
 
         LoginDialog.show();
+
     }
 
 

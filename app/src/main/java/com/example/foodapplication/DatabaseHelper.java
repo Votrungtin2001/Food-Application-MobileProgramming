@@ -107,13 +107,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(FoodManagementContract.CCustomer.KEY_NAME, user.name);
+        values.put(FoodManagementContract.CCustomer.KEY_NAME, user.getName());
         values.put(FoodManagementContract.CCustomer.KEY_CITY, user.getCity_id());
         values.put(FoodManagementContract.CCustomer.KEY_PHONE, user.getPhone());
-        values.put(FoodManagementContract.CCustomer.KEY_EMAIL, user.email);
+        values.put(FoodManagementContract.CCustomer.KEY_EMAIL, user.getEmail());
         values.put(FoodManagementContract.CCustomer.KEY_FACEBOOK, user.getFb());
         values.put(FoodManagementContract.CCustomer.KEY_USERNAME, user.getUsername());
-        values.put(FoodManagementContract.CCustomer.KEY_PASSWORD, user.password);
+        values.put(FoodManagementContract.CCustomer.KEY_PASSWORD, user.getPassword());
         values.put(FoodManagementContract.CCustomer.KEY_GENDER, user.getGender());
         values.put(FoodManagementContract.CCustomer.KEY_DOB, user.getDoB());
         values.put(FoodManagementContract.CCustomer.KEY_OCCUPATION, user.getJob());
@@ -189,6 +189,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return false;
         }
     }
+
     public boolean checkMaster(String email, String password) {
         // array of columns to fetch
         String[] columns = {

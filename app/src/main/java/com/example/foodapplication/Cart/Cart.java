@@ -25,6 +25,7 @@ import models.ProductModel;
 import models.Request;
 
 import static adapter.MenuAdapter.productModelList;
+import static com.example.foodapplication.MainActivity.customer_id;
 
 public class Cart extends AppCompatActivity {
 
@@ -40,8 +41,7 @@ public class Cart extends AppCompatActivity {
     private int branch_id;
     ProductModel productModel;
     Date currentTime = Calendar.getInstance().getTime();
-    user user = new user();
-    int addressId;
+    user user;
 
     public Cart(){ }
 
@@ -52,36 +52,39 @@ public class Cart extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
+        user = new user();
+
         recyclerView = findViewById(R.id.listCart);
         recyclerView.setHasFixedSize(true);
         databaseHelper = new DatabaseHelper(getBaseContext());
         db = databaseHelper.getReadableDatabase();
-
         txtTotalPrice = findViewById(R.id.total);
 
         loadListFood();
 
-        Intent intent = new Intent();
-        intent.putExtra("Address", addressId);
+        Intent intent = getIntent();
+        int addressID = intent.getIntExtra("Address",0);
 
         btnPlaceOrder = (Button) findViewById(R.id.btnPlaceOrder);
         btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Request req = new Request(currentTime,
-                        user.getId(),
-                        addressId,
+                        customer_id,
+                        addressID,
                         Integer.parseInt(txtTotalPrice.getText().toString()),
                         0);
                 databaseHelper.addOrder(req);
 
                 for (int i = 0; i < listCart.size(); i++)
                 {
-                    databaseHelper.addOrderDetail(3,
-                            1 ,
+                    databaseHelper.addOrderDetail(getOrderId(customer_id),
+                            getMenuId(listCart.get(i).getProduct_id()) ,
                             listCart.get(i).getQuantity(),
                             listCart.get(i).getPrice());
                 }
+
+                finish();
             }
         });
 
@@ -102,6 +105,47 @@ public class Cart extends AppCompatActivity {
 
         txtTotalPrice.setText(Integer.toString(total));
 
+    }
+    public int getCusId() {
+        String selectQuery = "SELECT _id FROM CUSTOMER '" + "';";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+
+            } while (cursor.moveToNext());
+        }
+        int cusid = cursor.getColumnIndex("_id");
+        return  cusid;
+    }
+
+    public int getMenuId(int product_id) {
+        int menuid = -1;
+        String selectQuery = "SELECT _id FROM MENU WHERE Product ='" + product_id + "';";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                menuid = cursor.getColumnIndex("_id");
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return  menuid;
+    }
+
+    public int getOrderId(int customer_id) {
+        int orderid = -1;
+        String selectQuery = "SELECT _id FROM ORDERS WHERE Customer ='" + customer_id + "';";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                orderid = cursor.getColumnIndex("_id");
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+        return  orderid;
     }
 
     public void getAllProducts(int id) {

@@ -28,18 +28,20 @@
         android:layout_marginStart="155dp"
         android:layout_marginEnd="155dp" />
 
-    <TextView
+    <Button
         android:id="@+id/txtName"
         android:layout_width="wrap_content"
-        android:layout_height="28dp"
+        android:layout_height="40dp"
         android:layout_below="@+id/imgUser"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="135dp"
+        android:layout_marginStart="100dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="135dp"
+        android:layout_marginEnd="100dp"
         android:gravity="center"
-        android:text="Đăng nhập/Đăng kí" />
+        android:text="Đăng nhập/Đăng ký"
+        android:textAllCaps="false"
+        app:cornerRadius="18dp"/>
 
     <Button
         android:id="@+id/btnPayment"
@@ -59,14 +61,17 @@
 
     <Button
         android:id="@+id/btnLogout"
-        android:layout_width="match_parent"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/btnAbout"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="17dp"
         android:layout_marginBottom="4dp"
-        android:text="@string/activity_account_logout"
+        android:text="Logout"
         app:backgroundTint="@color/scrollBackground"
-        app:cornerRadius="0dp" />
+        app:cornerRadius="18dp"
+        android:textAllCaps="false"
+        android:layout_marginStart="149dp"
+        android:layout_marginEnd="149dp"/>
 
     <Button
         android:id="@+id/btnSupport"
