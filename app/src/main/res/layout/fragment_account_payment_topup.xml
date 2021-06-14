@@ -11,20 +11,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/TopupLayoutGrid"
-        android:layout_marginTop="110dp"
+        android:layout_marginTop="20dp"
         android:text="@string/activity_account_payment_deposit"
         app:backgroundTint="#F44336" />
 
     <EditText
         android:id="@+id/txtTopupAmount"
         android:layout_width="match_parent"
-        android:layout_height="114dp"
+        android:layout_height="150dp"
         android:background="@null"
         android:ems="10"
         android:gravity="center"
         android:inputType="number"
         android:textAlignment="gravity"
-        android:textSize="24sp" />
+        android:textSize="36sp" />
 
     <TableLayout
         android:id="@+id/TopupLayoutGrid"
@@ -40,7 +40,7 @@
             <Button
                 android:id="@+id/btnAdd50k"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_weight="0.33"
                 android:background="#706767"
                 android:text="@string/activity_account_payment_50000"
@@ -50,7 +50,7 @@
             <Button
                 android:id="@+id/btnAdd100k"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_weight="0.33"
                 android:background="#706767"
                 android:text="@string/activity_account_payment_100000"
@@ -60,7 +60,7 @@
             <Button
                 android:id="@+id/btnAdd200k"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_weight="0.33"
                 android:background="#706767"
                 android:text="@string/activity_account_payment_200000"
@@ -75,7 +75,7 @@
             <Button
                 android:id="@+id/btnAdd300k"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_weight="0.33"
                 android:background="#706767"
                 android:text="@string/activity_account_payment_300000"
@@ -85,7 +85,7 @@
             <Button
                 android:id="@+id/btnAdd500k"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_weight="0.33"
                 android:background="#706767"
                 android:text="@string/activity_account_payment_500000"
@@ -95,7 +95,7 @@
             <Button
                 android:id="@+id/btnAdd1M"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_weight="0.33"
                 android:background="#706767"
                 android:text="@string/activity_account_payment_1000000"
@@ -110,7 +110,7 @@
             <Button
                 android:id="@+id/btnAdd2M"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_weight="0.33"
                 android:background="#706767"
                 android:text="@string/activity_account_payment_2000000"
@@ -120,7 +120,7 @@
             <Button
                 android:id="@+id/btnAdd5M"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_weight="0.33"
                 android:background="#706767"
                 android:text="@string/activity_account_payment_5000000"
@@ -130,7 +130,7 @@
             <Button
                 android:id="@+id/btnAdd10M"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_weight="0.33"
                 android:background="#706767"
                 android:text="@string/activity_account_payment_10000000"

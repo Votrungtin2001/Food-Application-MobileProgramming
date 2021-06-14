@@ -4,12 +4,15 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import java.util.Calendar;
+import java.util.Date;
 
 
 public class AccountPaymentTopup extends Fragment {
@@ -22,16 +25,15 @@ public class AccountPaymentTopup extends Fragment {
     }
 
     public static AccountPaymentTopup newInstance() {
-        AccountPaymentTopup fragment = new AccountPaymentTopup();
-        return fragment;
+        return new AccountPaymentTopup();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if ((getArguments() != null) && (getArguments().containsKey("CUSTOMER_ID")))
-            user_id = getArguments().getInt("CUSTOMER_ID");
+        if (MainActivity.customer_id > 0)
+            user_id = MainActivity.customer_id;
     }
 
     @Override
@@ -71,14 +73,20 @@ public class AccountPaymentTopup extends Fragment {
     };
 
     View.OnClickListener onDepositClick = v -> {
-        if ((Integer.getInteger(txtTopupAmount.getText().toString()) != 0) && (txtTopupAmount.getText().toString() != null)) {
-            int topup = Integer.parseInt(txtTopupAmount.getText().toString());
+        if (!txtTopupAmount.getText().toString().equals("")) {
+            if (user_id != -1) {
+                int topup = Integer.parseInt(txtTopupAmount.getText().toString());
+                Date date = Calendar.getInstance().getTime();
 
-            DatabaseHelper dbHelper = new DatabaseHelper(getContext());
-            dbHelper.addTransaction(user_id, topup);
-            int credits = dbHelper.getCredits(user_id);
-            credits += topup;
-            dbHelper.updCredits(user_id, credits);
+                DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+                dbHelper.addTransaction(user_id, date, topup);
+                int credits = dbHelper.getCredits(user_id);
+                credits += topup;
+                dbHelper.updCredits(user_id, credits);
+            } else
+                Toast.makeText(getContext(), "User not found. Did you forget to log in?", Toast.LENGTH_LONG).show();
         }
+        else
+            Toast.makeText(getContext(), "Please input the amount of credits to purchase!", Toast.LENGTH_LONG).show();
     };
 }

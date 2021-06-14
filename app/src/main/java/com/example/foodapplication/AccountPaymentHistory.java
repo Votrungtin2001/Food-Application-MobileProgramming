@@ -11,10 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import adapter.TransactionAdapter;
 
@@ -25,16 +22,15 @@ public class AccountPaymentHistory extends Fragment {
     public AccountPaymentHistory() { }
 
     public static AccountPaymentHistory newInstance() {
-        AccountPaymentHistory fragment = new AccountPaymentHistory();
-        return fragment;
+        return new AccountPaymentHistory();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if ((getArguments() != null) && (getArguments().containsKey("CUSTOMER_ID")))
-            user_id = getArguments().getInt("CUSTOMER_ID");
+        if (MainActivity.customer_id > 0)
+            user_id = MainActivity.customer_id;
     }
 
     @Override
@@ -43,25 +39,22 @@ public class AccountPaymentHistory extends Fragment {
         View view = inflater.inflate(R.layout.fragment_account_payment_history, container, false);
 
         RecyclerView rvTransactionHistory = view.findViewById(R.id.rvTransactionHistory);
+        transactions = new ArrayList<>();
 
-        DatabaseHelper dbHelper = new DatabaseHelper(getContext());
-        Cursor cursor = dbHelper.getTransactions(user_id);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
-        while (cursor.moveToNext()) {
-            Date date = null;
-            try {
-                date = sdf.parse(cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CTransaction.KEY_DATE)));
-            } catch (ParseException e) {
-                e.printStackTrace();
+        if (user_id != -1) {
+            DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+            Cursor cursor = dbHelper.getTransactions(user_id);
+            while (cursor.moveToNext()) {
+                int credits = cursor.getInt(cursor.getColumnIndexOrThrow(FoodManagementContract.CTransaction.KEY_CREDITS));
+                String date = cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CTransaction.KEY_DATE));
+                transactions.add(new Transaction(credits, date));
             }
-            int credits = cursor.getInt(cursor.getColumnIndexOrThrow(FoodManagementContract.CTransaction.KEY_CREDITS));
-            transactions.add(new Transaction(credits, date));
-        }
-        cursor.close();
+            cursor.close();
 
-        TransactionAdapter adapter = new TransactionAdapter(transactions);
-        rvTransactionHistory.setAdapter(adapter);
-        rvTransactionHistory.setLayoutManager(new LinearLayoutManager(getActivity()));
+            TransactionAdapter adapter = new TransactionAdapter(transactions);
+            rvTransactionHistory.setAdapter(adapter);
+            rvTransactionHistory.setLayoutManager(new LinearLayoutManager(getActivity()));
+        }
 
         return view;
     }

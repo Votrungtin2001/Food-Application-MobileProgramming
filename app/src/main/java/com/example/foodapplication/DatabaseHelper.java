@@ -120,6 +120,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(FoodManagementContract.CCustomer.KEY_GENDER, user.getGender());
         values.put(FoodManagementContract.CCustomer.KEY_DOB, user.getDoB());
         values.put(FoodManagementContract.CCustomer.KEY_OCCUPATION, user.getJob());
+        values.put(FoodManagementContract.CCustomer.KEY_CREDITS, 0);
 
         db.insert(FoodManagementContract.CCustomer.TABLE_NAME, null, values);
         db.close();
@@ -382,12 +383,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public int getCredits(int cus_id) {
         SQLiteDatabase db = this.getReadableDatabase();
+        int credits = 0;
 
         String selection = FoodManagementContract.CCustomer._ID + " = ?";
         String[] selectionArgs = { Integer.toString(cus_id) };
 
         Cursor cursor = db.query(FoodManagementContract.CCustomer.TABLE_NAME, null, selection, selectionArgs, null, null, null);
-        int credits = cursor.getInt(cursor.getColumnIndexOrThrow(FoodManagementContract.CCustomer.KEY_CREDITS));
+        if (cursor.moveToFirst()) {
+            credits = cursor.getInt(cursor.getColumnIndexOrThrow(FoodManagementContract.CCustomer.KEY_CREDITS));
+        }
         cursor.close();
         return credits;
     }
@@ -558,7 +562,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public long addAddressLabel(String type) {
         ContentValues values = new ContentValues();
-        values.put(FoodManagementContract.CAddressLabel.KEY_TYPE, type);
+        values.put(FoodManagementContract.CAddressLabel.KEY_TYPE, type.trim());
 
         SQLiteDatabase db = this.getWritableDatabase();
         return db.insertOrThrow(FoodManagementContract.CAddressLabel.TABLE_NAME, null, values);
@@ -587,6 +591,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(FoodManagementContract.CAddressLabel.TABLE_NAME, null, null, null, null, null, null);
         return cursor;
+    }
+
+    public long getAddressLabelId(String label) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selection = FoodManagementContract.CAddressLabel.KEY_TYPE + " = ?";
+        String[] selectionArgs = { label };
+        Cursor cursor = db.query(FoodManagementContract.CAddressLabel.TABLE_NAME, null, selection, selectionArgs, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            int id = cursor.getInt(cursor.getColumnIndexOrThrow(FoodManagementContract.CAddressLabel._ID));
+            cursor.close();
+            return (long) id;
+        }
+        else {
+            cursor.close();
+            return 0L;
+        }
     }
 
     public void addCustomerAddress(int customer_id, int address_id) {
@@ -989,10 +1011,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public void addTransaction(int cus_id, int amount) {
+    public void addTransaction(int cus_id, Date date, int amount) {
         ContentValues values = new ContentValues();
         values.put(FoodManagementContract.CTransaction.KEY_CUSTOMER, cus_id);
-        values.put(FoodManagementContract.CTransaction.KEY_DATE, (Calendar.getInstance().getTime()).toString());
+        values.put(FoodManagementContract.CTransaction.KEY_DATE, date.toString());
         values.put(FoodManagementContract.CTransaction.KEY_CREDITS, amount);
 
         SQLiteDatabase db = this.getWritableDatabase();

@@ -2,6 +2,7 @@ package com.example.foodapplication;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.LayoutInflater;
@@ -18,13 +19,10 @@ import com.example.foodapplication.auth.LoginFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class AccountFragment extends Fragment {
-    Button btnPayment, btnAddress, btnInvite, btnSupport, btnShop, btnPolicy, btnSettings, btnAbout, btnLogout;
+    Button btnPayment, btnAddress, btnPolicy, btnSettings, btnAbout, btnLogout;
     Fragment newFragment;
     TextView txtlogin;
-
-    int user_id = -1;
-
-    Bundle importArgs;
+    ImageView imgUser;
 
     Dialog LoginDialog;
 
@@ -33,15 +31,14 @@ public class AccountFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if ((getArguments() != null) && (getArguments().containsKey("CUSTOMER_ID")))
-            user_id = getArguments().getInt("CUSTOMER_ID");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_account, container, false);
+
+        imgUser = view.findViewById(R.id.imgUser);
 
         LoginDialog = new Dialog(getActivity());
         LoginDialog.setContentView(R.layout.custom_pop_up_login);
@@ -55,19 +52,34 @@ public class AccountFragment extends Fragment {
         btnSettings = view.findViewById(R.id.btnSettings);
         btnSettings.setOnClickListener(runSettingsFragment);
 
-        btnSupport = view.findViewById(R.id.btnSupport);
-        btnSupport.setOnClickListener(runSupportFragment);
-
         btnAbout = view.findViewById(R.id.btnAbout);
         btnAbout.setOnClickListener(runAboutFragment);
-
-        btnInvite = view.findViewById(R.id.btnInvite);
-        btnInvite.setOnClickListener(runInviteFragment);
 
         btnPolicy = view.findViewById(R.id.btnPolicy);
         btnPolicy.setOnClickListener(runPolicyFragment);
 
         txtlogin = view.findViewById(R.id.txtName);
+        if (MainActivity.customer_id > 0) {
+            DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+            Cursor cursor = dbHelper.getCustomerById(MainActivity.customer_id);
+            if (cursor.moveToFirst()) {
+                txtlogin.setText(cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CCustomer.KEY_NAME)));
+                switch (cursor.getInt(cursor.getColumnIndexOrThrow(FoodManagementContract.CCustomer.KEY_GENDER))) {
+                    case 0:
+                        imgUser.setImageResource(R.drawable.avatar_male);
+                        break;
+                    case 1:
+                        imgUser.setImageResource(R.drawable.avatar_female);
+                        break;
+                    default:
+                        imgUser.setImageResource(R.drawable.avatar_none);
+                        break;
+                }
+            }
+            cursor.close();
+        }
+        else
+            txtlogin.setText("Đăng nhập/Đăng kí");
         txtlogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,24 +90,12 @@ public class AccountFragment extends Fragment {
         btnLogout = view.findViewById(R.id.btnLogout);
         btnLogout.setOnClickListener(v -> FirebaseAuth.getInstance().signOut());
 
-        importArgs = new Bundle();
-        importArgs.putInt("CUSTOMER_ID", user_id);
-
         return view;
     }
 
     View.OnClickListener runAddressFragment = v -> {
         newFragment = new AccountAddressFragment();
-        newFragment.setArguments(importArgs);
         // source: https://stackoverflow.com/questions/21028786/how-do-i-open-a-new-fragment-from-another-fragment
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
-                .addToBackStack(null)
-                .commit();
-    };
-
-    View.OnClickListener runSupportFragment = v -> {
-        newFragment = new AccountSupportFragment();
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
                 .addToBackStack(null)
@@ -104,15 +104,6 @@ public class AccountFragment extends Fragment {
 
     View.OnClickListener runPaymentFragment = v -> {
         newFragment = new AccountPayment();
-        newFragment.setArguments(importArgs);
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
-                .addToBackStack(null)
-                .commit();
-    };
-
-    View.OnClickListener runInviteFragment = v -> {
-        newFragment = new AccountInviteFragment();
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
                 .addToBackStack(null)
@@ -121,7 +112,6 @@ public class AccountFragment extends Fragment {
 
     View.OnClickListener runSettingsFragment = v -> {
         newFragment = new AccountSettings();
-        newFragment.setArguments(importArgs);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
                 .addToBackStack(null)

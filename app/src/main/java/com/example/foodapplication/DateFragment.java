@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.widget.DatePicker;
+import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 
@@ -19,8 +20,8 @@ public class DateFragment extends DialogFragment implements DatePickerDialog.OnD
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if ((getArguments() != null) && (getArguments().containsKey("CUSTOMER_ID")))
-            user_id = getArguments().getInt("CUSTOMER_ID");
+        if (MainActivity.customer_id > 0)
+            user_id = MainActivity.customer_id;
     }
 
     @NotNull
@@ -34,19 +35,23 @@ public class DateFragment extends DialogFragment implements DatePickerDialog.OnD
     }
 
     public void onDateSet(DatePicker view, int yy, int mm, int dd) {
-        DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+        if (user_id != -1) {
+            DatabaseHelper dbHelper = new DatabaseHelper(getContext());
 
-        Calendar calendar = GregorianCalendar.getInstance();
-        calendar.set(Calendar.DAY_OF_MONTH, dd);
-        calendar.set(Calendar.MONTH, mm);
-        calendar.set(Calendar.YEAR, yy);
-        calendar.set(Calendar.MILLISECOND, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
+            Calendar calendar = GregorianCalendar.getInstance();
+            calendar.set(Calendar.DAY_OF_MONTH, dd);
+            calendar.set(Calendar.MONTH, mm);
+            calendar.set(Calendar.YEAR, yy);
+            calendar.set(Calendar.MILLISECOND, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
 
-        Date date = calendar.getTime();
-        dbHelper.updUserDoB(user_id, date);
-        dbHelper.close();
+            Date date = calendar.getTime();
+            dbHelper.updUserDoB(user_id, date);
+            dbHelper.close();
+        }
+        else
+            Toast.makeText(getContext(), "Unknown user. Did you forget to log in?", Toast.LENGTH_LONG).show();
     }
 }

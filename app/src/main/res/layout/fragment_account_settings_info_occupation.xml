@@ -8,61 +8,74 @@
 
     <TextView
         android:id="@+id/textView13"
-        android:layout_width="153dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
-        android:layout_marginEnd="258dp"
-        android:text="@string/activity_account_settings_account_info_occupation_desc" />
+        android:layout_marginEnd="100dp"
+        android:text="@string/activity_account_settings_account_info_occupation_desc"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/txtOccupationOffice"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_below="@+id/textView13"
         android:layout_marginTop="2dp"
         android:background="#FFFFFF"
+        android:gravity="center|start"
         android:text="@string/activity_account_settings_account_info_occupation_office"
+        android:textAlignment="gravity"
         android:textSize="24sp" />
 
     <TextView
         android:id="@+id/txtOccupationFree"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_below="@+id/txtOccupationOffice"
         android:layout_marginTop="2dp"
         android:background="#FFFFFF"
+        android:gravity="center|start"
         android:text="@string/activity_account_settings_account_info_occupation_free"
+        android:textAlignment="gravity"
         android:textSize="24sp" />
 
     <TextView
         android:id="@+id/txtOccupationStudent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_below="@+id/txtOccupationFree"
         android:layout_marginTop="2dp"
         android:background="#FFFFFF"
+        android:gravity="center|start"
         android:text="@string/activity_account_settings_account_info_occupation_student"
+        android:textAlignment="gravity"
         android:textSize="24sp" />
 
     <TextView
         android:id="@+id/txtOccupationHome"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_below="@+id/txtOccupationStudent"
         android:layout_marginTop="2dp"
         android:background="#FFFFFF"
+        android:gravity="center|start"
         android:text="@string/activity_account_settings_account_info_occupation_home"
+        android:textAlignment="gravity"
         android:textSize="24sp" />
 
     <TextView
         android:id="@+id/txtOccupationOther"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_below="@+id/txtOccupationHome"
         android:layout_marginTop="2dp"
         android:background="#FFFFFF"
+        android:gravity="center|start"
         android:text="@string/activity_account_settings_account_info_occupation_other"
+        android:textAlignment="gravity"
         android:textSize="24sp" />
 </RelativeLayout>
