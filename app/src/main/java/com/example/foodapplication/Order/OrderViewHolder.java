@@ -10,7 +10,6 @@ import com.example.foodapplication.R;
 
 public class OrderViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-
     public TextView txtOrderId, txtOrderStatus, txtOrderPhone, txtOrderAddress;
 
     private ItemClickListener itemClickListener;

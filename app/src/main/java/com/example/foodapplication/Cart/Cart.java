@@ -1,6 +1,5 @@
 package com.example.foodapplication.Cart;
 
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -62,28 +61,25 @@ public class Cart extends AppCompatActivity {
 
         loadListFood();
 
-        Intent intent = getIntent();
-        int addressID = intent.getIntExtra("Address",0);
-
         btnPlaceOrder = (Button) findViewById(R.id.btnPlaceOrder);
         btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Request req = new Request(currentTime,
                         customer_id,
-                        addressID,
+                        getAddressId(),
                         Integer.parseInt(txtTotalPrice.getText().toString()),
                         0);
                 databaseHelper.addOrder(req);
 
                 for (int i = 0; i < listCart.size(); i++)
                 {
-                    databaseHelper.addOrderDetail(getOrderId(customer_id),
+                    databaseHelper.addOrderDetail(getOrderId(),
                             getMenuId(listCart.get(i).getProduct_id()) ,
                             listCart.get(i).getQuantity(),
                             listCart.get(i).getPrice());
                 }
-
+                listCart.clear();
                 finish();
             }
         });
@@ -103,18 +99,20 @@ public class Cart extends AppCompatActivity {
 
         txtTotalPrice.setText(Integer.toString(total));
 
+
     }
-    public int getCusId() {
-        String selectQuery = "SELECT _id FROM CUSTOMER '" + "';";
+    public int getAddressId() {
+        int addressId = -1;
+        String selectQuery = "SELECT _id FROM CUSTOMER_ADDRESS WHERE Customer ='" + customer_id + "';";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             do {
-
+                addressId = cursor.getInt(cursor.getColumnIndex("_id"));
             } while (cursor.moveToNext());
         }
-        int cusid = cursor.getColumnIndex("_id");
-        return  cusid;
+        cursor.close();
+        return  addressId;
     }
 
     public int getMenuId(int product_id) {
@@ -124,21 +122,21 @@ public class Cart extends AppCompatActivity {
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             do {
-                menuid = cursor.getColumnIndex("_id");
+                menuid = cursor.getInt(cursor.getColumnIndex("_id"));
             } while (cursor.moveToNext());
         }
         cursor.close();
         return  menuid;
     }
 
-    public int getOrderId(int customer_id) {
+    public int getOrderId() {
         int orderid = -1;
         String selectQuery = "SELECT _id FROM ORDERS WHERE Customer ='" + customer_id + "';";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             do {
-                orderid = cursor.getColumnIndex("_id");
+                orderid = cursor.getInt(cursor.getColumnIndex("_id"));
             }
             while (cursor.moveToNext());
         }
