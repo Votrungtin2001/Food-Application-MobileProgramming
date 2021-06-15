@@ -33,8 +33,11 @@
         android:background="#FFFFFF"
         android:editable="true"
         android:ems="10"
+        android:gravity="center|start"
         android:hint="@string/activity_account_address_input"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:textAlignment="gravity"
+        android:textSize="18sp" />
 
     <EditText
         android:id="@+id/txtAccountAddressGate"
@@ -46,8 +49,11 @@
         android:layout_marginEnd="-1dp"
         android:background="#FFFFFF"
         android:ems="10"
+        android:gravity="center|start"
         android:hint="@string/activity_account_address_gate"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:textAlignment="gravity"
+        android:textSize="18sp" />
 
     <EditText
         android:id="@+id/txtAccountAddressFloor"
@@ -59,17 +65,22 @@
         android:layout_marginEnd="1dp"
         android:background="#FFFFFF"
         android:ems="10"
+        android:gravity="center|start"
         android:hint="@string/activity_account_address_floor"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:textAlignment="gravity"
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
         android:layout_marginTop="3dp"
-        android:layout_marginEnd="343dp"
+        android:layout_marginEnd="250dp"
         android:text="@string/activity_account_address"
         android:textSize="18sp" />
 
@@ -96,7 +107,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.33"
             android:background="#FFFFFF"
-            android:text="@string/nav_label_home" />
+            android:text="@string/activity_account_address_label_home" />
 
         <RadioButton
             android:id="@+id/rbWork"
@@ -123,8 +134,11 @@
         android:layout_below="@+id/rbGroup"
         android:background="#FFFFFF"
         android:ems="10"
+        android:gravity="center|start"
         android:hint="@string/activity_account_address_label_other_spec"
         android:inputType="textPersonName"
+        android:textAlignment="gravity"
+        android:textSize="18sp"
         android:visibility="invisible" />
 
     <Button

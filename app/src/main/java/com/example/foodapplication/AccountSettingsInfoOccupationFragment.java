@@ -55,22 +55,24 @@ public class AccountSettingsInfoOccupationFragment extends Fragment {
         if (cursor.moveToFirst()) {
             String occupation = cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CCustomer.KEY_OCCUPATION));
 
-            switch (occupation) {
-                case "Văn phòng":
-                    txtOccupationOffice.setBackgroundColor(getResources().getColor(R.color.quantum_bluegrey400));
-                    break;
-                case "Tự kinh doanh/Tự do":
-                    txtOccupationFree.setBackgroundColor(getResources().getColor(R.color.quantum_bluegrey400));
-                    break;
-                case "Sinh viên":
-                    txtOccupationStudent.setBackgroundColor(getResources().getColor(R.color.quantum_bluegrey400));
-                    break;
-                case "Ở nhà":
-                    txtOccupationHome.setBackgroundColor(getResources().getColor(R.color.quantum_bluegrey400));
-                    break;
-                case "Khác":
-                    txtOccupationOther.setBackgroundColor(getResources().getColor(R.color.quantum_bluegrey400));
-                    break;
+            if (occupation != null) {
+                switch (occupation) {
+                    case "Văn phòng":
+                        txtOccupationOffice.setBackgroundColor(getResources().getColor(R.color.quantum_bluegrey400));
+                        break;
+                    case "Tự kinh doanh/Tự do":
+                        txtOccupationFree.setBackgroundColor(getResources().getColor(R.color.quantum_bluegrey400));
+                        break;
+                    case "Sinh viên":
+                        txtOccupationStudent.setBackgroundColor(getResources().getColor(R.color.quantum_bluegrey400));
+                        break;
+                    case "Ở nhà":
+                        txtOccupationHome.setBackgroundColor(getResources().getColor(R.color.quantum_bluegrey400));
+                        break;
+                    case "Khác":
+                        txtOccupationOther.setBackgroundColor(getResources().getColor(R.color.quantum_bluegrey400));
+                        break;
+                }
             }
         }
         cursor.close();

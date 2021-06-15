@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -26,7 +27,6 @@ public class AccountFragment extends Fragment {
     Dialog LoginDialog;
 
     int choose_role = 0;
-user user = new user();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,12 +79,16 @@ user user = new user();
         }
         else
             txtlogin.setText(getResources().getString(R.string.activity_account_login_name));
-        txtlogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ShowPopUpLogin(v);
-
+        txtlogin.setOnClickListener(v -> {
+            if (MainActivity.customer_id > 0) {
+                Fragment fragment = new AccountSettingsInfoFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(((ViewGroup)getView().getParent()).getId(), fragment, null)
+                        .addToBackStack(null)
+                        .commit();
             }
+            else
+                ShowPopUpLogin(v);
         });
 
         btnLogout = view.findViewById(R.id.btnLogout);
@@ -94,28 +98,39 @@ user user = new user();
     }
 
     View.OnClickListener runAddressFragment = v -> {
-        newFragment = new AccountAddressFragment();
-        // source: https://stackoverflow.com/questions/21028786/how-do-i-open-a-new-fragment-from-another-fragment
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
-                .addToBackStack(null)
-                .commit();
+        if (MainActivity.customer_id > 0) {
+            newFragment = new AccountAddressFragment();
+            // source: https://stackoverflow.com/questions/21028786/how-do-i-open-a-new-fragment-from-another-fragment
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(((ViewGroup) getView().getParent()).getId(), newFragment, null)
+                    .addToBackStack(null)
+                    .commit();
+        }
+        else
+            Toast.makeText(getContext(), "Bạn không thể dùng chức năng này vì bạn chưa đăng nhập.", Toast.LENGTH_LONG).show();
     };
 
     View.OnClickListener runPaymentFragment = v -> {
-        newFragment = new AccountPayment();
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
-                .addToBackStack(null)
-                .commit();
+        if (MainActivity.customer_id > 0) {
+            newFragment = new AccountPayment();
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(((ViewGroup) getView().getParent()).getId(), newFragment, null)
+                    .addToBackStack(null)
+                    .commit();
+        }
+        else
+            Toast.makeText(getContext(), "Bạn không thể dùng chức năng này vì bạn chưa đăng nhập.", Toast.LENGTH_LONG).show();
     };
 
     View.OnClickListener runSettingsFragment = v -> {
-        newFragment = new AccountSettings();
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
-                .addToBackStack(null)
-                .commit();
+        if (MainActivity.customer_id > 0) {
+            newFragment = new AccountSettings();
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(((ViewGroup) getView().getParent()).getId(), newFragment, null)
+                    .addToBackStack(null)
+                    .commit();
+        } else
+            Toast.makeText(getContext(), "Bạn không thể dùng chức năng này vì bạn chưa đăng nhập.", Toast.LENGTH_LONG).show();
     };
 
     View.OnClickListener runAboutFragment = v -> {

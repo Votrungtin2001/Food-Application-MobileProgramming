@@ -4,12 +4,12 @@
     <string name="save">Save</string>
 
     <!--nav bar start-->
-    <string name="nav_label_home">Home</string>
-    <string name="nav_label_order">Order</string>
-    <string name="nav_label_favorites">Favorites</string>
-    <string name="nav_label_notif">Notifications</string>
-    <string name="nav_label_account">Account</string>
-    <string name="nav_label_update">Update</string>
+    <string name="nav_label_home">Trang chủ</string>
+    <string name="nav_label_order">Đơn hàng</string>
+    <string name="nav_label_favorites">Đã lưu</string>
+    <string name="nav_label_notif">Thông báo</string>
+    <string name="nav_label_account">Tài khoản</string>
+    <string name="nav_label_update">Cập nhật</string>
     <!--nav bar end-->
 
     <string name="activity_fav">Favorites</string>
@@ -43,6 +43,7 @@
     <string name="activity_account_address_floor">Tầng (tự chọn)</string>
     <string name="activity_account_address_gate">Cổng (tự chọn)</string>
     <string name="activity_account_address_label">Nhãn địa chỉ</string>
+    <string name="activity_account_address_label_home">Nhà</string>
     <string name="activity_account_address_label_work">Nơi làm việc</string>
     <string name="activity_account_address_label_other">Khác</string>
     <string name="activity_account_address_label_other_spec">Tên nhãn (vd Trường, Phòng tập, v.v)</string>
