@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".getCurrentLocation_LoadingScreen"
+    tools:context=".SubScreen.GetCurrentLocation"
     >
 
     <pl.droidsonroids.gif.GifImageView
@@ -15,20 +15,6 @@
         android:src="@drawable/current_location_loading_screen"
         tools:layout_editor_absoluteX="-121dp"
         tools:layout_editor_absoluteY="-57dp" />
-
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="100dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@+id/gifImageView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-    </ProgressBar>
 
     <TextView
         android:id="@+id/address_TextView"

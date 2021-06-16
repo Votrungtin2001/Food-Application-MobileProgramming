@@ -38,11 +38,11 @@
             android:value="AIzaSyB_RuQCaFrm4wAIamLJA9R-NvSc7RmjlrA" />
 
         <activity android:name=".Map" />
-        <activity android:name=".getCurrentLocation_LoadingScreen" />
+        <activity android:name=".SubScreen.GetCurrentLocation" />
         <activity
             android:name=".Fill_Address_Screen"
             android:theme="@style/Theme.AppCompat.Button" />
-        <activity android:name=".LoadingScreen">
+        <activity android:name=".SubScreen.LoadingScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
