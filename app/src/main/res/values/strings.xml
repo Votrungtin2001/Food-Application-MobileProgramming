@@ -47,6 +47,8 @@
     <string name="activity_account_address_label_work">Nơi làm việc</string>
     <string name="activity_account_address_label_other">Khác</string>
     <string name="activity_account_address_label_other_spec">Tên nhãn (vd Trường, Phòng tập, v.v)</string>
+    <string name="activity_account_address_save">Lưu địa chỉ</string>
+    <string name="activity_account_address_update">Cập nhật địa chỉ</string>
 
     <!-- Account -> Settings strings -->
     <string name="activity_account_settings_account">Cài đặt Tài khoản</string>

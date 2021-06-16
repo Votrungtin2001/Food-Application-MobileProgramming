@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import java.util.ArrayList;
 
@@ -22,9 +23,10 @@ public class AccountAddressFragment extends Fragment {
     EditText txtAccountAddressInput, txtAccountAddressGate, txtAccountAddressFloor, txtOtherLabelName;
     RadioGroup rbGroup;
     Button btnAccountAddressSave;
+    ArrayList<IdWithNameListItem> citySpinner, districtSpinner;
 
     DatabaseHelper dbHelper;
-    int user_id = -1;
+    int user_id = -1, address_id = 0;
 
     public AccountAddressFragment() {
         // Required empty public constructor
@@ -49,15 +51,15 @@ public class AccountAddressFragment extends Fragment {
         dbHelper = new DatabaseHelper(getContext());
 
         spinCityInput = view.findViewById(R.id.spinCityInput);
-        ArrayList<IdWithNameListItem> spinnerArray = new ArrayList<>();
+        citySpinner = new ArrayList<>();
         Cursor cursor = dbHelper.getCities();
         while (cursor.moveToNext()) {
             int id = cursor.getInt(cursor.getColumnIndexOrThrow(FoodManagementContract.CCity._ID));
             String name = cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CCity.KEY_NAME));
-            spinnerArray.add(new IdWithNameListItem(id, name));
+            citySpinner.add(new IdWithNameListItem(id, name));
         }
         cursor.close();
-        ArrayAdapter spinnerAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, spinnerArray);
+        ArrayAdapter spinnerAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, citySpinner);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinCityInput.setAdapter(spinnerAdapter);
         spinCityInput.setOnItemSelectedListener(onCityChosen);
@@ -80,11 +82,16 @@ public class AccountAddressFragment extends Fragment {
     RadioGroup.OnCheckedChangeListener onCheckedChangeListener = (group, checkedId) -> {
         switch(rbGroup.getCheckedRadioButtonId()) {
             case R.id.rbHome:
+                txtOtherLabelName.setVisibility(View.INVISIBLE);
+                setUpHints(true);
+                break;
             case R.id.rbWork:
                 txtOtherLabelName.setVisibility(View.INVISIBLE);
+                setUpHints(false);
                 break;
             case R.id.rbOther:
                 txtOtherLabelName.setVisibility(View.VISIBLE);
+                btnAccountAddressSave.setText(getResources().getText(R.string.activity_account_address_save));
                 break;
         }
     };
@@ -95,14 +102,14 @@ public class AccountAddressFragment extends Fragment {
             IdWithNameListItem spinnerItem = (IdWithNameListItem) spinCityInput.getSelectedItem();
             int city_id = spinnerItem.getId();
             Cursor cursor = dbHelper.getDistricts(city_id);
-            ArrayList<IdWithNameListItem> spinnerArray = new ArrayList<>();
+            districtSpinner = new ArrayList<>();
             while (cursor.moveToNext()) {
                 int dist_id = cursor.getInt(cursor.getColumnIndexOrThrow(FoodManagementContract.CDistrict._ID));
                 String name = cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CDistrict.KEY_NAME));
-                spinnerArray.add(new IdWithNameListItem(dist_id, name));
+                districtSpinner.add(new IdWithNameListItem(dist_id, name));
             }
             cursor.close();
-            ArrayAdapter spinnerAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, spinnerArray);
+            ArrayAdapter spinnerAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, districtSpinner);
             spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinDistrictInput.setAdapter(spinnerAdapter);
         }
@@ -136,6 +143,9 @@ public class AccountAddressFragment extends Fragment {
                 case R.id.rbWork:
                     address_label = 2L;
                     break;
+                default:
+                    address_label = 3L;
+                    break;
             }
 
             int floor = 0, gate = 0;
@@ -145,16 +155,76 @@ public class AccountAddressFragment extends Fragment {
             if (!txtAccountAddressGate.getText().toString().equals(""))
                 gate = Integer.parseInt(txtAccountAddressGate.getText().toString());
 
-
-            long address_id = dbHelper.addAddress(txtAccountAddressInput.getText().toString(),
-                    selectedDistrict.getId(),
-                    selectedCity.getId(),
-                    floor,
-                    gate,
-                    (int) address_label);
-            dbHelper.addCustomerAddress(user_id, (int) address_id);
+            if (btnAccountAddressSave.getText().toString().equals("Lưu địa chỉ")) {
+                long address_id = dbHelper.addAddress(txtAccountAddressInput.getText().toString(),
+                        selectedDistrict.getId(),
+                        selectedCity.getId(),
+                        floor,
+                        gate,
+                        (int) address_label);
+                dbHelper.addCustomerAddress(user_id, (int) address_id);
+                Toast.makeText(getContext(), "Lưu địa chỉ thành công!", Toast.LENGTH_SHORT).show();
+                FragmentManager fragmentManager = getParentFragmentManager();
+                fragmentManager.popBackStack(null, 0);
+            }
+            else {
+                dbHelper.updAddress(address_id,
+                        txtAccountAddressInput.getText().toString(),
+                        selectedDistrict.getId(),
+                        selectedCity.getId(),
+                        floor,
+                        gate,
+                        (int) address_label);
+                Toast.makeText(getContext(), "Cập nhật địa chỉ thành công!", Toast.LENGTH_SHORT).show();
+                FragmentManager fragmentManager = getParentFragmentManager();
+                fragmentManager.popBackStack(null, 0);
+            }
         }
         else
             Toast.makeText(getContext(), "Unknown user. Did you forget to log in?", Toast.LENGTH_LONG).show();
     };
+
+    public void setUpHints(boolean IsHomeAddress) {
+        int id = 0;
+        if (IsHomeAddress)
+            id = dbHelper.getCustomerAddress(user_id, 1);
+        else
+            id = dbHelper.getCustomerAddress(user_id, 2);
+
+        if (id > 0) {
+            btnAccountAddressSave.setText(getResources().getText(R.string.activity_account_address_update));
+            address_id = id;
+
+            Cursor cursor = dbHelper.getAddress(address_id);
+            if (cursor.moveToFirst()) {
+                int city_id = cursor.getInt(cursor.getColumnIndexOrThrow(FoodManagementContract.CAddress.KEY_CITY)),
+                        district_id = cursor.getInt(cursor.getColumnIndexOrThrow(FoodManagementContract.CAddress.KEY_DISTRICT)),
+                        floor = cursor.getInt(cursor.getColumnIndexOrThrow(FoodManagementContract.CAddress.KEY_FLOOR)),
+                        gate = cursor.getInt(cursor.getColumnIndexOrThrow(FoodManagementContract.CAddress.KEY_GATE));
+                String address = cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CAddress.KEY_ADDRESS));
+
+                for (int i = 0; i < citySpinner.size(); i++) {
+                    if (city_id == citySpinner.get(i).getId()) {
+                        spinCityInput.setSelection(i);
+                        break;
+                    }
+                }
+
+                for (int i = 0; i < districtSpinner.size(); i++) {
+                    if (district_id == districtSpinner.get(i).getId()) {
+                        spinDistrictInput.setSelection(i);
+                        break;
+                    }
+                }
+
+                txtAccountAddressFloor.setText(Integer.toString(floor));
+                txtAccountAddressGate.setText(Integer.toString(gate));
+                txtAccountAddressInput.setText(address);
+            }
+        }
+        else {
+            btnAccountAddressSave.setText(getResources().getString(R.string.activity_account_address_save));
+            address_id = 0;
+        }
+    }
 }

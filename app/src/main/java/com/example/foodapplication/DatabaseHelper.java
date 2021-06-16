@@ -13,8 +13,10 @@ import android.graphics.drawable.Drawable;
 import com.example.foodapplication.auth.user;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import models.Request;
 
@@ -347,7 +349,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         int id_master = -1;
 
-        String selectQuery = "SELECT _id FROM MASTER WHERE USERNAME='" + username +"';";
+        String selectQuery = "SELECT _id FROM MASTER WHERE Email='" + username +"';";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor != null) {
             cursor.moveToFirst();
@@ -534,6 +536,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.delete(FoodManagementContract.CAddress.TABLE_NAME, selection, selectionArgs);
     }
 
+    public Cursor getAddress(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selection = FoodManagementContract.CAddress._ID + " = ?";
+        String[] selectionArgs = { Integer.toString(id) };
+        Cursor cursor = db.query(FoodManagementContract.CAddress.TABLE_NAME, null, selection, selectionArgs, null, null, null);
+
+        return cursor;
+    }
+
     public Cursor getAddress() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(FoodManagementContract.CAddress.TABLE_NAME, null, null, null, null, null, null);
@@ -620,10 +632,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.delete(FoodManagementContract.CCustomerAddress.TABLE_NAME, selection, selectionArgs);
     }
 
-    public Cursor getCustomerAddress() {
+    public int getCustomerAddress(int id, int criteria) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(FoodManagementContract.CCustomerAddress.TABLE_NAME, null, null, null, null, null, null);
-        return cursor;
+
+        String query = "SELECT * FROM " + FoodManagementContract.CAddress.TABLE_NAME
+                + " INNER JOIN " + FoodManagementContract.CCustomerAddress.TABLE_NAME
+                + " ON " + FoodManagementContract.CCustomerAddress.TABLE_NAME + "." + FoodManagementContract.CCustomerAddress.KEY_ADDRESS
+                + " = " + FoodManagementContract.CAddress.TABLE_NAME + "." + FoodManagementContract.CAddress._ID
+                + " WHERE " + FoodManagementContract.CCustomerAddress.KEY_CUSTOMER + " = ? "
+                + "AND " + FoodManagementContract.CAddress.KEY_LABEL + " = ?";
+        String[] selectionArgs = { Integer.toString(id) , Integer.toString(criteria)};
+        Cursor cursor = db.rawQuery(query, selectionArgs);
+        if (cursor.moveToFirst()) {
+            int return_id = cursor.getInt(cursor.getColumnIndexOrThrow(FoodManagementContract.CCustomerAddress.KEY_ADDRESS));
+            cursor.close();
+            return return_id;
+        }
+        else {
+            cursor.close();
+            return 0;
+        }
     }
 
     public void addRestaurant(String name, String opening_time, byte[] image) {

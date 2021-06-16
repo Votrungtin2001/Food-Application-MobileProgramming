@@ -3,6 +3,7 @@ package com.example.foodapplication;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -83,10 +84,13 @@ public class AccountPaymentTopup extends Fragment {
                 int credits = dbHelper.getCredits(user_id);
                 credits += topup;
                 dbHelper.updCredits(user_id, credits);
+                Toast.makeText(getContext(), "Nạp tiền thành công!", Toast.LENGTH_SHORT).show();
+                FragmentManager fragmentManager = getParentFragmentManager();
+                fragmentManager.popBackStack(null, 0);
             } else
                 Toast.makeText(getContext(), "User not found. Did you forget to log in?", Toast.LENGTH_LONG).show();
         }
         else
-            Toast.makeText(getContext(), "Please input the amount of credits to purchase!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Xin hãy nhập lượng tiền cần nạp!", Toast.LENGTH_LONG).show();
     };
 }

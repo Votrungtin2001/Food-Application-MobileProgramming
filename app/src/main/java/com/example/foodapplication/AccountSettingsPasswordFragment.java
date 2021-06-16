@@ -4,6 +4,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,6 +57,8 @@ public class AccountSettingsPasswordFragment extends Fragment {
                     if (txtConfirmPassword.getText().toString().equals(txtNewPassword.getText().toString())) {
                         dbHelper.updUserPassword(user_id, txtNewPassword.getText().toString());
                         Toast.makeText(getContext(), "Đã cập nhật mật khẩu!", Toast.LENGTH_SHORT).show();
+                        FragmentManager fragmentManager = getParentFragmentManager();
+                        fragmentManager.popBackStack(null, 0);
                     } else {
                         txtNewPassword.setText("");
                         txtConfirmPassword.setText("");

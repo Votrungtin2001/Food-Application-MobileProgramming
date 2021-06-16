@@ -4,6 +4,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -87,6 +88,8 @@ public class SingleEditTextUpdateFragment extends Fragment {
                 dbHelper.updUserInfoWithKey(user_id, txtEditText.getText().toString(), type);
                 dbHelper.close();
                 Toast.makeText(getContext(), "Cập nhật dữ liệu thành công!", Toast.LENGTH_SHORT).show();
+                FragmentManager fragmentManager = getParentFragmentManager();
+                fragmentManager.popBackStack(null, 0);
             }
         }
         else
