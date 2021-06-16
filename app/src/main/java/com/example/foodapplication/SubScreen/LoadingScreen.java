@@ -1,9 +1,8 @@
-package com.example.foodapplication;
+package com.example.foodapplication.SubScreen;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -12,6 +11,8 @@ import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+
+import com.example.foodapplication.R;
 
 public class LoadingScreen extends AppCompatActivity {
 
@@ -23,17 +24,21 @@ public class LoadingScreen extends AppCompatActivity {
         //Transparent Status and Navigation Bar
         transparentStatusAndNavigation();
 
-        //Progress Bar run, if it finishes, Loading Screen will change a new screen
+        setContentView(R.layout.activity_loading_screen);
+
+        Run();
+    }
+
+    public void Run() {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                startActivity(new Intent(LoadingScreen.this,getCurrentLocation_LoadingScreen.class));
+                startActivity(new Intent(LoadingScreen.this, GetCurrentLocation.class));
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
                 finish();
             }
-        }, 4000);
-        setContentView(R.layout.activity_loading_screen);
+        }, 3000);
     }
     private void transparentStatusAndNavigation() {
         //make full transparent statusBar
