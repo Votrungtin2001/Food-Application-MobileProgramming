@@ -49,9 +49,6 @@ public class RestaurantInformation extends AppCompatActivity {
 
     Dialog AnnouncementDialog;
 
-    //Code Minh Thi
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

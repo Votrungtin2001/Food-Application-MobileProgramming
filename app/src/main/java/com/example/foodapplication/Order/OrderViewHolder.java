@@ -1,41 +1,78 @@
 package com.example.foodapplication.Order;
 
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.foodapplication.DatabaseHelper;
 import com.example.foodapplication.R;
 
-public class OrderViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+import java.util.List;
 
+public class OrderViewHolder extends RecyclerView.Adapter<OrderViewHolder.ViewHolder> {
 
-    public TextView txtOrderId, txtOrderStatus, txtOrderPhone, txtOrderAddress;
+    List<OrderModel> itemList;
+    Context context;
+    LayoutInflater inflater;
 
-    private ItemClickListener itemClickListener;
+    SQLiteDatabase db;
+    DatabaseHelper databaseHelper;
 
-    public OrderViewHolder(@NonNull View itemView) {
-        super(itemView);
-
-        txtOrderId = itemView.findViewById(R.id.order_id);
-        txtOrderStatus = itemView.findViewById(R.id.order_status);
-        txtOrderPhone = itemView.findViewById(R.id.order_phone);
-        txtOrderAddress = itemView.findViewById(R.id.order_address);
-
-        itemView.setOnClickListener(this);
+    public OrderViewHolder(Context ctx, List<OrderModel> ItemList) {
+        this.context = ctx;
+        this.itemList = ItemList;
+        this.inflater = LayoutInflater.from(ctx);
     }
 
-    public void setItemClickListener(ItemClickListener itemClickListener) {
-        this.itemClickListener = itemClickListener;
+    @NonNull
+    @Override
+    public OrderViewHolder.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = inflater.inflate(R.layout.order_layout, parent, false);
+
+        databaseHelper = new DatabaseHelper(context);
+        db = databaseHelper.getReadableDatabase();
+
+        return new OrderViewHolder.ViewHolder(view);
     }
 
     @Override
-    public void onClick(View view) {
-        itemClickListener.onClick(view,getAdapterPosition(),false);
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        OrderModel currentItem = itemList.get(position);
+
+        holder.txtOrderId.setText(Integer.toString(currentItem.getOrderId()));
+        holder.txtOrderStt.setText(Integer.toString(currentItem.getOrderStatus()));
+        holder.txtPhone.setText(currentItem.getPhone());
+        holder.txtAddress.setText(Integer.toString(currentItem.getTotal()));
+
     }
 
-    public interface ItemClickListener {
-        void onClick(View view, int position,boolean isLongClick);
+    @Override
+    public int getItemCount() {
+        return itemList.size();
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView txtOrderId;
+        TextView txtOrderStt;
+        TextView txtPhone;
+        TextView txtAddress;
+
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            txtOrderId = itemView.findViewById(R.id.order_id);
+            txtOrderStt = itemView.findViewById(R.id.order_status);
+            txtPhone = itemView.findViewById(R.id.order_phone);
+            txtAddress = itemView.findViewById(R.id.order_address);
+
+        }
     }
 }
+

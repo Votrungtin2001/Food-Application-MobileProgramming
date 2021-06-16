@@ -1,5 +1,6 @@
 package com.example.foodapplication.Order;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,10 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.example.foodapplication.DatabaseHelper;
 import com.example.foodapplication.R;
 import com.google.android.material.tabs.TabItem;
 import com.google.android.material.tabs.TabLayout;
-import com.google.gson.internal.$Gson$Preconditions;
 
 
 public class OrderFragment extends Fragment {
@@ -23,6 +24,8 @@ public class OrderFragment extends Fragment {
     TabLayout tabLayout;
     ViewPager vp;
 
+    DatabaseHelper databaseHelper;
+    SQLiteDatabase db;
     public OrderFragment() {
         // Required empty public constructor
     }
@@ -32,7 +35,8 @@ public class OrderFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_order, container, false);
-
+        databaseHelper = new DatabaseHelper(getActivity());
+        db = databaseHelper.getReadableDatabase();
         tabLayout = view.findViewById(R.id.tabBar);
         TabItem tab1 = view.findViewById(R.id.ord_coming);
         TabItem tab2 = view.findViewById(R.id.ord_history);

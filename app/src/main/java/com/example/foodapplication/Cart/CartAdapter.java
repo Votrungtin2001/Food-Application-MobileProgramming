@@ -78,6 +78,10 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
                 holder.countItem.setText(Integer.toString(listCart.get(position).quantity--));
                 int price = (listCart.get(position).getPrice())*(listCart.get(position).getQuantity());
                 holder.price.setText(Integer.toString(price));
+                if(listCart.get(position).quantity == 0)
+                {
+                    listCart.remove(listCart.get(position));
+                }
             }
         });
     }

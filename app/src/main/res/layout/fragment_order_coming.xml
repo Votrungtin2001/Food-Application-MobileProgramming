@@ -12,6 +12,7 @@
        android:layout_height="match_parent">
 
       <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/listOrders"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           app:layout_constraintEnd_toEndOf="parent"
@@ -32,6 +33,7 @@
           app:srcCompat="@drawable/sale66" />
 
       <LinearLayout
+          android:id="@+id/none"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:orientation="vertical"
