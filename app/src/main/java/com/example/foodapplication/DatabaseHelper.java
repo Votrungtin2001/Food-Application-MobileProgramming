@@ -25,7 +25,7 @@ import static com.example.foodapplication.FoodManagementContract.CCustomer.TABLE
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // REMEMBER TO ADD 1 TO THIS CONSTANT WHEN YOU MAKE ANY CHANGES TO THE CONTRACT CLASS!
-    public static final int DATABASE_VERSION = 47;
+    public static final int DATABASE_VERSION = 48;
     private static String DB_PATH= "data/data/com.example.foodapplication/databases/";
     private static String DB_NAME = "foodapp";
     private final Context context;
@@ -225,25 +225,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
         }
     }
-    public void updCustomer(int id, String name, int city_id, String phone, String email, String fb, String user, String pass, int gender, Date DoB, String job) {
-        SQLiteDatabase db = this.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-        values.put(FoodManagementContract.CCustomer.KEY_NAME, name);
-        values.put(FoodManagementContract.CCustomer.KEY_CITY, city_id);
-        values.put(FoodManagementContract.CCustomer.KEY_PHONE, phone);
-        values.put(KEY_EMAIL, email);
-        values.put(FoodManagementContract.CCustomer.KEY_FACEBOOK, fb);
-        values.put(FoodManagementContract.CCustomer.KEY_USERNAME, user);
-        values.put(FoodManagementContract.CCustomer.KEY_PASSWORD, pass);
-        values.put(FoodManagementContract.CCustomer.KEY_GENDER, gender);
-        values.put(FoodManagementContract.CCustomer.KEY_DOB, DoB.toString());
-        values.put(FoodManagementContract.CCustomer.KEY_OCCUPATION, job);
-
-        String selection = FoodManagementContract.CCustomer._ID + " = ?";
-        String[] selectionArgs = { Integer.toString(id) };
-        db.update(FoodManagementContract.CCustomer.TABLE_NAME, values, selection, selectionArgs);
-    }
 
     public void updUserInfoWithKey(int cus_id, String string, String key) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -254,7 +236,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 values.put(FoodManagementContract.CCustomer.KEY_PHONE, string);
                 break;
             case "EditName":
-                values.put(FoodManagementContract.CCustomer.KEY_USERNAME, string);
+                values.put(FoodManagementContract.CCustomer.KEY_NAME, string);
                 break;
             case "EditEmail":
                 values.put(FoodManagementContract.CCustomer.KEY_EMAIL, string);
@@ -346,7 +328,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         int id_user = -1;
 
-        String selectQuery = "SELECT _id FROM CUSTOMER WHERE USERNAME='" + username +"';";
+        String selectQuery = "SELECT _id FROM CUSTOMER WHERE Email='" + username +"';";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor != null) {
             cursor.moveToFirst();

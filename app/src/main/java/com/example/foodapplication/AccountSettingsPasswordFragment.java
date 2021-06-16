@@ -55,17 +55,17 @@ public class AccountSettingsPasswordFragment extends Fragment {
                 if (txtCurrentPassword.getText().toString().equals(currentPassword)) {
                     if (txtConfirmPassword.getText().toString().equals(txtNewPassword.getText().toString())) {
                         dbHelper.updUserPassword(user_id, txtNewPassword.getText().toString());
-                        Toast.makeText(getContext(), "Password updated!!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Đã cập nhật mật khẩu!", Toast.LENGTH_SHORT).show();
                     } else {
                         txtNewPassword.setText("");
                         txtConfirmPassword.setText("");
-                        Toast.makeText(getContext(), "Password fields do not match!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Mật khẩu xác nhận không trùng mật khẩu mới!", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     txtCurrentPassword.setText("");
                     txtNewPassword.setText("");
                     txtConfirmPassword.setText("");
-                    Toast.makeText(getContext(), "Incorrect password!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Sai mật khẩu hiện tại!", Toast.LENGTH_SHORT).show();
                 }
             }
             dbHelper.close();

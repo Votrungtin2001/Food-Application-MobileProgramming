@@ -55,22 +55,24 @@ public class AccountSettingsInfoOccupationFragment extends Fragment {
         if (cursor.moveToFirst()) {
             String occupation = cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CCustomer.KEY_OCCUPATION));
 
-            switch (occupation) {
-                case "Office State/Professional":
-                    txtOccupationOffice.setBackgroundColor(getResources().getColor(R.color.quantum_bluegrey400));
-                    break;
-                case "Self-Employed/Freelancer":
-                    txtOccupationFree.setBackgroundColor(getResources().getColor(R.color.quantum_bluegrey400));
-                    break;
-                case "Student":
-                    txtOccupationStudent.setBackgroundColor(getResources().getColor(R.color.quantum_bluegrey400));
-                    break;
-                case "At Home":
-                    txtOccupationHome.setBackgroundColor(getResources().getColor(R.color.quantum_bluegrey400));
-                    break;
-                case "Other":
-                    txtOccupationOther.setBackgroundColor(getResources().getColor(R.color.quantum_bluegrey400));
-                    break;
+            if (occupation != null) {
+                switch (occupation) {
+                    case "Văn phòng":
+                        txtOccupationOffice.setBackgroundColor(getResources().getColor(R.color.quantum_bluegrey400));
+                        break;
+                    case "Tự kinh doanh/Tự do":
+                        txtOccupationFree.setBackgroundColor(getResources().getColor(R.color.quantum_bluegrey400));
+                        break;
+                    case "Sinh viên":
+                        txtOccupationStudent.setBackgroundColor(getResources().getColor(R.color.quantum_bluegrey400));
+                        break;
+                    case "Ở nhà":
+                        txtOccupationHome.setBackgroundColor(getResources().getColor(R.color.quantum_bluegrey400));
+                        break;
+                    case "Khác":
+                        txtOccupationOther.setBackgroundColor(getResources().getColor(R.color.quantum_bluegrey400));
+                        break;
+                }
             }
         }
         cursor.close();
@@ -82,7 +84,7 @@ public class AccountSettingsInfoOccupationFragment extends Fragment {
         if (user_id != -1) {
             TextView view = (TextView) v;
             dbHelper.updUserOccupation(user_id, view.getText().toString());
-            Toast.makeText(getContext(), "Occupation updated!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Đã cập nhật việc làm!", Toast.LENGTH_SHORT).show();
             FragmentManager fragmentManager = getParentFragmentManager();
             fragmentManager.popBackStack(null, 0);
         }
