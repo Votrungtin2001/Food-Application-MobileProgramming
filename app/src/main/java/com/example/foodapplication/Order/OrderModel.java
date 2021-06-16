@@ -2,44 +2,50 @@ package com.example.foodapplication.Order;
 
 public class OrderModel {
 
-    public int OrderId, Quantity, Price, ProductId;
-    public String ProductName;
+    public int OrderId, OrderStatus,Total;
+    public String Phone, Address;
 
 
-    public OrderModel(String productName, int quantity, int price){
-        ProductName = productName;
-        Quantity = quantity;
-        Price = price;
-    }
-
-    public OrderModel(int orderId, String productName, int quantity, int price){
+    public OrderModel(int orderId,int orderStatus,int total,String phone){
         OrderId = orderId;
-        ProductName = productName;
-        Quantity = quantity;
-        Price = price;
+        OrderStatus =orderStatus;
+        Total = total;
+        Phone = phone;
     }
 
-    public int getOrderId() { return OrderId; }
+    public int getTotal() {
+        return Total;
+    }
+
+    public int getOrderId() {
+        return OrderId;
+    }
+
+    public int getOrderStatus() {
+        return OrderStatus;
+    }
+
+    public String getAddress() {
+        return Address;
+    }
+
+    public String getPhone() {
+        return Phone;
+    }
+
+    public void setAddress(String address) {
+        Address = address;
+    }
+
     public void setOrderId(int orderId) {
         OrderId = orderId;
     }
 
-    public String getProductName() {
-        return ProductName;
-    }
-    public void setProductName(String productName) {
-        ProductName = productName;
+    public void setOrderStatus(int orderStatus) {
+        OrderStatus = orderStatus;
     }
 
-    public int getQuantity() {
-        return Quantity;
-    }
-    public void setQuantity(int quantity) {
-        Quantity = quantity;
-    }
-
-    public int getPrice() {return Price;}
-    public void setPrice(int price) {
-        Price = price;
+    public void setPhone(String phone) {
+        Phone = phone;
     }
 }

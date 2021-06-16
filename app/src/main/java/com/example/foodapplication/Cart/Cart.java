@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,6 +26,7 @@ import models.Request;
 
 import static adapter.MenuAdapter.productModelList;
 import static com.example.foodapplication.MainActivity.customer_id;
+
 
 public class Cart extends AppCompatActivity {
 
@@ -65,6 +67,7 @@ public class Cart extends AppCompatActivity {
         btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(listCart.size()>0){
                 Request req = new Request(currentTime,
                         customer_id,
                         getAddressId(),
@@ -81,6 +84,9 @@ public class Cart extends AppCompatActivity {
                 }
                 listCart.clear();
                 finish();
+            }
+                else
+                    Toast.makeText(getApplicationContext(),"Chưa thêm món ăn nào trong giỏ hàng!",Toast.LENGTH_LONG).show();
             }
         });
     }

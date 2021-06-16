@@ -38,21 +38,22 @@
                 android:textColor="@android:color/background_dark"
                 android:textSize="15sp" />
 
-            <TextView
-                android:id="@+id/order_status"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                android:ellipsize="marquee"
-                android:focusable="false"
-                android:freezesText="true"
-                android:marqueeRepeatLimit="marquee_forever"
-                android:scrollHorizontally="true"
-                android:singleLine="true"
-                android:text="Status"
-                android:textColor="@android:color/background_dark"
-                android:textSize="15sp" />
+        <TextView
+            android:id="@+id/order_status"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:ellipsize="marquee"
+            android:focusable="false"
+            android:freezesText="true"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:scrollHorizontally="true"
+            android:singleLine="true"
+            android:text="Status"
+            android:textColor="@android:color/background_dark"
+            android:textSize="15sp" />
+
         <TextView
             android:id="@+id/order_phone"
             android:layout_width="match_parent"
