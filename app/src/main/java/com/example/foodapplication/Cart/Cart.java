@@ -67,7 +67,7 @@ public class Cart extends AppCompatActivity {
         btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(listCart.size()>0){
+                if(listCart.size() > 0){
                 Request req = new Request(currentTime,
                         customer_id,
                         getAddressId(),
@@ -82,6 +82,7 @@ public class Cart extends AppCompatActivity {
                             listCart.get(i).getQuantity(),
                             listCart.get(i).getPrice());
                 }
+
                 listCart.clear();
                 finish();
             }

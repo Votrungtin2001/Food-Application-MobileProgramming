@@ -45,10 +45,10 @@ public class OrderViewHolder extends RecyclerView.Adapter<OrderViewHolder.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         OrderModel currentItem = itemList.get(position);
 
-        holder.txtOrderId.setText(currentItem.getOrderId());
-        holder.txtOrderStt.setText(currentItem.getOrderStatus());
+        holder.txtOrderId.setText(Integer.toString(currentItem.getOrderId()));
+        holder.txtOrderStt.setText(Integer.toString(currentItem.getOrderStatus()));
         holder.txtPhone.setText(currentItem.getPhone());
-        holder.txtAddress.setText(currentItem.getTotal());
+        holder.txtAddress.setText(Integer.toString(currentItem.getTotal()));
 
     }
 
