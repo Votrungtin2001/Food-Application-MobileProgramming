@@ -50,7 +50,7 @@ public class GetCurrentLocation extends AppCompatActivity {
 
     FusedLocationProviderClient fusedLocationProviderClient;
     boolean permission = false;
-    int district_id = -1;
+    int district_id = 0;
     int master_id = 0;
     int customer_id = 0;
 
@@ -143,10 +143,7 @@ public class GetCurrentLocation extends AppCompatActivity {
                             if(disctrict.trim().equals("Thủ Đức") || disctrict.trim().equals("Thu Duc") || disctrict.trim().equals("Thành Phố Thủ Đức") || disctrict.trim().equals("Quận Thủ Đức")) {
                                 district_id = 14;
                             }
-                            else if(disctrict.trim().equals("Quận 5") || disctrict.trim().equals("Quan 5")) {
-                                district_id = 5;
-                            }
-                            else district_id = -1;
+                            else district_id = 0;
 
                         } catch (IOException e) {
                             e.printStackTrace();

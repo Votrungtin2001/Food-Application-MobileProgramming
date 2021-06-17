@@ -1,15 +1,9 @@
 package com.example.foodapplication;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -22,13 +16,11 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.foodapplication.HomeFragment.HomeFragment;
 import com.example.foodapplication.Notification.Noti;
 import com.example.foodapplication.Notification.NotiSettingFragment;
 import com.example.foodapplication.Order.OrderFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 public class MainActivity extends AppCompatActivity implements CommunicationInterface {
 
@@ -39,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
     public static int district_id;
     public static int customer_id;
     public static int master_id;
+    public static String stateName;
 
 
     Bundle importArgs;
@@ -48,7 +41,6 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
     FragmentManager fragmentManager = getSupportFragmentManager();
     final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
     HomeFragment homeFragment = new HomeFragment();
-    FavoritesFragment favFragment = new FavoritesFragment();
     AccountFragment accFragment = new AccountFragment();
     Noti notifFragment = new Noti();
     OrderFragment orderFragment = new OrderFragment();
@@ -62,38 +54,28 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
         transparentStatusAndNavigation();
         setContentView(R.layout.activity_main);
 
+        initComponents();
+
+        Run();
+    }
+
+    public void initComponents() {
+        navigation = findViewById(R.id.bottom_nav_bar);
+    }
+
+    public void Run() {
         addressLine = getIntent().getExtras().getString("AddressLine");
         nameStreet = getIntent().getExtras().getString("NameStreet");
         district_id = getIntent().getExtras().getInt("District ID");
         customer_id = getIntent().getExtras().getInt("Customer ID");
 
-        homeFragment.setKeyValue(addressLine, nameStreet, district_id);
-
-
-
         fragmentTransaction.add(R.id.frame_container, homeFragment);
         fragmentTransaction.commit();
 
-        navigation = findViewById(R.id.bottom_nav_bar);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
         //Default fragment
         loadFragment(homeFragment);
-
-        try {
-            PackageInfo info = getPackageManager().getPackageInfo(
-                    "com.example.foodapplication",                  //Insert your own package name.
-                    PackageManager.GET_SIGNATURES);
-            for (Signature signature : info.signatures) {
-                MessageDigest md = MessageDigest.getInstance("SHA");
-                md.update(signature.toByteArray());
-                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-
-        } catch (NoSuchAlgorithmException e) {
-
-        }
-
     }
 
 
@@ -106,9 +88,6 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
                 case R.id.nav_home:
                     //homeFragment.setArguments(importArgs);
                     loadFragment(homeFragment);
-                    break;
-                case R.id.nav_favorites:
-                    loadFragment(favFragment);
                     break;
                 case R.id.nav_account:
                     loadFragment(accFragment);
@@ -132,16 +111,6 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
         transaction.addToBackStack(null);
         transaction.commit();
     }
-
-    private void openActivity1()
-    {
-        Intent intent = new Intent(this, Fill_Address_Screen.class);
-        intent.putExtra("NameStreet", nameStreet);
-        intent.putExtra("AddressLine", addressLine);
-        startActivity(intent);
-
-    }
-
 
     private void transparentStatusAndNavigation()
     {

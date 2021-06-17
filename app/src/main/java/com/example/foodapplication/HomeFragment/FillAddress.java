@@ -1,4 +1,4 @@
-package com.example.foodapplication;
+package com.example.foodapplication.HomeFragment;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,11 +15,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.foodapplication.DatabaseHelper;
+import com.example.foodapplication.R;
+
 import static com.example.foodapplication.MainActivity.customer_id;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-public class CreateAddressScreen extends AppCompatActivity {
+public class FillAddress extends AppCompatActivity {
 
     private TextView textView_Home;
     private TextView textView_Company;
@@ -52,7 +53,7 @@ public class CreateAddressScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_address_screen);
+        setContentView(R.layout.activity_fill_address);
 
         databaseHelper = new DatabaseHelper(this);
         db = databaseHelper.getReadableDatabase();
@@ -164,9 +165,6 @@ public class CreateAddressScreen extends AppCompatActivity {
                 }
             }
         });
-
-
-
     }
 
     private void SaveButtonEvent()
