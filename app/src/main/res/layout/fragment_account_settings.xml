@@ -6,13 +6,19 @@
     android:background="#E8E8E8"
     tools:context=".AccountSettings" >
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
     <TextView
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp"
         android:layout_marginEnd="100dp"
         android:text="@string/activity_account_settings_account"
         android:textSize="18sp" />
