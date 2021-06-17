@@ -26,8 +26,8 @@ public class SignUpFragment extends Fragment {
     private static final String TAG = "SignUpFragment";
     private FragmentSignUpBinding binding;
     user user = new user();
-    private DatabaseHelper databaseHelper ;
-    private LoginFragment loginFragment = new LoginFragment();
+    private DatabaseHelper databaseHelper;
+    private LoginFragment loginFragment;
 
     int role = 0;
 
@@ -48,6 +48,8 @@ public class SignUpFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        databaseHelper = new DatabaseHelper(getActivity());
+
         binding = FragmentSignUpBinding.inflate(inflater, container, false);
         binding.btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,6 +64,7 @@ public class SignUpFragment extends Fragment {
         binding.loginText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                loginFragment = new LoginFragment(role);
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_container, loginFragment);
                 transaction.addToBackStack(null);
@@ -152,27 +155,31 @@ public class SignUpFragment extends Fragment {
     }
 
     private void postDataToSQLite() {
-       if (!databaseHelper.checkUser(binding.email.getText().toString().trim()))
-       {
-            if(role == 2) {
+        if (role == 2) {
+            if(!databaseHelper.checkMaster(binding.email.getText().toString().trim()))
+            {
                 user.setName(binding.displayName.getText().toString().trim());
                 user.setEmail(binding.email.getText().toString().trim());
                 user.setPassword(binding.password.getText().toString().trim());
                 user.setUsername(binding.email.getText().toString().trim());
-
                 databaseHelper.addMaster(user);
                 Toast.makeText(getActivity(),"Đăng kí thành công! ", Toast.LENGTH_LONG).show();
             }
-            else {
+            else Toast.makeText(getActivity(),"Đăng kí không thành công! ", Toast.LENGTH_LONG).show();
+        }
+        else {
+            if (!databaseHelper.checkUser(binding.email.getText().toString().trim()))
+            {
                 user.setName(binding.displayName.getText().toString().trim());
                 user.setEmail(binding.email.getText().toString().trim());
                 user.setPassword(binding.password.getText().toString().trim());
                 user.setUsername(binding.email.getText().toString().trim());
-
                 databaseHelper.addCustomer(user);
                 Toast.makeText(getActivity(),"Đăng kí thành công! ", Toast.LENGTH_LONG).show();
             }
-       }
+            else Toast.makeText(getActivity(),"Đăng kí không thành công! ", Toast.LENGTH_LONG).show();
+        }
+
 
         emptyInputEditText();
     }

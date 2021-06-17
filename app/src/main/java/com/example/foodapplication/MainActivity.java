@@ -34,10 +34,12 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
 
     NotiSettingFragment NotiSettingFrag;
 
-    private String addressLine;
-    private String nameStreet;
-    private int district_id;
+    public static String addressLine;
+    public static String nameStreet;
+    public static int district_id;
     public static int customer_id;
+    public static int master_id;
+
 
     Bundle importArgs;
 
@@ -63,12 +65,11 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
         addressLine = getIntent().getExtras().getString("AddressLine");
         nameStreet = getIntent().getExtras().getString("NameStreet");
         district_id = getIntent().getExtras().getInt("District ID");
+        customer_id = getIntent().getExtras().getInt("Customer ID");
 
         homeFragment.setKeyValue(addressLine, nameStreet, district_id);
 
-        /*Bundle b = new Bundle();
-        b.putInt("CUSTOMER_ID", user_id);
-        homeFragment.setArguments(b);*/
+
 
         fragmentTransaction.add(R.id.frame_container, homeFragment);
         fragmentTransaction.commit();

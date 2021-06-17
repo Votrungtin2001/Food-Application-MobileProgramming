@@ -3,6 +3,7 @@ package com.example.foodapplication;
 import android.app.Dialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,9 @@ import com.example.foodapplication.auth.LoginFragment;
 import com.example.foodapplication.auth.user;
 import com.google.firebase.auth.FirebaseAuth;
 
+import static com.example.foodapplication.MainActivity.customer_id;
+import static com.example.foodapplication.MainActivity.master_id;
+
 public class AccountFragment extends Fragment {
     Button btnPayment, btnAddress, btnPolicy, btnSettings, btnAbout, btnLogout;
     Fragment newFragment;
@@ -27,6 +31,8 @@ public class AccountFragment extends Fragment {
     Dialog LoginDialog;
 
     int choose_role = 0;
+    SQLiteDatabase db;
+    DatabaseHelper databaseHelper;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,11 +63,17 @@ public class AccountFragment extends Fragment {
         btnPolicy = view.findViewById(R.id.btnPolicy);
         btnPolicy.setOnClickListener(runPolicyFragment);
 
+        btnLogout = (Button) view.findViewById(R.id.btnLogout);
+
+        databaseHelper = new DatabaseHelper(getActivity());
+
         txtlogin = view.findViewById(R.id.txtName);
-        if (MainActivity.customer_id > 0) {
+        if (customer_id > 0) {
             DatabaseHelper dbHelper = new DatabaseHelper(getContext());
-            Cursor cursor = dbHelper.getCustomerById(MainActivity.customer_id);
+            Cursor cursor = dbHelper.getCustomerById(customer_id);
             if (cursor.moveToFirst()) {
+                imgUser.setVisibility(View.VISIBLE);
+                btnLogout.setVisibility(View.VISIBLE);
                 txtlogin.setText(cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CCustomer.KEY_NAME)));
                 switch (cursor.getInt(cursor.getColumnIndexOrThrow(FoodManagementContract.CCustomer.KEY_GENDER))) {
                     case 0:
@@ -77,10 +89,13 @@ public class AccountFragment extends Fragment {
             }
             cursor.close();
         }
-        else
+        else {
             txtlogin.setText(getResources().getString(R.string.activity_account_login_name));
+            imgUser.setImageResource(0);
+            btnLogout.setVisibility(View.INVISIBLE);
+        }
         txtlogin.setOnClickListener(v -> {
-            if (MainActivity.customer_id > 0) {
+            if (customer_id > 0) {
                 Fragment fragment = new AccountSettingsInfoFragment();
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(((ViewGroup)getView().getParent()).getId(), fragment, null)
@@ -91,14 +106,23 @@ public class AccountFragment extends Fragment {
                 ShowPopUpLogin(v);
         });
 
-        btnLogout = view.findViewById(R.id.btnLogout);
-        btnLogout.setOnClickListener(v -> FirebaseAuth.getInstance().signOut());
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                databaseHelper.updAllAcountLogOutStatus();
+                imgUser.setImageResource(0);
+                txtlogin.setText("Đăng nhập/Đăng ký");
+                btnLogout.setVisibility(View.INVISIBLE);
+                customer_id = 0;
+                master_id = 0;
+            }
+        });
 
         return view;
     }
 
     View.OnClickListener runAddressFragment = v -> {
-        if (MainActivity.customer_id > 0) {
+        if (customer_id > 0) {
             newFragment = new AccountAddressFragment();
             // source: https://stackoverflow.com/questions/21028786/how-do-i-open-a-new-fragment-from-another-fragment
             getActivity().getSupportFragmentManager().beginTransaction()
@@ -111,7 +135,7 @@ public class AccountFragment extends Fragment {
     };
 
     View.OnClickListener runPaymentFragment = v -> {
-        if (MainActivity.customer_id > 0) {
+        if (customer_id > 0) {
             newFragment = new AccountPayment();
             getActivity().getSupportFragmentManager().beginTransaction()
                     .replace(((ViewGroup) getView().getParent()).getId(), newFragment, null)
@@ -123,7 +147,7 @@ public class AccountFragment extends Fragment {
     };
 
     View.OnClickListener runSettingsFragment = v -> {
-        if (MainActivity.customer_id > 0) {
+        if (customer_id > 0) {
             newFragment = new AccountSettings();
             getActivity().getSupportFragmentManager().beginTransaction()
                     .replace(((ViewGroup) getView().getParent()).getId(), newFragment, null)

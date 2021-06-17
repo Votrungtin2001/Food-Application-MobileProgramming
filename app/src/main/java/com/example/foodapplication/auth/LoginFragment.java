@@ -96,6 +96,8 @@ public class LoginFragment extends Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        databaseHelper = new DatabaseHelper(getActivity());
+
         binding = FragmentLoginBinding.inflate(inflater, container, false);
         binding.facebookView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,6 +123,8 @@ public class LoginFragment extends Fragment  {
 
                     if(isExist){
                         int master_id = databaseHelper.getIdMasterByUsername(binding.username.getText().toString().trim());
+                        databaseHelper.updAllAcountLogOutStatus();
+                        databaseHelper.updMasterLoginStatus(master_id);
                         Intent intent = new Intent(getActivity(), Master_MainActivity.class);
                         intent.putExtra("Master ID",master_id);
                         startActivity(intent);
@@ -134,6 +138,8 @@ public class LoginFragment extends Fragment  {
 
                     if(isExist){
                         customer_id = databaseHelper.getIdByUsername(binding.username.getText().toString().trim());
+                        databaseHelper.updAllAcountLogOutStatus();
+                        databaseHelper.updCustomerLoginStatus(customer_id);
                         Toast.makeText(getActivity(), "Login id: " + customer_id, Toast.LENGTH_SHORT).show();
 
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
