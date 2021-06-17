@@ -1,4 +1,4 @@
-package com.example.foodapplication;
+package com.example.foodapplication.HomeFragment;
 
 import android.content.Intent;
 import android.content.res.Resources;
@@ -29,6 +29,14 @@ import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.interfaces.ItemClickListener;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.example.foodapplication.DatabaseHelper;
+import com.example.foodapplication.FastestDeliveryRestaurantFragment;
+import com.example.foodapplication.ItemList_Collection;
+import com.example.foodapplication.Item_Collection;
+import com.example.foodapplication.R;
+import com.example.foodapplication.RestaurantList;
+import com.example.foodapplication.SortOfProductList;
+import com.example.foodapplication.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.ByteArrayOutputStream;
@@ -48,6 +56,10 @@ import models.CollectionModel;
 import models.SearchBarModel;
 import models.SortOfProductModel;
 
+import static com.example.foodapplication.MainActivity.addressLine;
+import static com.example.foodapplication.MainActivity.district_id;
+import static com.example.foodapplication.MainActivity.nameStreet;
+
 
 public class HomeFragment extends Fragment {
 
@@ -55,8 +67,6 @@ public class HomeFragment extends Fragment {
     private ImageView imageView_Next;
     private TextView textView_addressLine;
     private EditText editText_search;
-    private String addressLine;
-    private String nameStreet;
     private TextView textView_DistrictIsUnavailable;
     private TextView textView_space1;
     private TextView textView_space2;
@@ -117,7 +127,6 @@ public class HomeFragment extends Fragment {
 
     ArrayList<String> title_KindOfRestaurant = new ArrayList<>();
 
-    private int district_id;
     boolean district_isAvailable = false;
 
     DatabaseHelper databaseHelper;
@@ -146,21 +155,13 @@ public class HomeFragment extends Fragment {
         databaseHelper = new DatabaseHelper(getActivity());
         db = databaseHelper.getReadableDatabase();
 
-       /* databaseHelper.delBranch(43);
-        databaseHelper.delAddress(43);
-        databaseHelper.delRestaurant(43);
-        databaseHelper.delProduct(582);
-        databaseHelper.delMenu(591);
-        databaseHelper.delProduct(583);
-        databaseHelper.delMenu(592);
+        initComponents(view);
+        Run();
 
-       databaseHelper.delCustomerAddress(1);
-        databaseHelper.delCustomerAddress(2);
+        return view;
+    }
 
-        databaseHelper.delAddress(43);
-        databaseHelper.delAddress(44);*/
-
-
+    public void initComponents(View view) {
         //EditText Search
         editText_search = view.findViewById(R.id.editText_SearchBar);
 
@@ -169,32 +170,12 @@ public class HomeFragment extends Fragment {
 
         //ImageView Location
         imageView_Location = (ImageView) view.findViewById(R.id.location_imageView);
-        imageView_Location.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                runFillAddressActivity();
-            }
-        });
 
-        //Open Fill Address Activity
+        //TextView AddressLine
         textView_addressLine = view.findViewById(R.id.address_Txt);
-        textView_addressLine.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { runFillAddressActivity(); }
-        });
 
         //ImageView Next
         imageView_Next = (ImageView) view.findViewById(R.id.next_imageView);
-        //Open Fill Address Activity
-        imageView_Next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { runFillAddressActivity(); }
-        });
-
-
-        //TextView AddressLine
-        //Set Address Data
-        textView_addressLine.setText(addressLine);
 
         //TextView Announcement When District Doesn't Have Any Restaurants
         textView_DistrictIsUnavailable = view.findViewById(R.id.textView_DistrictIsUnavailable);
@@ -241,13 +222,32 @@ public class HomeFragment extends Fragment {
         //Tab Layout and ViewPager
         tabLayout_KindOfRestaurant = (TabLayout) view.findViewById(R.id.KindOfRestaurant_TabLayout);
         viewPager_KindOfRestaurant = (ViewPager) view.findViewById(R.id.KindOfRestaurant_ViewPager);
+    }
 
-        district_id = 14;
-        if(district_id >= 0) district_isAvailable = true;
+    public void Run() {
+        //Open Mange Address Activity
+        imageView_Location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { runFillAddressActivity(); }
+        });
+
+        textView_addressLine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { runFillAddressActivity(); }
+        });
+
+        imageView_Next.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { runFillAddressActivity(); }
+        });
+
+        //TextView AddressLine
+        textView_addressLine.setText(addressLine);
+
+        // Set Screen
+        if(district_id > 0) district_isAvailable = true;
         SetAllData(district_id);
         setUpSreen(district_isAvailable);
-
-        return view;
     }
 
 
@@ -337,7 +337,7 @@ public class HomeFragment extends Fragment {
             if (cursor != null) {
                 cursor.moveToFirst();
                 do {
-                    if (count <= 15) {
+                    if (count <= 10) {
                         count++;
                         int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
                         byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
@@ -366,7 +366,7 @@ public class HomeFragment extends Fragment {
         if (cursor != null) {
             cursor.moveToFirst();
             do {
-                if (count <= 15) {
+                if (count <= 10) {
                     String key = "Combo";
                     String name_product = cursor.getString(cursor.getColumnIndex("Name"));
                     if (name_product.toLowerCase().contains(key.toLowerCase())) {
@@ -387,6 +387,7 @@ public class HomeFragment extends Fragment {
     }
 
     public void AddDataForCheapestProduct(int id) {
+        int count = 0;
         sortOfProductModelList2 = new ArrayList<>();
         String selectQuery = "SELECT B._id, P.Image, P.Name, B.NAME, M.Price " +
                 "FROM (((PRODUCTS P JOIN MENU M ON P._id = M.Product) " +
@@ -398,14 +399,17 @@ public class HomeFragment extends Fragment {
         if (cursor != null) {
             cursor.moveToFirst();
             do {
-                String name_product = cursor.getString(cursor.getColumnIndex("Name"));
-                byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
-                int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
-                Bitmap img_bitmap = BitmapFactory.decodeByteArray(img_byte, 0, img_byte.length);
-                String name_branch = cursor.getString(cursor.getColumnIndex("NAME"));
-                int price = cursor.getInt(cursor.getColumnIndex("Price"));
-                SortOfProductModel sortOfProductModel = new SortOfProductModel(img_bitmap, name_product, name_branch, price, branch_id);
-                sortOfProductModelList2.add(sortOfProductModel);
+                if (count <= 10) {
+                    count++;
+                    String name_product = cursor.getString(cursor.getColumnIndex("Name"));
+                    byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
+                    int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
+                    Bitmap img_bitmap = BitmapFactory.decodeByteArray(img_byte, 0, img_byte.length);
+                    String name_branch = cursor.getString(cursor.getColumnIndex("NAME"));
+                    int price = cursor.getInt(cursor.getColumnIndex("Price"));
+                    SortOfProductModel sortOfProductModel = new SortOfProductModel(img_bitmap, name_product, name_branch, price, branch_id);
+                    sortOfProductModelList2.add(sortOfProductModel);
+                }
             } while (cursor.moveToNext());
 
         }
@@ -506,7 +510,7 @@ public class HomeFragment extends Fragment {
 
     private void runFillAddressActivity()
     {
-        Intent intent = new Intent(getActivity(), Fill_Address_Screen.class);
+        Intent intent = new Intent(getActivity(), ManageAddress.class);
         intent.putExtra("AddressLine", addressLine);
         intent.putExtra("NameStreet", nameStreet);
         startActivityForResult(intent, 1);
@@ -519,11 +523,6 @@ public class HomeFragment extends Fragment {
             if(resultCode == getActivity().RESULT_OK)
             {
                 boolean sign = false;
-                addressLine = data.getStringExtra("Address Line");
-                district_id = data.getIntExtra("District ID", 0);
-                textView_addressLine.setText(addressLine);
-                nameStreet = data.getStringExtra("Name Street");
-
                 if(district_id >= 0) sign = true;
                 SetAllData(district_id);
 
@@ -602,8 +601,6 @@ public class HomeFragment extends Fragment {
                         "Bạn ơi đừng lo lắng, quán nhỏ quen thuộc không thể phục vụ tại chỗ thì lên Now đặt là có ngay. Cứ yên tâm ở nhà hủ tíu, bột chiên, xiên que, gỏi cuốn...nóng hổi sẽ được giao tận cửa. Để đảm bảo an toàn trong mùa dịch, Now khuyến khích bạn thanh toán qua Airpay và lựa chọn không tiếp xúc nhé.\n" +
                         "✅ Nhập mã ANTOAN để được giảm ngay 15K phí ship cho đơn từ 0Đ.";
                 break;
-
-
         }
         intent.putExtra("image", iImage);
         intent.putExtra("name", sName);
@@ -620,7 +617,6 @@ public class HomeFragment extends Fragment {
         slideModels.add(new SlideModel("https://scontent.fsgn5-5.fna.fbcdn.net/v/t1.6435-9/182918562_2950431178608162_2329511474755934128_n.jpg?_nc_cat=100&ccb=1-3&_nc_sid=730e14&_nc_ohc=Jgq6I7C60f0AX-2AN7W&_nc_ht=scontent.fsgn5-5.fna&oh=a57d61aef409cdf117feb5ce0d9c096f&oe=60D19B3E", "", ScaleTypes.FIT));
         slideModels.add(new SlideModel("https://scontent.fsgn5-5.fna.fbcdn.net/v/t1.6435-9/183957113_2952210498430230_5664319190676897654_n.jpg?_nc_cat=100&ccb=1-3&_nc_sid=730e14&_nc_ohc=za8BW5IJPXkAX9pLiwy&_nc_ht=scontent.fsgn5-5.fna&oh=9703325e27053340c449dc54a4b119d4&oe=60CFE4AE", "", ScaleTypes.FIT));
         imageSlider_advertisement.setImageList(slideModels, ScaleTypes.FIT);
-
     }
 
     public void ClickAdvertisementItemImageSlider(int i)
@@ -713,29 +709,6 @@ public class HomeFragment extends Fragment {
                     }
                 }
             }
-        });
-
-        //Open Fill Address Activity
-        imageView_Location.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                runFillAddressActivity();
-            }
-        });
-
-        //Open Fill Address Activity
-        imageView_Next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { runFillAddressActivity(); }
-        });
-
-        //Set Address Data
-        textView_addressLine.setText(addressLine);
-
-        //Open Fill Address Activity
-        textView_addressLine.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) { runFillAddressActivity(); }
         });
 
         if(district_isAvailable == true) {
@@ -839,11 +812,4 @@ public class HomeFragment extends Fragment {
             prepareViewPagerCategories(viewPager_KindOfRestaurant, title_KindOfRestaurant);
         }
     }
-
-    public void setKeyValue(String AddressLine, String NameStreet, int District_ID) {
-        this.addressLine = AddressLine;
-        this.nameStreet = NameStreet;
-        this.district_id = District_ID;
-    }
-
 }

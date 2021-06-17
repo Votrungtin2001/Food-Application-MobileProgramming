@@ -65,12 +65,11 @@ public class AccountFragment extends Fragment {
 
         btnLogout = (Button) view.findViewById(R.id.btnLogout);
 
-        databaseHelper = new DatabaseHelper(getActivity());
+        databaseHelper = new DatabaseHelper(getContext());
 
         txtlogin = view.findViewById(R.id.txtName);
         if (customer_id > 0) {
-            DatabaseHelper dbHelper = new DatabaseHelper(getContext());
-            Cursor cursor = dbHelper.getCustomerById(customer_id);
+            Cursor cursor = databaseHelper.getCustomerById(customer_id);
             if (cursor.moveToFirst()) {
                 imgUser.setVisibility(View.VISIBLE);
                 btnLogout.setVisibility(View.VISIBLE);

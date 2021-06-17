@@ -1,24 +1,19 @@
-package com.example.foodapplication;
+package com.example.foodapplication.HomeFragment;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -27,21 +22,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.foodapplication.auth.LoginFragment;
-import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
-import com.google.android.gms.common.GooglePlayServicesRepairableException;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
+import com.example.foodapplication.DatabaseHelper;
+import com.example.foodapplication.FoodManagementContract;
+import com.example.foodapplication.Map;
+import com.example.foodapplication.R;
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.places.ui.PlacePicker;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
-import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
-import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 
 import java.io.IOException;
@@ -50,18 +40,19 @@ import java.util.List;
 import java.util.Locale;
 
 import static com.example.foodapplication.MainActivity.customer_id;
+import static com.example.foodapplication.MainActivity.nameStreet;
+import static com.example.foodapplication.MainActivity.addressLine;
+import static com.example.foodapplication.MainActivity.district_id;
 
 
-public class Fill_Address_Screen extends AppCompatActivity {
+public class ManageAddress extends AppCompatActivity {
 
     private ImageView back_imageView;
     private TextView textView_nameStreet;
     private TextView textView_addressLine;
+    private TextView textView_NameAccount;
     private ImageView map_imageView;
     private EditText editText_AddressBar;
-
-    private String nameStreet;
-    private String addressLine;
 
     private ImageView imageView_Home;
     private TextView textView_HomeAddress;
@@ -82,13 +73,10 @@ public class Fill_Address_Screen extends AppCompatActivity {
 
     private Button button_NewAddress;
 
-    private Location location;
     private Geocoder geocoder;
     private static final String apiKey = "AIzaSyB_RuQCaFrm4wAIamLJA9R-NvSc7RmjlrA";
     double dLatitude;
     double dLongitude;
-
-    private int district_id;
 
     Dialog AnnouncementDialog;
 
@@ -103,7 +91,7 @@ public class Fill_Address_Screen extends AppCompatActivity {
         //Transparent Status and Navigation Bar
         transparentStatusAndNavigation();
 
-        setContentView(R.layout.activity_fill__address__screen);
+        setContentView(R.layout.activity_manage_address);
 
         databaseHelper = new DatabaseHelper(this);
         db = databaseHelper.getReadableDatabase();
@@ -111,13 +99,12 @@ public class Fill_Address_Screen extends AppCompatActivity {
         initComponents();
 
         Run();
-
-
     }
 
     public void initComponents() {
         textView_nameStreet = findViewById(R.id.nameStreet_textView);
         textView_addressLine = findViewById(R.id.fullAddress_textView);
+        textView_NameAccount = findViewById(R.id.nameAccount_textView);
         textView_HomeAddress = findViewById(R.id.addHomeAddress_textView);
         textView_CompanyAddress = findViewById(R.id.addCompanyAddress_textView);
         textView_FullAddress1 = findViewById(R.id.FullAddress_FillAddress1);
@@ -145,13 +132,18 @@ public class Fill_Address_Screen extends AppCompatActivity {
     }
 
     public void Run() {
-        nameStreet = getIntent().getExtras().getString("NameStreet");
         textView_nameStreet.setText(nameStreet);
 
         addressLine = getIntent().getExtras().getString("AddressLine");
         textView_addressLine = findViewById(R.id.fullAddress_textView);
         textView_addressLine.setText(addressLine);
 
+        if (customer_id > 0) {
+            Cursor cursor = databaseHelper.getCustomerById(customer_id);
+            if (cursor.moveToFirst()) {
+                textView_NameAccount.setText(cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CCustomer.KEY_NAME)));
+            }
+        } else textView_NameAccount.setText("Không có dữ liệu");
 
         back_imageView = findViewById(R.id.Back_imageView);
         back_imageView.setOnClickListener(new View.OnClickListener() {
@@ -180,7 +172,7 @@ public class Fill_Address_Screen extends AppCompatActivity {
                         , Place.Field.LAT_LNG, Place.Field.NAME);
                 //Create intent
                 Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY
-                        , fieldList).setCountry("VN").build(Fill_Address_Screen.this);
+                        , fieldList).setCountry("VN").build(ManageAddress.this);
                 //Start activity result
                 startActivityForResult(intent, 100);
             }
@@ -246,8 +238,8 @@ public class Fill_Address_Screen extends AppCompatActivity {
                     textView_HomeAddress.setText("Nhà");
                     textView_FullAddress1.setText(full_address_HOME);
                 }
-                if(phone != null) textView_PhoneContact1.setText(phone);
-                if(name != null) textView_NameContact1.setText(name);
+                if(phone != null) textView_PhoneContact1.setText("Số điện thoại: " + phone);
+                if(name != null) textView_NameContact1.setText("Tên liên lạc: " + name);
             }
 
             boolean checkCustomerHasWorkAddress = CheckCustomerHasRightAddressLabel(customer_id, 2);
@@ -257,8 +249,8 @@ public class Fill_Address_Screen extends AppCompatActivity {
                     textView_CompanyAddress.setText("Công ty");
                     textView_FullAddress2.setText(full_address_WORK);
                 }
-                if(phone != null) textView_PhoneContact2.setText(phone);
-                if(name != null) textView_NameContact2.setText(name);
+                if(phone != null) textView_PhoneContact2.setText("Số điện thoại: " + phone);
+                if(name != null) textView_NameContact2.setText("Tên liên lạc: " + name);
             }
 
         }
@@ -273,24 +265,21 @@ public class Fill_Address_Screen extends AppCompatActivity {
             Place place = Autocomplete.getPlaceFromIntent(data);
             //Set address on EditText
             editText_AddressBar.setText(place.getAddress());
-            textView_addressLine.setText(place.getAddress());
-            textView_nameStreet.setText(place.getName());
 
             LatLng latLng = place.getLatLng();
             double MyLat = latLng.latitude;
             double MyLong = latLng.longitude;
-            Geocoder geocoder = new Geocoder(Fill_Address_Screen.this, Locale.getDefault());
+            Geocoder geocoder = new Geocoder(ManageAddress.this, Locale.getDefault());
             try {
                 List<Address> addresses = geocoder.getFromLocation(MyLat, MyLong, 1);
+                addressLine = addresses.get(0).getAddressLine(0);
+                nameStreet = addresses.get(0).getThoroughfare();
                 String stateName = addresses.get(0).getSubAdminArea();
                 if(stateName.trim().equals("Thủ Đức") || stateName.trim().equals("Thu Duc") || stateName.trim().equals("Thành Phố Thủ Đức") || stateName.trim().equals("Quận Thủ Đức")) {
                     district_id = 14;
                 }
-                else if(stateName.trim().equals("Quận 5") || stateName.trim().equals("Quan 5")) {
-                    district_id = 5;
-                }
                 else {
-                    district_id = -1;
+                    district_id = 0;
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -300,17 +289,10 @@ public class Fill_Address_Screen extends AppCompatActivity {
                 @Override
                 public void run() {
                     Intent resultIntent = new Intent();
-                    addressLine = textView_addressLine.getText().toString();
-                    nameStreet = textView_nameStreet.getText().toString();
-                    resultIntent.putExtra("Name Street", nameStreet);
-                    resultIntent.putExtra("Address Line", addressLine);
-                    resultIntent.putExtra("District ID", district_id);
                     setResult(RESULT_OK, resultIntent);
                     finish();
                 }
             }, 1000);
-
-
 
         }
         else if(resultCode == AutocompleteActivity.RESULT_ERROR){
@@ -394,24 +376,19 @@ public class Fill_Address_Screen extends AppCompatActivity {
             if(resultCode == RESULT_OK) {
                 dLatitude = data.getDoubleExtra("Latitude", 0);
                 dLongitude = data.getDoubleExtra("Longitude", 0);
-                String placeName = data.getStringExtra("Place Name");
                 String placeAddress = data.getStringExtra("Place Address");
                 district_id = data.getIntExtra("District ID", 0);
 
                 try {
                     geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
                     List<Address> addresses = geocoder.getFromLocation(dLatitude, dLongitude, 1);
-                    textView_nameStreet.setText(placeName);
+                    nameStreet = addresses.get(0).getThoroughfare();
+                    textView_nameStreet.setText(nameStreet);
                     textView_addressLine.setText(placeAddress);
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             Intent resultIntent = new Intent();
-                            nameStreet = textView_nameStreet.getText().toString();
-                            resultIntent.putExtra("Name Street", nameStreet);
-                            addressLine = textView_addressLine.getText().toString();
-                            resultIntent.putExtra("Address Line", addressLine);
-                            resultIntent.putExtra("District ID", district_id);
                             setResult(RESULT_OK, resultIntent);
                             finish();
                         }
@@ -424,12 +401,10 @@ public class Fill_Address_Screen extends AppCompatActivity {
 
     }
 
-
-
     private void openCreateAddressActivityWithHomeOption()
     {
         if(customer_id > 0 ) {
-            Intent intent = new Intent(Fill_Address_Screen.this, CreateAddressScreen.class);
+            Intent intent = new Intent(ManageAddress.this, FillAddress.class);
             intent.putExtra("Option", "Home");
             startActivityForResult(intent, 1);
         }
@@ -439,7 +414,7 @@ public class Fill_Address_Screen extends AppCompatActivity {
     private void openCreateAddressActivityWithCompanyOption()
     {
         if(customer_id > 0) {
-            Intent intent = new Intent(Fill_Address_Screen.this, CreateAddressScreen.class);
+            Intent intent = new Intent(ManageAddress.this, FillAddress.class);
             intent.putExtra("Option", "Company");
             startActivityForResult(intent, 1);
         }
@@ -449,7 +424,7 @@ public class Fill_Address_Screen extends AppCompatActivity {
     private void openCreateAddressActivityWithNewAddressOption()
     {
         if(customer_id > 0) {
-            Intent intent = new Intent(Fill_Address_Screen.this, CreateAddressScreen.class);
+            Intent intent = new Intent(ManageAddress.this, FillAddress.class);
             intent.putExtra("Option", "New Address");
             startActivityForResult(intent, 1);
         }
@@ -459,7 +434,7 @@ public class Fill_Address_Screen extends AppCompatActivity {
 
     private void openMapActivity()
     {
-        Intent intent = new Intent(Fill_Address_Screen.this, Map.class);
+        Intent intent = new Intent(ManageAddress.this, Map.class);
         startActivityForResult(intent, 2);
     }
 

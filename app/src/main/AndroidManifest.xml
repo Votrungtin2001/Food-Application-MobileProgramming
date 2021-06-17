@@ -29,8 +29,8 @@
         <activity android:name=".ItemList_Collection" />
         <activity android:name=".Item_Collection" />
         <activity
-            android:name=".CreateAddressScreen"
-            android:parentActivityName=".Fill_Address_Screen"
+            android:name=".HomeFragment.FillAddress"
+            android:parentActivityName=".HomeFragment.ManageAddress"
             android:theme="@style/Theme.AppCompat.Button" />
 
         <meta-data
@@ -40,7 +40,7 @@
         <activity android:name=".Map" />
         <activity android:name=".SubScreen.GetCurrentLocation" />
         <activity
-            android:name=".Fill_Address_Screen"
+            android:name=".HomeFragment.ManageAddress"
             android:theme="@style/Theme.AppCompat.Button" />
         <activity android:name=".SubScreen.LoadingScreen">
             <intent-filter>
