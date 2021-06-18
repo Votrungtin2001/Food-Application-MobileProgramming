@@ -1,4 +1,4 @@
-package fragments;
+package com.example.foodapplication.HomeFragment.fragment;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -45,16 +45,26 @@ public class RestaurantInformation_ThongTin extends Fragment {
         databaseHelper = new DatabaseHelper(getActivity());
         db = databaseHelper.getReadableDatabase();
 
-        textView_address = view.findViewById(R.id.RestaurantInformation_Address);
-        address = getAddress(branch_id);
-        textView_address.setText(address);
-
-        textView_openingtime = view.findViewById(R.id.RestaurantInformation_OpeningTime);
-        opening_time = getOpeningTime(branch_id);
-        textView_openingtime.setText("Giờ mở cửa \t" + opening_time);
+        initComponents(view);
+        Run();
 
         return  view;
     }
+
+    public void initComponents(View view) {
+        textView_address = view.findViewById(R.id.RestaurantInformation_Address);
+        textView_openingtime = view.findViewById(R.id.RestaurantInformation_OpeningTime);
+    }
+
+    public void Run() {
+        address = getAddress(branch_id);
+        textView_address.setText(address);
+
+
+        opening_time = getOpeningTime(branch_id);
+        textView_openingtime.setText("Giờ mở cửa \t" + opening_time);
+    }
+
 
     public String getAddress(int id) {
         String branch_address = "";

@@ -13,7 +13,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodapplication.R;
-import com.example.foodapplication.RestaurantInformation;
+import com.example.foodapplication.HomeFragment.RestaurantInformation;
 
 import java.util.List;
 

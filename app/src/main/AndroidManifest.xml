@@ -25,7 +25,7 @@
         <activity android:name=".Cart.Cart"></activity>
         <activity android:name=".HomeFragment.ListRestaurant" />
         <activity android:name=".HomeFragment.ProductWithCategory" />
-        <activity android:name=".RestaurantInformation" />
+        <activity android:name=".HomeFragment.RestaurantInformation" />
         <activity android:name=".HomeFragment.ListCollection" />
         <activity android:name=".HomeFragment.Details" />
         <activity

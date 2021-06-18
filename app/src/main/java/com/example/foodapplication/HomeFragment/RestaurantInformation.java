@@ -1,4 +1,4 @@
-package com.example.foodapplication;
+package com.example.foodapplication.HomeFragment;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -19,13 +19,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.foodapplication.Cart.Cart;
+import com.example.foodapplication.DatabaseHelper;
+import com.example.foodapplication.R;
+import com.example.foodapplication.ViewPagerAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 
-import fragments.RestaurantInformation_DatDon;
-import fragments.RestaurantInformation_ThongTin;
+import com.example.foodapplication.HomeFragment.fragment.RestaurantInformation_DatDon;
+import com.example.foodapplication.HomeFragment.fragment.RestaurantInformation_ThongTin;
+
+import static com.example.foodapplication.MainActivity.customer_id;
 
 public class RestaurantInformation extends AppCompatActivity {
 
@@ -108,16 +113,16 @@ public class RestaurantInformation extends AppCompatActivity {
         cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // if(customer_id > 0) {
-                    // boolean checkCustomerHasAddress = CheckCustomerHasAddress(customer_id);
-                    // if(checkCustomerHasAddress == true) {
+               if(customer_id > 0) {
+                    boolean checkCustomerHasAddress = CheckCustomerHasAddress(customer_id);
+                    if(checkCustomerHasAddress == true) {
                         Intent intent = new Intent(getApplication(), Cart.class);
                         startActivity(intent);
-                        // }
-                //  else ShowPopUpRequireAddress();
+                         }
+                  else ShowPopUpRequireAddress();
                 }
-//                else ShowPopUpRequireLogin();
-//            }
+            else ShowPopUpRequireLogin();
+           }
         });
     }
 
@@ -143,7 +148,7 @@ public class RestaurantInformation extends AppCompatActivity {
         byte[] img = null;
         String selectQuery = "SELECT R.Image FROM Restaurant R JOIN BRANCHES B ON R._id = B.Restaurant WHERE B._id ='" + id + "';";
         Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor != null) {
+        if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             do {
                 img = cursor.getBlob(cursor.getColumnIndex("Image"));
@@ -157,7 +162,7 @@ public class RestaurantInformation extends AppCompatActivity {
         String name = "";
         String selectQuery = "SELECT NAME FROM BRANCHES WHERE _id ='" + id + "';";
         Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor != null) {
+        if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             do {
                 name = cursor.getString(cursor.getColumnIndex("NAME"));
@@ -240,7 +245,7 @@ public class RestaurantInformation extends AppCompatActivity {
 
         String selectQuery = "SELECT * FROM CUSTOMER_ADDRESS WHERE Customer='" + customer_id + "';";
         Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor != null) {
+        if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             do {
 

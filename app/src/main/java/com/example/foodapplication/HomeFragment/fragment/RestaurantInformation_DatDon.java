@@ -1,4 +1,4 @@
-package fragments;
+package com.example.foodapplication.HomeFragment.fragment;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -49,15 +49,23 @@ public class RestaurantInformation_DatDon extends Fragment {
         databaseHelper = new DatabaseHelper(getActivity());
         db = databaseHelper.getReadableDatabase();
 
+        initComponents(view);
+        Run();
+
+        return  view;
+    }
+
+    public void initComponents(View view) {
         recyclerView_Menu = view.findViewById(R.id.Menu_RecyclerView);
+    }
+
+    public void Run() {
         productModelList = new ArrayList<>();
         getAllProducts(branch_id);
         menuAdapter = new MenuAdapter(getActivity(), productModelList);
         LinearLayoutManager linearLayoutManager_Menu = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView_Menu.setLayoutManager(linearLayoutManager_Menu);
         recyclerView_Menu.setAdapter(menuAdapter);
-
-        return  view;
     }
 
     public void getAllProducts(int id) {

@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.foodapplication.DatabaseHelper;
+import com.example.foodapplication.HomeFragment.fragment.RestaurantInformation_ThongTin;
 import com.example.foodapplication.R;
 import com.example.foodapplication.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
