@@ -48,20 +48,19 @@ public class OrderComingFragment extends Fragment {
         linearLayout = view.findViewById(R.id.none);
 
         if(getOId() > 0) {order_isAvailable = true;}
-        SetAllData(getOId());
+        SetAllData();
         setUpSreen(order_isAvailable);
 
         return view;
     }
-    public void SetAllData(int a) {
-        order_isAvailable = false;
-        if(a >= 0) order_isAvailable = true;
+    public void SetAllData() {
         getOrder(customer_id);
         orderViewHolder = new OrderViewHolder(getActivity(), orderModelList);
         linearLayoutManager_Menu = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager_Menu);
         recyclerView.setAdapter(orderViewHolder);
     }
+
     private void setUpSreen(boolean sign) {
         if (sign == true) {
             recyclerView.setVisibility(View.VISIBLE);
@@ -72,8 +71,7 @@ public class OrderComingFragment extends Fragment {
             linearLayout.setVisibility(View.VISIBLE);
         }
     }
-
-
+    
     public void getOrder(int id) {
         orderModelList = new ArrayList<>();
         String selectQuery = " SELECT O._id, O.Status, O.Total, C.Phone " +
