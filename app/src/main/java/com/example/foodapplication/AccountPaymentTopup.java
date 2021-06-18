@@ -2,7 +2,10 @@ package com.example.foodapplication;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +43,15 @@ public class AccountPaymentTopup extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_account_payment_topup, container, false);
+
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(getResources().getString(R.string.activity_account_payment_topup));
+        toolbar.setNavigationOnClickListener(v -> {
+            FragmentManager fragmentManager = getParentFragmentManager();
+            fragmentManager.popBackStack(null, 0);
+        });
 
         btnAdd50k = view.findViewById(R.id.btnAdd50k);
         btnAdd50k.setOnClickListener(onAmountClickListener);
@@ -83,10 +95,13 @@ public class AccountPaymentTopup extends Fragment {
                 int credits = dbHelper.getCredits(user_id);
                 credits += topup;
                 dbHelper.updCredits(user_id, credits);
+                Toast.makeText(getContext(), "Nạp tiền thành công!", Toast.LENGTH_SHORT).show();
+                FragmentManager fragmentManager = getParentFragmentManager();
+                fragmentManager.popBackStack(null, 0);
             } else
                 Toast.makeText(getContext(), "User not found. Did you forget to log in?", Toast.LENGTH_LONG).show();
         }
         else
-            Toast.makeText(getContext(), "Please input the amount of credits to purchase!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), "Xin hãy nhập lượng tiền cần nạp!", Toast.LENGTH_LONG).show();
     };
 }

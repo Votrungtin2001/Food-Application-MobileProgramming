@@ -6,6 +6,15 @@
     android:background="#E8E8E8"
     tools:context=".AccountPolicyFragment">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/toolbar" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -127,4 +136,5 @@
             android:visibility="gone" />
 
     </RelativeLayout>
+    </LinearLayout>
 </ScrollView>

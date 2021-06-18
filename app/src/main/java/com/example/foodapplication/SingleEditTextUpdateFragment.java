@@ -3,7 +3,10 @@ package com.example.foodapplication;
 import android.database.Cursor;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,6 +48,14 @@ public class SingleEditTextUpdateFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_single_edit_text_update, container, false);
 
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(v -> {
+            FragmentManager fragmentManager = getParentFragmentManager();
+            fragmentManager.popBackStack(null, 0);
+        });
+
         txtSingleEditTitle = view.findViewById(R.id.txtSingleEditTitle);
         txtEditText = view.findViewById(R.id.txtEditText);
         btnConfirmEdit = view.findViewById(R.id.btnConfirmEdit);
@@ -77,6 +88,8 @@ public class SingleEditTextUpdateFragment extends Fragment {
         }
 
         btnConfirmEdit.setOnClickListener(onConfirmEditClick);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(txtSingleEditTitle.getText().toString());
+
         return view;
     }
 
@@ -87,6 +100,8 @@ public class SingleEditTextUpdateFragment extends Fragment {
                 dbHelper.updUserInfoWithKey(user_id, txtEditText.getText().toString(), type);
                 dbHelper.close();
                 Toast.makeText(getContext(), "Cập nhật dữ liệu thành công!", Toast.LENGTH_SHORT).show();
+                FragmentManager fragmentManager = getParentFragmentManager();
+                fragmentManager.popBackStack(null, 0);
             }
         }
         else

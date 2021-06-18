@@ -3,6 +3,8 @@ package com.example.foodapplication.SubScreen;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
@@ -19,7 +21,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.example.foodapplication.DatabaseHelper;
 import com.example.foodapplication.MainActivity;
+import com.example.foodapplication.Master_MainActivity;
 import com.example.foodapplication.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -36,9 +40,14 @@ public class GetCurrentLocation extends AppCompatActivity {
     private String addressLine;
     private String nameStreet;
 
+    SQLiteDatabase db;
+    DatabaseHelper databaseHelper;
+
     FusedLocationProviderClient fusedLocationProviderClient;
     boolean permission = false;
-    int district_id = -1;
+    int district_id = 0;
+    int master_id = 0;
+    int customer_id = 0;
 
 
     @Override
@@ -49,10 +58,12 @@ public class GetCurrentLocation extends AppCompatActivity {
         transparentStatusAndNavigation();
         setContentView(R.layout.activity_get_current_location);
 
+        databaseHelper = new DatabaseHelper(this);
+        db = databaseHelper.getReadableDatabase();
+
         initComponents();
 
         Run();
-
     }
 
     public void initComponents() {
@@ -63,18 +74,35 @@ public class GetCurrentLocation extends AppCompatActivity {
         //get current location - Address Line
         getLocation();
 
+        customer_id = GetCustomerIDLoginBefore();
+        master_id = GetMasterIDLoginBefore();
+
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent i = new Intent(GetCurrentLocation.this, MainActivity.class);
-                addressLine = textView.getText().toString();
-                i.putExtra("AddressLine", addressLine);
-                i.putExtra("NameStreet", nameStreet);
-                i.putExtra("District ID", district_id);
-                startActivity(i);
-                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-                finish();
+                if(master_id > 0) {
+                    Intent i = new Intent(GetCurrentLocation.this, Master_MainActivity.class);
+                    addressLine = textView.getText().toString();
+                    i.putExtra("AddressLine", addressLine);
+                    i.putExtra("NameStreet", nameStreet);
+                    i.putExtra("District ID", district_id);
+                    i.putExtra("Master ID", master_id);
+                    startActivity(i);
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                    finish();
+                }
+                else {
+                    Intent i = new Intent(GetCurrentLocation.this, MainActivity.class);
+                    addressLine = textView.getText().toString();
+                    i.putExtra("AddressLine", addressLine);
+                    i.putExtra("NameStreet", nameStreet);
+                    i.putExtra("District ID", district_id);
+                    i.putExtra("Customer ID", customer_id);
+                    startActivity(i);
+                    overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+                    finish();
+                }
             }
         }, 5000);
     }
@@ -108,10 +136,7 @@ public class GetCurrentLocation extends AppCompatActivity {
                             if(disctrict.trim().equals("Thủ Đức") || disctrict.trim().equals("Thu Duc") || disctrict.trim().equals("Thành Phố Thủ Đức") || disctrict.trim().equals("Quận Thủ Đức")) {
                                 district_id = 14;
                             }
-                            else if(disctrict.trim().equals("Quận 5") || disctrict.trim().equals("Quan 5")) {
-                                district_id = 5;
-                            }
-                            else district_id = -1;
+                            else district_id = 0;
 
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -154,6 +179,36 @@ public class GetCurrentLocation extends AppCompatActivity {
             winParams.flags &= ~bits;
         }
         win.setAttributes(winParams);
+    }
+
+    public int GetCustomerIDLoginBefore() {
+        int cus_id = 0;
+        String selectQuery = "Select _id from CUSTOMER where Status ='" + 1 + "';";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                cus_id = cursor.getInt(cursor.getColumnIndex("_id"));
+            } while (cursor.moveToNext());
+
+        }
+        cursor.close();
+        return cus_id;
+    }
+
+    public int GetMasterIDLoginBefore() {
+        int master_id = 0;
+        String selectQuery = "Select _id from MASTER where Status ='" + 1 + "';";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                master_id = cursor.getInt(cursor.getColumnIndex("_id"));
+            } while (cursor.moveToNext());
+
+        }
+        cursor.close();
+        return master_id;
     }
 
 

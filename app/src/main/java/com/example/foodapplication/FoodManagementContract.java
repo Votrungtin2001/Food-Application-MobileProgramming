@@ -74,7 +74,8 @@ public final class FoodManagementContract {
                 KEY_GENDER = "Gender",
                 KEY_DOB = "DoB",
                 KEY_OCCUPATION = "Occupation",
-                KEY_CREDITS = "Credits";
+                KEY_CREDITS = "Credits",
+                KEY_STATUS = "Status";
 
         /* no id column here unlike in standard SQL: an SQLite table needs a column explicitly named
         "_id" in order to use the cursor class and its dependencies provided by Android */
@@ -91,6 +92,7 @@ public final class FoodManagementContract {
                 + KEY_DOB + " TEXT,"
                 + KEY_OCCUPATION + " TEXT,"
                 + KEY_CREDITS + " INTEGER,"
+                + KEY_STATUS + " INTEGER,"
                 + "FOREIGN KEY (" + KEY_CITY + ") REFERENCES " + CCity.TABLE_NAME + " (" + CCity._ID + ")"
                 + ");";
 
@@ -106,7 +108,8 @@ public final class FoodManagementContract {
                 KEY_EMAIL = "Email",
                 KEY_FACEBOOK = "Facebook",
                 KEY_USERNAME = "Username",
-                KEY_PASSWORD = "Password";
+                KEY_PASSWORD = "Password",
+                KEY_STATUS = "Status";
 
         /* no id column here unlike in standard SQL: an SQLite table needs a column explicitly named
         "_id" in order to use the cursor class and its dependencies provided by Android */
@@ -117,12 +120,13 @@ public final class FoodManagementContract {
                 + KEY_EMAIL + " TEXT,"
                 + KEY_FACEBOOK + " TEXT,"
                 + KEY_USERNAME + " TEXT,"
-                + KEY_PASSWORD + " TEXT NOT NULL"
+                + KEY_PASSWORD + " TEXT NOT NULL,"
+                + KEY_STATUS + " INTEGER"
                 + ");";
 
-        public static final String POPULATE_TABLE = "INSERT INTO " + TABLE_NAME + " (" + KEY_NAME + ", " + KEY_PHONE + ", " + KEY_EMAIL + ", " + KEY_FACEBOOK + ", " + KEY_USERNAME + ", " + KEY_PASSWORD +  ")"
+        public static final String POPULATE_TABLE = "INSERT INTO " + TABLE_NAME + " (" + KEY_NAME + ", " + KEY_PHONE + ", " + KEY_EMAIL + ", " + KEY_FACEBOOK + ", " + KEY_USERNAME + ", " + KEY_PASSWORD + ", " + KEY_STATUS + ")"
                 + " VALUES "
-                + " (\"A\", \"A\", \"A\", \"A\", \"A\", \"A\");";
+                + " (\"A\", \"A\", \"A\", \"A\", \"A\", \"A\", \"0\");";
 
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
