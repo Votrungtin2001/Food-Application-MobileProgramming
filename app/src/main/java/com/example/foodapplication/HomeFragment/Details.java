@@ -1,4 +1,4 @@
-package com.example.foodapplication;
+package com.example.foodapplication.HomeFragment;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,7 +11,9 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class Item_Collection extends AppCompatActivity {
+import com.example.foodapplication.R;
+
+public class Details extends AppCompatActivity {
 
     ImageView imageView;
     TextView textView_ItemName;
@@ -24,13 +26,21 @@ public class Item_Collection extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         transparentStatusAndNavigation();
-        setContentView(R.layout.activity_item__collection);
+        setContentView(R.layout.activity_details);
 
+        initComponents();
+        Run();
+
+    }
+
+    public void initComponents() {
         imageView = findViewById(R.id.ItemCollection_Image);
         textView_ItemName = findViewById(R.id.ItemCollection_Name);
         textView_ItemDescription = findViewById(R.id.ItemCollection_Description);
         imageView_Back = findViewById(R.id.ItemCollection_Back);
+    }
 
+    public void Run() {
         imageView_Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,9 +55,8 @@ public class Item_Collection extends AppCompatActivity {
         imageView.setImageResource(image);
         textView_ItemName.setText(item_Name);
         textView_ItemDescription.setText(item_Description);
-
-
     }
+
     private void transparentStatusAndNavigation()
     {
         //make full transparent statusBar

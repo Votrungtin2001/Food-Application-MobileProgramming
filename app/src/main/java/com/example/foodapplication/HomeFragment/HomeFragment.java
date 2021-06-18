@@ -30,12 +30,8 @@ import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.interfaces.ItemClickListener;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.foodapplication.DatabaseHelper;
-import com.example.foodapplication.FastestDeliveryRestaurantFragment;
-import com.example.foodapplication.ItemList_Collection;
-import com.example.foodapplication.Item_Collection;
+import com.example.foodapplication.HomeFragment.fragment.FastestDeliveryRestaurantFragment;
 import com.example.foodapplication.R;
-import com.example.foodapplication.RestaurantList;
-import com.example.foodapplication.SortOfProductList;
 import com.example.foodapplication.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
@@ -43,18 +39,18 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import adapter.AllRestaurantAdapter;
-import adapter.CollectionAdapter;
-import adapter.DiscountComboProductAdapter;
-import adapter.ListAdapter;
-import adapter.SearchBarAdapter;
-import fragments.BestRatingRestaurantFragment;
-import fragments.BestSellerRestaurantFragment;
-import fragments.NearMeRestaurantsFragment;
-import models.AllRestaurantModel;
-import models.CollectionModel;
-import models.SearchBarModel;
-import models.SortOfProductModel;
+import com.example.foodapplication.HomeFragment.adapter.AllRestaurantAdapter;
+import com.example.foodapplication.HomeFragment.adapter.CollectionAdapter;
+import com.example.foodapplication.HomeFragment.adapter.DiscountComboProductAdapter;
+import com.example.foodapplication.HomeFragment.adapter.CategoryAdapter;
+import com.example.foodapplication.HomeFragment.adapter.SearchBarAdapter;
+import com.example.foodapplication.HomeFragment.fragment.BestRatingRestaurantFragment;
+import com.example.foodapplication.HomeFragment.fragment.BestSellerRestaurantFragment;
+import com.example.foodapplication.HomeFragment.fragment.NearMeRestaurantsFragment;
+import com.example.foodapplication.HomeFragment.model.AllRestaurantModel;
+import com.example.foodapplication.HomeFragment.model.CollectionModel;
+import com.example.foodapplication.HomeFragment.model.SearchBarModel;
+import com.example.foodapplication.HomeFragment.model.SortOfProductModel;
 
 import static com.example.foodapplication.MainActivity.addressLine;
 import static com.example.foodapplication.MainActivity.district_id;
@@ -80,12 +76,11 @@ public class HomeFragment extends Fragment {
     List<SearchBarModel> searchBarModels;
     LinearLayoutManager linearLayoutManager_SearchBar;
 
-    //RecyclerView List
-    RecyclerView recyclerView_list;
+    //RecyclerView Category
+    RecyclerView recyclerView_Category;
     List<String> titles1;
     List<Integer> images;
-    ListAdapter listAdapter;
-
+    CategoryAdapter categoryAdapter;
 
     //RecyclerView Collection
     RecyclerView recyclerView_Collection;
@@ -143,14 +138,10 @@ public class HomeFragment extends Fragment {
 
     }
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-
 
         databaseHelper = new DatabaseHelper(getActivity());
         db = databaseHelper.getReadableDatabase();
@@ -184,7 +175,7 @@ public class HomeFragment extends Fragment {
         imageSlider_promo = view.findViewById(R.id.promo_slider);
 
         //RecyclerView List
-        recyclerView_list = view.findViewById(R.id.list_recyclerView);
+        recyclerView_Category = view.findViewById(R.id.list_recyclerView);
 
         textView_space1 = view.findViewById(R.id.textView7);
 
@@ -255,7 +246,7 @@ public class HomeFragment extends Fragment {
         if (sign == true) {
             imageSlider_promo.setVisibility(View.VISIBLE);
             textView_DistrictIsUnavailable.setVisibility(View.GONE);
-            recyclerView_list.setVisibility(View.VISIBLE);
+            recyclerView_Category.setVisibility(View.VISIBLE);
             textView_space1.setVisibility(View.VISIBLE);
             textView_CollectionTitle.setVisibility(View.VISIBLE);
             textView_MoreCollection.setVisibility(View.VISIBLE);
@@ -280,7 +271,7 @@ public class HomeFragment extends Fragment {
         else {
             imageSlider_promo.setVisibility(View.GONE);
             textView_DistrictIsUnavailable.setVisibility(View.VISIBLE);
-            recyclerView_list.setVisibility(View.GONE);
+            recyclerView_Category.setVisibility(View.GONE);
             textView_space1.setVisibility(View.GONE);
             textView_CollectionTitle.setVisibility(View.GONE);
             textView_MoreCollection.setVisibility(View.GONE);
@@ -308,7 +299,7 @@ public class HomeFragment extends Fragment {
         searchBarModels = new ArrayList<>();
         String selectQuery = "SELECT B._id, B.NAME, R.Image FROM (RESTAURANT R JOIN BRANCHES B ON R._id = B.Restaurant) JOIN ADDRESS A ON B.Address = A._id WHERE A.District ='" + id + "';";
         Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor != null) {
+        if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             do {
                 String name_branch = cursor.getString(cursor.getColumnIndex("NAME"));
@@ -334,10 +325,10 @@ public class HomeFragment extends Fragment {
         allRestaurantModelList = new ArrayList<>();
             String selectQuery = "SELECT B._id, R.Image, B.NAME, A.Address FROM (RESTAURANT R JOIN BRANCHES B ON R._id = B.Restaurant) JOIN ADDRESS A ON B.Address = A._id WHERE A.District = '" + id + "';";
             Cursor cursor = db.rawQuery(selectQuery, null);
-            if (cursor != null) {
+            if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 do {
-                    if (count <= 10) {
+                    if (count < 8) {
                         count++;
                         int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
                         byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
@@ -363,10 +354,10 @@ public class HomeFragment extends Fragment {
                 "JOIN ADDRESS A ON B.Address = A._id " +
                 "WHERE A.District ='" + id + "';";
         Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor != null) {
+        if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             do {
-                if (count <= 10) {
+                if (count < 8) {
                     String key = "Combo";
                     String name_product = cursor.getString(cursor.getColumnIndex("Name"));
                     if (name_product.toLowerCase().contains(key.toLowerCase())) {
@@ -396,10 +387,10 @@ public class HomeFragment extends Fragment {
                 "JOIN ADDRESS A ON B.Address = A._id  " +
                 "WHERE M.Price < 20000 AND M.Price >= 15000 AND P.Category != 4 AND P.Category != 12 AND A.District ='" + id + "';";
         Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor != null) {
+        if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             do {
-                if (count <= 10) {
+                if (count < 8) {
                     count++;
                     String name_product = cursor.getString(cursor.getColumnIndex("Name"));
                     byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
@@ -448,7 +439,7 @@ public class HomeFragment extends Fragment {
         viewPager.setAdapter(viewPagerAdapter);
     }
 
-    public void AddDataForList()
+    public void AddDataForCategory()
     {
             titles1 = new ArrayList<>();
             images = new ArrayList<>();
@@ -487,7 +478,6 @@ public class HomeFragment extends Fragment {
             images.add(R.drawable.cake_icon);
             images.add(R.drawable.sushi_icon);
             images.add(R.drawable.xoi_icon);
-
     }
 
     public void AddDataForCollection()
@@ -503,10 +493,7 @@ public class HomeFragment extends Fragment {
             collectionModels.add(new CollectionModel(R.drawable.di_het_viet_nam, "Đi Hết Việt Nam - \nFreeship"));
             collectionModels.add(new CollectionModel(R.drawable.he_xinh_tiec_xin, "Hè Xinh - \nTiệc Xịn 55k"));
             collectionModels.add(new CollectionModel(R.drawable.le_to_deal_xin_xo, "Lễ To - \nDeal Xịn Xò"));
-
-
     }
-
 
     private void runFillAddressActivity()
     {
@@ -522,6 +509,7 @@ public class HomeFragment extends Fragment {
         if(requestCode == 1){
             if(resultCode == getActivity().RESULT_OK)
             {
+                textView_addressLine.setText(addressLine);
                 boolean sign = false;
                 if(district_id >= 0) sign = true;
                 SetAllData(district_id);
@@ -548,7 +536,7 @@ public class HomeFragment extends Fragment {
     public void ClickPromoItemImageSlider(int i)
     {
         String sDescription = "";
-        Intent intent = new Intent(getActivity(), Item_Collection.class);
+        Intent intent = new Intent(getActivity(), Details.class);
         int iImage = 0;
         String sName = "";
         switch (i) {
@@ -622,7 +610,7 @@ public class HomeFragment extends Fragment {
     public void ClickAdvertisementItemImageSlider(int i)
     {
         String sDescription = "";
-        Intent intent = new Intent(getActivity(), Item_Collection.class);
+        Intent intent = new Intent(getActivity(), Details.class);
         int iImage = 0;
         String sName = "";
         switch (i) {
@@ -678,7 +666,7 @@ public class HomeFragment extends Fragment {
 
     public void SetAllData(int a) {
         district_isAvailable = false;
-        if(a >= 0) district_isAvailable = true;
+        if(a > 0) district_isAvailable = true;
 
         //Search Bar Event
         searchBarAdapter = new SearchBarAdapter(getActivity(), searchBarModels);
@@ -687,12 +675,10 @@ public class HomeFragment extends Fragment {
         editText_search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
 
             @Override
@@ -721,12 +707,12 @@ public class HomeFragment extends Fragment {
                 }
             });
 
-            //RecyclerView List
-            AddDataForList();
-            listAdapter = new ListAdapter(getActivity(), titles1, images, district_id, district_isAvailable);
+            //RecyclerView Category
+            AddDataForCategory();
+            categoryAdapter = new CategoryAdapter(getActivity(), titles1, images, district_id, district_isAvailable);
             GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.HORIZONTAL, false);
-            recyclerView_list.setLayoutManager(gridLayoutManager);
-            recyclerView_list.setAdapter(listAdapter);
+            recyclerView_Category.setLayoutManager(gridLayoutManager);
+            recyclerView_Category.setAdapter(categoryAdapter);
 
             //RecyclerView Collection
             collectionModels = new ArrayList<>();
@@ -738,7 +724,7 @@ public class HomeFragment extends Fragment {
             textView_MoreCollection.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), ItemList_Collection.class);
+                    Intent intent = new Intent(getActivity(), ListCollection.class);
                     startActivity(intent);
                 }
             });
@@ -752,7 +738,7 @@ public class HomeFragment extends Fragment {
             AllRestaurant_more.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(getActivity(), RestaurantList.class);
+                    Intent intent = new Intent(getActivity(), ListRestaurant.class);
                     intent.putExtra("Name Activity", "All Restaurants");
                     intent.putExtra("District ID", district_id);
                     startActivity(intent);

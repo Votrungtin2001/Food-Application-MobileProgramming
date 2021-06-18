@@ -1,4 +1,4 @@
-package com.example.foodapplication;
+package com.example.foodapplication.HomeFragment;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -12,15 +12,17 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+import com.example.foodapplication.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import adapter.ItemListCollectionAdapter;
-import models.CollectionModel;
+import com.example.foodapplication.HomeFragment.adapter.ListCollectionAdapter;
+import com.example.foodapplication.HomeFragment.model.CollectionModel;
 
-public class ItemList_Collection extends AppCompatActivity {
+public class ListCollection extends AppCompatActivity {
 
-    RecyclerView recyclerView_ItemListCollection;
+    RecyclerView recyclerView_ListCollection;
     List<CollectionModel> collectionModels;
     ImageView imageView_Back;
     RecyclerView.Adapter adapter;
@@ -28,15 +30,15 @@ public class ItemList_Collection extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         transparentStatusAndNavigation();
-        setContentView(R.layout.activity_item_list__collection);
+        setContentView(R.layout.activity_list__collection);
 
-        recyclerView_ItemListCollection = findViewById(R.id.ItemListCollection_recyclerView);
+        recyclerView_ListCollection = findViewById(R.id.ItemListCollection_recyclerView);
         collectionModels = new ArrayList<>();
-        adapter = new ItemListCollectionAdapter(collectionModels, this);
+        adapter = new ListCollectionAdapter(collectionModels, this);
         AddDataForCollection();
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
-        recyclerView_ItemListCollection.setLayoutManager(gridLayoutManager);
-        recyclerView_ItemListCollection.setAdapter(adapter);
+        recyclerView_ListCollection.setLayoutManager(gridLayoutManager);
+        recyclerView_ListCollection.setAdapter(adapter);
 
         imageView_Back = findViewById(R.id.Back_ItemListCollection);
         imageView_Back.setOnClickListener(new View.OnClickListener() {

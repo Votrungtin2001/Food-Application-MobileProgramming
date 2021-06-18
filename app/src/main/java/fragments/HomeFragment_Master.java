@@ -21,9 +21,6 @@ import com.example.foodapplication.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
-import java.util.Set;
-
-import models.SortOfProductModel;
 
 
 public class HomeFragment_Master extends Fragment {

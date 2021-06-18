@@ -21,13 +21,13 @@
         android:theme="@style/Theme.FoodApplication"
         android:usesCleartextTraffic="true">
         <activity android:name=".Master_MainActivity"></activity>
-        <activity android:name=".SortOfProductList" />
+        <activity android:name=".HomeFragment.SortOfProductList" />
         <activity android:name=".Cart.Cart"></activity>
-        <activity android:name=".RestaurantList" />
-        <activity android:name=".ProductWithCategory" />
+        <activity android:name=".HomeFragment.ListRestaurant" />
+        <activity android:name=".HomeFragment.ProductWithCategory" />
         <activity android:name=".RestaurantInformation" />
-        <activity android:name=".ItemList_Collection" />
-        <activity android:name=".Item_Collection" />
+        <activity android:name=".HomeFragment.ListCollection" />
+        <activity android:name=".HomeFragment.Details" />
         <activity
             android:name=".HomeFragment.FillAddress"
             android:parentActivityName=".HomeFragment.ManageAddress"
@@ -37,7 +37,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyB_RuQCaFrm4wAIamLJA9R-NvSc7RmjlrA" />
 
-        <activity android:name=".Map" />
+        <activity android:name=".HomeFragment.Map" />
         <activity android:name=".SubScreen.GetCurrentLocation" />
         <activity
             android:name=".HomeFragment.ManageAddress"

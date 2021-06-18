@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Item_Collection"
+    tools:context=".HomeFragment.Details"
     android:background="@drawable/item_collection_background">
 
     <RelativeLayout
@@ -39,7 +39,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/RelativeLayout"
-        android:layout_marginLeft="15dp"
         android:layout_marginTop="30dp"
         android:text="ITEM NAME"
         android:textColor="@color/black"

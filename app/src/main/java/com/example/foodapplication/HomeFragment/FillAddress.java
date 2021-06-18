@@ -75,6 +75,11 @@ public class FillAddress extends AppCompatActivity {
         editText_FullAddress = findViewById(R.id.FullAddressEditText_CreateAddress);
         editText_HouseAddress = findViewById(R.id.HouseAddressEditText_CreateAddress);
         editText_NumberOfGate = findViewById(R.id.NumberOfGateEditText_CreateAddress);
+
+        textView_Home = findViewById(R.id.HomeOption_CreateAddress);
+        textView_Company = findViewById(R.id.CompanyOption_CreateAddress);
+        textView_Others = findViewById(R.id.OthersOption_CreateAddress);
+
         editText_NameContact = findViewById(R.id.NameContactEditText_CreateAddress);
         editText_PhoneContact = findViewById(R.id.PhoneContactEditText_CreateAddress);
         editText_Note = findViewById(R.id.NoteEditText_CreateAddress);
@@ -89,10 +94,6 @@ public class FillAddress extends AppCompatActivity {
                 finish();
             }
         });
-
-        textView_Home = findViewById(R.id.HomeOption_CreateAddress);
-        textView_Company = findViewById(R.id.CompanyOption_CreateAddress);
-        textView_Others = findViewById(R.id.OthersOption_CreateAddress);
 
         TurnOnOption();
 
@@ -115,19 +116,6 @@ public class FillAddress extends AppCompatActivity {
             }
         });
 
-        editText_FullAddress = findViewById(R.id.FullAddressEditText_CreateAddress);
-
-        editText_HouseAddress = findViewById(R.id.HouseAddressEditText_CreateAddress);
-
-        editText_NumberOfGate = findViewById(R.id.NumberOfGateEditText_CreateAddress);
-
-        editText_NameContact = findViewById(R.id.NameContactEditText_CreateAddress);
-
-        editText_PhoneContact = findViewById(R.id.PhoneContactEditText_CreateAddress);
-
-        editText_Note = findViewById(R.id.NoteEditText_CreateAddress);
-
-        button_SaveAddress = findViewById(R.id.SaveAddressButton_CreateAddress);
 
         editText_FullAddress.addTextChangedListener(new TextWatcher() {
             @Override

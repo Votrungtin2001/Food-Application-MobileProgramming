@@ -1,4 +1,4 @@
-package adapter;
+package com.example.foodapplication.HomeFragment.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,8 +17,7 @@ import com.example.foodapplication.RestaurantInformation;
 
 import java.util.List;
 
-import models.AllRestaurantModel;
-import models.SortOfProductModel;
+import com.example.foodapplication.HomeFragment.model.SortOfProductModel;
 
 public class DiscountComboProductAdapter extends RecyclerView.Adapter<DiscountComboProductAdapter.ViewHolder> {
 

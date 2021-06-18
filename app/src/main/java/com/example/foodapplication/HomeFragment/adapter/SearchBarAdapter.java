@@ -1,4 +1,4 @@
-package adapter;
+package com.example.foodapplication.HomeFragment.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,7 +17,7 @@ import com.example.foodapplication.RestaurantInformation;
 
 import java.util.List;
 
-import models.SearchBarModel;
+import com.example.foodapplication.HomeFragment.model.SearchBarModel;
 
 public class SearchBarAdapter extends RecyclerView.Adapter<SearchBarAdapter.ViewHolder> {
 

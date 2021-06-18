@@ -1,4 +1,4 @@
-package adapter;
+package com.example.foodapplication.HomeFragment.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,12 +12,12 @@ import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.foodapplication.ProductWithCategory;
+import com.example.foodapplication.HomeFragment.ProductWithCategory;
 import com.example.foodapplication.R;
 
 import java.util.List;
 
-public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
+public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
 
     List<String> titles;
     List<Integer> images;
@@ -26,7 +26,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.ViewHolder> {
     int district_id;
     boolean district_isAvailable;
 
-    public ListAdapter(Context ctx, List<String> sTitles, List<Integer> sImages, int District_ID, boolean Sign){
+    public CategoryAdapter(Context ctx, List<String> sTitles, List<Integer> sImages, int District_ID, boolean Sign){
         this.context = ctx;
         this.titles = sTitles;
         this.images = sImages;

@@ -24,7 +24,6 @@ import android.widget.Toast;
 
 import com.example.foodapplication.DatabaseHelper;
 import com.example.foodapplication.FoodManagementContract;
-import com.example.foodapplication.Map;
 import com.example.foodapplication.R;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;
@@ -383,8 +382,9 @@ public class ManageAddress extends AppCompatActivity {
                     geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
                     List<Address> addresses = geocoder.getFromLocation(dLatitude, dLongitude, 1);
                     nameStreet = addresses.get(0).getThoroughfare();
+                    addressLine = addresses.get(0).getAddressLine(0);
                     textView_nameStreet.setText(nameStreet);
-                    textView_addressLine.setText(placeAddress);
+                    textView_addressLine.setText(addressLine);
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {

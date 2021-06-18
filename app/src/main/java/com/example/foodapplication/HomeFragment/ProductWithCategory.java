@@ -1,4 +1,4 @@
-package com.example.foodapplication;
+package com.example.foodapplication.HomeFragment;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,10 +20,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import adapter.MenuAdapter;
-import adapter.ProductWithCategoryAdapter;
-import models.ProductCategoryModel;
-import models.ProductModel;
+import com.example.foodapplication.HomeFragment.adapter.ProductWithCategoryAdapter;
+
+import com.example.foodapplication.DatabaseHelper;
+import com.example.foodapplication.HomeFragment.model.ProductCategoryModel;
+import com.example.foodapplication.R;
 
 public class ProductWithCategory extends AppCompatActivity {
 
@@ -49,14 +50,25 @@ public class ProductWithCategory extends AppCompatActivity {
         databaseHelper = new DatabaseHelper(this);
         db = databaseHelper.getReadableDatabase();
 
+        initComponents();
+
+        Run();
+    }
+
+    public void initComponents() {
+        textView = findViewById(R.id.textView_Category);
+        imageView = findViewById(R.id.Back_Category);
+        recyclerView_ProductWithCategory = findViewById(R.id.ProductWithCategory_RecyclerView);
+    }
+
+    public void Run() {
         category_id = getIntent().getIntExtra("Category ID", 0);
         district_id = getIntent().getIntExtra("District ID", 0);
 
         category_name = getNameCategory(category_id);
-        textView = findViewById(R.id.textView_Category);
+
         textView.setText(category_name);
 
-        imageView = findViewById(R.id.Back_Category);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +76,6 @@ public class ProductWithCategory extends AppCompatActivity {
             }
         });
 
-        recyclerView_ProductWithCategory = findViewById(R.id.ProductWithCategory_RecyclerView);
         productCategoryModelList = new ArrayList<>();
         getAllProducts(category_id, district_id);
         productWithCategoryAdapter = new ProductWithCategoryAdapter(this, productCategoryModelList);
@@ -81,7 +92,7 @@ public class ProductWithCategory extends AppCompatActivity {
                 "JOIN ADDRESS A ON B.Address = A._id " +
                 "WHERE C._id ='" + id + "' AND A.District ='" + district + "';";
         Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor != null) {
+        if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             do {
                 byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));

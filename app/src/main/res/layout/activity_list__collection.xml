@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ItemList_Collection">
+    tools:context=".HomeFragment.ListCollection">
 
     <TextView
         android:id="@+id/ItemListCollection_Title"

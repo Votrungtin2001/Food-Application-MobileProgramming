@@ -1,4 +1,4 @@
-package models;
+package com.example.foodapplication.HomeFragment.model;
 import android.graphics.Bitmap;
 
 public class SearchBarModel {

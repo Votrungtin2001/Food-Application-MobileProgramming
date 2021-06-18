@@ -1,4 +1,4 @@
-package adapter;
+package com.example.foodapplication.HomeFragment.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,8 +17,7 @@ import com.example.foodapplication.RestaurantInformation;
 
 import java.util.List;
 
-import models.ProductCategoryModel;
-import models.ProductModel;
+import com.example.foodapplication.HomeFragment.model.ProductCategoryModel;
 
 public class ProductWithCategoryAdapter extends RecyclerView.Adapter<ProductWithCategoryAdapter.ViewHolder> {
 

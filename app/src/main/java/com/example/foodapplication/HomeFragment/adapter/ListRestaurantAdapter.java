@@ -1,4 +1,4 @@
-package adapter;
+package com.example.foodapplication.HomeFragment.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,33 +17,31 @@ import com.example.foodapplication.RestaurantInformation;
 
 import java.util.List;
 
-import models.AllRestaurantModel;
+import com.example.foodapplication.HomeFragment.model.AllRestaurantModel;
 
-public class AllRestaurantAdapter extends RecyclerView.Adapter<AllRestaurantAdapter.ViewHolder> {
+public class ListRestaurantAdapter extends RecyclerView.Adapter<ListRestaurantAdapter.ViewHolder> {
 
     List<AllRestaurantModel> itemList;
     Context context;
-    LayoutInflater inflater;
 
-    public AllRestaurantAdapter(Context ctx, List<AllRestaurantModel> list){
-        this.itemList = list;
-        this.inflater = LayoutInflater.from(ctx);
-        this.context = ctx;
+    public ListRestaurantAdapter(List<AllRestaurantModel> ItemList, Context context){
+        this.itemList = ItemList;
+        this.context = context;
     }
 
     @NonNull
     @Override
-    public AllRestaurantAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.custom_allrestaurants_constraint_layout, parent, false);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_gridlayout_item_restaurantlist, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AllRestaurantAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         AllRestaurantModel currentItem = itemList.get(position);
-        holder.title1.setText(currentItem.getNameBranch());
-        holder.title2.setText(currentItem.getAddressBranch());
-        holder.constraintIcon.setImageBitmap(currentItem.getImage());
+        holder.name_branch.setText(currentItem.getNameBranch());
+        holder.address_branch.setText(currentItem.getAddressBranch());
+        holder.linearIcon.setImageBitmap(currentItem.getImage());
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,17 +59,17 @@ public class AllRestaurantAdapter extends RecyclerView.Adapter<AllRestaurantAdap
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView title1;
-        TextView title2;
-        ImageView constraintIcon;
+        TextView name_branch;
+        TextView address_branch;
+        ImageView linearIcon;
         ConstraintLayout constraintLayout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            title1 = itemView.findViewById(R.id.AllRestaurants_NameRestaurant);
-            title2 = itemView.findViewById(R.id.AllRestaurants_Address);
-            constraintIcon = itemView.findViewById(R.id.imageView_AllRestaurants);
-            constraintLayout = itemView.findViewById(R.id.AllRestaurant_ConstraintLayout);
+            name_branch = itemView.findViewById(R.id.ItemRestaurantList_NameBranch);
+            address_branch = itemView.findViewById(R.id.ItemRestaurantList_AddressBranch);
+            linearIcon = itemView.findViewById(R.id.ImageView_ItemRestaurantList);
+            constraintLayout = itemView.findViewById(R.id.ItemRestaurantList_ConstraintLayout);
         }
     }
 }

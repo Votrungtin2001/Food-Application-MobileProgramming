@@ -1,4 +1,4 @@
-package com.example.foodapplication;
+package com.example.foodapplication.HomeFragment.adapter;
 
 import android.content.Context;
 import android.graphics.Typeface;

@@ -1,10 +1,12 @@
-package com.example.foodapplication;
+package com.example.foodapplication.HomeFragment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import com.example.foodapplication.R;
 import com.google.android.libraries.places.api.Places;
 
 import android.Manifest;
@@ -18,16 +20,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.inputmethod.EditorInfo;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -40,18 +37,14 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.api.model.RectangularBounds;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -177,10 +170,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback,
                                 if(stateName.trim().equals("Thủ Đức") || stateName.trim().equals("Thu Duc") || stateName.trim().equals("Thành Phố Thủ Đức") || stateName.trim().equals("Quận Thủ Đức")) {
                                     district_id = 14;
                                 }
-                                else if(stateName.trim().equals("Quận 5") || stateName.trim().equals("Quan 5")) {
-                                    district_id = 5;
-                                }
-                                else district_id = -1;
+                                else district_id = 0;
                             } catch (IOException e) {
                                 e.printStackTrace();
 
@@ -257,10 +247,7 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback,
                                     if(stateName.trim().equals("Thủ Đức") || stateName.trim().equals("Thu Duc") || stateName.trim().equals("Thành Phố Thủ Đức") || stateName.trim().equals("Quận Thủ Đức")) {
                                         district_id = 14;
                                     }
-                                    else if(stateName.trim().equals("Quận 5") || stateName.trim().equals("Quan 5")) {
-                                        district_id = 5;
-                                    }
-                                    else district_id = -1;
+                                    else district_id = 0;
                                 } catch (IOException e) {
                                     e.printStackTrace();
 

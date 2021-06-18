@@ -1,4 +1,4 @@
-package models;
+package com.example.foodapplication.HomeFragment.model;
 
 public class CollectionModel {
     int image;

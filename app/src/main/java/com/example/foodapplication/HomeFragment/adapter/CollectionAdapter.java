@@ -1,4 +1,4 @@
-package adapter;
+package com.example.foodapplication.HomeFragment.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,46 +6,46 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.foodapplication.Item_Collection;
+import com.example.foodapplication.HomeFragment.Details;
 import com.example.foodapplication.R;
 
 import java.util.List;
 
-import models.CollectionModel;
+import com.example.foodapplication.HomeFragment.model.CollectionModel;
 
-public class ItemListCollectionAdapter extends RecyclerView.Adapter<ItemListCollectionAdapter.ViewHolder> {
+public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.ViewHolder> {
 
     List<CollectionModel> my_list;
     Context context;
 
-    public ItemListCollectionAdapter(List<CollectionModel> my_list, Context context){
+    public CollectionAdapter(List<CollectionModel> my_list, Context context){
         this.my_list = my_list;
         this.context = context;
     }
 
     @NonNull
     @Override
-    public ItemListCollectionAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_itemlistcollection_grid_layout, parent, false);
-        return new ItemListCollectionAdapter.ViewHolder(view);
+    public CollectionAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_collection_linear_layout, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ItemListCollectionAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull CollectionAdapter.ViewHolder holder, int position) {
         CollectionModel collectionModel = my_list.get(position);
         holder.title.setText(collectionModel.getItem_name());
         holder.linearIcon.setImageDrawable(context.getResources().getDrawable(collectionModel.getImage()));
-        holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String sDescription;
-                Intent intent = new Intent(context, Item_Collection.class);
+                Intent intent = new Intent(context, Details.class);
                 intent.putExtra("image", collectionModel.getImage());
                 intent.putExtra("name", collectionModel.getItem_name());
                 switch (position) {
@@ -122,17 +122,12 @@ public class ItemListCollectionAdapter extends RecyclerView.Adapter<ItemListColl
                         sDescription = "Khởi động cho Tiệc chào hè 5.5, để giúp \"thượng đế\" an tâm ngồi tại nhà hoặc nơi làm việc thưởng thức các món ngon mà không phải lo lắng về những cơn mưa rào bất chợt hay cái nắng gắt chói chang đầu hè. NowFood đã tung ra các Bộ sưu tập rất hấp dẫn như đồng giá các món ngon chỉ còn 5K, Combo chỉ 55K, các deal đếm ngược về 1Đ... giúp người dùng tha hồ tận hưởng bữa tiệc xịn đúng chất hè.";
                         intent.putExtra("description", sDescription);
                         break;
-                    case 9:
+                    default:
                         sDescription = "[DEAL MÊ ĐẮM - SẮM NGẤT NGÂY - DUY NHẤT TRONG THÁNG 6]\n" +
-                                "Chỉ cần ở nhà mở app Now vào mục NowFresh là có ngay các mặt hàng từ thực phẩm tươi như thịt, hải sản, rau củ quả, sữa...với nhiều ưu đãi hấp dẫn lên đến 50% từ cửa hàng nha.\n" +
+                        "Chỉ cần ở nhà mở app Now vào mục NowFresh là có ngay các mặt hàng từ thực phẩm tươi như thịt, hải sản, rau củ quả, sữa...với nhiều ưu đãi hấp dẫn lên đến 50% từ cửa hàng nha.\n" +
                                 "Chưa hết đâu NowFresh còn có dàn code siêu yêu thương cho mọi người để thêm vào giỏ hàng đi chợ đây!";
                         intent.putExtra("description", sDescription);
                         break;
-
-
-
-
-
 
                 }
                 context.startActivity(intent);
@@ -148,13 +143,13 @@ public class ItemListCollectionAdapter extends RecyclerView.Adapter<ItemListColl
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView title;
         ImageView linearIcon;
-        ConstraintLayout constraintLayout;
+        LinearLayout linearLayout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            title = itemView.findViewById(R.id.ItemListCollection_NameVoucher);
-            linearIcon = itemView.findViewById(R.id.imageView_ItemListCollection);
-            constraintLayout = itemView.findViewById(R.id.ItemListCollection_ConstraintLayout);
+            title = itemView.findViewById(R.id.textView_NameVoucher);
+            linearIcon = itemView.findViewById(R.id.imageView_Collection);
+            linearLayout = itemView.findViewById(R.id.Collection_LinearLayout);
         }
     }
 }
