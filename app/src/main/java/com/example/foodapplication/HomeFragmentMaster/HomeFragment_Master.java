@@ -1,4 +1,4 @@
-package fragments;
+package com.example.foodapplication.HomeFragmentMaster;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.foodapplication.DatabaseHelper;
 import com.example.foodapplication.HomeFragment.fragment.RestaurantInformation_ThongTin;
+import com.example.foodapplication.HomeFragmentMaster.fragment.HomeFragment_Master_MonAn;
 import com.example.foodapplication.R;
 import com.example.foodapplication.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
@@ -142,7 +143,7 @@ public class HomeFragment_Master extends Fragment {
         for(int i = 0; i < title_tabLayout.size(); i++)
         {
             if(i == 0) {
-                HomeFragment_Master_DatDon fragment1 = new HomeFragment_Master_DatDon(branch_id);
+                HomeFragment_Master_MonAn fragment1 = new HomeFragment_Master_MonAn(branch_id);
                 viewPagerAdapter.addFragment(fragment1, title_tabLayout.get(i));
             }
 
@@ -209,7 +210,7 @@ public class HomeFragment_Master extends Fragment {
         String branch_name = getBranchName(branch_id);
         textView_BranchName_HomeFragment_Master.setText(branch_name);
 
-        title_TabLayout.add("Đặt đơn");
+        title_TabLayout.add("Món ăn");
         title_TabLayout.add("Thông tin");
 
 

@@ -1,4 +1,4 @@
-package fragments;
+package com.example.foodapplication.UpdateFragmentMaster;
 
 import android.Manifest;
 import android.app.Dialog;
@@ -731,7 +731,6 @@ public class UpdateFragment_Master extends Fragment {
                 editText_ClosingTime_UpdateFragment.setText("");
                 editText_NameBranch_UpdateFragment.setText("");
                 editText_Address_UpdateFragment.setText("");
-                Toast.makeText(getActivity(), "Đã tạo thành công", Toast.LENGTH_SHORT);
                 button_CreateRestaurant_UpdateFragment.setEnabled(false);
                 sign_update = true;
                 if(sign_update == true) Run2();
@@ -1048,7 +1047,7 @@ public class UpdateFragment_Master extends Fragment {
 
         TextView textView_Text;
         textView_Text = (TextView) AnnouncementDialog.findViewById(R.id.TextView_PopUp_RequireLogin);
-        textView_Text.setText("Bạn đã tạo nhà hàng thành công!!!       ");
+        textView_Text.setText("  Bạn đã tạo nhà hàng thành công!!!    \n    ");
 
         AnnouncementDialog.show();
     }

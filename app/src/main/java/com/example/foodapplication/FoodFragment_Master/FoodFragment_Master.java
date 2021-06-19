@@ -1,4 +1,4 @@
-package fragments;
+package com.example.foodapplication.FoodFragment_Master;
 
 import android.Manifest;
 import android.app.Dialog;
@@ -497,7 +497,7 @@ public class FoodFragment_Master extends Fragment {
 
         TextView textView_Text;
         textView_Text = (TextView) AnnouncementDialog.findViewById(R.id.TextView_PopUp_RequireLogin);
-        textView_Text.setText("Bạn đã thêm món thành công!!!     ");
+        textView_Text.setText("  Bạn đã thêm món thành công!!!  \n   ");
 
         AnnouncementDialog.show();
     }

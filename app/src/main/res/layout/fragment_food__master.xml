@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="fragments.FoodFragment_Master">
+    tools:context=".FoodFragment_Master.FoodFragment_Master">
 
     <TextView
         android:id="@+id/TextView_Announcement_FoodFragment"

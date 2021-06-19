@@ -19,7 +19,7 @@ import com.example.foodapplication.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import adapter.MenuAdapter;
+import com.example.foodapplication.HomeFragment.adapter.MenuAdapter;
 import models.ProductModel;
 
 

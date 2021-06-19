@@ -24,7 +24,7 @@ import java.util.List;
 import models.ProductModel;
 import models.Request;
 
-import static adapter.MenuAdapter.productModelList;
+import static com.example.foodapplication.HomeFragment.adapter.MenuAdapter.productModelList;
 import static com.example.foodapplication.MainActivity.customer_id;
 
 

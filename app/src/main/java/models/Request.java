@@ -3,7 +3,7 @@ package models;
 import java.util.Date;
 import java.util.List;
 
-import static adapter.MenuAdapter.productModelList;
+import static com.example.foodapplication.HomeFragment.adapter.MenuAdapter.productModelList;
 
 public class Request {
     Date DateTime;
