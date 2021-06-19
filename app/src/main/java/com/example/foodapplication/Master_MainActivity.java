@@ -14,11 +14,11 @@ import android.view.WindowManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import fragments.FoodFragment_Master;
-import fragments.HomeFragment_Master;
-import fragments.HomeFragment_Master_DatDon;
+import com.example.foodapplication.FoodFragment_Master.FoodFragment_Master;
+import com.example.foodapplication.HomeFragmentMaster.HomeFragment_Master;
+import com.example.foodapplication.HomeFragmentMaster.fragment.HomeFragment_Master_MonAn;
 import com.example.foodapplication.HomeFragment.fragment.RestaurantInformation_ThongTin;
-import fragments.UpdateFragment_Master;
+import com.example.foodapplication.UpdateFragmentMaster.UpdateFragment_Master;
 
 import static com.example.foodapplication.MainActivity.master_id;
 import static com.example.foodapplication.MainActivity.addressLine;
@@ -32,7 +32,7 @@ public class Master_MainActivity extends AppCompatActivity {
     UpdateFragment_Master updateFragment;
     FoodFragment_Master foodFragment;
 
-    public static HomeFragment_Master_DatDon fragment1;
+    public static HomeFragment_Master_MonAn fragment1;
     public static RestaurantInformation_ThongTin fragment2;
 
 

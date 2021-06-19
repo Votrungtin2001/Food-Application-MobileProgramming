@@ -61,6 +61,15 @@ public class GetCurrentLocation extends AppCompatActivity {
         databaseHelper = new DatabaseHelper(this);
         db = databaseHelper.getReadableDatabase();
 
+        databaseHelper.delAddress(27);
+        databaseHelper.delRestaurant(26);
+        databaseHelper.delBranch(26);
+        databaseHelper.delProduct(201);
+        databaseHelper.delProduct(202);
+        databaseHelper.delMenu(201);
+        databaseHelper.delMenu(202);
+        databaseHelper.updAllAcountLogOutStatus();
+
         initComponents();
 
         Run();

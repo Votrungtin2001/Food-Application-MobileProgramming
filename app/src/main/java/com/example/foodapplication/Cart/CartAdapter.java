@@ -15,7 +15,7 @@ import java.util.List;
 
 import models.ProductModel;
 
-import static adapter.MenuAdapter.productModelList;
+import static com.example.foodapplication.HomeFragment.adapter.MenuAdapter.productModelList;
 
 class CartViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 

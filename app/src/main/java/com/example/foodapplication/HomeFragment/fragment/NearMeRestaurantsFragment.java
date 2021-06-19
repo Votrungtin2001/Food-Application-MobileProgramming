@@ -19,7 +19,7 @@ import com.example.foodapplication.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import adapter.KindOfRestaurantAdapter;
+import com.example.foodapplication.HomeFragment.adapter.KindOfRestaurantAdapter;
 import models.KindOfRestaurantModel;
 
 public class NearMeRestaurantsFragment extends Fragment {

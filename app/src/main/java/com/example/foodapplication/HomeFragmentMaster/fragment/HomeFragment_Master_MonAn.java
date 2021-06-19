@@ -1,4 +1,4 @@
-package fragments;
+package com.example.foodapplication.HomeFragmentMaster.fragment;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -20,12 +20,11 @@ import com.example.foodapplication.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import adapter.MenuAdapter;
-import adapter.MenuAdapter_HomeFragment_Master_DatDon;
+import com.example.foodapplication.HomeFragmentMaster.adapter.MenuAdapter_HomeFragment_Master_DatDon;
 import models.ProductModel;
 
 
-public class HomeFragment_Master_DatDon extends Fragment {
+public class HomeFragment_Master_MonAn extends Fragment {
 
 
     private List<ProductModel> productModelList;
@@ -38,11 +37,11 @@ public class HomeFragment_Master_DatDon extends Fragment {
     DatabaseHelper databaseHelper;
 
 
-    public HomeFragment_Master_DatDon() {
+    public HomeFragment_Master_MonAn() {
         // Required empty public constructor
     }
 
-    public HomeFragment_Master_DatDon(int id) {
+    public HomeFragment_Master_MonAn(int id) {
         branch_id = id;
     }
 
@@ -58,7 +57,7 @@ public class HomeFragment_Master_DatDon extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_home__master__dat_don, container, false);
+        View view = inflater.inflate(R.layout.fragment_home__master__mon_an, container, false);
 
         databaseHelper = new DatabaseHelper(getActivity());
         db = databaseHelper.getReadableDatabase();

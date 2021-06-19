@@ -1,4 +1,4 @@
-package adapter;
+package com.example.foodapplication.HomeFragmentMaster.adapter;
 
 import android.app.Dialog;
 import android.content.Context;
