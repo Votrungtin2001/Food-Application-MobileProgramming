@@ -14,13 +14,21 @@
       },
       "oauth_client": [
         {
+          "client_id": "696570888109-r7evajv59lc9u2ibt7fihl8id6ehpb23.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.foodapplication",
+            "certificate_hash": "b3d691d1a0a6240c1702d3ddd9299210c806ab08"
+          }
+        },
+        {
           "client_id": "696570888109-rn5vclopf8jhp7mbr9kuqu10vd3mfond.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBRMZ8VbDrCyjdFLqAuvUanZKbGIj-ySM8"
+          "current_key": "AIzaSyDvI-QXZAlXgPa7se7bXnZFgMBLPxlcDf4"
         }
       ],
       "services": {

@@ -13,10 +13,7 @@ import android.graphics.drawable.Drawable;
 import com.example.foodapplication.auth.user;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import models.Request;
 
@@ -353,6 +350,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(FoodManagementContract.CCustomer.KEY_PASSWORD, password);
+
+        String selection = FoodManagementContract.CCustomer._ID + " = ?";
+        String[] selectionArgs = { Integer.toString(cus_id) };
+        db.update(FoodManagementContract.CCustomer.TABLE_NAME, values, selection, selectionArgs);
+    }
+
+    public void updUserFacebook(int cus_id, String facebook) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(FoodManagementContract.CCustomer.KEY_PASSWORD, facebook);
 
         String selection = FoodManagementContract.CCustomer._ID + " = ?";
         String[] selectionArgs = { Integer.toString(cus_id) };
