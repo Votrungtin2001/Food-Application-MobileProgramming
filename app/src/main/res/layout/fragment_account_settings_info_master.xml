@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E8E8E8"
+    tools:context=".AccountSettingsInfoMaster">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <TextView
+        android:id="@+id/txtAccountSettingsInfoPhoneMaster"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginTop="0dp"
+        android:background="#FFFFFF"
+        android:clickable="true"
+        android:gravity="center|left"
+        android:text="@string/activity_account_settings_account_info_phone"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txtAccountSettingsInfoNameMaster"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/txtAccountSettingsInfoPhoneMaster"
+        android:layout_marginTop="2dp"
+        android:background="#FFFFFF"
+        android:clickable="true"
+        android:gravity="center|left"
+        android:text="@string/activity_account_settings_account_info_name"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txtAccountSettingsInfoEmailMaster"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/txtAccountSettingsInfoNameMaster"
+        android:layout_marginTop="2dp"
+        android:background="#FFFFFF"
+        android:clickable="true"
+        android:gravity="center|left"
+        android:text="@string/activity_account_settings_account_info_email"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txtAccountSettingsPasswordMaster"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/txtAccountSettingsInfoEmailMaster"
+        android:layout_marginTop="2dp"
+        android:background="#FFFFFF"
+        android:clickable="true"
+        android:gravity="center|left"
+        android:text="@string/activity_account_settings_account_password"
+        android:textSize="18sp" />
+
+</RelativeLayout>

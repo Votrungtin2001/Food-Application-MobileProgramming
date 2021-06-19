@@ -11,9 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class AccountSettings extends Fragment {
     TextView txtAccountSettingsInfo, txtAccountSettingsPassword;
+    int id;
 
     public AccountSettings() {
 
@@ -51,11 +53,25 @@ public class AccountSettings extends Fragment {
     }
 
     View.OnClickListener openUserInfoFragment = v -> {
-        Fragment fragment = new AccountSettingsInfoFragment();
-        getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(((ViewGroup)getView().getParent()).getId(), fragment, null)
-                .addToBackStack(null)
-                .commit();
+        Fragment fragment;
+        if (MainActivity.customer_id > 0) {
+            fragment = new AccountSettingsInfoFragment();
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(((ViewGroup) getView().getParent()).getId(), fragment, null)
+                    .addToBackStack(null)
+                    .commit();
+        }
+        else {
+            if (MainActivity.master_id > 0) {
+                fragment = new AccountSettingsInfoMaster();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(((ViewGroup) getView().getParent()).getId(), fragment, null)
+                        .addToBackStack(null)
+                        .commit();
+            }
+            else
+                Toast.makeText(getContext(), "Bạn cần đăng nhập để dùng chức năng này!", Toast.LENGTH_SHORT).show();
+        }
     };
 
     View.OnClickListener openPasswordFragment = v -> {

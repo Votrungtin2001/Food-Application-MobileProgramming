@@ -404,6 +404,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.update(FoodManagementContract.CMaster.TABLE_NAME, values2, null, null);
     }
 
+    public Cursor getMasterById(int mst_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selection = FoodManagementContract.CMaster._ID + " = ?";
+        String[] selectionArgs = { Integer.toString(mst_id) };
+
+        return db.query(FoodManagementContract.CMaster.TABLE_NAME, null, selection, selectionArgs, null, null, null);
+    }
+
     public int getIdMasterByUsername(String username) {
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -502,6 +511,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         String selection = FoodManagementContract.CMaster._ID + " = ?";
         String[] selectionArgs = { Integer.toString(id) };
+        db.update(FoodManagementContract.CMaster.TABLE_NAME, values, selection, selectionArgs);
+    }
+
+    public void updMasterInfoWithKey(int mst_id, String string, String key) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        switch (key) {
+            case "EditPhone":
+                values.put(FoodManagementContract.CMaster.KEY_PHONE, string);
+                break;
+            case "EditName":
+                values.put(FoodManagementContract.CMaster.KEY_NAME, string);
+                break;
+            case "EditEmail":
+                values.put(FoodManagementContract.CMaster.KEY_EMAIL, string);
+                break;
+        }
+
+        String selection = FoodManagementContract.CMaster._ID + " = ?";
+        String[] selectionArgs = { Integer.toString(mst_id) };
+        db.update(FoodManagementContract.CMaster.TABLE_NAME, values, selection, selectionArgs);
+    }
+
+    public void updMasterPassword(int mst_id, String password) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(FoodManagementContract.CMaster.KEY_PASSWORD, password);
+
+        String selection = FoodManagementContract.CMaster._ID + " = ?";
+        String[] selectionArgs = { Integer.toString(mst_id) };
         db.update(FoodManagementContract.CMaster.TABLE_NAME, values, selection, selectionArgs);
     }
 
@@ -727,6 +768,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public int getBranchAddressByMaster(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT * FROM " + FoodManagementContract.CAddress.TABLE_NAME
+                + " INNER JOIN " + FoodManagementContract.CBranch.TABLE_NAME
+                + " ON " + FoodManagementContract.CBranch.TABLE_NAME + "." + FoodManagementContract.CBranch.KEY_ADDRESS
+                + " = " + FoodManagementContract.CAddress.TABLE_NAME + "." + FoodManagementContract.CAddress._ID
+                + " WHERE " + FoodManagementContract.CBranch.KEY_MASTER  + " = ?";
+        String[] selectionArgs = { Integer.toString(id) };
+        Cursor cursor = db.rawQuery(query, selectionArgs);
+        if (cursor.moveToFirst()) {
+            int return_id = cursor.getInt(cursor.getColumnIndexOrThrow(FoodManagementContract.CBranch.KEY_ADDRESS));
+            cursor.close();
+            return return_id;
+        }
+        else {
+            cursor.close();
+            return 0;
+        }
+    }
+
     public void addRestaurant(String name, String opening_time, byte[] image) {
         ContentValues values = new ContentValues();
         values.put(FoodManagementContract.CRestaurant.KEY_NAME, name);
@@ -791,6 +853,42 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public String getBranchName(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selection = FoodManagementContract.CBranch._ID + " = ?";
+        String[] selectionArgs = { Integer.toString(id) };
+
+        Cursor cursor = db.query(FoodManagementContract.CBranch.TABLE_NAME, null, selection, selectionArgs, null, null, null);
+        if (cursor.moveToFirst()) {
+            String str = cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CBranch.KEY_NAME));
+            cursor.close();
+            return str;
+        }
+        else {
+            cursor.close();
+            return "";
+        }
+    }
+
+    public int getBranchId(int addr_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selection = FoodManagementContract.CBranch.KEY_ADDRESS + " = ?";
+        String[] selectionArgs = { Integer.toString(addr_id) };
+
+        Cursor cursor = db.query(FoodManagementContract.CBranch.TABLE_NAME, null, selection, selectionArgs, null, null, null);
+        if (cursor.moveToFirst()) {
+            int id = cursor.getInt(cursor.getColumnIndexOrThrow(FoodManagementContract.CBranch._ID));
+            cursor.close();
+            return id;
+        }
+        else {
+            cursor.close();
+            return 0;
+        }
+    }
+
     public void delBranch(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -807,6 +905,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(FoodManagementContract.CBranch.KEY_PARENT, restaurant_id);
         values.put(FoodManagementContract.CBranch.KEY_ADDRESS, address_id);
         values.put(FoodManagementContract.CBranch.KEY_MASTER, master_id);
+
+        String selection = FoodManagementContract.CBranch._ID + " = ?";
+        String[] selectionArgs = { Integer.toString(id) };
+        db.update(FoodManagementContract.CBranch.TABLE_NAME, values, selection, selectionArgs);
+    }
+
+    public void updBranchName(int id, String name) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(FoodManagementContract.CBranch.KEY_NAME, name);
 
         String selection = FoodManagementContract.CBranch._ID + " = ?";
         String[] selectionArgs = { Integer.toString(id) };

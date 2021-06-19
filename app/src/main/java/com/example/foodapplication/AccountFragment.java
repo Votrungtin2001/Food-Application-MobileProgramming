@@ -1,7 +1,6 @@
 package com.example.foodapplication;
 
 import android.app.Dialog;
-import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -16,8 +15,6 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.example.foodapplication.auth.LoginFragment;
-import com.example.foodapplication.auth.user;
-import com.google.firebase.auth.FirebaseAuth;
 
 import static com.example.foodapplication.MainActivity.customer_id;
 import static com.example.foodapplication.MainActivity.master_id;
@@ -31,7 +28,6 @@ public class AccountFragment extends Fragment {
     Dialog LoginDialog;
 
     int choose_role = 0;
-    SQLiteDatabase db;
     DatabaseHelper databaseHelper;
     @Override
     public void onCreate(Bundle savedInstanceState) {

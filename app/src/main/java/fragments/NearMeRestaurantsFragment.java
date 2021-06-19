@@ -59,32 +59,27 @@ public class NearMeRestaurantsFragment extends Fragment {
 
     }
 
-    private void AddDataForKindOfRestaurantWithNearMe(int id)
-    {
+    private void AddDataForKindOfRestaurantWithNearMe(int id) {
         kindOfRestaurantModelList = new ArrayList<>();
         String selectQuery = "SELECT B._id, R.Image, B.NAME, A.Address, R.Opening_Times " +
                 "FROM (RESTAURANT R JOIN BRANCHES B ON R._id = B.Restaurant) " +
                 "JOIN ADDRESS A ON B.Address = A._id WHERE A.District ='" + id + "';";
         Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor != null) {
-            cursor.moveToFirst();
+        if (cursor.moveToFirst()) {
             do {
-               int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
-               if(branch_id % 2 == 0) {
-                   byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
-                   Bitmap bitmap = BitmapFactory.decodeByteArray(img_byte, 0, img_byte.length);
-                   String name_branch = cursor.getString(cursor.getColumnIndex("NAME"));
-                   String address_branch = cursor.getString(cursor.getColumnIndex("Address"));
-                   String opening_time = cursor.getString(cursor.getColumnIndex("Opening_Times"));
-                   KindOfRestaurantModel kindOfRestaurantModel = new KindOfRestaurantModel(bitmap, name_branch, address_branch, opening_time, branch_id);
+                int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
+                if (branch_id % 2 == 0) {
+                    byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(img_byte, 0, img_byte.length);
+                    String name_branch = cursor.getString(cursor.getColumnIndex("NAME"));
+                    String address_branch = cursor.getString(cursor.getColumnIndex("Address"));
+                    String opening_time = cursor.getString(cursor.getColumnIndex("Opening_Times"));
+                    KindOfRestaurantModel kindOfRestaurantModel = new KindOfRestaurantModel(bitmap, name_branch, address_branch, opening_time, branch_id);
                     kindOfRestaurantModelList.add(kindOfRestaurantModel);
 
-               }
+                }
             } while (cursor.moveToNext());
-
         }
         cursor.close();
-
-
     }
 }
