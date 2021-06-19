@@ -106,7 +106,7 @@
         android:id="@+id/textView24"
         android:layout_width="match_parent"
         android:layout_height="35dp"
-        android:text="   Tên địa chỉ (Không bắt buộc)"
+        android:text="   Tên địa chỉ"
         android:textSize="17dp"
         android:background="#F5EAF1EE"
         android:gravity="center|left"

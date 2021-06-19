@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
@@ -33,11 +31,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import models.AllRestaurantModel;
 
 public class GetCurrentLocation extends AppCompatActivity {
 
@@ -66,11 +61,18 @@ public class GetCurrentLocation extends AppCompatActivity {
         databaseHelper = new DatabaseHelper(this);
         db = databaseHelper.getReadableDatabase();
 
+        databaseHelper.delAddress(27);
+        databaseHelper.delRestaurant(26);
+        databaseHelper.delBranch(26);
+        databaseHelper.delProduct(201);
+        databaseHelper.delProduct(202);
+        databaseHelper.delMenu(201);
+        databaseHelper.delMenu(202);
+        databaseHelper.updAllAcountLogOutStatus();
 
         initComponents();
 
         Run();
-
     }
 
     public void initComponents() {

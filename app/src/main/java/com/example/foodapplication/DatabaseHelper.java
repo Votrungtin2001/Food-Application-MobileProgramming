@@ -13,10 +13,7 @@ import android.graphics.drawable.Drawable;
 import com.example.foodapplication.auth.user;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import models.Request;
 
@@ -125,6 +122,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(FoodManagementContract.CCustomer.TABLE_NAME, null, values);
         db.close();
 
+    }
+    public boolean checkFacebook(String email) {
+        // array of columns to fetch
+        String[] columns = {
+                FoodManagementContract.CCustomer._ID
+        };
+        SQLiteDatabase db = this.getReadableDatabase();
+        // selection criteria
+        String selection = KEY_EMAIL + " = ?";
+        // selection argument
+        String[] selectionArgs = {email};
+        // query user table with condition
+        /**
+         * Here query function is used to fetch records from user table this function works like we use sql query.
+         * SQL query equivalent to this query function is
+         * SELECT user_id FROM user WHERE user_email = 'jack@androidtutorialshub.com';
+         */
+        Cursor cursor = db.query(TABLE_NAME, //Table to query
+                columns,                    //columns to return
+                selection,                  //columns for the WHERE clause
+                selectionArgs,              //The values for the WHERE clause
+                null,                       //group the rows
+                null,                      //filter by row groups
+                null);                      //The sort order
+        int cursorCount = cursor.getCount();
+        cursor.close();
+        db.close();
+        if (cursorCount > 0) {
+            return true;
+        }
+        return false;
     }
 
     public boolean checkUser(String email) {
@@ -322,6 +350,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(FoodManagementContract.CCustomer.KEY_PASSWORD, password);
+
+        String selection = FoodManagementContract.CCustomer._ID + " = ?";
+        String[] selectionArgs = { Integer.toString(cus_id) };
+        db.update(FoodManagementContract.CCustomer.TABLE_NAME, values, selection, selectionArgs);
+    }
+
+    public void updUserFacebook(int cus_id, String facebook) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(FoodManagementContract.CCustomer.KEY_PASSWORD, facebook);
 
         String selection = FoodManagementContract.CCustomer._ID + " = ?";
         String[] selectionArgs = { Integer.toString(cus_id) };

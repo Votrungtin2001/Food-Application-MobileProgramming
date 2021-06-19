@@ -36,8 +36,10 @@ android {
 }
 configurations {
     compile.exclude group: 'com.google.zxing'
+
 }
 dependencies {
+
     implementation 'androidx.appcompat:appcompat:1.3.0'
     implementation "androidx.fragment:fragment:1.3.2"
     implementation 'androidx.preference:preference:1.1.1'
@@ -53,9 +55,11 @@ dependencies {
     implementation 'androidx.viewpager:viewpager:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
-    implementation 'com.google.firebase:firebase-auth:19.3.1'
+    implementation 'com.google.firebase:firebase-auth:21.0.1'
     implementation 'androidx.annotation:annotation:1.2.0'
     implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'com.google.firebase:firebase-storage:20.0.0'
+    implementation 'com.google.firebase:firebase-firestore:23.0.1'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -66,6 +70,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'com.github.Trendyol:BubbleScrollBar:0.1'
+
     //noinspection GradleCompatible
     implementation 'com.android.support:design:28.0.0'
 
@@ -75,14 +80,14 @@ dependencies {
     // login gg
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
     // login fb
-    implementation 'com.facebook.android:facebook-android-sdk:[8,9)'
-    implementation 'com.facebook.android:facebook-login:[8.1)'
+    implementation 'com.facebook.android:facebook-android-sdk:8.2.0'
+    implementation 'com.facebook.android:facebook-login:8.2.0'
     //sms
     implementation platform('com.google.firebase:firebase-bom:28.0.1')
     implementation 'com.google.firebase:firebase-auth'
 
     implementation'com.google.android.material:material:1.4.0-beta01'
-    implementation platform('com.google.firebase:firebase-bom:28.0.1')
+
 
     // Declare the dependency for the Realtime Database library
     // When using the BoM, you don't specify versions in Firebase library dependencies
@@ -98,11 +103,28 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:19.0.0'
     //Firebase Messaging library for Sending push Notifications
     implementation 'com.google.firebase:firebase-messaging:22.0.0'
-    implementation platform('com.google.firebase:firebase-bom:28.1.0')
+
 
     // Declare the dependencies for the Firebase Cloud Messaging and Analytics libraries
     // When using the BoM, you don't specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-messaging'
     implementation 'com.google.firebase:firebase-analytics'
+    // Don't forget to change the line below with the latest version of Parse SDK for Android
+    implementation "com.github.parse-community.Parse-SDK-Android:parse:1.18.5"
+
+    // Don't forget to change the line below with the latest version of Parse Facebook Utils SDK for Android
+    implementation "com.github.parse-community:ParseFacebookUtils-Android:1.12.0"
+
+
+
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
+// Firebase and ML Kit dependencies
+    implementation 'com.google.firebase:firebase-core:19.0.0'
+    implementation 'com.google.android.gms:play-services-vision:20.1.3'
+    implementation 'com.google.firebase:firebase-ml-vision-barcode-model:16.1.2'
+
+// Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:27.1.0')
 }
 apply plugin: 'com.google.gms.google-services'
+

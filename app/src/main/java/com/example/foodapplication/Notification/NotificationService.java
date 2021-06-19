@@ -18,7 +18,6 @@ import com.google.firebase.messaging.RemoteMessage;
 public class NotificationService extends FirebaseMessagingService {
     private static final String TAG = "NotificationService";
 
-
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         Log.d(TAG, "From: " + remoteMessage.getFrom());
