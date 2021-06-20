@@ -164,6 +164,10 @@
         <item>Giặt ủi</item>
     </string-array>
 
+    <string name="fragment_master_restaurant_prompt">Chọn nhà hàng để quản lý</string>
+    <string name="fragment_master_restaurant_confirm">Xác nhận</string>
+    <string name="fragment_master_restaurant_navailable">Không thấy nhà hàng của bạn? Liên lạc với chúng tôi để tiến hành quy trình hợp tác.</string>
+
     <!--history_order -->
     <string name="all">Dịch vụ</string>
     <string-array name="all_array">

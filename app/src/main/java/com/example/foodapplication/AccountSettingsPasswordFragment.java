@@ -19,6 +19,7 @@ public class AccountSettingsPasswordFragment extends Fragment {
     EditText txtCurrentPassword, txtNewPassword, txtConfirmPassword;
     Button btnSavePassword;
     int user_id = -1;
+    boolean IsUpdatingCustomer;
 
     public AccountSettingsPasswordFragment() { }
 
@@ -30,8 +31,16 @@ public class AccountSettingsPasswordFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (MainActivity.customer_id > 0)
+        if (MainActivity.customer_id > 0) {
             user_id = MainActivity.customer_id;
+            IsUpdatingCustomer = true;
+        }
+        else {
+            if (MainActivity.master_id > 0) {
+                user_id = MainActivity.master_id;
+                IsUpdatingCustomer = false;
+            }
+        }
     }
 
     @Override
@@ -60,13 +69,28 @@ public class AccountSettingsPasswordFragment extends Fragment {
     View.OnClickListener onPasswordSave = v -> {
         if (user_id != -1) {
             DatabaseHelper dbHelper = new DatabaseHelper(getContext());
-            Cursor cursor = dbHelper.getCustomerById(user_id);
+            Cursor cursor;
+
+            if (IsUpdatingCustomer)
+                cursor = dbHelper.getCustomerById(user_id);
+            else
+                cursor = dbHelper.getMasterById(user_id);
+
             if (cursor.moveToFirst()) {
-                String currentPassword = cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CCustomer.KEY_PASSWORD));
+                String currentPassword;
+
+                if (IsUpdatingCustomer)
+                    currentPassword = cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CCustomer.KEY_PASSWORD));
+                else
+                    currentPassword = cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CMaster.KEY_PASSWORD));
 
                 if (txtCurrentPassword.getText().toString().equals(currentPassword)) {
                     if (txtConfirmPassword.getText().toString().equals(txtNewPassword.getText().toString())) {
-                        dbHelper.updUserPassword(user_id, txtNewPassword.getText().toString());
+                        if (IsUpdatingCustomer)
+                            dbHelper.updUserPassword(user_id, txtNewPassword.getText().toString());
+                        else
+                            dbHelper.updMasterPassword(user_id, txtNewPassword.getText().toString());
+
                         Toast.makeText(getContext(), "Đã cập nhật mật khẩu!", Toast.LENGTH_SHORT).show();
                         FragmentManager fragmentManager = getParentFragmentManager();
                         fragmentManager.popBackStack(null, 0);

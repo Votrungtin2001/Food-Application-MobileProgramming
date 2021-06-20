@@ -14,11 +14,20 @@ import android.view.WindowManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+<<<<<<< HEAD
+import fragments.AccountFragment_Master;
+import fragments.FoodFragment_Master;
+import fragments.HomeFragment_Master;
+import fragments.HomeFragment_Master_DatDon;
+import fragments.RestaurantInformation_ThongTin;
+import fragments.UpdateFragment_Master;
+=======
 import com.example.foodapplication.FoodFragment_Master.FoodFragment_Master;
 import com.example.foodapplication.HomeFragmentMaster.HomeFragment_Master;
 import com.example.foodapplication.HomeFragmentMaster.fragment.HomeFragment_Master_MonAn;
 import com.example.foodapplication.HomeFragment.fragment.RestaurantInformation_ThongTin;
 import com.example.foodapplication.UpdateFragmentMaster.UpdateFragment_Master;
+>>>>>>> f6939363b0e804a39bbf5a177c2cec2ccec033d3
 
 import static com.example.foodapplication.MainActivity.master_id;
 import static com.example.foodapplication.MainActivity.addressLine;
@@ -31,6 +40,7 @@ public class Master_MainActivity extends AppCompatActivity {
     HomeFragment_Master homeFragment;
     UpdateFragment_Master updateFragment;
     FoodFragment_Master foodFragment;
+    AccountFragment_Master accountFragment;
 
     public static HomeFragment_Master_MonAn fragment1;
     public static RestaurantInformation_ThongTin fragment2;
@@ -60,6 +70,7 @@ public class Master_MainActivity extends AppCompatActivity {
         homeFragment = new HomeFragment_Master(master_id);
         updateFragment = new UpdateFragment_Master(master_id);
         foodFragment = new FoodFragment_Master(master_id);
+        accountFragment = new AccountFragment_Master();
 
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         loadFragment(homeFragment);
@@ -85,6 +96,11 @@ public class Master_MainActivity extends AppCompatActivity {
 
                 case R.id.nav_product:
                     fragment = foodFragment;
+                    loadFragment(fragment);
+                    break;
+
+                case R.id.nav_account:
+                    fragment = accountFragment;
                     loadFragment(fragment);
                     break;
             }

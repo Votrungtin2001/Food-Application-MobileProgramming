@@ -52,6 +52,11 @@ import org.json.JSONObject;
 import java.util.Arrays;
 
 import static com.example.foodapplication.MainActivity.customer_id;
+<<<<<<< HEAD
+import static com.example.foodapplication.MainActivity.master_id;
+
+=======
+>>>>>>> f6939363b0e804a39bbf5a177c2cec2ccec033d3
 // DataPasser reference: https://stackoverflow.com/questions/9343241/passing-data-between-a-fragment-and-its-container-activity
 
 public class LoginFragment extends Fragment  {
@@ -123,7 +128,7 @@ public class LoginFragment extends Fragment  {
                     boolean isExist = databaseHelper.checkMaster(binding.username.getText().toString().trim(),binding.password.getText().toString().trim());
 
                     if(isExist){
-                        int master_id = databaseHelper.getIdMasterByUsername(binding.username.getText().toString().trim());
+                        master_id = databaseHelper.getIdMasterByUsername(binding.username.getText().toString().trim());
                         databaseHelper.updAllAcountLogOutStatus();
                         databaseHelper.updMasterLoginStatus(master_id);
                         Intent intent = new Intent(getActivity(), Master_MainActivity.class);

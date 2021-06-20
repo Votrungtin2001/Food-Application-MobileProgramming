@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class SingleEditTextUpdateFragment extends Fragment {
-    private String type;
+    private String type, target;
     private int user_id = -1;
 
     TextView txtSingleEditTitle;
@@ -26,9 +26,7 @@ public class SingleEditTextUpdateFragment extends Fragment {
 
     DatabaseHelper dbHelper;
 
-    public SingleEditTextUpdateFragment() {
-        // Required empty public constructor
-    }
+    public SingleEditTextUpdateFragment() { }
 
     public static SingleEditTextUpdateFragment newInstance() {
         return new SingleEditTextUpdateFragment();
@@ -38,9 +36,20 @@ public class SingleEditTextUpdateFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        type = getArguments().getString("SINGLE_EDIT_TEXT");
-        if (MainActivity.customer_id > 0)
-            user_id = MainActivity.customer_id;
+        if (getArguments() != null) {
+            type = getArguments().getString("SINGLE_EDIT_TEXT");
+            target = getArguments().getString("EDIT_TARGET");
+
+            if (target.equals("Customer")) {
+                if (MainActivity.customer_id > 0)
+                    user_id = MainActivity.customer_id;
+            } else {
+                if (target.equals("Master")) {
+                    if (MainActivity.master_id > 0)
+                        user_id = MainActivity.master_id;
+                }
+            }
+        }
     }
 
     @Override
@@ -62,29 +71,56 @@ public class SingleEditTextUpdateFragment extends Fragment {
 
         if (user_id != -1) {
             dbHelper = new DatabaseHelper(getContext());
-            Cursor cursor = dbHelper.getCustomerById(user_id);
+            if (target.equals("Customer")) {
+                Cursor cursor = dbHelper.getCustomerById(user_id);
 
-            switch (type) {
-                case "EditPhone":
-                    txtSingleEditTitle.setText("Cập nhật số điện thoại");
-                    btnConfirmEdit.setText("Cập nhật");
-                    if (cursor.moveToFirst())
-                        txtEditText.setHint(cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CCustomer.KEY_PHONE)));
-                    break;
-                case "EditName":
-                    txtSingleEditTitle.setText("Cập nhật tên");
-                    btnConfirmEdit.setText("Cập nhật");
-                    if (cursor.moveToFirst())
-                        txtEditText.setHint(cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CCustomer.KEY_NAME)));
-                    break;
-                case "EditEmail":
-                    txtSingleEditTitle.setText("Cập nhật email");
-                    btnConfirmEdit.setText("Cập nhật");
-                    if (cursor.moveToFirst())
-                        txtEditText.setHint(cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CCustomer.KEY_EMAIL)));
-                    break;
+                switch (type) {
+                    case "EditPhone":
+                        txtSingleEditTitle.setText("Cập nhật số điện thoại");
+                        btnConfirmEdit.setText("Cập nhật");
+                        if (cursor.moveToFirst())
+                            txtEditText.setHint(cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CCustomer.KEY_PHONE)));
+                        break;
+                    case "EditName":
+                        txtSingleEditTitle.setText("Cập nhật tên");
+                        btnConfirmEdit.setText("Cập nhật");
+                        if (cursor.moveToFirst())
+                            txtEditText.setHint(cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CCustomer.KEY_NAME)));
+                        break;
+                    case "EditEmail":
+                        txtSingleEditTitle.setText("Cập nhật email");
+                        btnConfirmEdit.setText("Cập nhật");
+                        if (cursor.moveToFirst())
+                            txtEditText.setHint(cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CCustomer.KEY_EMAIL)));
+                        break;
+                }
+                cursor.close();
+            } else {
+                if (target.equals("Master")) {
+                    Cursor cursor = dbHelper.getMasterById(user_id);
+
+                    switch (type) {
+                        case "EditPhone":
+                            txtSingleEditTitle.setText("Cập nhật số điện thoại");
+                            btnConfirmEdit.setText("Cập nhật");
+                            if (cursor.moveToFirst())
+                                txtEditText.setHint(cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CMaster.KEY_PHONE)));
+                            break;
+                        case "EditName":
+                            txtSingleEditTitle.setText("Cập nhật tên");
+                            btnConfirmEdit.setText("Cập nhật");
+                            if (cursor.moveToFirst())
+                                txtEditText.setHint(cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CMaster.KEY_NAME)));
+                            break;
+                        case "EditEmail":
+                            txtSingleEditTitle.setText("Cập nhật email");
+                            btnConfirmEdit.setText("Cập nhật");
+                            if (cursor.moveToFirst())
+                                txtEditText.setHint(cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CMaster.KEY_EMAIL)));
+                            break;
+                    }
+                }
             }
-            cursor.close();
         }
 
         btnConfirmEdit.setOnClickListener(onConfirmEditClick);
@@ -96,8 +132,11 @@ public class SingleEditTextUpdateFragment extends Fragment {
     View.OnClickListener onConfirmEditClick = v -> {
         if (user_id != -1) {
             if (!txtEditText.getText().toString().equals("")) {
-                DatabaseHelper dbHelper = new DatabaseHelper(getContext());
-                dbHelper.updUserInfoWithKey(user_id, txtEditText.getText().toString(), type);
+                if (target.equals("Customer"))
+                    dbHelper.updUserInfoWithKey(user_id, txtEditText.getText().toString(), type);
+                else
+                    dbHelper.updMasterInfoWithKey(user_id, txtEditText.getText().toString(), type);
+
                 dbHelper.close();
                 Toast.makeText(getContext(), "Cập nhật dữ liệu thành công!", Toast.LENGTH_SHORT).show();
                 FragmentManager fragmentManager = getParentFragmentManager();

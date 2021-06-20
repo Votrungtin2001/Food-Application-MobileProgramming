@@ -64,18 +64,21 @@ public class BestSellerRestaurantFragment extends Fragment {
         return  view;
     }
 
-    private void AddDataForKindOfRestaurantWithBestSeller(int id)
-    {
+    private void AddDataForKindOfRestaurantWithBestSeller(int id) {
         kindOfRestaurantModelList = new ArrayList<>();
         String selectQuery = "SELECT B._id, R.Image, B.NAME, A.Address, R.Opening_Times " +
                 "FROM (RESTAURANT R JOIN BRANCHES B ON R._id = B.Restaurant) " +
                 "JOIN ADDRESS A ON B.Address = A._id WHERE A.District ='" + id + "';";
         Cursor cursor = db.rawQuery(selectQuery, null);
+<<<<<<< HEAD:app/src/main/java/fragments/BestSellerRestaurantFragment.java
+        if (cursor.moveToFirst()) {
+=======
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
+>>>>>>> f6939363b0e804a39bbf5a177c2cec2ccec033d3:app/src/main/java/com/example/foodapplication/HomeFragment/fragment/BestSellerRestaurantFragment.java
             do {
                 int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
-                if(branch_id % 3 == 0) {
+                if (branch_id % 3 == 0) {
                     byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
                     Bitmap bitmap = BitmapFactory.decodeByteArray(img_byte, 0, img_byte.length);
                     String name_branch = cursor.getString(cursor.getColumnIndex("NAME"));
@@ -86,9 +89,7 @@ public class BestSellerRestaurantFragment extends Fragment {
 
                 }
             } while (cursor.moveToNext());
-
         }
         cursor.close();
-
     }
 }

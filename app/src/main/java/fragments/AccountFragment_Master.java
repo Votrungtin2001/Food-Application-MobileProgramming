@@ -1,5 +1,7 @@
 package fragments;
 
+import android.app.Dialog;
+import android.database.Cursor;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,60 +9,164 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.foodapplication.AccountAbout;
+import com.example.foodapplication.AccountAddressMaster;
+import com.example.foodapplication.AccountSettingsInfoMaster;
+import com.example.foodapplication.DatabaseHelper;
+import com.example.foodapplication.FoodManagementContract;
+import com.example.foodapplication.MainActivity;
+import com.example.foodapplication.MasterRestaurantFragment;
 import com.example.foodapplication.R;
+import com.example.foodapplication.auth.LoginFragment;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AccountFragment_Master#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class AccountFragment_Master extends Fragment {
+    TextView txtName_Master;
+    Button btnAddress_Master, btnSettings_Master, btnAbout_Master, btnLogout_Master;
+    DatabaseHelper dbHelper;
+    Fragment newFragment;
+    Dialog LoginDialog;
+    int choose_role = 0;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    public AccountFragment_Master() {}
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public AccountFragment_Master() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AccountFragment_Master.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AccountFragment_Master newInstance(String param1, String param2) {
-        AccountFragment_Master fragment = new AccountFragment_Master();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public static AccountFragment_Master newInstance() {
+        return new AccountFragment_Master();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_account__master, container, false);
+        View view = inflater.inflate(R.layout.fragment_account__master, container, false);
+        dbHelper = new DatabaseHelper(getContext());
+
+        LoginDialog = new Dialog(getActivity());
+        LoginDialog.setContentView(R.layout.custom_pop_up_login);
+
+        txtName_Master = view.findViewById(R.id.txtName_Master);
+        txtName_Master.setOnClickListener(onNameClick);
+        btnAddress_Master = view.findViewById(R.id.btnAddress_Master);
+        btnAddress_Master.setOnClickListener(openAddressFragment);
+        btnSettings_Master = view.findViewById(R.id.btnSettings_Master);
+        btnSettings_Master.setOnClickListener(openSettingsFragment);
+        btnAbout_Master = view.findViewById(R.id.btnAbout_Master);
+        btnAbout_Master.setOnClickListener(openAboutFragment);
+        btnLogout_Master = view.findViewById(R.id.btnLogout_Master);
+        btnLogout_Master.setOnClickListener(v -> {
+            dbHelper.updAllAcountLogOutStatus();
+            txtName_Master.setText("Đăng nhập/Đăng ký");
+            btnLogout_Master.setVisibility(View.INVISIBLE);
+            MainActivity.customer_id = 0;
+            MainActivity.master_id = 0;
+        });
+
+        if (MainActivity.master_id > 0) {
+            Cursor cursor = dbHelper.getMasterById(MainActivity.master_id);
+            if (cursor.moveToFirst()) {
+                btnLogout_Master.setVisibility(View.VISIBLE);
+                txtName_Master.setText(cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CMaster.KEY_NAME)));
+            }
+            cursor.close();
+        }
+        else {
+            txtName_Master.setText("Đăng nhập/Đăng ký");
+            btnLogout_Master.setVisibility(View.INVISIBLE);
+        }
+
+        return view;
+    }
+
+    View.OnClickListener onNameClick = v -> {
+        if (MainActivity.master_id > 0) {
+            Fragment fragment = new AccountSettingsInfoMaster();
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(((ViewGroup) getView().getParent()).getId(), fragment, null)
+                    .addToBackStack(null)
+                    .commit();
+        }
+        else
+            ShowPopUpLogin(v);
+    };
+
+    View.OnClickListener openAddressFragment = v -> {
+        if (MainActivity.master_id > 0) {
+            int branch = dbHelper.getBranchAddressByMaster(MainActivity.master_id);
+            if (branch == 0) {
+                newFragment = new MasterRestaurantFragment();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(((ViewGroup) getView().getParent()).getId(), newFragment, null)
+                        .addToBackStack(null)
+                        .commit();
+            } else {
+                newFragment = new AccountAddressMaster();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(((ViewGroup) getView().getParent()).getId(), newFragment, null)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        }
+        else
+            Toast.makeText(getContext(), "Bạn không thể dùng chức năng này vì bạn chưa đăng nhập.", Toast.LENGTH_LONG).show();
+    };
+
+    View.OnClickListener openSettingsFragment = v -> {
+        if (MainActivity.master_id > 0) {
+            newFragment = new AccountSettingsInfoMaster();
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(((ViewGroup) getView().getParent()).getId(), newFragment, null)
+                    .addToBackStack(null)
+                    .commit();
+        }
+        else
+            Toast.makeText(getContext(), "Bạn không thể dùng chức năng này vì bạn chưa đăng nhập.", Toast.LENGTH_LONG).show();
+    };
+
+    View.OnClickListener openAboutFragment = v -> {
+        newFragment = new AccountAbout();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
+                .addToBackStack(null)
+                .commit();
+    };
+
+    public void ShowPopUpLogin(View v) {
+        TextView textView_Close;
+        textView_Close = (TextView) LoginDialog.findViewById(R.id.Close_PopUpLogin);
+        textView_Close.setOnClickListener(v1 -> LoginDialog.dismiss());
+
+        ImageView imageView_CustomerOption;
+        imageView_CustomerOption = (ImageView) LoginDialog.findViewById(R.id.ImageView_Customer_PopUpLogin);
+        imageView_CustomerOption.setOnClickListener(v12 -> {
+            choose_role = 1;
+            newFragment = new LoginFragment(choose_role);
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
+                    .addToBackStack(null)
+                    .commit();
+            LoginDialog.dismiss();
+
+        });
+
+        ImageView imageView_MasterOption;
+        imageView_MasterOption = (ImageView) LoginDialog.findViewById(R.id.ImageView_Master_PopUpLogin);
+        imageView_MasterOption.setOnClickListener(v13 -> {
+            choose_role = 2;
+            newFragment = new LoginFragment(choose_role);
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
+                    .addToBackStack(null)
+                    .commit();
+            LoginDialog.dismiss();
+        });
+        LoginDialog.show();
     }
 }

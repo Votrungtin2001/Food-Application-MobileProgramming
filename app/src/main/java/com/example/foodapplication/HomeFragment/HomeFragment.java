@@ -28,12 +28,21 @@ import androidx.viewpager.widget.ViewPager;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.interfaces.ItemClickListener;
-import com.denzcoskun.imageslider.models.SlideModel;
-import com.example.foodapplication.DatabaseHelper;
+import com.denzcoskun.imageslider.models.SlideModel;import com.example.foodapplication.DatabaseHelper;
+import com.example.foodapplication.HomeFragment.fragment.FastestDeliveryRestaurantFragment;
+import com.example.foodapplication.R;
+import com.example.foodapplication.ViewPagerAdapter;
+import com.google.android.material.tabs.TabLayout;
+
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.example.foodapplication.HomeFragment.adapter.AllRestaurantAdapter;
 import com.example.foodapplication.HomeFragment.adapter.CategoryAdapter;
 import com.example.foodapplication.HomeFragment.adapter.CollectionAdapter;
 import com.example.foodapplication.HomeFragment.adapter.DiscountComboProductAdapter;
+import com.example.foodapplication.HomeFragment.adapter.CategoryAdapter;
 import com.example.foodapplication.HomeFragment.adapter.SearchBarAdapter;
 import com.example.foodapplication.HomeFragment.fragment.BestRatingRestaurantFragment;
 import com.example.foodapplication.HomeFragment.fragment.BestSellerRestaurantFragment;
@@ -235,7 +244,6 @@ public class HomeFragment extends Fragment {
         textView_addressLine.setText(addressLine);
 
         // Set Screen
-        district_id = 14;
         if(district_id > 0) district_isAvailable = true;
         SetAllData(district_id);
         setUpSreen(district_isAvailable);
@@ -340,7 +348,21 @@ public class HomeFragment extends Fragment {
                     }
                 } while (cursor.moveToNext());
 
-            }
+             if (cursor.moveToFirst()) {
+                 do {
+                     if (count <= 10) {
+                         count++;
+                         int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
+                         byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
+                         Bitmap bitmap = BitmapFactory.decodeByteArray(img_byte, 0, img_byte.length);
+                         String name_branch = cursor.getString(cursor.getColumnIndex("NAME"));
+                         String address_branch = cursor.getString(cursor.getColumnIndex("Address"));
+                         AllRestaurantModel allRestaurantModel = new AllRestaurantModel(bitmap, name_branch, address_branch, branch_id);
+                         allRestaurantModelList.add(allRestaurantModel);
+                     }
+                 } while (cursor.moveToNext());
+             }
+
             cursor.close();
     }
 
@@ -373,7 +395,24 @@ public class HomeFragment extends Fragment {
                 }
             } while (cursor.moveToNext());
 
-        }
+         if (cursor.moveToFirst()) {
+             do {
+                 if (count <= 10) {
+                     String key = "Combo";
+                     String name_product = cursor.getString(cursor.getColumnIndex("Name"));
+                     if (name_product.toLowerCase().contains(key.toLowerCase())) {
+                         count++;
+                         byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
+                         int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
+                         Bitmap img_bitmap = BitmapFactory.decodeByteArray(img_byte, 0, img_byte.length);
+                         String name_branch = cursor.getString(cursor.getColumnIndex("NAME"));
+                         int price = cursor.getInt(cursor.getColumnIndex("Price"));
+                         SortOfProductModel sortOfProductModel = new SortOfProductModel(img_bitmap, name_product, name_branch, price, branch_id);
+                         sortOfProductModelList1.add(sortOfProductModel);
+                     }
+                 }
+             } while (cursor.moveToNext());
+         }
         cursor.close();
     }
 

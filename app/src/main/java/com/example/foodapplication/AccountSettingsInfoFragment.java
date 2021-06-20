@@ -71,6 +71,7 @@ public class AccountSettingsInfoFragment extends Fragment {
         SingleEditTextUpdateFragment fragment = new SingleEditTextUpdateFragment();
 
         Bundle args = new Bundle();
+        args.putString("EDIT_TARGET", "Customer");
         switch (v.getId()) {
             case R.id.txtAccountSettingsInfoPhone:
                 args.putString("SINGLE_EDIT_TEXT", "EditPhone");
