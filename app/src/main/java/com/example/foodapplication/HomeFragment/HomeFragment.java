@@ -322,42 +322,25 @@ public class HomeFragment extends Fragment {
     private void GetDataForAllRestaurants(int id) {
         int count = 0;
         allRestaurantModelList = new ArrayList<>();
-            String selectQuery = "SELECT B._id, R.Image, B.NAME, A.Address FROM (RESTAURANT R JOIN BRANCHES B ON R._id = B.Restaurant) JOIN ADDRESS A ON B.Address = A._id WHERE A.District = '" + id + "';";
-            Cursor cursor = db.rawQuery(selectQuery, null);
-<<<<<<< HEAD
-=======
-            if (cursor.getCount() > 0) {
-                cursor.moveToFirst();
-                do {
-                    if (count < 8) {
-                        count++;
-                        int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
-                        byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
-                        Bitmap bitmap = BitmapFactory.decodeByteArray(img_byte, 0, img_byte.length);
-                        String name_branch = cursor.getString(cursor.getColumnIndex("NAME"));
-                        String address_branch = cursor.getString(cursor.getColumnIndex("Address"));
-                        AllRestaurantModel allRestaurantModel = new AllRestaurantModel(bitmap, name_branch, address_branch, branch_id);
-                        allRestaurantModelList.add(allRestaurantModel);
-                    }
-                } while (cursor.moveToNext());
->>>>>>> f6939363b0e804a39bbf5a177c2cec2ccec033d3
+        String selectQuery = "SELECT B._id, R.Image, B.NAME, A.Address FROM (RESTAURANT R JOIN BRANCHES B ON R._id = B.Restaurant) JOIN ADDRESS A ON B.Address = A._id WHERE A.District = '" + id + "';";
+        Cursor cursor = db.rawQuery(selectQuery, null);
 
-             if (cursor.moveToFirst()) {
-                 do {
-                     if (count <= 10) {
-                         count++;
-                         int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
-                         byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
-                         Bitmap bitmap = BitmapFactory.decodeByteArray(img_byte, 0, img_byte.length);
-                         String name_branch = cursor.getString(cursor.getColumnIndex("NAME"));
-                         String address_branch = cursor.getString(cursor.getColumnIndex("Address"));
-                         AllRestaurantModel allRestaurantModel = new AllRestaurantModel(bitmap, name_branch, address_branch, branch_id);
-                         allRestaurantModelList.add(allRestaurantModel);
-                     }
-                 } while (cursor.moveToNext());
-             }
-
-            cursor.close();
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                if (count < 8) {
+                    count++;
+                    int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
+                    byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(img_byte, 0, img_byte.length);
+                    String name_branch = cursor.getString(cursor.getColumnIndex("NAME"));
+                    String address_branch = cursor.getString(cursor.getColumnIndex("Address"));
+                    AllRestaurantModel allRestaurantModel = new AllRestaurantModel(bitmap, name_branch, address_branch, branch_id);
+                    allRestaurantModelList.add(allRestaurantModel);
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
     }
 
     private void AddDataForDiscountComboProduct(int id) {
@@ -370,8 +353,7 @@ public class HomeFragment extends Fragment {
                 "JOIN ADDRESS A ON B.Address = A._id " +
                 "WHERE A.District ='" + id + "';";
         Cursor cursor = db.rawQuery(selectQuery, null);
-<<<<<<< HEAD
-=======
+
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             do {
@@ -390,26 +372,7 @@ public class HomeFragment extends Fragment {
                     }
                 }
             } while (cursor.moveToNext());
->>>>>>> f6939363b0e804a39bbf5a177c2cec2ccec033d3
-
-         if (cursor.moveToFirst()) {
-             do {
-                 if (count <= 10) {
-                     String key = "Combo";
-                     String name_product = cursor.getString(cursor.getColumnIndex("Name"));
-                     if (name_product.toLowerCase().contains(key.toLowerCase())) {
-                         count++;
-                         byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
-                         int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
-                         Bitmap img_bitmap = BitmapFactory.decodeByteArray(img_byte, 0, img_byte.length);
-                         String name_branch = cursor.getString(cursor.getColumnIndex("NAME"));
-                         int price = cursor.getInt(cursor.getColumnIndex("Price"));
-                         SortOfProductModel sortOfProductModel = new SortOfProductModel(img_bitmap, name_product, name_branch, price, branch_id);
-                         sortOfProductModelList1.add(sortOfProductModel);
-                     }
-                 }
-             } while (cursor.moveToNext());
-         }
+        }
         cursor.close();
     }
 
@@ -423,12 +386,9 @@ public class HomeFragment extends Fragment {
                 "JOIN ADDRESS A ON B.Address = A._id  " +
                 "WHERE M.Price < 20000 AND M.Price >= 15000 AND P.Category != 4 AND P.Category != 12 AND A.District ='" + id + "';";
         Cursor cursor = db.rawQuery(selectQuery, null);
-<<<<<<< HEAD
-        if (cursor.moveToFirst()) {
-=======
+
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
->>>>>>> f6939363b0e804a39bbf5a177c2cec2ccec033d3
             do {
                 if (count < 8) {
                     count++;
@@ -445,7 +405,6 @@ public class HomeFragment extends Fragment {
         }
         cursor.close();
     }
-
 
     private void prepareViewPagerCategories(ViewPager viewPager, ArrayList<String> arrayList)
     {
