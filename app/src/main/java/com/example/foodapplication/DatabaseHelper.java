@@ -524,34 +524,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
 
     }
-    public void addMaster(String name, String phone, String email, String fb, String user, String pass) {
-        ContentValues values = new ContentValues();
-        values.put(FoodManagementContract.CMaster.KEY_NAME, name);
-        values.put(FoodManagementContract.CMaster.KEY_PHONE, phone);
-        values.put(FoodManagementContract.CMaster.KEY_EMAIL, email);
-        values.put(FoodManagementContract.CMaster.KEY_FACEBOOK, fb);
-        values.put(FoodManagementContract.CMaster.KEY_USERNAME, user);
-        values.put(FoodManagementContract.CMaster.KEY_PASSWORD, pass);
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.insertOrThrow(FoodManagementContract.CMaster.TABLE_NAME, null, values);
-    }
-
-    public void updMaster(int id, String name, String phone, String email, String fb, String user, String pass) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(FoodManagementContract.CMaster.KEY_NAME, name);
-        values.put(FoodManagementContract.CMaster.KEY_PHONE, phone);
-        values.put(FoodManagementContract.CMaster.KEY_EMAIL, email);
-        values.put(FoodManagementContract.CMaster.KEY_FACEBOOK, fb);
-        values.put(FoodManagementContract.CMaster.KEY_USERNAME, user);
-        values.put(FoodManagementContract.CMaster.KEY_PASSWORD, pass);
-
-        String selection = FoodManagementContract.CMaster._ID + " = ?";
-        String[] selectionArgs = { Integer.toString(id) };
-        db.update(FoodManagementContract.CMaster.TABLE_NAME, values, selection, selectionArgs);
-    }
 
     public void updMasterInfoWithKey(int mst_id, String string, String key) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -585,49 +557,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.update(FoodManagementContract.CMaster.TABLE_NAME, values, selection, selectionArgs);
     }
 
-    public void addDelivery(String name, String address, String phone, String email, String fb, String user, String pass, String license) {
-        ContentValues values = new ContentValues();
-        values.put(FoodManagementContract.CDelivery.KEY_NAME, name);
-        values.put(FoodManagementContract.CDelivery.KEY_ADDRESS, address);
-        values.put(FoodManagementContract.CDelivery.KEY_PHONE, phone);
-        values.put(FoodManagementContract.CDelivery.KEY_EMAIL, email);
-        values.put(FoodManagementContract.CDelivery.KEY_FACEBOOK, fb);
-        values.put(FoodManagementContract.CDelivery.KEY_USERNAME, user);
-        values.put(FoodManagementContract.CDelivery.KEY_PASSWORD, pass);
-        values.put(FoodManagementContract.CDelivery.KEY_LICENSE, license);
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.insertOrThrow(FoodManagementContract.CDelivery.TABLE_NAME, null, values);
-    }
-
-    public void updDelivery(int id, String name, String address, String phone, String email, String fb, String user, String pass, String license) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(FoodManagementContract.CDelivery.KEY_NAME, name);
-        values.put(FoodManagementContract.CDelivery.KEY_ADDRESS, address);
-        values.put(FoodManagementContract.CDelivery.KEY_PHONE, phone);
-        values.put(FoodManagementContract.CDelivery.KEY_EMAIL, email);
-        values.put(FoodManagementContract.CDelivery.KEY_FACEBOOK, fb);
-        values.put(FoodManagementContract.CDelivery.KEY_USERNAME, user);
-        values.put(FoodManagementContract.CDelivery.KEY_PASSWORD, pass);
-        values.put(FoodManagementContract.CDelivery.KEY_LICENSE, license);
-
-        String selection = FoodManagementContract.CDelivery._ID + " = ?";
-        String[] selectionArgs = { Integer.toString(id) };
-        db.update(FoodManagementContract.CDelivery.TABLE_NAME, values, selection, selectionArgs);
-    }
-
-    public void addDistrict(String name, int city_id) {
-        ContentValues values = new ContentValues();
-
-        values.put(FoodManagementContract.CDistrict.KEY_NAME, name);
-        values.put(FoodManagementContract.CDistrict.KEY_CITY, city_id);
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.insertOrThrow(FoodManagementContract.CDistrict.TABLE_NAME, null, values);
-    }
-
     public Cursor getDistricts(int city_id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -636,14 +565,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         Cursor cursor = db.query(FoodManagementContract.CDistrict.TABLE_NAME, null, selection, selectionArgs, null, null, null);
         return cursor;
-    }
-
-    public void addCity(String name) {
-        ContentValues values = new ContentValues();
-        values.put(FoodManagementContract.CCity.KEY_NAME, name);
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.insertOrThrow(FoodManagementContract.CCity.TABLE_NAME, null, values);
     }
 
     public Cursor getCities() {
@@ -713,31 +634,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return db.insertOrThrow(FoodManagementContract.CAddressLabel.TABLE_NAME, null, values);
     }
 
-    public void updAddressLabel(int id, String type) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(FoodManagementContract.CAddressLabel.KEY_TYPE, type);
-
-        String selection = FoodManagementContract.CAddressLabel._ID + " = ?";
-        String[] selectionArgs = { Integer.toString(id) };
-        db.update(FoodManagementContract.CAddressLabel.TABLE_NAME, values, selection, selectionArgs);
-    }
-
-    public void delAddressLabel(int id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        String selection = FoodManagementContract.CAddressLabel._ID + " = ?";
-        String[] selectionArgs = { Integer.toString(id) };
-        db.delete(FoodManagementContract.CAddressLabel.TABLE_NAME, selection, selectionArgs);
-    }
-
-    public Cursor getAddressLabel() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(FoodManagementContract.CAddressLabel.TABLE_NAME, null, null, null, null, null, null);
-        return cursor;
-    }
-
     public long getAddressLabelId(String label) {
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -765,26 +661,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insertOrThrow(FoodManagementContract.CCustomerAddress.TABLE_NAME, null, values);
     }
 
-    public void updCustomerAddress(int id, int customer_id, int address_id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(FoodManagementContract.CCustomerAddress.KEY_CUSTOMER, customer_id);
-        values.put(FoodManagementContract.CCustomerAddress.KEY_ADDRESS, address_id);
-
-        String selection = FoodManagementContract.CCustomerAddress._ID + " = ?";
-        String[] selectionArgs = { Integer.toString(id) };
-        db.update(FoodManagementContract.CCustomerAddress.TABLE_NAME, values, selection, selectionArgs);
-    }
-
-    public void delCustomerAddress(int id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        String selection = FoodManagementContract.CCustomerAddress._ID + " = ?";
-        String[] selectionArgs = { Integer.toString(id) };
-        db.delete(FoodManagementContract.CCustomerAddress.TABLE_NAME, selection, selectionArgs);
-    }
-
     public int getCustomerAddress(int id, int criteria) {
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -807,27 +683,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public int getBranchAddressByMaster(int id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        String query = "SELECT * FROM " + FoodManagementContract.CAddress.TABLE_NAME
-                + " INNER JOIN " + FoodManagementContract.CBranch.TABLE_NAME
-                + " ON " + FoodManagementContract.CBranch.TABLE_NAME + "." + FoodManagementContract.CBranch.KEY_ADDRESS
-                + " = " + FoodManagementContract.CAddress.TABLE_NAME + "." + FoodManagementContract.CAddress._ID
-                + " WHERE " + FoodManagementContract.CBranch.KEY_MASTER  + " = ?";
-        String[] selectionArgs = { Integer.toString(id) };
-        Cursor cursor = db.rawQuery(query, selectionArgs);
-        if (cursor.moveToFirst()) {
-            int return_id = cursor.getInt(cursor.getColumnIndexOrThrow(FoodManagementContract.CBranch.KEY_ADDRESS));
-            cursor.close();
-            return return_id;
-        }
-        else {
-            cursor.close();
-            return 0;
-        }
-    }
-
     public void addRestaurant(String name, String opening_time, byte[] image) {
         ContentValues values = new ContentValues();
         values.put(FoodManagementContract.CRestaurant.KEY_NAME, name);
@@ -841,16 +696,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor getRestaurant() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(FoodManagementContract.CRestaurant.TABLE_NAME, null, null, null, null, null, null);
-        return cursor;
-    }
-
-    public Cursor getRestaurant(int res_id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        String selection = FoodManagementContract.CRestaurant._ID + " = ?";
-        String[] selectionArgs = { Integer.toString(res_id) };
-
-        Cursor cursor = db.query(FoodManagementContract.CRestaurant.TABLE_NAME, null, selection, selectionArgs, null, null, null);
         return cursor;
     }
 
@@ -892,42 +737,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public String getBranchName(int id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        String selection = FoodManagementContract.CBranch._ID + " = ?";
-        String[] selectionArgs = { Integer.toString(id) };
-
-        Cursor cursor = db.query(FoodManagementContract.CBranch.TABLE_NAME, null, selection, selectionArgs, null, null, null);
-        if (cursor.moveToFirst()) {
-            String str = cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CBranch.KEY_NAME));
-            cursor.close();
-            return str;
-        }
-        else {
-            cursor.close();
-            return "";
-        }
-    }
-
-    public int getBranchId(int addr_id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        String selection = FoodManagementContract.CBranch.KEY_ADDRESS + " = ?";
-        String[] selectionArgs = { Integer.toString(addr_id) };
-
-        Cursor cursor = db.query(FoodManagementContract.CBranch.TABLE_NAME, null, selection, selectionArgs, null, null, null);
-        if (cursor.moveToFirst()) {
-            int id = cursor.getInt(cursor.getColumnIndexOrThrow(FoodManagementContract.CBranch._ID));
-            cursor.close();
-            return id;
-        }
-        else {
-            cursor.close();
-            return 0;
-        }
-    }
-
     public void delBranch(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -948,40 +757,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String selection = FoodManagementContract.CBranch._ID + " = ?";
         String[] selectionArgs = { Integer.toString(id) };
         db.update(FoodManagementContract.CBranch.TABLE_NAME, values, selection, selectionArgs);
-    }
-
-    public void updBranchName(int id, String name) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(FoodManagementContract.CBranch.KEY_NAME, name);
-
-        String selection = FoodManagementContract.CBranch._ID + " = ?";
-        String[] selectionArgs = { Integer.toString(id) };
-        db.update(FoodManagementContract.CBranch.TABLE_NAME, values, selection, selectionArgs);
-    }
-
-    public Cursor getCategory() {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(FoodManagementContract.CCategory.TABLE_NAME, null, null, null, null, null, null);
-        return cursor;
-    }
-
-    public void addCategory(String name, String description) {
-        ContentValues values = new ContentValues();
-        values.put(FoodManagementContract.CCategory.KEY_NAME, name);
-        values.put(FoodManagementContract.CCategory.KEY_DESC, description);
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.insertOrThrow(FoodManagementContract.CCategory.TABLE_NAME, null, values);
-    }
-
-    public void delCategory(int id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        String selection = FoodManagementContract.CCategory._ID + " = ?";
-        String[] selectionArgs = { Integer.toString(id) };
-        db.delete(FoodManagementContract.CCategory.TABLE_NAME, selection, selectionArgs);
     }
 
     public void addProduct(String name, String description, int category_id, byte[] image) {
@@ -1009,20 +784,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.delete(FoodManagementContract.CProduct.TABLE_NAME, selection, selectionArgs);
     }
 
-    public void updProduct(int id, String name, String description, int category_id, byte[] image) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(FoodManagementContract.CProduct.KEY_NAME, name);
-        values.put(FoodManagementContract.CProduct.KEY_DESC, description);
-        values.put(FoodManagementContract.CProduct.KEY_CATEGORY, category_id);
-        values.put(FoodManagementContract.CProduct.KEY_IMAGE, image);
-
-        String selection = FoodManagementContract.CProduct._ID + " = ?";
-        String[] selectionArgs = { Integer.toString(id) };
-        db.update(FoodManagementContract.CProduct.TABLE_NAME, values, selection, selectionArgs);
-    }
-
     public void addMenu(int res_id, int prod_id, String desc, int price) {
         ContentValues values = new ContentValues();
         values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, res_id);
@@ -1034,37 +795,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insertOrThrow(FoodManagementContract.CMenu.TABLE_NAME, null, values);
     }
 
-    public void updMenu(int id, int res_id, int prod_id, String desc, int price) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(FoodManagementContract.CMenu.KEY_RESTAURANT, res_id);
-        values.put(FoodManagementContract.CMenu.KEY_PRODUCT, prod_id);
-        values.put(FoodManagementContract.CMenu.KEY_DESC, desc);
-        values.put(FoodManagementContract.CMenu.KEY_PRICE, price);
-
-        String selection = FoodManagementContract.CMenu._ID + " = ?";
-        String[] selectionArgs = { Integer.toString(id) };
-        db.update(FoodManagementContract.CMenu.TABLE_NAME, values, selection, selectionArgs);
-    }
-
     public void delMenu(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         String selection = FoodManagementContract.CMenu._ID + " = ?";
         String[] selectionArgs = { Integer.toString(id) };
         db.delete(FoodManagementContract.CMenu.TABLE_NAME, selection, selectionArgs);
-    }
-
-    public Cursor getMenu(int res_id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        String selection = FoodManagementContract.CMenu.KEY_RESTAURANT + " = ?";
-        String[] selectionArgs = { Integer.toString(res_id) };
-        String[] columns = { FoodManagementContract.CMenu.KEY_PRODUCT, FoodManagementContract.CMenu.KEY_DESC, FoodManagementContract.CMenu.KEY_PRICE};
-
-        Cursor cursor = db.query(FoodManagementContract.CMenu.TABLE_NAME, columns, selection, selectionArgs, null, null, null);
-        return cursor;
     }
 
     public void addOrder(Request request) {
@@ -1080,58 +816,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insertOrThrow(FoodManagementContract.COrder.TABLE_NAME, null, values);
     }
 
-    public long addOrder(Date date, int customer_id) {
-        ContentValues values = new ContentValues();
-        values.put(FoodManagementContract.COrder.KEY_DATETIME, date.toString());
-        values.put(FoodManagementContract.COrder.KEY_CUSTOMER, customer_id);
-        values.put(FoodManagementContract.COrder.KEY_STATUS, 0);
-        values.put(FoodManagementContract.COrder.KEY_STATUS, 0);
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        long id = db.insertOrThrow(FoodManagementContract.COrder.TABLE_NAME, null, values);
-        return id;
-    }
-
-    public void updOrderStatus(int id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(FoodManagementContract.COrder.KEY_STATUS, 1);
-
-        String selection = FoodManagementContract.CMenu._ID + " = ?";
-        String[] selectionArgs = {Integer.toString(id)};
-        db.update(FoodManagementContract.COrder.TABLE_NAME, values, selection, selectionArgs);
-    }
-
-    public void updOrderTotal(int id, int total) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(FoodManagementContract.COrder.KEY_TOTAL, total);
-
-        String selection = FoodManagementContract.CMenu._ID + " = ?";
-        String[] selectionArgs = {Integer.toString(id)};
-        db.update(FoodManagementContract.COrder.TABLE_NAME, values, selection, selectionArgs);
-    }
-
-    public void delOrder(int id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        String selection = FoodManagementContract.COrder._ID + " = ?";
-        String[] selectionArgs = { Integer.toString(id) };
-        db.delete(FoodManagementContract.COrder.TABLE_NAME, selection, selectionArgs);
-    }
-
-    public Cursor getOrder(int customer_id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        String selection = FoodManagementContract.COrder.KEY_CUSTOMER + " = ?";
-        String[] selectionArgs = { Integer.toString(customer_id) };
-
-        Cursor cursor = db.query(FoodManagementContract.COrder.TABLE_NAME, null, selection, selectionArgs, null, null, null);
-        return cursor;
-    }
-
     public void addOrderDetail(int order_id, int item_id, int quantity, int price) {
         ContentValues values = new ContentValues();
         values.put(FoodManagementContract.COrderDetails.KEY_ORDER, order_id);
@@ -1141,103 +825,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.insertOrThrow(FoodManagementContract.COrderDetails.TABLE_NAME, null, values);
-    }
-
-    public void updOrderDetail(int order_id, int item_id, int quantity, int price) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        ContentValues values = new ContentValues();
-        values.put(FoodManagementContract.COrderDetails.KEY_ORDER, order_id);
-        values.put(FoodManagementContract.COrderDetails.KEY_MENUITEM, item_id);
-        values.put(FoodManagementContract.COrderDetails.KEY_QUANTITY, quantity);
-        values.put(FoodManagementContract.COrderDetails.KEY_PRICE, price);
-
-        String selection = FoodManagementContract.COrderDetails.KEY_ORDER + " = ? "
-                + "AND " + FoodManagementContract.COrderDetails.KEY_MENUITEM + " = ?";
-        String[] selectionArgs = { Integer.toString(order_id), Integer.toString(item_id) };
-        db.update(FoodManagementContract.COrderDetails.TABLE_NAME, values, selection, selectionArgs);
-    }
-
-    public void delOrderDetail(int order_id, int item_id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        String selection = FoodManagementContract.COrderDetails.KEY_ORDER + " = ? "
-                + "AND " + FoodManagementContract.COrderDetails.KEY_MENUITEM + " = ?";
-        String[] selectionArgs = { Integer.toString(order_id), Integer.toString(item_id) };
-        db.delete(FoodManagementContract.COrderDetails.TABLE_NAME, selection, selectionArgs);
-    }
-
-    public void delOrderDetail(int order_id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        String selection = FoodManagementContract.COrderDetails.KEY_ORDER + " = ? ";
-        String[] selectionArgs = { Integer.toString(order_id)};
-        db.delete(FoodManagementContract.COrderDetails.TABLE_NAME, selection, selectionArgs);
-    }
-
-    public Cursor getOrderDetail(int order_id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        String selection = FoodManagementContract.COrderDetails.KEY_ORDER + " = ?";
-        String[] selectionArgs = { Integer.toString(order_id) };
-
-        Cursor cursor = db.query(FoodManagementContract.COrderDetails.TABLE_NAME, null, selection, selectionArgs, null, null, null);
-        return cursor;
-    }
-
-    public Cursor getOrderDetail(int order_id, int item_id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        String selection = FoodManagementContract.COrderDetails.KEY_ORDER + " = ? "
-                + "AND " + FoodManagementContract.COrderDetails.KEY_MENUITEM + " = ?";
-        String[] selectionArgs = { Integer.toString(order_id), Integer.toString(item_id) };
-
-        Cursor cursor = db.query(FoodManagementContract.COrderDetails.TABLE_NAME, null, selection, selectionArgs, null, null, null);
-        return cursor;
-    }
-
-    public int calcOrderTotal(int order_id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        String selection = FoodManagementContract.COrderDetails.KEY_ORDER + " = ?";
-        String[] selectionArgs = { Integer.toString(order_id) };
-        Cursor cursor = db.query(FoodManagementContract.COrderDetails.TABLE_NAME, null, selection, selectionArgs, null, null, null);
-
-        int total = 0;
-        while(cursor.moveToNext()) {
-            total += cursor.getInt(cursor.getColumnIndexOrThrow(FoodManagementContract.COrderDetails.KEY_PRICE));
-        }
-
-        cursor.close();
-        return total;
-    }
-
-    public void addFavorites(int cus_id, int res_id) {
-        ContentValues values = new ContentValues();
-        values.put(FoodManagementContract.CFavorites.KEY_CUSTOMER, cus_id);
-        values.put(FoodManagementContract.CFavorites.KEY_RESTAURANT, res_id);
-
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.insertOrThrow(FoodManagementContract.CFavorites.TABLE_NAME, null, values);
-    }
-
-    public void delFavorites(int cus_id, int res_id) {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-        String selection = FoodManagementContract.CFavorites.KEY_CUSTOMER + " = ? "
-                + "AND " + FoodManagementContract.CFavorites.KEY_RESTAURANT + " = ?";
-        String[] selectionArgs = { Integer.toString(cus_id), Integer.toString(res_id) };
-        db.delete(FoodManagementContract.CFavorites.TABLE_NAME, selection, selectionArgs);
-    }
-
-    public Cursor getFavorites(int cus_id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        String selection = FoodManagementContract.CFavorites.KEY_CUSTOMER + " = ?";
-        String[] selectionArgs = { Integer.toString(cus_id) };
-
-        Cursor cursor = db.query(FoodManagementContract.CFavorites.TABLE_NAME, null, selection, selectionArgs, null, null, null);
-        return cursor;
     }
 
     public void addTransaction(int cus_id, Date date, int amount) {

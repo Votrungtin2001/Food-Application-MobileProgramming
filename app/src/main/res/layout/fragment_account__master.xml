@@ -7,6 +7,16 @@
     android:background="#E8E8E8"
     tools:context=".AccountFragment_Master">
 
+    <ImageView
+        android:id="@+id/imgMaster"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="130dp"
+        android:layout_marginEnd="130dp"
+        app:srcCompat="@drawable/master_icon" />
+
     <TextView
         android:id="@+id/txtVersion_Master"
         android:layout_width="wrap_content"
@@ -25,8 +35,8 @@
         android:id="@+id/txtName_Master"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
+        android:layout_below="@+id/imgMaster"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="100dp"
         android:layout_marginTop="10dp"
@@ -54,8 +64,8 @@
         android:id="@+id/btnSettings_Master"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_below="@+id/btnAddress_Master"
-        android:layout_marginTop="0dp"
+        android:layout_below="@+id/txtName_Master"
+        android:layout_marginTop="20dp"
         android:drawableLeft="@drawable/ic_baseline_settings_24"
         android:insetTop="0dp"
         android:insetBottom="0dp"
@@ -77,23 +87,6 @@
         android:insetTop="0dp"
         android:insetBottom="0dp"
         android:text="@string/activity_account_about"
-        android:textAlignment="viewStart"
-        android:textAllCaps="false"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:backgroundTint="@color/white"
-        app:cornerRadius="0dp" />
-
-    <Button
-        android:id="@+id/btnAddress_Master"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_below="@+id/txtName_Master"
-        android:layout_marginTop="10dp"
-        android:drawableLeft="@drawable/ic_baseline_place_24"
-        android:insetTop="0dp"
-        android:insetBottom="0dp"
-        android:text="@string/activity_account_address_update"
         android:textAlignment="viewStart"
         android:textAllCaps="false"
         android:textColor="@color/black"

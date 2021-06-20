@@ -14,20 +14,13 @@ import android.view.WindowManager;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-<<<<<<< HEAD
 import fragments.AccountFragment_Master;
-import fragments.FoodFragment_Master;
-import fragments.HomeFragment_Master;
-import fragments.HomeFragment_Master_DatDon;
-import fragments.RestaurantInformation_ThongTin;
-import fragments.UpdateFragment_Master;
-=======
+
 import com.example.foodapplication.FoodFragment_Master.FoodFragment_Master;
 import com.example.foodapplication.HomeFragmentMaster.HomeFragment_Master;
 import com.example.foodapplication.HomeFragmentMaster.fragment.HomeFragment_Master_MonAn;
 import com.example.foodapplication.HomeFragment.fragment.RestaurantInformation_ThongTin;
 import com.example.foodapplication.UpdateFragmentMaster.UpdateFragment_Master;
->>>>>>> f6939363b0e804a39bbf5a177c2cec2ccec033d3
 
 import static com.example.foodapplication.MainActivity.master_id;
 import static com.example.foodapplication.MainActivity.addressLine;
