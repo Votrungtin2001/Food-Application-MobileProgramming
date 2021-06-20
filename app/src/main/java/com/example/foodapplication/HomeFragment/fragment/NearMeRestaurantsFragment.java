@@ -65,12 +65,9 @@ public class NearMeRestaurantsFragment extends Fragment {
                 "FROM (RESTAURANT R JOIN BRANCHES B ON R._id = B.Restaurant) " +
                 "JOIN ADDRESS A ON B.Address = A._id WHERE A.District ='" + id + "';";
         Cursor cursor = db.rawQuery(selectQuery, null);
-<<<<<<< HEAD:app/src/main/java/fragments/NearMeRestaurantsFragment.java
-        if (cursor.moveToFirst()) {
-=======
+
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
->>>>>>> f6939363b0e804a39bbf5a177c2cec2ccec033d3:app/src/main/java/com/example/foodapplication/HomeFragment/fragment/NearMeRestaurantsFragment.java
             do {
                 int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
                 if (branch_id % 2 == 0) {
