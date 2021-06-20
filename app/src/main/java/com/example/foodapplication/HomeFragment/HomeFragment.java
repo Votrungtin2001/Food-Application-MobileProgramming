@@ -28,21 +28,8 @@ import androidx.viewpager.widget.ViewPager;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.interfaces.ItemClickListener;
-import com.denzcoskun.imageslider.models.SlideModel;
-import com.example.foodapplication.DatabaseHelper;
-import com.example.foodapplication.HomeFragment.adapter.AllRestaurantAdapter;
-import com.example.foodapplication.HomeFragment.adapter.CategoryAdapter;
-import com.example.foodapplication.HomeFragment.adapter.CollectionAdapter;
-import com.example.foodapplication.HomeFragment.adapter.DiscountComboProductAdapter;
-import com.example.foodapplication.HomeFragment.adapter.SearchBarAdapter;
-import com.example.foodapplication.HomeFragment.fragment.BestRatingRestaurantFragment;
-import com.example.foodapplication.HomeFragment.fragment.BestSellerRestaurantFragment;
+import com.denzcoskun.imageslider.models.SlideModel;import com.example.foodapplication.DatabaseHelper;
 import com.example.foodapplication.HomeFragment.fragment.FastestDeliveryRestaurantFragment;
-import com.example.foodapplication.HomeFragment.fragment.NearMeRestaurantsFragment;
-import com.example.foodapplication.HomeFragment.model.AllRestaurantModel;
-import com.example.foodapplication.HomeFragment.model.CollectionModel;
-import com.example.foodapplication.HomeFragment.model.SearchBarModel;
-import com.example.foodapplication.HomeFragment.model.SortOfProductModel;
 import com.example.foodapplication.R;
 import com.example.foodapplication.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
@@ -50,6 +37,19 @@ import com.google.android.material.tabs.TabLayout;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.example.foodapplication.HomeFragment.adapter.AllRestaurantAdapter;
+import com.example.foodapplication.HomeFragment.adapter.CollectionAdapter;
+import com.example.foodapplication.HomeFragment.adapter.DiscountComboProductAdapter;
+import com.example.foodapplication.HomeFragment.adapter.CategoryAdapter;
+import com.example.foodapplication.HomeFragment.adapter.SearchBarAdapter;
+import com.example.foodapplication.HomeFragment.fragment.BestRatingRestaurantFragment;
+import com.example.foodapplication.HomeFragment.fragment.BestSellerRestaurantFragment;
+import com.example.foodapplication.HomeFragment.fragment.NearMeRestaurantsFragment;
+import com.example.foodapplication.HomeFragment.model.AllRestaurantModel;
+import com.example.foodapplication.HomeFragment.model.CollectionModel;
+import com.example.foodapplication.HomeFragment.model.SearchBarModel;
+import com.example.foodapplication.HomeFragment.model.SortOfProductModel;
 
 import static com.example.foodapplication.MainActivity.addressLine;
 import static com.example.foodapplication.MainActivity.district_id;
@@ -322,92 +322,59 @@ public class HomeFragment extends Fragment {
     private void GetDataForAllRestaurants(int id) {
         int count = 0;
         allRestaurantModelList = new ArrayList<>();
-            String selectQuery = "SELECT B._id, R.Image, B.NAME, A.Address FROM (RESTAURANT R JOIN BRANCHES B ON R._id = B.Restaurant) JOIN ADDRESS A ON B.Address = A._id WHERE A.District = '" + id + "';";
-            Cursor cursor = db.rawQuery(selectQuery, null);
-            if (cursor.getCount() > 0) {
-                cursor.moveToFirst();
-                do {
-                    if (count < 8) {
-                        count++;
-                        int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
-                        byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
-                        Bitmap bitmap = BitmapFactory.decodeByteArray(img_byte, 0, img_byte.length);
-                        String name_branch = cursor.getString(cursor.getColumnIndex("NAME"));
-                        String address_branch = cursor.getString(cursor.getColumnIndex("Address"));
-                        AllRestaurantModel allRestaurantModel = new AllRestaurantModel(bitmap, name_branch, address_branch, branch_id);
-                        allRestaurantModelList.add(allRestaurantModel);
-                    }
-                } while (cursor.moveToNext());
+        String selectQuery = "SELECT B._id, R.Image, B.NAME, A.Address FROM (RESTAURANT R JOIN BRANCHES B ON R._id = B.Restaurant) JOIN ADDRESS A ON B.Address = A._id WHERE A.District = '" + id + "';";
+        Cursor cursor = db.rawQuery(selectQuery, null);
 
-             if (cursor.moveToFirst()) {
-                 do {
-                     if (count <= 10) {
-                         count++;
-                         int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
-                         byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
-                         Bitmap bitmap = BitmapFactory.decodeByteArray(img_byte, 0, img_byte.length);
-                         String name_branch = cursor.getString(cursor.getColumnIndex("NAME"));
-                         String address_branch = cursor.getString(cursor.getColumnIndex("Address"));
-                         AllRestaurantModel allRestaurantModel = new AllRestaurantModel(bitmap, name_branch, address_branch, branch_id);
-                         allRestaurantModelList.add(allRestaurantModel);
-                     }
-                 } while (cursor.moveToNext());
-             }
-
-            cursor.close();
-    }
-    }
-
-    private void AddDataForDiscountComboProduct(int id){
-            int count = 0;
-            sortOfProductModelList1 = new ArrayList<>();
-            String selectQuery = "SELECT B._id, P.Image, P.Name, B.NAME, M.Price " +
-                    "FROM (((PRODUCTS P JOIN MENU M ON P._id = M.Product) " +
-                    "JOIN RESTAURANT R ON M.Restaurant = R._id) " +
-                    "JOIN BRANCHES B ON R._id = B.Restaurant) " +
-                    "JOIN ADDRESS A ON B.Address = A._id " +
-                    "WHERE A.District ='" + id + "';";
-            Cursor cursor = db.rawQuery(selectQuery, null);
-            if (cursor.getCount() > 0) {
-                cursor.moveToFirst();
-                do {
-                    if (count < 8) {
-                        String key = "Combo";
-                        String name_product = cursor.getString(cursor.getColumnIndex("Name"));
-                        if (name_product.toLowerCase().contains(key.toLowerCase())) {
-                            count++;
-                            byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
-                            int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
-                            Bitmap img_bitmap = BitmapFactory.decodeByteArray(img_byte, 0, img_byte.length);
-                            String name_branch = cursor.getString(cursor.getColumnIndex("NAME"));
-                            int price = cursor.getInt(cursor.getColumnIndex("Price"));
-                            SortOfProductModel sortOfProductModel = new SortOfProductModel(img_bitmap, name_product, name_branch, price, branch_id);
-                            sortOfProductModelList1.add(sortOfProductModel);
-                        }
-                    }
-                } while (cursor.moveToNext());
-
-                if (cursor.moveToFirst()) {
-                    do {
-                        if (count <= 10) {
-                            String key = "Combo";
-                            String name_product = cursor.getString(cursor.getColumnIndex("Name"));
-                            if (name_product.toLowerCase().contains(key.toLowerCase())) {
-                                count++;
-                                byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
-                                int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
-                                Bitmap img_bitmap = BitmapFactory.decodeByteArray(img_byte, 0, img_byte.length);
-                                String name_branch = cursor.getString(cursor.getColumnIndex("NAME"));
-                                int price = cursor.getInt(cursor.getColumnIndex("Price"));
-                                SortOfProductModel sortOfProductModel = new SortOfProductModel(img_bitmap, name_product, name_branch, price, branch_id);
-                                sortOfProductModelList1.add(sortOfProductModel);
-                            }
-                        }
-                    } while (cursor.moveToNext());
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                if (count < 8) {
+                    count++;
+                    int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
+                    byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(img_byte, 0, img_byte.length);
+                    String name_branch = cursor.getString(cursor.getColumnIndex("NAME"));
+                    String address_branch = cursor.getString(cursor.getColumnIndex("Address"));
+                    AllRestaurantModel allRestaurantModel = new AllRestaurantModel(bitmap, name_branch, address_branch, branch_id);
+                    allRestaurantModelList.add(allRestaurantModel);
                 }
-                cursor.close();
-            }
+            } while (cursor.moveToNext());
         }
+        cursor.close();
+    }
+
+    private void AddDataForDiscountComboProduct(int id) {
+        int count = 0;
+        sortOfProductModelList1 = new ArrayList<>();
+        String selectQuery = "SELECT B._id, P.Image, P.Name, B.NAME, M.Price " +
+                "FROM (((PRODUCTS P JOIN MENU M ON P._id = M.Product) " +
+                "JOIN RESTAURANT R ON M.Restaurant = R._id) " +
+                "JOIN BRANCHES B ON R._id = B.Restaurant) " +
+                "JOIN ADDRESS A ON B.Address = A._id " +
+                "WHERE A.District ='" + id + "';";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                if (count < 8) {
+                    String key = "Combo";
+                    String name_product = cursor.getString(cursor.getColumnIndex("Name"));
+                    if (name_product.toLowerCase().contains(key.toLowerCase())) {
+                        count++;
+                        byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
+                        int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
+                        Bitmap img_bitmap = BitmapFactory.decodeByteArray(img_byte, 0, img_byte.length);
+                        String name_branch = cursor.getString(cursor.getColumnIndex("NAME"));
+                        int price = cursor.getInt(cursor.getColumnIndex("Price"));
+                        SortOfProductModel sortOfProductModel = new SortOfProductModel(img_bitmap, name_product, name_branch, price, branch_id);
+                        sortOfProductModelList1.add(sortOfProductModel);
+                    }
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+    }
 
     public void AddDataForCheapestProduct(int id) {
         int count = 0;
@@ -419,6 +386,7 @@ public class HomeFragment extends Fragment {
                 "JOIN ADDRESS A ON B.Address = A._id  " +
                 "WHERE M.Price < 20000 AND M.Price >= 15000 AND P.Category != 4 AND P.Category != 12 AND A.District ='" + id + "';";
         Cursor cursor = db.rawQuery(selectQuery, null);
+
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             do {
@@ -434,11 +402,9 @@ public class HomeFragment extends Fragment {
                     sortOfProductModelList2.add(sortOfProductModel);
                 }
             } while (cursor.moveToNext());
-
         }
         cursor.close();
     }
-
 
     private void prepareViewPagerCategories(ViewPager viewPager, ArrayList<String> arrayList)
     {
@@ -554,7 +520,8 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    public void AddDataForPromoImageSlider() {
+    public void AddDataForPromoImageSlider()
+    {
             slideModels = new ArrayList<>();
             slideModels.add(new SlideModel("https://scontent-xsp1-1.xx.fbcdn.net/v/t1.6435-9/185300233_2957674807883799_868667496622488565_n.png?_nc_cat=110&ccb=1-3&_nc_sid=730e14&_nc_ohc=8hcDqTC2dI0AX8e9G-x&_nc_ht=scontent-xsp1-1.xx&oh=0144670a64d17d8f9ad030ab3c632fb8&oe=60D12B74", "", ScaleTypes.FIT));
             slideModels.add(new SlideModel("https://scontent.fsgn5-7.fna.fbcdn.net/v/t1.6435-9/186486539_2962000987451181_5574183893428808477_n.jpg?_nc_cat=104&ccb=1-3&_nc_sid=730e14&_nc_ohc=1E2IX-q2UHsAX-HXkAo&_nc_ht=scontent.fsgn5-7.fna&oh=ad4cea16142bf5a7a9c96a88ffada497&oe=60D8FE8C", "", ScaleTypes.FIT));
@@ -564,7 +531,8 @@ public class HomeFragment extends Fragment {
             imageSlider_promo.setImageList(slideModels, ScaleTypes.FIT);
     }
 
-    public void ClickPromoItemImageSlider(int i){
+    public void ClickPromoItemImageSlider(int i)
+    {
         String sDescription = "";
         Intent intent = new Intent(getActivity(), Details.class);
         int iImage = 0;
@@ -626,7 +594,8 @@ public class HomeFragment extends Fragment {
         startActivity(intent);
     }
 
-    public void AddDataForAdvertisementImageSlider() {
+    public void AddDataForAdvertisementImageSlider()
+    {
         slideModels = new ArrayList<>();
         slideModels.add(new SlideModel("https://scontent-xsp1-1.xx.fbcdn.net/v/t1.6435-9/188671556_2956750824642864_7898612267439071608_n.jpg?_nc_cat=110&ccb=1-3&_nc_sid=e3f864&_nc_ohc=5T1by_CuRnsAX_GYF2T&_nc_oc=AQnSFjs4Cp3BCVQoajaWL2wNwlzn5MkY2JSf_fyMekJgXS1eUX570GYxahi_AOGNFDqgvAj7A_18cJ3GsYmq4AOi&_nc_ht=scontent-xsp1-1.xx&oh=b49ea9fd0dd3fa4375729ca0991d649d&oe=60D1E0DA", "", ScaleTypes.FIT));
         slideModels.add(new SlideModel("https://scontent-xsp1-3.xx.fbcdn.net/v/t1.6435-9/185061072_2955623628088917_8236040101871481045_n.jpg?_nc_cat=107&ccb=1-3&_nc_sid=730e14&_nc_ohc=l1HyBy6ZrLoAX9icslA&_nc_ht=scontent-xsp1-3.xx&oh=62da3033eb8a0fac09aff2750e84ed1a&oe=60D20C0C", "", ScaleTypes.FIT));
@@ -636,7 +605,8 @@ public class HomeFragment extends Fragment {
         imageSlider_advertisement.setImageList(slideModels, ScaleTypes.FIT);
     }
 
-    public void ClickAdvertisementItemImageSlider(int i){
+    public void ClickAdvertisementItemImageSlider(int i)
+    {
         String sDescription = "";
         Intent intent = new Intent(getActivity(), Details.class);
         int iImage = 0;
@@ -827,4 +797,3 @@ public class HomeFragment extends Fragment {
         }
     }
 }
-
