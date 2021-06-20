@@ -1,7 +1,6 @@
 package com.example.foodapplication.auth;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,8 +42,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.StorageReference;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -52,7 +49,6 @@ import org.json.JSONObject;
 import java.util.Arrays;
 
 import static com.example.foodapplication.MainActivity.customer_id;
-
 import static com.example.foodapplication.MainActivity.master_id;
 
 
@@ -67,14 +63,14 @@ public class LoginFragment extends Fragment  {
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private GoogleSignInClient mGoogleSignInClient;
-    StorageReference storageReference;
+
     private GoogleApiClient mGoogleApiClient; // for google sign in
     private CallbackManager mFacebookCallbackManager; // for facebook log in
     LoginButton mFacebookLoginButton;
     private DatabaseHelper databaseHelper;
     private user user;
     private FragmentLoginBinding binding;
-    FirebaseFirestore fStore;
+
     String userId;
     MainActivity mainActivity = new MainActivity();
 
@@ -96,7 +92,7 @@ public class LoginFragment extends Fragment  {
                              Bundle savedInstanceState) {
 
         databaseHelper = new DatabaseHelper(getActivity());
-        fStore = FirebaseFirestore.getInstance();
+
         mFirebaseAuth = FirebaseAuth.getInstance();
 
         binding = FragmentLoginBinding.inflate(inflater, container, false);
@@ -340,8 +336,6 @@ public class LoginFragment extends Fragment  {
                                     }
                                 });
 
-
-
                         Bundle parameters = new Bundle();
                         parameters.putString("fields", "email");
                         request.setParameters(parameters);
@@ -374,55 +368,5 @@ public class LoginFragment extends Fragment  {
             }
         };
 
-
     }
-
-
-    private Bundle getFacebookData(JSONObject object) {
-        Bundle bundle = new Bundle();
-
-        try {
-            String id = object.getString("id");
-
-            bundle.putString("idFacebook", id);
-            if (object.has("name"))
-                bundle.putString("name", object.getString("name"));
-            if (object.has("email"))
-                bundle.putString("email", object.getString("email"));
-
-        } catch (Exception e) {
-            Log.d(TAG, "BUNDLE Exception : "+e.toString());
-        }
-
-        return bundle;
-    }
-
-
-
-
-
-    private  void loadUserGG(){
-        GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(getActivity());
-        if (acct != null) {
-            String personName = acct.getDisplayName();
-            String personGivenName = acct.getGivenName();
-            String personFamilyName = acct.getFamilyName();
-            String personEmail = acct.getEmail();
-            String personId = acct.getId();
-            Uri personPhoto = acct.getPhotoUrl();
-            if(databaseHelper.checkUser(personEmail))
-            {
-                customer_id = databaseHelper.getIdByUsername(personEmail);
-                //databaseHelper.addCustomer(user);
-                 binding.username.setText(personEmail);
-                 Toast.makeText(getActivity(), "Login id: " + customer_id, Toast.LENGTH_SHORT).show();
-            }
-            else {
-                Toast.makeText(getActivity(), "Email chưa được đăng ký. Vui lòng đăng ký!", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-
-
 }
