@@ -95,7 +95,7 @@ public class OrderComingFragment extends Fragment {
 
     public int getOId() {
         int orderid = -1;
-        String selectQuery = "SELECT _id FROM ORDERS WHERE Customer ='" + customer_id + "';";
+        String selectQuery = "SELECT * FROM ORDERS WHERE Customer ='" + customer_id + "';";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
