@@ -258,10 +258,10 @@ public class LoginFragment extends Fragment  {
                         if (task.isSuccessful()) {
                             FirebaseUser User = mFirebaseAuth.getCurrentUser();
                             boolean isNew = task.getResult().getAdditionalUserInfo().isNewUser();
-
-                            // check login first time
-//                        if (isNew){
-
+                        if (isNew){
+                            Toast.makeText(getActivity(), "Email chưa được đăng ký. Vui lòng đăng ký!", Toast.LENGTH_LONG).show();
+                        }
+else {
                             if (GoogleSignIn.getLastSignedInAccount(getActivity()) != null) {
                                 mGoogleSignInClient.silentSignIn().addOnCompleteListener(getActivity(), new OnCompleteListener<GoogleSignInAccount>() {
                                     @Override
@@ -270,21 +270,15 @@ public class LoginFragment extends Fragment  {
                                             // The signed in account is stored in the task's result.
                                             GoogleSignInAccount signedInAccount = task.getResult();
                                             //   user.setAccessToken(signedInAccount.getIdToken());
-                                             String email =  signedInAccount.getEmail();
-                                            if(databaseHelper.checkUser(User.getEmail()))
-                                            {
+                                            String email = signedInAccount.getEmail();
+                                            if (databaseHelper.checkUser(User.getEmail())) {
                                                 customer_id = databaseHelper.getIdByUsername(User.getEmail());
                                                 databaseHelper.updAllAcountLogOutStatus();
                                                 databaseHelper.updCustomerLoginStatus(customer_id);
                                                 Toast.makeText(getActivity(), "Login id: " + customer_id, Toast.LENGTH_LONG).show();
-                                            }
-                                            else {
+                                            } else {
                                                 Toast.makeText(getActivity(), "Email chưa được đăng ký. Vui lòng đăng ký!", Toast.LENGTH_LONG).show();
                                             }
-}
-                                        else {
-                                            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-                                            startActivityForResult(signInIntent, RC_SIGN_IN);
                                         }
                                     }
                                 });
@@ -293,13 +287,14 @@ public class LoginFragment extends Fragment  {
                             transaction.replace(R.id.frame_container, accountFragment);
                             transaction.addToBackStack(null);
                             transaction.commit();
+}
                         }
                         else {
                             Toast.makeText(getActivity(), "Đăng nhập không thành công!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-    }
+    }   
 
     // [END auth_with_google]
 
