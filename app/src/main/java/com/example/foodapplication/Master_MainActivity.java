@@ -22,7 +22,6 @@ import com.example.foodapplication.HomeFragmentMaster.fragment.HomeFragment_Mast
 import com.example.foodapplication.HomeFragment.fragment.RestaurantInformation_ThongTin;
 import com.example.foodapplication.UpdateFragmentMaster.UpdateFragment_Master;
 
-
 import static com.example.foodapplication.MainActivity.master_id;
 import static com.example.foodapplication.MainActivity.addressLine;
 import static com.example.foodapplication.MainActivity.nameStreet;

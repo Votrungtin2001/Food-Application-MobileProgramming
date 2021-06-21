@@ -15,18 +15,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.foodapplication.AccountAbout;
-import com.example.foodapplication.AccountAddressMaster;
 import com.example.foodapplication.AccountSettingsInfoMaster;
 import com.example.foodapplication.DatabaseHelper;
 import com.example.foodapplication.FoodManagementContract;
 import com.example.foodapplication.MainActivity;
-import com.example.foodapplication.MasterRestaurantFragment;
 import com.example.foodapplication.R;
 import com.example.foodapplication.auth.LoginFragment;
 
 public class AccountFragment_Master extends Fragment {
     TextView txtName_Master;
-    Button btnAddress_Master, btnSettings_Master, btnAbout_Master, btnLogout_Master;
+    Button btnSettings_Master, btnAbout_Master, btnLogout_Master;
     DatabaseHelper dbHelper;
     Fragment newFragment;
     Dialog LoginDialog;
@@ -54,8 +52,6 @@ public class AccountFragment_Master extends Fragment {
 
         txtName_Master = view.findViewById(R.id.txtName_Master);
         txtName_Master.setOnClickListener(onNameClick);
-        btnAddress_Master = view.findViewById(R.id.btnAddress_Master);
-        btnAddress_Master.setOnClickListener(openAddressFragment);
         btnSettings_Master = view.findViewById(R.id.btnSettings_Master);
         btnSettings_Master.setOnClickListener(openSettingsFragment);
         btnAbout_Master = view.findViewById(R.id.btnAbout_Master);
@@ -95,27 +91,6 @@ public class AccountFragment_Master extends Fragment {
         }
         else
             ShowPopUpLogin(v);
-    };
-
-    View.OnClickListener openAddressFragment = v -> {
-        if (MainActivity.master_id > 0) {
-            int branch = dbHelper.getBranchAddressByMaster(MainActivity.master_id);
-            if (branch == 0) {
-                newFragment = new MasterRestaurantFragment();
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(((ViewGroup) getView().getParent()).getId(), newFragment, null)
-                        .addToBackStack(null)
-                        .commit();
-            } else {
-                newFragment = new AccountAddressMaster();
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .replace(((ViewGroup) getView().getParent()).getId(), newFragment, null)
-                        .addToBackStack(null)
-                        .commit();
-            }
-        }
-        else
-            Toast.makeText(getContext(), "Bạn không thể dùng chức năng này vì bạn chưa đăng nhập.", Toast.LENGTH_LONG).show();
     };
 
     View.OnClickListener openSettingsFragment = v -> {

@@ -25,8 +25,6 @@ import models.KindOfRestaurantModel;
 
 
 public class BestSellerRestaurantFragment extends Fragment {
-
-    Context context;
     List<KindOfRestaurantModel> kindOfRestaurantModelList;
     RecyclerView recyclerView_KindOfRestaurant;
     KindOfRestaurantAdapter kindOfRestaurantAdapter;
@@ -39,6 +37,7 @@ public class BestSellerRestaurantFragment extends Fragment {
     public BestSellerRestaurantFragment() {
 
     }
+
     public BestSellerRestaurantFragment(int id) {
         this.district_id = id;
     }
@@ -61,7 +60,7 @@ public class BestSellerRestaurantFragment extends Fragment {
         recyclerView_KindOfRestaurant.setAdapter(kindOfRestaurantAdapter);
 
 
-        return  view;
+        return view;
     }
 
     private void AddDataForKindOfRestaurantWithBestSeller(int id) {
@@ -70,24 +69,24 @@ public class BestSellerRestaurantFragment extends Fragment {
                 "FROM (RESTAURANT R JOIN BRANCHES B ON R._id = B.Restaurant) " +
                 "JOIN ADDRESS A ON B.Address = A._id WHERE A.District ='" + id + "';";
         Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.moveToFirst()) {
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                do {
+                    int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
+                    if (branch_id % 3 == 0) {
+                        byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(img_byte, 0, img_byte.length);
+                        String name_branch = cursor.getString(cursor.getColumnIndex("NAME"));
+                        String address_branch = cursor.getString(cursor.getColumnIndex("Address"));
+                        String opening_time = cursor.getString(cursor.getColumnIndex("Opening_Times"));
+                        KindOfRestaurantModel kindOfRestaurantModel = new KindOfRestaurantModel(bitmap, name_branch, address_branch, opening_time, branch_id);
+                        kindOfRestaurantModelList.add(kindOfRestaurantModel);
 
-
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            do {
-                int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
-                if (branch_id % 3 == 0) {
-                    byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(img_byte, 0, img_byte.length);
-                    String name_branch = cursor.getString(cursor.getColumnIndex("NAME"));
-                    String address_branch = cursor.getString(cursor.getColumnIndex("Address"));
-                    String opening_time = cursor.getString(cursor.getColumnIndex("Opening_Times"));
-                    KindOfRestaurantModel kindOfRestaurantModel = new KindOfRestaurantModel(bitmap, name_branch, address_branch, opening_time, branch_id);
-                    kindOfRestaurantModelList.add(kindOfRestaurantModel);
-
-                }
-            } while (cursor.moveToNext());
+                    }
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
         }
-        cursor.close();
     }
 }
