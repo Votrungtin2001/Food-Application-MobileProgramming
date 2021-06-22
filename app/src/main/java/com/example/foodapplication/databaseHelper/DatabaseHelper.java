@@ -124,6 +124,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
 
     }
+    public void delCustomer(int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String selection = FoodManagementContract.CCustomer._ID + " = ?";
+        String[] selectionArgs = { Integer.toString(id) };
+        db.delete(FoodManagementContract.CCustomer.TABLE_NAME, selection, selectionArgs);
+    }
+
     public boolean checkFacebook(String email) {
         // array of columns to fetch
         String[] columns = {

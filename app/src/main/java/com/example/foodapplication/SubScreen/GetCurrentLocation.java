@@ -60,7 +60,6 @@ public class GetCurrentLocation extends AppCompatActivity {
 
         databaseHelper = new DatabaseHelper(this);
         db = databaseHelper.getReadableDatabase();
-
         initComponents();
 
         Run();
