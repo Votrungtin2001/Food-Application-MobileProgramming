@@ -23,7 +23,7 @@ import static com.example.foodapplication.MainActivity.customer_id;
 import static com.example.foodapplication.MainActivity.master_id;
 
 public class AccountFragment extends Fragment {
-    Button btnPayment, btnAddress, btnPolicy, btnSettings, btnAbout, btnLogout;
+    Button btnPayment, btnInvite, btnAddress, btnPolicy, btnSettings, btnAbout, btnLogout;
     Fragment newFragment;
     TextView txtlogin;
     ImageView imgUser;
@@ -55,6 +55,9 @@ public class AccountFragment extends Fragment {
 
         btnPayment = view.findViewById(R.id.btnPayment);
         btnPayment.setOnClickListener(runPaymentFragment);
+
+        btnInvite = view.findViewById(R.id.btnInvite);
+        btnInvite.setOnClickListener(runInviteFragment);
 
         btnAddress = view.findViewById(R.id.btnAddress);
         btnAddress.setOnClickListener(runAddressFragment);
@@ -148,6 +151,14 @@ public class AccountFragment extends Fragment {
         }
         else
             Toast.makeText(getContext(), "Bạn không thể dùng chức năng này vì bạn chưa đăng nhập.", Toast.LENGTH_LONG).show();
+    };
+
+    View.OnClickListener runInviteFragment = v -> {
+        newFragment = new AccountInvite();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(((ViewGroup) getView().getParent()).getId(), newFragment, null)
+                .addToBackStack(null)
+                .commit();
     };
 
     View.OnClickListener runSettingsFragment = v -> {

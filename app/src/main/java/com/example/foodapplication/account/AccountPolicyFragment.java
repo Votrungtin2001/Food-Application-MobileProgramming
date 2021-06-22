@@ -14,8 +14,8 @@ import android.widget.TextView;
 
 import com.example.foodapplication.R;
 
-public class AccountPolicyFragment extends Fragment {
-    TextView txtPayment, txtPaymentAnswer, txtPrivacy, txtPrivacyAnswer, txtRegulation, txtRegulationAnswer, txtToS, txtToSAnswer, txtDispute, txtDisputeAnswer;
+public class AccountPolicyFragment extends Fragment implements View.OnClickListener {
+    TextView txtPayment, txtPrivacy, txtRegulation, txtToS, txtDispute;
 
     public AccountPolicyFragment() { }
 
@@ -43,60 +43,48 @@ public class AccountPolicyFragment extends Fragment {
         });
 
         txtPayment = view.findViewById(R.id.txtPaymentGuide);
-        txtPayment.setOnClickListener(onPaymentClick);
-        txtPaymentAnswer = view.findViewById(R.id.txtPaymentGuideAnswer);
+        txtPayment.setOnClickListener(this);
 
         txtPrivacy = view.findViewById(R.id.txtPrivacyPolicy);
-        txtPrivacy.setOnClickListener(onPrivacyClick);
-        txtPrivacyAnswer = view.findViewById(R.id.txtPrivacyPolicyAnswer);
+        txtPrivacy.setOnClickListener(this);
 
         txtRegulation = view.findViewById(R.id.txtRegulation);
-        txtRegulation.setOnClickListener(onRegulationClick);
-        txtRegulationAnswer= view.findViewById(R.id.txtRegulationAnswer);
+        txtRegulation.setOnClickListener(this);
 
         txtToS = view.findViewById(R.id.txtToS);
-        txtToS.setOnClickListener(onToSClick);
-        txtToSAnswer = view.findViewById(R.id.txtToSAnswer);
+        txtToS.setOnClickListener(this);
 
         txtDispute= view.findViewById(R.id.txtDisputePolicy);
-        txtDispute.setOnClickListener(onDisputeClick);
-        txtDisputeAnswer = view.findViewById(R.id.txtDisputePolicyAnswer);
+        txtDispute.setOnClickListener(this);
 
         return view;
     }
 
-    View.OnClickListener onPaymentClick = v -> {
-        if (txtPaymentAnswer.getVisibility() == View.GONE)
-            txtPaymentAnswer.setVisibility(View.VISIBLE);
-        else
-            txtPaymentAnswer.setVisibility(View.GONE);
-    };
-
-    View.OnClickListener onPrivacyClick = v -> {
-        if (txtPrivacyAnswer.getVisibility() == View.GONE)
-            txtPrivacyAnswer.setVisibility(View.VISIBLE);
-        else
-            txtPrivacyAnswer.setVisibility(View.GONE);
-    };
-
-    View.OnClickListener onRegulationClick = v -> {
-        if (txtRegulationAnswer.getVisibility() == View.GONE)
-            txtRegulationAnswer.setVisibility(View.VISIBLE);
-        else
-            txtRegulationAnswer.setVisibility(View.GONE);
-    };
-
-    View.OnClickListener onToSClick = v -> {
-        if (txtToSAnswer.getVisibility() == View.GONE)
-            txtToSAnswer.setVisibility(View.VISIBLE);
-        else
-            txtToSAnswer.setVisibility(View.GONE);
-    };
-
-    View.OnClickListener onDisputeClick = v -> {
-        if (txtDisputeAnswer.getVisibility() == View.GONE)
-            txtDisputeAnswer.setVisibility(View.VISIBLE);
-        else
-            txtDisputeAnswer.setVisibility(View.GONE);
-    };
+    @Override
+    public void onClick(View v) {
+        Fragment fragment = new WebViewFragment();
+        Bundle args = new Bundle();
+        switch (v.getId()) {
+            case R.id.txtPaymentGuide:
+                args.putString("HTML_PATH", "file:///android_asset/html/payment.html");
+                break;
+            case R.id.txtPrivacyPolicy:
+                args.putString("HTML_PATH", "file:///android_asset/html/privacy.html");
+                break;
+            case R.id.txtRegulation:
+                args.putString("HTML_PATH", "file:///android_asset/html/regulation.html");
+                break;
+            case R.id.txtToS:
+                args.putString("HTML_PATH", "file:///android_asset/html/tos.html");
+                break;
+            case R.id.txtDisputePolicy:
+                args.putString("HTML_PATH", "file:///android_asset/html/claims.html");
+                break;
+        }
+        fragment.setArguments(args);
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(((ViewGroup) getView().getParent()).getId(), fragment, null)
+                .addToBackStack(null)
+                .commit();
+    }
 }

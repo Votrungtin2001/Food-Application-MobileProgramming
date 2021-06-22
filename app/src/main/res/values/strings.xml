@@ -17,6 +17,7 @@
     <!--account screen strings start-->
     <string name="activity_account_login_name">Đăng nhập/Đăng ký</string>
     <string name="activity_account_payment">Nạp tiền</string>
+    <string name="activity_account_invite">Mời bạn</string>
     <string name="activity_account_address">Thêm địa chỉ</string>
     <string name="activity_account_policy">Chính sách Người dùng</string>
     <string name="activity_account_settings">Cài đặt</string>
@@ -50,6 +51,10 @@
     <string name="activity_account_address_save">Lưu địa chỉ</string>
     <string name="activity_account_address_update">Cập nhật địa chỉ</string>
 
+    <!-- Account -> Invite strings -->
+    <string name="activity_account_invite_sms">Mời bằng SMS</string>
+    <string name="activity_account_invite_clipboard">Lấy đường dẫn</string>
+
     <!-- Account -> Settings strings -->
     <string name="activity_account_settings_account">Cài đặt Tài khoản</string>
     <string name="activity_account_settings_account_info">Thông tin liên lạc</string>
@@ -73,57 +78,10 @@
 
     <!-- Account -> Policy strings -->
     <string name="activity_account_policy_payment">Hướng dẫn thanh toán</string>
-    <string name="activity_account_policy_payment_answer">
-        Các phương thức thanh toán được áp dụng:
-        \n- Thanh toán tiền mặt khi nhận hàng
-        \n- Thanh toán qua thẻ Debit/Credit VISA/MASTER/JCB
-        \n- Thanh toán qua thẻ ATM nội địa
-        \n- Thanh toán qua Credit
-    </string>
     <string name="activity_account_policy_privacy">Chính sách bảo mật thông tin</string>
-    <string name="activity_account_policy_privacy_answer">
-        Chúng tôi có thể thu nhập dữ liệu cá nhân của người dùng khi:
-        \n- Người dùng đồng ý bất kỳ thỏa thuận nào hoặc cung cấp cho chúng tôi dữ liệu hoặc thông tin liên quan đến tương tác giữa người dùng với Chúng tôi, hoặc khi người dùng sử dụng dịch vụ của chúng tôi;
-        \n- Người dùng tương tác và liên lạc với chúng tôi;
-        \n- Người dùng sử dụng dịch vụ của chúng tôi;
-        \n- Người dùng thực hiện các giao dịch thông qua dịch vụ của chúng tôi;
-        \n- Người dùng cung cấp cho chúng tôi thông tin phản hồi, góp ý, khảo sát hoặc khiếu nại về dịch vụ;
-        \n- Người dùng tham gia cuộc thi do chúng tôi tổ chức;
-        \n- Người dùng gửi dữ liệu cá nhân cho chúng tôi vì bất kỳ lý do nào.
-
-        \n\nDữ liệu cá nhân được yêu cầu cung cấp bao gồm, nhưng không giới hạn:
-        \n- Họ tên
-        \n- Số điện thoại di động
-        \n- Địa chỉ email
-        \n- Địa chỉ giao hàng
-        \n- Bất kỳ thông tin nào khác về người dùng khi người dùng đăng nhập và/hoặc sử dụng dịch vụ
-    </string>
     <string name="activity_account_policy_regulation">Quy chế hoạt động</string>
-    <string name="activity_account_policy_regulation_answer">
-        I. Nguyên tắc chung
-        \nII. Quy định chung
-        \nIII. Quy trình giao dịch
-        \nIV. Quy trình thanh toán
-        \nV. Đảm bảo an toàn giao dịch
-        \nVI. Chính sách bảo vệ thông tin cá nhân của người tiêu dùng
-        \nVII. Quản lý thông tin xấu
-        \nVIII. Trách nhiệm trong trường hợp phát sinh lỗi ký thuật
-        \nIX. Quyền và trách nhiệm của Ban quản lý Sàn giao dịch
-        \nX. Quyền và trách nhiệm của đối tác
-        \nXI. Quyền và trách nhiệm của Khách hàng trên Sàn giao dịch
-        \nXII. Điều khoản áp dụng
-        \nXIII. Điều khoản cam kết
-    </string>
     <string name="activity_account_policy_tos">Điều khoản dịch vụ</string>
-    <string name="activity_account_policy_tos_answer">
-        Tôi đã đọc các điều khoản dịch vụ này và đồng ý với tất cả các điều khoản như trên cũng như bất kỳ điều khoản nào được chỉnh sửa sau này.
-    </string>
     <string name="activity_account_policy_dispute">Giải quyết tranh chấp, khiếu nại</string>
-    <string name="activity_account_policy_dispute_answer">
-        Bước 1: Thành viên khách hàng/người tiêu dùng khiếu nại về hàng hóa của nhà cung cấp qua email: info@foodapp.vn. Thành viên có thể phản ánh trực tiếp đến ban quản trị.
-        \nBước 2: Bộ phận Chăm sóc Khách hàng sẽ tiếp nhận các khiếu nại của thành viên khách hàng/người tiêu dùng, tùy theo tính chất và mức độ của khiếu nại thì bên Sàn giao dịch Ứng dụng sẽ có những biện pháp cụ thế hỗ trọ khác hàng/người tiêu dùng để giải quyết tranh chấp đó.
-        \nBước 3: Trong trường nằm ngoài khả năng và thẩm quyền của Sàn giao dịch Ứng dụng thì ban quản trị sẽ yêu cầu khách hàng/người tiêu dùng đưa vụ việc này ra cơ quan nhà nước có thẩm quyền giải quyết theo pháp luật.
-    </string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
