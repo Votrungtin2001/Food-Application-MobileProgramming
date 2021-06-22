@@ -14,7 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.foodapplication.DatabaseHelper;
+import com.example.foodapplication.databaseHelper.DatabaseHelper;
 import com.example.foodapplication.R;
 
 import java.util.ArrayList;

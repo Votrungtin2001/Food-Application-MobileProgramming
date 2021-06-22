@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E8E8E8"
-    tools:context=".AccountSettingsInfoOccupationFragment" >
+    tools:context=".account.AccountSettingsInfoOccupationFragment" >
 
     <include
         android:id="@+id/toolbar"

@@ -28,8 +28,21 @@ import androidx.viewpager.widget.ViewPager;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.interfaces.ItemClickListener;
-import com.denzcoskun.imageslider.models.SlideModel;import com.example.foodapplication.DatabaseHelper;
+import com.denzcoskun.imageslider.models.SlideModel;
+import com.example.foodapplication.databaseHelper.DatabaseHelper;
+import com.example.foodapplication.HomeFragment.adapter.AllRestaurantAdapter;
+import com.example.foodapplication.HomeFragment.adapter.CategoryAdapter;
+import com.example.foodapplication.HomeFragment.adapter.CollectionAdapter;
+import com.example.foodapplication.HomeFragment.adapter.DiscountComboProductAdapter;
+import com.example.foodapplication.HomeFragment.adapter.SearchBarAdapter;
+import com.example.foodapplication.HomeFragment.fragment.BestRatingRestaurantFragment;
+import com.example.foodapplication.HomeFragment.fragment.BestSellerRestaurantFragment;
 import com.example.foodapplication.HomeFragment.fragment.FastestDeliveryRestaurantFragment;
+import com.example.foodapplication.HomeFragment.fragment.NearMeRestaurantsFragment;
+import com.example.foodapplication.HomeFragment.model.AllRestaurantModel;
+import com.example.foodapplication.HomeFragment.model.CollectionModel;
+import com.example.foodapplication.HomeFragment.model.SearchBarModel;
+import com.example.foodapplication.HomeFragment.model.SortOfProductModel;
 import com.example.foodapplication.R;
 import com.example.foodapplication.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
@@ -37,19 +50,6 @@ import com.google.android.material.tabs.TabLayout;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.example.foodapplication.HomeFragment.adapter.AllRestaurantAdapter;
-import com.example.foodapplication.HomeFragment.adapter.CollectionAdapter;
-import com.example.foodapplication.HomeFragment.adapter.DiscountComboProductAdapter;
-import com.example.foodapplication.HomeFragment.adapter.CategoryAdapter;
-import com.example.foodapplication.HomeFragment.adapter.SearchBarAdapter;
-import com.example.foodapplication.HomeFragment.fragment.BestRatingRestaurantFragment;
-import com.example.foodapplication.HomeFragment.fragment.BestSellerRestaurantFragment;
-import com.example.foodapplication.HomeFragment.fragment.NearMeRestaurantsFragment;
-import com.example.foodapplication.HomeFragment.model.AllRestaurantModel;
-import com.example.foodapplication.HomeFragment.model.CollectionModel;
-import com.example.foodapplication.HomeFragment.model.SearchBarModel;
-import com.example.foodapplication.HomeFragment.model.SortOfProductModel;
 
 import static com.example.foodapplication.MainActivity.addressLine;
 import static com.example.foodapplication.MainActivity.district_id;
@@ -235,6 +235,7 @@ public class HomeFragment extends Fragment {
         textView_addressLine.setText(addressLine);
 
         // Set Screen
+        district_id = 14;
         if(district_id > 0) district_isAvailable = true;
         SetAllData(district_id);
         setUpSreen(district_isAvailable);

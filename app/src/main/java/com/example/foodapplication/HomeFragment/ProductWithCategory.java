@@ -22,7 +22,7 @@ import java.util.List;
 
 import com.example.foodapplication.HomeFragment.adapter.ProductWithCategoryAdapter;
 
-import com.example.foodapplication.DatabaseHelper;
+import com.example.foodapplication.databaseHelper.DatabaseHelper;
 import com.example.foodapplication.HomeFragment.model.ProductCategoryModel;
 import com.example.foodapplication.R;
 

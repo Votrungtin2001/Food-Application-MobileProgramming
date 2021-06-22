@@ -13,7 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.foodapplication.DatabaseHelper;
+import com.example.foodapplication.databaseHelper.DatabaseHelper;
 import com.example.foodapplication.R;
 
 import java.util.List;

@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.foodapplication.DatabaseHelper;
+import com.example.foodapplication.databaseHelper.DatabaseHelper;
 import com.example.foodapplication.HomeFragment.adapter.SortOfProductAdapter;
 import com.example.foodapplication.HomeFragment.model.SortOfProductModel;
 import com.example.foodapplication.R;

@@ -21,7 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.example.foodapplication.DatabaseHelper;
+import com.example.foodapplication.databaseHelper.DatabaseHelper;
 import com.example.foodapplication.MainActivity;
 import com.example.foodapplication.Master_MainActivity;
 import com.example.foodapplication.R;

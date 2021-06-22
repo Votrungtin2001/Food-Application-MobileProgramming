@@ -1,4 +1,4 @@
-package com.example.foodapplication;
+package com.example.foodapplication.account;
 
 import android.os.Bundle;
 
@@ -13,6 +13,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.foodapplication.databaseHelper.DatabaseHelper;
+import com.example.foodapplication.MainActivity;
+import com.example.foodapplication.R;
 
 import java.util.Calendar;
 import java.util.Date;

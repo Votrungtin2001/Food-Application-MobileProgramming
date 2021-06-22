@@ -1,13 +1,11 @@
 package com.example.foodapplication;
 
-import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -17,14 +15,11 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.foodapplication.HomeFragment.HomeFragment;
-import com.example.foodapplication.Notification.Noti;
-import com.example.foodapplication.Notification.NotiSettingFragment;
 import com.example.foodapplication.Order.OrderFragment;
+import com.example.foodapplication.account.AccountFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity implements CommunicationInterface {
-
-    NotiSettingFragment NotiSettingFrag;
+public class MainActivity extends AppCompatActivity {
 
     public static String addressLine;
     public static String nameStreet;
@@ -32,7 +27,6 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
     public static int customer_id;
     public static int master_id;
     public static String stateName;
-
 
     Bundle importArgs;
 
@@ -42,7 +36,6 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
     final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
     HomeFragment homeFragment = new HomeFragment();
     AccountFragment accFragment = new AccountFragment();
-    Noti notifFragment = new Noti();
     OrderFragment orderFragment = new OrderFragment();
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -91,9 +84,6 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
                     break;
                 case R.id.nav_account:
                     loadFragment(accFragment);
-                    break;
-                case R.id.nav_notif:
-                    loadFragment(notifFragment);
                     break;
                 case R.id.nav_order:
                     loadFragment(orderFragment);
@@ -144,18 +134,5 @@ public class MainActivity extends AppCompatActivity implements CommunicationInte
             winParams.flags &= ~bits;
         }
         win.setAttributes(winParams);
-    }
-
-    @Override
-    public void onClickTopFragment(String str) {
-        @SuppressLint("ResourceType") NotiSettingFragment fragBot = (NotiSettingFragment) getSupportFragmentManager().findFragmentById(R.layout.fragment_noti_setting);
-        if ("add".equalsIgnoreCase(String.valueOf(fragBot))) { // kiểm tra Fragment cần truyền data đến có thực sự tồn tại và đang hiện.
-            fragBot.updateFragment(str);
-            Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
-        }
-        else
-            {
-            Toast.makeText(this, "Khong tim thay, hoac fragment khong hien", Toast.LENGTH_SHORT).show();
-        }
     }
 }

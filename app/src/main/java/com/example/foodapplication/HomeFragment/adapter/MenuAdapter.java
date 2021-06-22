@@ -1,4 +1,4 @@
-package com.example.foodapplication.HomeFragment.adapter;
+ package com.example.foodapplication.HomeFragment.adapter;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -14,7 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.foodapplication.DatabaseHelper;
+import com.example.foodapplication.databaseHelper.DatabaseHelper;
 import com.example.foodapplication.R;
 
 import java.util.ArrayList;
@@ -68,19 +68,23 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         holder.imageView_ImageProduct.setImageBitmap(currentItem.getImage());
 
         holder.imageView_addItem.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View v) {
                 int qty = currentItem.getQuantity();
                 if (customer_id > 0) {
+                    ProductModel checkProduct = new ProductModel(currentItem.getNameProduct(), qty, currentItem.getPrice(),currentItem.getProduct_id());
                     boolean checkCustomerHasAddress = CheckCustomerHasAddress(customer_id);
-                    boolean alreadyExist = productModelList.contains(currentItem);
-                    if(checkCustomerHasAddress == true) {
+                    boolean isExist = productModelList.contains(checkProduct);
+                    if(checkCustomerHasAddress == true ) {
+                        if(isExist == true){
                         productModelList.add(new ProductModel(currentItem.getNameProduct(), qty, currentItem.getPrice(),currentItem.getProduct_id()));
                         Toast.makeText(context, "Thêm vào giỏ hàng thành công!", Toast.LENGTH_SHORT).show();
+                        }
+                        else qty++;
                     }
                     else {
-                       // qty++;
-                       // Toast.makeText(context,"None!",Toast.LENGTH_LONG).show();
                         ShowPopUpRequireAddress();
                     }
                 }

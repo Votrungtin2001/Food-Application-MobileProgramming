@@ -16,6 +16,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.foodapplication.databaseHelper.DatabaseHelper;
+import com.example.foodapplication.databaseHelper.FoodManagementContract;
+
 public class SingleEditTextUpdateFragment extends Fragment {
     private String type, target;
     private int user_id = -1;

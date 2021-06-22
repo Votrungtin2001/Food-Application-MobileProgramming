@@ -1,4 +1,4 @@
-package com.example.foodapplication;
+package com.example.foodapplication.account;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -17,6 +17,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
+import com.example.foodapplication.databaseHelper.DatabaseHelper;
+import com.example.foodapplication.databaseHelper.FoodManagementContract;
+import com.example.foodapplication.IdWithNameListItem;
+import com.example.foodapplication.MainActivity;
+import com.example.foodapplication.R;
 
 import java.util.ArrayList;
 

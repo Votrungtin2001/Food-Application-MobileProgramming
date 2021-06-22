@@ -1,19 +1,23 @@
-package com.example.foodapplication;
+package com.example.foodapplication.account;
 
 import android.database.Cursor;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
+import com.example.foodapplication.databaseHelper.DatabaseHelper;
+import com.example.foodapplication.databaseHelper.FoodManagementContract;
+import com.example.foodapplication.MainActivity;
+import com.example.foodapplication.R;
 
 public class AccountSettingsPasswordFragment extends Fragment {
     EditText txtCurrentPassword, txtNewPassword, txtConfirmPassword;

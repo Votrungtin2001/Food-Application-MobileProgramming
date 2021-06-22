@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools" xmlns="">
 
     <data>
         <variable
@@ -103,14 +103,14 @@
 
             <Button
                 android:id="@+id/signin_username"
-                android:layout_width="227dp"
-                android:layout_height="52dp"
+                android:layout_width="181dp"
+                android:layout_height="50dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="10dp"
                 android:backgroundTint="#CF2127"
                 android:gravity="center"
-                android:text="Tiếp tục"
+                android:text="Đăng nhập"
                 app:cornerRadius="18dp"
                 android:textAllCaps="false"
                 android:textSize="16sp"
@@ -209,7 +209,5 @@
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-
     </FrameLayout>
 </layout>

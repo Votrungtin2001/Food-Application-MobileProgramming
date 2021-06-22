@@ -1,4 +1,4 @@
-package com.example.foodapplication;
+package com.example.foodapplication.account;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -13,6 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.foodapplication.databaseHelper.DatabaseHelper;
+import com.example.foodapplication.databaseHelper.FoodManagementContract;
+import com.example.foodapplication.MainActivity;
+import com.example.foodapplication.R;
+import com.example.foodapplication.Transaction;
 
 import java.util.ArrayList;
 

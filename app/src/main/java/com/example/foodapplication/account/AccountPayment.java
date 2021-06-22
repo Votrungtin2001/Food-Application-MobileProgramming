@@ -1,4 +1,4 @@
-package com.example.foodapplication;
+package com.example.foodapplication.account;
 
 import android.os.Bundle;
 
@@ -11,6 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.foodapplication.databaseHelper.DatabaseHelper;
+import com.example.foodapplication.MainActivity;
+import com.example.foodapplication.R;
 
 public class AccountPayment extends Fragment {
     private int credits = 0, user_id = -1;

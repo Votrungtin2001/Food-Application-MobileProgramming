@@ -19,7 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.example.foodapplication.Cart.Cart;
-import com.example.foodapplication.DatabaseHelper;
+import com.example.foodapplication.databaseHelper.DatabaseHelper;
 import com.example.foodapplication.R;
 import com.example.foodapplication.ViewPagerAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

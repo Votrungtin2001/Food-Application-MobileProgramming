@@ -1,4 +1,4 @@
-package com.example.foodapplication;
+package com.example.foodapplication.account;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+
+import com.example.foodapplication.R;
 
 public class AccountAbout extends Fragment {
     public AccountAbout() {}

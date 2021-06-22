@@ -21,7 +21,7 @@ import java.util.List;
 
 import com.example.foodapplication.HomeFragment.adapter.ListRestaurantAdapter;
 
-import com.example.foodapplication.DatabaseHelper;
+import com.example.foodapplication.databaseHelper.DatabaseHelper;
 import com.example.foodapplication.HomeFragment.model.AllRestaurantModel;
 import com.example.foodapplication.R;
 

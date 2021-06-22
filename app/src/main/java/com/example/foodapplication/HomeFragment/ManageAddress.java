@@ -22,8 +22,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.foodapplication.DatabaseHelper;
-import com.example.foodapplication.FoodManagementContract;
+import com.example.foodapplication.databaseHelper.DatabaseHelper;
+import com.example.foodapplication.databaseHelper.FoodManagementContract;
 import com.example.foodapplication.R;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.model.LatLng;

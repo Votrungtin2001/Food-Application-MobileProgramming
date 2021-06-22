@@ -13,10 +13,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.foodapplication.AccountFragment;
-import com.example.foodapplication.DatabaseHelper;
+import com.example.foodapplication.account.AccountFragment;
+import com.example.foodapplication.databaseHelper.DatabaseHelper;
 import com.example.foodapplication.MainActivity;
-import com.example.foodapplication.Master_MainActivity;
 import com.example.foodapplication.R;
 import com.example.foodapplication.databinding.FragmentLoginBinding;
 import com.facebook.AccessToken;
@@ -49,7 +48,6 @@ import org.json.JSONObject;
 import java.util.Arrays;
 
 import static com.example.foodapplication.MainActivity.customer_id;
-import static com.example.foodapplication.MainActivity.master_id;
 
 
 // DataPasser reference: https://stackoverflow.com/questions/9343241/passing-data-between-a-fragment-and-its-container-activity
@@ -75,12 +73,19 @@ public class LoginFragment extends Fragment  {
     MainActivity mainActivity = new MainActivity();
 
     int role = 0;
+    int namefragment_before = 0;
 
     public LoginFragment() { }
+
+    public LoginFragment(int name, int choose_role) {
+        this.namefragment_before = name;
+        this.role = choose_role;
+    }
 
     public LoginFragment(int choose_role) {
         this.role = choose_role;
     }
+
 
     public static LoginFragment newInstance() {
         LoginFragment fragment = new LoginFragment();
@@ -106,8 +111,6 @@ public class LoginFragment extends Fragment  {
             }
         });
 
-        initObjects();
-
         createRequest();
         binding.signinGg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,24 +122,9 @@ public class LoginFragment extends Fragment  {
         binding.signinUsername.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (role == 2) {
-                    boolean isExist = databaseHelper.checkMaster(binding.username.getText().toString().trim(),binding.password.getText().toString().trim());
 
-                    if(isExist){
-                        master_id = databaseHelper.getIdMasterByUsername(binding.username.getText().toString().trim());
-                        databaseHelper.updAllAcountLogOutStatus();
-                        databaseHelper.updMasterLoginStatus(master_id);
-                        Intent intent = new Intent(getActivity(), Master_MainActivity.class);
-                        intent.putExtra("Master ID",master_id);
-                        startActivity(intent);
-                    } else {
-                        binding.password.setText(null);
-                        Toast.makeText(getActivity(), "Đăng nhập không thành công. Vui lòng điền email hoặc mật khẩu!", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                else {
-                    boolean isExist = databaseHelper.checkUser(binding.username.getText().toString().trim(),binding.password.getText().toString().trim());
-
+                boolean isExist = databaseHelper.checkUser(binding.username.getText().toString().trim(),binding.password.getText().toString().trim());
+                if (namefragment_before == 1 && role == 1) {
                     if(isExist){
                         customer_id = databaseHelper.getIdByUsername(binding.username.getText().toString().trim());
                         databaseHelper.updAllAcountLogOutStatus();
@@ -147,6 +135,22 @@ public class LoginFragment extends Fragment  {
                         transaction.replace(R.id.frame_container, accountFragment);
                         transaction.addToBackStack(null);
                         transaction.commit();
+
+                    } else {
+                        binding.password.setText(null);
+                        Toast.makeText(getActivity(), "Đăng nhập không thành công. Vui lòng điền email hoặc mật khẩu!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                if(namefragment_before == 2 && role == 1) {
+                    if(isExist){
+                        customer_id = databaseHelper.getIdByUsername(binding.username.getText().toString().trim());
+                        databaseHelper.updAllAcountLogOutStatus();
+                        databaseHelper.updCustomerLoginStatus(customer_id);
+                        Toast.makeText(getActivity(), "Login id: " + customer_id, Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        intent.putExtra("_ID", customer_id);
+                        startActivity(intent);
                     } else {
                         binding.password.setText(null);
                         Toast.makeText(getActivity(), "Đăng nhập không thành công. Vui lòng điền email hoặc mật khẩu!", Toast.LENGTH_SHORT).show();
@@ -179,15 +183,6 @@ public class LoginFragment extends Fragment  {
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
-//        if (mGoogleApiClient != null && mGoogleApiClient.isConnected()) {
-//            mGoogleApiClient.stopAutoManage(getActivity());
-//            mGoogleApiClient.disconnect();
-//        }
-    }
-
-    @Override
     public void onStop() {
         super.onStop();
         if (mAuthStateListener != null) {
@@ -199,21 +194,10 @@ public class LoginFragment extends Fragment  {
         }
     }
 
-//    @Override
-//    public void onAttach(Context context) {
-//        super.onAttach(context);
-//    }
-
-
-    private void initObjects() {
-        databaseHelper = new DatabaseHelper(getActivity());
-    }
-
     private void emptyInputEditText() {
         binding.username.setText(null);
         binding.password.setText(null);
     }
-
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

@@ -1,8 +1,7 @@
-package com.example.foodapplication;
+package com.example.foodapplication.account;
 
 import android.app.Dialog;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +13,11 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.foodapplication.databaseHelper.DatabaseHelper;
+import com.example.foodapplication.databaseHelper.FoodManagementContract;
+import com.example.foodapplication.R;
 import com.example.foodapplication.auth.LoginFragment;
+import com.example.foodapplication.auth.LoginFragmentMaster;
 
 import static com.example.foodapplication.MainActivity.customer_id;
 import static com.example.foodapplication.MainActivity.master_id;
@@ -28,7 +31,13 @@ public class AccountFragment extends Fragment {
     Dialog LoginDialog;
 
     int choose_role = 0;
+    int namefragment = 0;
     DatabaseHelper databaseHelper;
+    public AccountFragment(int role,int name) {
+        this.choose_role = role;
+        this.namefragment = name;}
+    public AccountFragment() { }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -194,13 +203,13 @@ public class AccountFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 choose_role = 1;
-                newFragment = new LoginFragment(choose_role);
+                namefragment = 1;
+                newFragment = new LoginFragment(namefragment, choose_role);
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
                         .addToBackStack(null)
                         .commit();
                 LoginDialog.dismiss();
-
             }
         });
 
@@ -210,7 +219,7 @@ public class AccountFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 choose_role = 2;
-                newFragment = new LoginFragment(choose_role);
+                newFragment = new LoginFragmentMaster(choose_role);
                 getActivity().getSupportFragmentManager().beginTransaction()
                         .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
                         .addToBackStack(null)

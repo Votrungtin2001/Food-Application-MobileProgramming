@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EAE7E7"
-    tools:context=".AccountAddressFragment">
+    tools:context=".account.AccountAddressFragment">
 
     <include
         android:id="@+id/toolbar"

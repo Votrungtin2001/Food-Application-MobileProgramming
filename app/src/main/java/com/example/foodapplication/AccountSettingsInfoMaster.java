@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.foodapplication.account.AccountSettingsPasswordFragment;
+
 public class AccountSettingsInfoMaster extends Fragment {
     TextView txtAccountSettingsInfoPhoneMaster, txtAccountSettingsInfoNameMaster, txtAccountSettingsInfoEmailMaster, txtAccountSettingsPasswordMaster;
 

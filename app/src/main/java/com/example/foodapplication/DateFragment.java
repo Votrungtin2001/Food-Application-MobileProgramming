@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 
+import com.example.foodapplication.databaseHelper.DatabaseHelper;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Calendar;

@@ -1,72 +1,112 @@
 package com.example.foodapplication.Order;
 
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.viewpager.widget.ViewPager;
 
-import com.example.foodapplication.DatabaseHelper;
+import com.example.foodapplication.databaseHelper.DatabaseHelper;
 import com.example.foodapplication.R;
-import com.google.android.material.tabs.TabItem;
-import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.example.foodapplication.MainActivity.customer_id;
 
 
 public class OrderFragment extends Fragment {
-    private RecyclerView mRecyclerView;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private RecyclerView.Adapter mAdapter;
-    TabLayout tabLayout;
-    ViewPager vp;
 
+    public RecyclerView recyclerView;
+    public RecyclerView.LayoutManager layoutManager;
+    List<OrderModel> orderModelList = new ArrayList<>();
+    OrderViewHolder orderViewHolder;
     DatabaseHelper databaseHelper;
     SQLiteDatabase db;
+    LinearLayout linearLayout;
+    LinearLayoutManager linearLayoutManager_Menu;
+    int order_id = 1;
+    boolean order_isAvailable = false;
+
     public OrderFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_order, container, false);
+
         databaseHelper = new DatabaseHelper(getActivity());
         db = databaseHelper.getReadableDatabase();
-        tabLayout = view.findViewById(R.id.tabBar);
-        TabItem tab1 = view.findViewById(R.id.ord_coming);
-        TabItem tab2 = view.findViewById(R.id.ord_history);
-        TabItem tab3 = view.findViewById(R.id.ord_draft);
 
-        LinearLayoutManager mLayoutManager = new LinearLayoutManager(getActivity());
-        mLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView = (RecyclerView) view.findViewById(R.id.listOrders);
+        linearLayout = view.findViewById(R.id.none);
 
-        vp = view.findViewById(R.id.viewPager_order);
-        OrderAdapter orderAdapter = new OrderAdapter(getFragmentManager(),tabLayout.getTabCount());
-        vp.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.setupWithViewPager(vp);
-        tabLayout.setTabMode(TabLayout.MODE_FIXED);
-        vp.setAdapter(orderAdapter);
-
-        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                vp.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) { }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) { }
-        });
+        if(getOId() > 0) {order_isAvailable = true;}
+        SetAllData();
+        setUpSreen(order_isAvailable);
 
         return view;
+    }
+    public void SetAllData() {
+        getOrder(customer_id);
+        orderViewHolder = new OrderViewHolder(getActivity(), orderModelList);
+        linearLayoutManager_Menu = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(linearLayoutManager_Menu);
+        recyclerView.setAdapter(orderViewHolder);
+    }
+
+    private void setUpSreen(boolean sign) {
+        if (sign == true) {
+            recyclerView.setVisibility(View.VISIBLE);
+            linearLayout.setVisibility(View.GONE);
+        }
+        else {
+            recyclerView.setVisibility(View.GONE);
+            linearLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
+    public void getOrder(int id) {
+        orderModelList = new ArrayList<>();
+        String selectQuery = " SELECT O._id, O.Status, O.Total, C.Phone " +
+                "FROM ORDERS O JOIN CUSTOMER C ON O.Customer = C._id " +
+                "WHERE O.Customer ='" + id + "';";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                int orderid = cursor.getInt(cursor.getColumnIndex("_id"));
+                int stt =  cursor.getInt(cursor.getColumnIndex("Status"));
+                int total = cursor.getInt(cursor.getColumnIndex("Total"));
+                String phone = cursor.getString(cursor.getColumnIndex("Phone"));
+                OrderModel orderModel = new OrderModel(orderid,stt,total,phone);
+                orderModelList.add(orderModel);
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+    }
+
+    public int getOId() {
+        int orderid = -1;
+        String selectQuery = "SELECT * FROM ORDERS WHERE Customer ='" + customer_id + "';";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                orderid = cursor.getInt(cursor.getColumnIndex("_id"));
+            }
+            while (cursor.moveToNext());
+        }
+        cursor.close();
+        return  orderid;
     }
 
 }

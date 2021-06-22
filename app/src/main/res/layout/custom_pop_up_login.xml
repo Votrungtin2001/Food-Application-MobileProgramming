@@ -51,70 +51,48 @@
             android:layout_marginTop="0dp"/>
 
         <ImageView
-            android:id="@+id/ImageView_Customer_PopUpLogin"
+            android:id="@+id/ImageView_Master_PopUpLogin"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/customer_icon"
-            android:layout_marginTop="10dp"
             android:layout_marginStart="30dp"
-            app:layout_constraintTop_toBottomOf="@id/TextView_PopUpLogin"
-            app:layout_constraintStart_toStartOf="parent"/>
+            android:layout_marginTop="8dp"
+            android:src="@drawable/master_icon"
+            app:layout_constraintStart_toEndOf="@id/ImageView_Customer_PopUpLogin"
+            app:layout_constraintTop_toBottomOf="@id/TextView_PopUpLogin" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="56dp"
+            android:layout_marginTop="4dp"
             android:text="CUSTOMER"
             android:textColor="@color/white"
             android:textSize="12dp"
             android:textStyle="bold"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="20dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ImageView_Customer_PopUpLogin"/>
-
-        <ImageView
-            android:id="@+id/ImageView_Master_PopUpLogin"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/master_icon"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="30dp"
-            app:layout_constraintTop_toBottomOf="@id/TextView_PopUpLogin"
-            app:layout_constraintStart_toEndOf="@id/ImageView_Customer_PopUpLogin"/>
+            app:layout_constraintTop_toBottomOf="@id/ImageView_Customer_PopUpLogin" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="136dp"
+            android:layout_marginTop="4dp"
             android:text="MASTER"
             android:textColor="@color/white"
             android:textSize="12dp"
             android:textStyle="bold"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="95dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ImageView_Customer_PopUpLogin"/>
+            app:layout_constraintTop_toBottomOf="@id/ImageView_Customer_PopUpLogin" />
 
         <ImageView
-            android:id="@+id/ImageView_Deliver_PopUpLogin"
+            android:id="@+id/ImageView_Customer_PopUpLogin"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/deliver_icon"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="30dp"
-            app:layout_constraintTop_toBottomOf="@id/TextView_PopUpLogin"
-            app:layout_constraintStart_toEndOf="@id/ImageView_Master_PopUpLogin"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="DELIVER"
-            android:textColor="@color/white"
-            android:textSize="12dp"
-            android:textStyle="bold"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="165dp"
+            android:layout_marginStart="68dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/customer_icon"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ImageView_Customer_PopUpLogin"/>
+            app:layout_constraintTop_toBottomOf="@id/TextView_PopUpLogin" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

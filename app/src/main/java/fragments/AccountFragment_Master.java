@@ -3,9 +3,6 @@ package fragments;
 import android.app.Dialog;
 import android.database.Cursor;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,15 +11,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.foodapplication.AccountAbout;
+import androidx.fragment.app.Fragment;
+
+import com.example.foodapplication.account.AccountAbout;
 import com.example.foodapplication.AccountSettingsInfoMaster;
-import com.example.foodapplication.DatabaseHelper;
-import com.example.foodapplication.FoodManagementContract;
+import com.example.foodapplication.databaseHelper.DatabaseHelper;
+import com.example.foodapplication.databaseHelper.FoodManagementContract;
 import com.example.foodapplication.MainActivity;
 import com.example.foodapplication.R;
 import com.example.foodapplication.auth.LoginFragment;
+import com.example.foodapplication.auth.LoginFragmentMaster;
 
 public class AccountFragment_Master extends Fragment {
+
     TextView txtName_Master;
     Button btnSettings_Master, btnAbout_Master, btnLogout_Master;
     DatabaseHelper dbHelper;
@@ -30,7 +31,16 @@ public class AccountFragment_Master extends Fragment {
     Dialog LoginDialog;
     int choose_role = 0;
 
+    int role = 0;
+    int namefragment = 0;
     public AccountFragment_Master() {}
+
+    public AccountFragment_Master(int role) {this.role = role;}
+
+    public AccountFragment_Master(int role,int name) {
+        this.role = role;
+        this.namefragment = namefragment;
+    }
 
     public static AccountFragment_Master newInstance() {
         return new AccountFragment_Master();
@@ -122,7 +132,8 @@ public class AccountFragment_Master extends Fragment {
         imageView_CustomerOption = (ImageView) LoginDialog.findViewById(R.id.ImageView_Customer_PopUpLogin);
         imageView_CustomerOption.setOnClickListener(v12 -> {
             choose_role = 1;
-            newFragment = new LoginFragment(choose_role);
+            namefragment = 2;
+            newFragment = new LoginFragment(namefragment,choose_role);
             getActivity().getSupportFragmentManager().beginTransaction()
                     .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
                     .addToBackStack(null)
@@ -135,7 +146,7 @@ public class AccountFragment_Master extends Fragment {
         imageView_MasterOption = (ImageView) LoginDialog.findViewById(R.id.ImageView_Master_PopUpLogin);
         imageView_MasterOption.setOnClickListener(v13 -> {
             choose_role = 2;
-            newFragment = new LoginFragment(choose_role);
+            newFragment = new LoginFragmentMaster(choose_role);
             getActivity().getSupportFragmentManager().beginTransaction()
                     .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
                     .addToBackStack(null)
