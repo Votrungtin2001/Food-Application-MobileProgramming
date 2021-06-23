@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E8E8E8"
+    tools:context=".account.AccountInvite">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar" />
+
+    <TextView
+        android:id="@+id/txtInviteSMS"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginTop="0dp"
+        android:background="#FFFFFF"
+        android:clickable="true"
+        android:gravity="center|left"
+        android:text="@string/activity_account_invite_sms"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/txtInviteClipboard"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/txtInviteSMS"
+        android:layout_marginTop="2dp"
+        android:background="#FFFFFF"
+        android:clickable="true"
+        android:gravity="center|left"
+        android:text="@string/activity_account_invite_clipboard"
+        android:textSize="18sp" />
+
+</RelativeLayout>

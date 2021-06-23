@@ -524,11 +524,11 @@ public class HomeFragment extends Fragment {
     public void AddDataForPromoImageSlider()
     {
             slideModels = new ArrayList<>();
-            slideModels.add(new SlideModel("https://scontent-xsp1-1.xx.fbcdn.net/v/t1.6435-9/185300233_2957674807883799_868667496622488565_n.png?_nc_cat=110&ccb=1-3&_nc_sid=730e14&_nc_ohc=8hcDqTC2dI0AX8e9G-x&_nc_ht=scontent-xsp1-1.xx&oh=0144670a64d17d8f9ad030ab3c632fb8&oe=60D12B74", "", ScaleTypes.FIT));
+            slideModels.add(new SlideModel("https://scontent-xsp1-1.xx.fbcdn.net/v/t1.6435-0/p526x296/202106671_2982052245446055_8297844154551318828_n.jpg?_nc_cat=103&ccb=1-3&_nc_sid=730e14&_nc_ohc=AwNiJP_i6UkAX8a14Kx&_nc_ht=scontent-xsp1-1.xx&tp=6&oh=0fa7676533e0164e7e3fd3698241f401&oe=60D737F3", "", ScaleTypes.FIT));
             slideModels.add(new SlideModel("https://scontent.fsgn5-7.fna.fbcdn.net/v/t1.6435-9/186486539_2962000987451181_5574183893428808477_n.jpg?_nc_cat=104&ccb=1-3&_nc_sid=730e14&_nc_ohc=1E2IX-q2UHsAX-HXkAo&_nc_ht=scontent.fsgn5-7.fna&oh=ad4cea16142bf5a7a9c96a88ffada497&oe=60D8FE8C", "", ScaleTypes.FIT));
-            slideModels.add(new SlideModel("https://scontent-xsp1-3.xx.fbcdn.net/v/t1.6435-9/189654320_2957909371193676_2363560169176149542_n.jpg?_nc_cat=109&ccb=1-3&_nc_sid=e3f864&_nc_ohc=M4DNMZxSCvMAX-VPTjq&_nc_ht=scontent-xsp1-3.xx&oh=560db1b6c656d8482f40eeca00a6f027&oe=60D0A310", "", ScaleTypes.FIT));
-            slideModels.add(new SlideModel("https://scontent.fsgn5-5.fna.fbcdn.net/v/t1.6435-9/186629918_2956213878029892_1702674951943422020_n.jpg?_nc_cat=100&ccb=1-3&_nc_sid=730e14&_nc_ohc=-D1lKSojBkgAX-6lvQU&_nc_ht=scontent.fsgn5-5.fna&oh=c721ae5fece413a70dbcd87c4a9b25ad&oe=60D0A1B3", "", ScaleTypes.FIT));
-            slideModels.add(new SlideModel("https://scontent-xsp1-3.xx.fbcdn.net/v/t1.6435-9/187515711_2956744857976794_8796511153691441813_n.jpg?_nc_cat=107&ccb=1-3&_nc_sid=730e14&_nc_ohc=dZ7DvN9Ij9MAX-WBKSZ&_nc_ht=scontent-xsp1-3.xx&oh=aa23cf7817739bab7b053c64a8828f87&oe=60D12A2C", "", ScaleTypes.FIT));
+            slideModels.add(new SlideModel("https://scontent-xsp1-1.xx.fbcdn.net/v/t1.6435-9/201754266_2981137335537546_9104974445809144925_n.jpg?_nc_cat=108&ccb=1-3&_nc_sid=730e14&_nc_ohc=iQZ4vVqgTvUAX9zl2rw&_nc_ht=scontent-xsp1-1.xx&oh=89308a3312f7d3bdf5c5991670d44d59&oe=60D70E59", "", ScaleTypes.FIT));
+            slideModels.add(new SlideModel("https://scontent-xsp1-2.xx.fbcdn.net/v/t1.6435-9/201337288_2980520765599203_302196789186671101_n.jpg?_nc_cat=101&ccb=1-3&_nc_sid=730e14&_nc_ohc=HL5iygGiqMsAX8KSxqP&tn=oGKLtx5wpmgDHrLD&_nc_ht=scontent-xsp1-2.xx&oh=5e5f304a9feacecd455df6dc79131684&oe=60D693EB", "", ScaleTypes.FIT));
+            slideModels.add(new SlideModel("https://scontent-xsp1-2.xx.fbcdn.net/v/t1.6435-9/202051231_2980530008931612_5677314270312715322_n.jpg?_nc_cat=101&ccb=1-3&_nc_sid=730e14&_nc_ohc=dV30_QEjXcwAX_NH1zY&_nc_ht=scontent-xsp1-2.xx&oh=857f279c7361ebaa6fc216fb7d419d97&oe=60D69CCC", "", ScaleTypes.FIT));
             imageSlider_promo.setImageList(slideModels, ScaleTypes.FIT);
     }
 
@@ -540,11 +540,10 @@ public class HomeFragment extends Fragment {
         String sName = "";
         switch (i) {
             case 0:
-                iImage = R.drawable.van_deal_50_percent;
-                sName = "Vạn Deal \n Giảm 50%";
-                sDescription = "[DUY NHẤT 24.5 - LÊN ĐƠN \"VỢT\" GẤP 7749 CHIẾC DEAL 50% BẠN ƠI!]\n" +
-                        "Mùa dịch này không lên đường được thì mình ở nhà lên đơn thôi chứ còn làm gì nữa nè. Bao la deal đỉnh giảm 50% đang đợi bạn nè: Burger King, Popeyes, Phúc Long, Starbucks, Koi Thé, ... Nhanh tay kẻo hết nhé!\n" +
-                        "✅Số lượng mã có hạn\n";
+                iImage = R.drawable.ghepdoithanhcong;
+                sName = "Ghép đôi thành công \n Nhận ngay code xịn";
+                sDescription = "[MINIGAME] GHÉP ĐÔI THÀNH CÔNG - NHẬN NGAY CODE XỊN\n" +
+                        "Fan cứng Starbucks thuộc làu làu menu đâu rồi nhỉ, test thử xem bạn đã đạt đến trình độ chỉ cần nhìn ngoại hình mỗi ly là biết ngay tên món chưa nha. Hãy cho Now thấy những đáp án đúng của các bạn nào, nhanh tay comment giật ngay code xịn nè!";
                 break;
             case 1:
                 iImage = R.drawable.oder_lien_tay;
@@ -555,38 +554,27 @@ public class HomeFragment extends Fragment {
                         "Mùa này không thể ra đường thì thôi mình cứ ở nhà đặt món cho khỏe, sẵn tiện tham gia đua đơn cùng Now biết đâu rinh luôn cái Iphone 12 Pro Max 128GB nè! Không chỉ thế, chỉ cần 01 ĐƠN thôi là bạn cũng có cơ hội trúng ngay các voucher NowFood xịn xò dành cho các bạn may mắn tham gia đường đua kì này. Chờ gì nữa mà không xắn tay áo, bật điện thoại nhanh nhanh order.";
                 break;
             case 2:
-                iImage = R.drawable.sale_nua_gia;
-                sName = "Sale Giữa Năm \n Giảm Nửa Giá";
-                sDescription = "\uD83D\uDD256.6 NOWFOOD SALE GIỮA NĂM - GIẢM NỬA GIÁ\uD83D\uDD25\n" +
-                        "⚡️Sale tháng 6 chỉ 6k\n" +
-                        "⚡️Tiệc nửa giá 66k bao la món đỉnh\n" +
-                        "⚡️Deal đếm ngược 1Đ\n" +
-                        "\uD83D\uDCA5Bắt trọn voucher khủng mỗi khung giờ vàng\n" +
-                        "Cùng NowFood đại náo mùa hè!!!";
+                iImage = R.drawable.shiphangthaga;
+                sName = "Ship hàng thả ga \n Giảm 50%";
+                sDescription = "Cuối tháng đánh bay phí vận chuyển cùng ưu đãi GIAO HÀNG NỬA GIÁ\n" +
+                        "\n" +
+                        "\uD83D\uDCE6Những ngày cuối tháng là bộn bề với một đống hợp đồng, hàng hóa, đồ ăn.... cần phải giao nhanh cho khách. Chỉ cần đặt ngay NowShip và sử dụng dịch vụ giao hàng siêu tốc, giao nhanh cấp tốc chỉ 30 phút là nhận được hàng rồi nè!\n" +
+                        "\uD83D\uDD14Đừng quên nhập NOWSHIP5 để giảm ngay 50% (tối đa 5k) khi sử dụng dịch vụ giao hàng siêu tốc\n" +
+                        "*Để bảo vệ sức khỏe cho mọi người trong mùa dịch, nên mọi người sử dụng hình thức thanh toán Shopee Pay khi giao hàng nhé!*";
                 break;
             case 3:
-                iImage = R.drawable.chi_tu_0d;
-                sName = "Hot Deal \n Chi Tu 0đ";
-                sDescription = "[DEAL HOT CHỈ TỪ 0 ĐỒNG - MỘT LÒNG Ở NHÀ LÊN NOW CHỐT ĐƠN]\n" +
-                        "Bây giờ ra đường chi nữa khi mà lên Now có quá trời món ngon hấp dẫn, giá nghe hết hồn nè! Săn deal lẹ lẹ kẻo hết nha cả nhà:\n" +
-                        ". Sữa Chua Trân Châu Hạ Long Ngon\n" +
-                        "- Sữa chua trân châu Thanh Nghi\n" +
-                        "- Bún Đậu Gánh Hà Thành\n" +
-                        "- Rau Má Plus\n" +
-                        "- Bánh Mì Bami Bread\n" +
-                        "- Twitter Beans Coffee\n" +
-                        "- Bánh Mì Dân Tổ Hà Nội\n" +
-                        "- Cơm Gà Bento\n" +
-                        "- Sữa Chua Trân Châu Hoàng Gia\n" +
-                        "- Tiger Sugar - Đường Nâu Sữa Đài Loan\n" +
-                        "✅ Số lượng có hạn";
+                iImage = R.drawable.onhamotiec;
+                sName = "Ở nhà mở tiệc \n Voucher cực nhiệt";
+                sDescription = "MINIGAME [Ở NHÀ MỞ TIỆC - VOUCHER CỰC NHIỆT]\n" +
+                        "\n" +
+                        "Thành phố vẫn còn giãn cách nhưng game Now thì vẫn luôn \"rộn rã\" nhé mọi người ơi! Đón một tuần mới với \"chiếc\" game đơn giản, dễ như ăn bánh nhưng ẵm voucher thiệt nào.";
                 break;
             default:
-                iImage = R.drawable.o_nha_dat_now;
-                sName = "Xa Mặt Cách 2 Mét \n Quán Nhỏ Now Vẫn Giao";
-                sDescription = "[ĐỪNG LO LẮNG, QUÁN NHỎ BẠN THÍCH VẪN GIAO TRÊN NOW]\n" +
-                        "Bạn ơi đừng lo lắng, quán nhỏ quen thuộc không thể phục vụ tại chỗ thì lên Now đặt là có ngay. Cứ yên tâm ở nhà hủ tíu, bột chiên, xiên que, gỏi cuốn...nóng hổi sẽ được giao tận cửa. Để đảm bảo an toàn trong mùa dịch, Now khuyến khích bạn thanh toán qua Airpay và lựa chọn không tiếp xúc nhé.\n" +
-                        "✅ Nhập mã ANTOAN để được giảm ngay 15K phí ship cho đơn từ 0Đ.";
+                iImage = R.drawable.dealxindanloi;
+                sName = "Deal Xịn Dẫn Lối \n Món mới mỗi ngày";
+                sDescription = "[DEAL XỊN DẪN LỐI - MÓN MỚI MỖI NGÀY - NOW NGAY KẺO HẾT!]\n" +
+                        "\n" +
+                        "Không cần phải lo nghĩ nhức đầu là hôm nay sẽ ăn gì đây, vì Now tặng bạn mã Deal Xịn với loạt món mới được ưu đãi cực hấp dẫn mỗi ngày đến từ các thương hiệu xịn xò: Starbucks, The Alley, KFC, Yifang, .... Tha hồ ăn ngập mặt, uống tràn bờ đê không lo ngán nhé! Nhanh tay đặt món nhập mã giảm kẻo hết nè!";
                 break;
         }
         intent.putExtra("image", iImage);
@@ -598,11 +586,11 @@ public class HomeFragment extends Fragment {
     public void AddDataForAdvertisementImageSlider()
     {
         slideModels = new ArrayList<>();
-        slideModels.add(new SlideModel("https://scontent-xsp1-1.xx.fbcdn.net/v/t1.6435-9/188671556_2956750824642864_7898612267439071608_n.jpg?_nc_cat=110&ccb=1-3&_nc_sid=e3f864&_nc_ohc=5T1by_CuRnsAX_GYF2T&_nc_oc=AQnSFjs4Cp3BCVQoajaWL2wNwlzn5MkY2JSf_fyMekJgXS1eUX570GYxahi_AOGNFDqgvAj7A_18cJ3GsYmq4AOi&_nc_ht=scontent-xsp1-1.xx&oh=b49ea9fd0dd3fa4375729ca0991d649d&oe=60D1E0DA", "", ScaleTypes.FIT));
+        slideModels.add(new SlideModel("https://scontent-xsp1-1.xx.fbcdn.net/v/t1.6435-9/201776033_2979765912341355_37434459354534839_n.jpg?_nc_cat=105&ccb=1-3&_nc_sid=730e14&_nc_ohc=Mzn-Asqy0z8AX8UlAWr&_nc_ht=scontent-xsp1-1.xx&oh=590ce6e2fc965816c01b165297653eb9&oe=60D6B3AB", "", ScaleTypes.FIT));
         slideModels.add(new SlideModel("https://scontent-xsp1-3.xx.fbcdn.net/v/t1.6435-9/185061072_2955623628088917_8236040101871481045_n.jpg?_nc_cat=107&ccb=1-3&_nc_sid=730e14&_nc_ohc=l1HyBy6ZrLoAX9icslA&_nc_ht=scontent-xsp1-3.xx&oh=62da3033eb8a0fac09aff2750e84ed1a&oe=60D20C0C", "", ScaleTypes.FIT));
         slideModels.add(new SlideModel("https://scontent.fsgn5-5.fna.fbcdn.net/v/t1.6435-9/188460271_2955282381456375_7822490260664823430_n.jpg?_nc_cat=102&ccb=1-3&_nc_sid=730e14&_nc_ohc=3kjXuEqXHQAAX-cvzwt&_nc_ht=scontent.fsgn5-5.fna&oh=fcb070d238afbb7b3e35a56739c93421&oe=60D25137", "", ScaleTypes.FIT));
-        slideModels.add(new SlideModel("https://scontent.fsgn5-5.fna.fbcdn.net/v/t1.6435-9/182918562_2950431178608162_2329511474755934128_n.jpg?_nc_cat=100&ccb=1-3&_nc_sid=730e14&_nc_ohc=Jgq6I7C60f0AX-2AN7W&_nc_ht=scontent.fsgn5-5.fna&oh=a57d61aef409cdf117feb5ce0d9c096f&oe=60D19B3E", "", ScaleTypes.FIT));
-        slideModels.add(new SlideModel("https://scontent.fsgn5-5.fna.fbcdn.net/v/t1.6435-9/183957113_2952210498430230_5664319190676897654_n.jpg?_nc_cat=100&ccb=1-3&_nc_sid=730e14&_nc_ohc=za8BW5IJPXkAX9pLiwy&_nc_ht=scontent.fsgn5-5.fna&oh=9703325e27053340c449dc54a4b119d4&oe=60CFE4AE", "", ScaleTypes.FIT));
+        slideModels.add(new SlideModel("https://scontent-xsp1-2.xx.fbcdn.net/v/t1.6435-9/202436419_2979733865677893_6155688824291389949_n.jpg?_nc_cat=102&ccb=1-3&_nc_sid=730e14&_nc_ohc=DP1m6ORc2QAAX9yDE_B&_nc_oc=AQlA3yBiv7bRCNDoQq0GJu_8tEYJJx3M0144rpLLn-ooIIAp8uPKlzbRePV8GgMJ3dxVfQXf7w_5b2OoR1ujRXOh&_nc_ht=scontent-xsp1-2.xx&oh=c0a3f44d8ac0afdd610aef541c9e5713&oe=60D7D36D", "", ScaleTypes.FIT));
+        slideModels.add(new SlideModel("https://scontent-xsp1-1.xx.fbcdn.net/v/t1.6435-9/201029239_2979545829030030_6039762444511418176_n.jpg?_nc_cat=103&ccb=1-3&_nc_sid=730e14&_nc_ohc=Qj8BFWJSTqAAX_9gbBV&_nc_ht=scontent-xsp1-1.xx&oh=da9c1f50804289564039a2303ff8b0fc&oe=60D63BCD", "", ScaleTypes.FIT));
         imageSlider_advertisement.setImageList(slideModels, ScaleTypes.FIT);
     }
 
@@ -614,11 +602,11 @@ public class HomeFragment extends Fragment {
         String sName = "";
         switch (i) {
             case 0:
-                iImage = R.drawable.quan_van_mo_now_van_giao;
-                sName = "Quán Vẫn Mở \n Now Vẫn Giao";
-                sDescription = "[QUÁN QUEN YÊU THÍCH VẪN MỞ TRÊN NOW]\n" +
-                        "Bạn ơi đừng lo lắng, quán nhỏ quen thuộc không thể phục vụ tại chỗ thì lên Now đặt là có ngay. Hủ tíu, bột chiên, xiên que, gỏi cuốn... ở nhà vẫn ăn ngon. Để đảm bảo an toàn trong mùa dịch, Now khuyến khích bạn thanh toán qua Airpay và lựa chọn không tiếp xúc nhé.\n" +
-                        "✅ Nhập mã ANTOAN để được giảm ngay 15K phí ship cho đơn từ 0Đ.";
+                iImage = R.drawable.doantuoitienboi;
+                sName = "Đoán tuổi tiền bối \n Rinh voucher đỉnh";
+                sDescription = "[MINIGAME] ĐOÁN TUỔI TIỀN BỐI - RINH VOUCHER ĐỈNH\n" +
+                        "\n" +
+                        "Bạn ơi đừng để đánh rơi tài năng toán học mà vô tình tụt mất voucher 200k nhá. Bột Chiên Đạt Thành có hơn bao nhiêu năm tuổi, cùng đuổi theo những con số gợi ý tìm ra đoán án đúng nhất ha.";
                 break;
             case 1:
                 iImage = R.drawable.xe_san_sale;
@@ -634,25 +622,20 @@ public class HomeFragment extends Fragment {
                         "Link bình chọn: https://nowfood.onelink.me/dBJB/4b6fec7a";
                 break;
             case 3:
-                iImage = R.drawable.he_ron_ra;
-                sName = "Hè Rộn Rã \n Săn Deal Giờ Vàng";
-                sDescription = "[HÈ RỘN RÃ - ĐI CHỢ SĂN DEAL GIỜ VÀNG]\n" +
-                        "Săn khung giờ vàng với nghìn ưu đãi đến từ NowFresh nha mọi người ơi. Các thương hiệu đã có giảm giá sẵn lên đến 50% từ thực phẩm tươi, thịt, cá, rau củ quả, sữa rồi, giờ chỉ cần áp đúng mã code để được giảm thêm nữa nhé.";
+                iImage = R.drawable.ngaycuacha;
+                sName = "Ngày của cha \n Bữa ngon tại gia";
+                sDescription = "[NOW KHAO MÓN NGON MỪNG NGÀY CỦA CHA - TIỆC TẠI GIA CHỈ 116K]\n" +
+                        "\n" +
+                        "Đã bao lâu bạn chưa bày tỏ yêu thương đến cha? Nhân dịp Ngày của Cha, chi bằng đặt ngay vài món ngon để khao cả nhà và bày tỏ tình \"củm\" đến \"người hùng thầm lặng\" của cả gia đình nào:\n" +
+                        "✅Nhập mã CHAYEU giảm 30k cho đơn từ 146k\n" +
+                        "✅Áp dụng cho các quán chọn lọc. Số lượng có hạn, nhanh tay Now ngay!";
                 break;
             default:
-                iImage = R.drawable.announcement_now;
-                sName = "Thông Báo";
-                sDescription = "\uD83D\uDCE3 THÔNG BÁO NOW TẠM NGƯNG TẤT CẢ DỊCH VỤ TẠI ĐÀ NẴNG \uD83D\uDCE3\n" +
+                iImage = R.drawable.monchanaigiainhiet;
+                sName = "Món chân ái giải nhiệt";
+                sDescription = "Bình chọn Món Xịn Mùa Hè: đâu mới là chân ái vào mùa hè của bạn??\n" +
                         "\n" +
-                        "Với nỗ lực chung tay phòng chống dịch cùng cộng đồng và thực hiện nghiêm túc Công văn số 2938/UBND-KGVX của UBND Thành phố Đà Nẵng, Now thông báo sẽ tạm ngưng tất cả dịch vụ tại Đà Nẵng từ 0h ngày 17.05.2021 & sẽ mở lại dịch vụ khi có thông báo chính thức từ Chính phủ.\n" +
-                        "\n" +
-                        "Việc tạm ngưng dịch vụ Now có thể sẽ đem đến những bất tiện nhất định, nhưng Now tin rằng quyết định này sẽ góp phần chung tay cùng cộng đồng đẩy lùi dịch bệnh.\n" +
-                        "Rất mong Quý Khách hàng thông cảm, đồng thời chủ động bảo vệ sức khoẻ của bản thân, cộng đồng và thực hiện đầy đủ các khuyến cáo từ Bộ Y tế.\n" +
-                        "\n" +
-                        "Đà Nẵng ơi, cố lên!\n" +
-                        "\n" +
-                        "Trân trọng,\n" +
-                        "Đội ngũ Now.";
+                        "\uD83C\uDFCD Dù là món gì thì Deal xịn cũng chiều được bạn hết nhen";
                 break;
 
 
