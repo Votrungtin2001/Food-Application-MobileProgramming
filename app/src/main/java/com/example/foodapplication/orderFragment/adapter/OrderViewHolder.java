@@ -1,4 +1,4 @@
-package com.example.foodapplication.Order;
+package com.example.foodapplication.orderFragment.adapter;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodapplication.databaseHelper.DatabaseHelper;
 import com.example.foodapplication.R;
+import com.example.foodapplication.orderFragment.model.OrderModel;
 
 import java.util.List;
 
@@ -46,9 +47,9 @@ public class OrderViewHolder extends RecyclerView.Adapter<OrderViewHolder.ViewHo
         OrderModel currentItem = itemList.get(position);
 
         holder.txtOrderId.setText(Integer.toString(currentItem.getOrderId()));
-        holder.txtOrderStt.setText(Integer.toString(currentItem.getOrderStatus()));
+        holder.txtOrderStt.setText(Integer.toString(currentItem.getTotal()));
         holder.txtPhone.setText(currentItem.getPhone());
-        holder.txtAddress.setText(Integer.toString(currentItem.getTotal()));
+        holder.txtAddress.setText(currentItem.getAddress());
 
     }
 

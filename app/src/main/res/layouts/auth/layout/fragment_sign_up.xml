@@ -23,8 +23,8 @@
                 android:layout_width="110dp"
                 android:layout_height="110dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/nowlogo"
-                android:layout_marginTop="50dp"
+                android:src="@drawable/logonow"
+                android:layout_marginTop="80dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -38,7 +38,7 @@
                 android:textColor="#000000"
                 android:textSize="25sp"
                 android:textStyle="bold"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView6" />
@@ -101,25 +101,32 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/password2" />
 
-            <TextView
-                android:id="@+id/textView26"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Bạn đã có tài khoản?"
-                android:layout_marginStart="90dp"
-                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnSignUp" />
+                app:layout_constraintTop_toBottomOf="@+id/btnSignUp">
 
-            <TextView
-                android:id="@+id/loginText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Đăng nhập"
-                android:textColor="#2884FF"
-                android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@+id/textView26"
-                app:layout_constraintTop_toBottomOf="@+id/btnSignUp" />
+                <TextView
+                    android:id="@+id/textView26"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bạn đã có tài khoản?"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/btnSignUp" />
+
+                <TextView
+                    android:id="@+id/loginText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Đăng nhập"
+                    android:textColor="#2884FF"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toEndOf="@+id/textView26"
+                    app:layout_constraintTop_toBottomOf="@+id/btnSignUp" />
+            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </FrameLayout>

@@ -77,12 +77,12 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                     ProductModel checkProduct = new ProductModel(currentItem.getNameProduct(), qty, currentItem.getPrice(),currentItem.getProduct_id());
                     boolean checkCustomerHasAddress = CheckCustomerHasAddress(customer_id);
                     boolean isExist = productModelList.contains(checkProduct);
-                    if(checkCustomerHasAddress == true ) {
-                        if(isExist == true){
+                    if(checkCustomerHasAddress) {
+                        if(!isExist){
                         productModelList.add(new ProductModel(currentItem.getNameProduct(), qty, currentItem.getPrice(),currentItem.getProduct_id()));
                         Toast.makeText(context, "Thêm vào giỏ hàng thành công!", Toast.LENGTH_SHORT).show();
                         }
-                        else qty++;
+                        else ++qty;
                     }
                     else {
                         ShowPopUpRequireAddress();

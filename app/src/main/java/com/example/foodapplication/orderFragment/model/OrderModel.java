@@ -1,16 +1,16 @@
-package com.example.foodapplication.Order;
+package com.example.foodapplication.orderFragment.model;
 
 public class OrderModel {
 
-    public int OrderId, OrderStatus,Total;
+    public int OrderId, Total;
     public String Phone, Address;
 
 
-    public OrderModel(int orderId,int orderStatus,int total,String phone){
+    public OrderModel(int orderId,int total,String phone,String address){
         OrderId = orderId;
-        OrderStatus =orderStatus;
         Total = total;
         Phone = phone;
+        Address = address;
     }
 
     public int getTotal() {
@@ -19,10 +19,6 @@ public class OrderModel {
 
     public int getOrderId() {
         return OrderId;
-    }
-
-    public int getOrderStatus() {
-        return OrderStatus;
     }
 
     public String getAddress() {
@@ -39,10 +35,6 @@ public class OrderModel {
 
     public void setOrderId(int orderId) {
         OrderId = orderId;
-    }
-
-    public void setOrderStatus(int orderStatus) {
-        OrderStatus = orderStatus;
     }
 
     public void setPhone(String phone) {

@@ -1,4 +1,4 @@
-package com.example.foodapplication.Cart;
+package com.example.foodapplication.orderFragment.cart;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,7 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodapplication.databaseHelper.DatabaseHelper;
-import com.example.foodapplication.Order.OrderModel;
+import com.example.foodapplication.orderFragment.adapter.CartAdapter;
+import com.example.foodapplication.orderFragment.model.OrderModel;
 import com.example.foodapplication.R;
 import com.example.foodapplication.auth.user;
 

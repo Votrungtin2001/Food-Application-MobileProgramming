@@ -1,4 +1,4 @@
-package com.example.foodapplication.Order;
+package com.example.foodapplication.orderFragment;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,8 +12,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.foodapplication.databaseHelper.DatabaseHelper;
 import com.example.foodapplication.R;
+import com.example.foodapplication.databaseHelper.DatabaseHelper;
+import com.example.foodapplication.orderFragment.adapter.OrderViewHolder;
+import com.example.foodapplication.orderFragment.model.OrderModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,14 +26,13 @@ import static com.example.foodapplication.MainActivity.customer_id;
 public class OrderFragment extends Fragment {
 
     public RecyclerView recyclerView;
-    public RecyclerView.LayoutManager layoutManager;
     List<OrderModel> orderModelList = new ArrayList<>();
     OrderViewHolder orderViewHolder;
     DatabaseHelper databaseHelper;
     SQLiteDatabase db;
     LinearLayout linearLayout;
     LinearLayoutManager linearLayoutManager_Menu;
-    int order_id = 1;
+
     boolean order_isAvailable = false;
 
     public OrderFragment() {
@@ -54,6 +55,7 @@ public class OrderFragment extends Fragment {
 
         return view;
     }
+
     public void SetAllData() {
         getOrder(customer_id);
         orderViewHolder = new OrderViewHolder(getActivity(), orderModelList);
@@ -75,18 +77,18 @@ public class OrderFragment extends Fragment {
 
     public void getOrder(int id) {
         orderModelList = new ArrayList<>();
-        String selectQuery = " SELECT O._id, O.Status, O.Total, C.Phone " +
-                "FROM ORDERS O JOIN CUSTOMER C ON O.Customer = C._id " +
+        String selectQuery =  " SELECT O._id, O.Total, C.Phone, A.Address " +
+                " FROM ((ORDERS O JOIN CUSTOMER C ON O.Customer = C._id) JOIN CUSTOMER_ADDRESS CA ON CA.Customer = C._id ) JOIN ADDRESS A ON A._id = CA.Address " +
                 "WHERE O.Customer ='" + id + "';";
         Cursor cursor = db.rawQuery(selectQuery, null);
         if (cursor.getCount() > 0) {
             cursor.moveToFirst();
             do {
                 int orderid = cursor.getInt(cursor.getColumnIndex("_id"));
-                int stt =  cursor.getInt(cursor.getColumnIndex("Status"));
                 int total = cursor.getInt(cursor.getColumnIndex("Total"));
                 String phone = cursor.getString(cursor.getColumnIndex("Phone"));
-                OrderModel orderModel = new OrderModel(orderid,stt,total,phone);
+                String address = cursor.getString(cursor.getColumnIndex("Address"));
+                OrderModel orderModel = new OrderModel(orderid,total,phone,address);
                 orderModelList.add(orderModel);
             }
             while (cursor.moveToNext());

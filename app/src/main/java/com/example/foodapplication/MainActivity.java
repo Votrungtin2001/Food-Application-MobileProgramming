@@ -15,7 +15,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.foodapplication.HomeFragment.HomeFragment;
-import com.example.foodapplication.Order.OrderFragment;
+import com.example.foodapplication.orderFragment.OrderFragment;
 import com.example.foodapplication.account.AccountFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
