@@ -60,7 +60,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
 
-        holder.nameItem.setText(listCart.get(position).getNameProduct());
+        /*holder.nameItem.setText(listCart.get(position).getNameProduct());
         holder.countItem.setText(Integer.toString(listCart.get(position).getQuantity()));
         int price = (listCart.get(position).getPrice())*(listCart.get(position).getQuantity());
         holder.price.setText(Integer.toString(price));
@@ -83,7 +83,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
                     listCart.remove(listCart.get(position));
                 }
             }
-        });
+        });*/
     }
 
 

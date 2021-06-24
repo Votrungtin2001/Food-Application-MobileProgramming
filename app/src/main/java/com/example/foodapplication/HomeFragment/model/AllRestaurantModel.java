@@ -3,19 +3,20 @@ package com.example.foodapplication.HomeFragment.model;
 import android.graphics.Bitmap;
 
 public class AllRestaurantModel {
-    private Bitmap image_restaurant;
+    private int branch_id;
+    private String image_restaurant;
     private String name_branch;
     private String address_branch;
-    private int branch_id;
 
-    public AllRestaurantModel(Bitmap Image, String Name, String Address, int id) {
+
+    public AllRestaurantModel(int id, String Image, String Name, String Address) {
+        this.branch_id = id;
         this.image_restaurant = Image;
         this.name_branch= Name;
         this.address_branch = Address;
-        this.branch_id = id;
     }
 
-    public Bitmap getImage() {
+    public String getImage() {
         return image_restaurant;
     }
 

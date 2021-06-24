@@ -3,6 +3,7 @@ package com.example.foodapplication.HomeFragment.fragment;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,22 +11,34 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.foodapplication.databaseHelper.DatabaseHelper;
 import com.example.foodapplication.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class RestaurantInformation_ThongTin extends Fragment {
 
-    String address;
-    String opening_time;
-
     TextView textView_address;
     TextView textView_openingtime;
 
-    SQLiteDatabase db;
-    DatabaseHelper databaseHelper;
-
     int branch_id;
+    String branch_address = "";
+    String restaurant_openingtime = "";
+
+    private static final String TAG = "RI_ThongTin";
 
     public RestaurantInformation_ThongTin(int id) {
         this.branch_id = id;
@@ -42,9 +55,6 @@ public class RestaurantInformation_ThongTin extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_restaurant_information__thong_tin, container, false);
 
-        databaseHelper = new DatabaseHelper(getActivity());
-        db = databaseHelper.getReadableDatabase();
-
         initComponents(view);
         Run();
 
@@ -57,40 +67,95 @@ public class RestaurantInformation_ThongTin extends Fragment {
     }
 
     public void Run() {
-        address = getAddress(branch_id);
-        textView_address.setText(address);
+        textView_address.setText(branch_address);
+        getBranchAddress(branch_id);
 
-
-        opening_time = getOpeningTime(branch_id);
-        textView_openingtime.setText("Giờ mở cửa \t" + opening_time);
+        textView_openingtime.setText(restaurant_openingtime);
+        getOpeningTime(branch_id);
     }
 
 
-    public String getAddress(int id) {
-        String branch_address = "";
-        String selectQuery = "SELECT A.Address FROM BRANCHES B JOIN ADDRESS A ON B.Address = A._id WHERE B._id ='" + id + "';";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            do {
-                branch_address = cursor.getString(cursor.getColumnIndex("Address"));
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        return branch_address;
+    public void getBranchAddress(int id) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/getBranchAddress.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String success = jsonObject.getString("success");
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+                    if(success.equals("1")) {
+                        for(int i = 0; i < jsonArray.length(); i++) {
+
+                            JSONObject object = jsonArray.getJSONObject(i);
+
+                            branch_address = object.getString("ADDRESS");
+                            if(!branch_address.trim().equals("")) textView_address.setText(branch_address);
+
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Override
+            protected java.util.Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("branch_id", String.valueOf(id));
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue.add(request);
     }
 
-    public String getOpeningTime(int id) {
-        String branch_openingtime = "";
-        String selectQuery = "SELECT R.Opening_Times FROM BRANCHES B JOIN RESTAURANT R ON B.Restaurant = R._id WHERE B._id ='" + id + "';";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            do {
-                branch_openingtime = cursor.getString(cursor.getColumnIndex("Opening_Times"));
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        return branch_openingtime;
+    public void getOpeningTime(int id) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/getRestaurantOpeningTime.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String success = jsonObject.getString("success");
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+                    if(success.equals("1")) {
+                        for(int i = 0; i < jsonArray.length(); i++) {
+
+                            JSONObject object = jsonArray.getJSONObject(i);
+
+                            restaurant_openingtime = object.getString("OPENING_TIMES");
+                            if(!restaurant_openingtime.trim().equals("")) textView_openingtime.setText("Giờ mở cửa \t" + restaurant_openingtime);
+
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Override
+            protected java.util.Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("branch_id", String.valueOf(id));
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue.add(request);
     }
 }

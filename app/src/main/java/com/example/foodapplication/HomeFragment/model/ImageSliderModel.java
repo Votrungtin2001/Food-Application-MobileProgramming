@@ -1,14 +1,14 @@
 package com.example.foodapplication.HomeFragment.model;
 
-public class CollectionModel {
-    private int collection_id;
+public class ImageSliderModel {
+    private int imageslider_id;
     private String image;
     private String name;
     private String description;
 
 
-    public CollectionModel(int id, String Image, String Name, String Description) {
-        this.collection_id = id;
+    public ImageSliderModel(int id, String Image, String Name, String Description) {
+        this.imageslider_id = id;
         this.image = Image;
         this.name= Name;
         this.description = Description;
@@ -26,5 +26,5 @@ public class CollectionModel {
         return description;
     }
 
-    public int getCollectionID() {return collection_id;}
+    public int getImageSliderID() {return imageslider_id;}
 }

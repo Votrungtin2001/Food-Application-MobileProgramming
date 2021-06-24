@@ -64,7 +64,7 @@ public class HomeFragment_Master_MonAn extends Fragment {
 
         initComponents(view);
 
-        SetRecyclerView();
+        //SetRecyclerView();
 
 
 
@@ -76,7 +76,7 @@ public class HomeFragment_Master_MonAn extends Fragment {
         recyclerView_HomeFragment_Master_DatDon = (RecyclerView) view.findViewById(R.id.Menu_RecyclerView_HomeFragment_Master_DatDon);
     }
 
-    public void getAllProducts(int id) {
+    /*public void getAllProducts(int id) {
         String selectQuery = "SELECT P._id, P.Image, P.Name, P.Description AS PDescription, M.Description AS MDescription, M.Price " +
                 "FROM ((RESTAURANT R JOIN BRANCHES B ON R._id = B.Restaurant) JOIN MENU M ON R._id = M.Restaurant) JOIN PRODUCTS P ON M.Product = P._id " +
                 "WHERE B._id ='" + id + "';";
@@ -115,11 +115,11 @@ public class HomeFragment_Master_MonAn extends Fragment {
         int count = cursor.getCount();
         cursor.close();
         return count;
-    }
+    }*/
 
     public void SetRecyclerView()
     {
-        int count_products = getCountProduct(branch_id);
+       /* int count_products = getCountProduct(branch_id);
         if(count_products > 0) {
             productModelList = new ArrayList<>();
             getAllProducts(branch_id);
@@ -127,6 +127,6 @@ public class HomeFragment_Master_MonAn extends Fragment {
             LinearLayoutManager linearLayoutManager_Menu = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
             recyclerView_HomeFragment_Master_DatDon.setLayoutManager(linearLayoutManager_Menu);
             recyclerView_HomeFragment_Master_DatDon.setAdapter(adapter);
-        }
+        }*/
     }
 }

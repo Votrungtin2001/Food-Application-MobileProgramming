@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -18,6 +19,14 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.foodapplication.HomeFragment.model.AllRestaurantModel;
 import com.example.foodapplication.orderFragment.cart.Cart;
 import com.example.foodapplication.databaseHelper.DatabaseHelper;
 import com.example.foodapplication.R;
@@ -26,9 +35,16 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.example.foodapplication.HomeFragment.fragment.RestaurantInformation_DatDon;
 import com.example.foodapplication.HomeFragment.fragment.RestaurantInformation_ThongTin;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import static com.example.foodapplication.MainActivity.customer_id;
 
@@ -46,13 +62,15 @@ public class RestaurantInformation extends AppCompatActivity {
     ViewPagerAdapter viewPagerAdapter;
 
     int branch_id;
-    byte[] image_restaurant;
-    String branch_name;
+    String image_restaurant = "";
+    String branch_name = "";
     SQLiteDatabase db;
     DatabaseHelper databaseHelper;
     Bitmap bitmap_restaurant;
 
     Dialog AnnouncementDialog;
+
+    private static final String TAG = "RestaurantInformation";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,12 +111,10 @@ public class RestaurantInformation extends AppCompatActivity {
         });
 
         branch_id = getIntent().getIntExtra("Branch ID", 0);
-        image_restaurant = getRestaurantImage(branch_id);
-        bitmap_restaurant = BitmapFactory.decodeByteArray(image_restaurant, 0, image_restaurant.length);
-        imageView_RestaurantInformation.setImageBitmap(bitmap_restaurant);
 
-        branch_name = getBranchName(branch_id);
-        textView_BranchName.setText(branch_name);
+        textView_BranchName.setText("");
+        getRestaurantImage(branch_id);
+        getBranchName(branch_id);
 
         title_TabLayout.add("Đặt đơn");
         title_TabLayout.add("Thông tin");
@@ -144,32 +160,94 @@ public class RestaurantInformation extends AppCompatActivity {
         viewPager_RestaurantInformation.setAdapter(viewPagerAdapter);
     }
 
-    public byte[] getRestaurantImage(int id) {
-        byte[] img = null;
-        String selectQuery = "SELECT R.Image FROM Restaurant R JOIN BRANCHES B ON R._id = B.Restaurant WHERE B._id ='" + id + "';";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            do {
-                img = cursor.getBlob(cursor.getColumnIndex("Image"));
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        return img;
+    public void getRestaurantImage(int id) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/getImageRestaurant.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String success = jsonObject.getString("success");
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+                    if(success.equals("1")) {
+                        for(int i = 0; i < jsonArray.length(); i++) {
+
+                            JSONObject object = jsonArray.getJSONObject(i);
+
+                            image_restaurant = object.getString("IMAGE");
+                            if(image_restaurant.trim().equals("")){
+                                imageView_RestaurantInformation.setImageResource(R.drawable.noimage_restaurant);
+                            }else {
+                                Picasso.get ().load (image_restaurant)
+                                        .placeholder(R.drawable.noimage_restaurant)
+                                        .error(R.drawable.error)
+                                        .into(imageView_RestaurantInformation);
+                            }
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Override
+            protected java.util.Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("branch_id", String.valueOf(id));
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(request);
     }
 
-    public String getBranchName(int id) {
-        String name = "";
-        String selectQuery = "SELECT NAME FROM BRANCHES WHERE _id ='" + id + "';";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            do {
-                name = cursor.getString(cursor.getColumnIndex("NAME"));
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        return name;
+    public void getBranchName(int id) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/getBranchName.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String success = jsonObject.getString("success");
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+                    if(success.equals("1")) {
+                        for(int i = 0; i < jsonArray.length(); i++) {
+
+                            JSONObject object = jsonArray.getJSONObject(i);
+
+                            branch_name = object.getString("NAME");
+                            if(!branch_name.trim().equals("")) textView_BranchName.setText(branch_name);
+
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Override
+            protected java.util.Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("branch_id", String.valueOf(id));
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(request);
     }
 
     private void transparentStatusAndNavigation()

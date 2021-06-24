@@ -8,14 +8,17 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -25,10 +28,20 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.interfaces.ItemClickListener;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.example.foodapplication.HomeFragment.model.ImageSliderModel;
+import com.example.foodapplication.SubScreen.GetCurrentLocation;
+import com.example.foodapplication.SubScreen.LoadingScreen;
 import com.example.foodapplication.databaseHelper.DatabaseHelper;
 import com.example.foodapplication.HomeFragment.adapter.AllRestaurantAdapter;
 import com.example.foodapplication.HomeFragment.adapter.CategoryAdapter;
@@ -47,9 +60,15 @@ import com.example.foodapplication.R;
 import com.example.foodapplication.ViewPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.example.foodapplication.MainActivity.addressLine;
 import static com.example.foodapplication.MainActivity.district_id;
@@ -73,6 +92,7 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerView_SearchBar;
     SearchBarAdapter searchBarAdapter;
     List<SearchBarModel> searchBarModels;
+    List<AllRestaurantModel> list = new ArrayList<>();
     LinearLayoutManager linearLayoutManager_SearchBar;
 
     //RecyclerView Category
@@ -83,8 +103,8 @@ public class HomeFragment extends Fragment {
 
     //RecyclerView Collection
     RecyclerView recyclerView_Collection;
-    List<CollectionModel> collectionModels;
-    RecyclerView.Adapter adapter;
+    List<CollectionModel> collectionModelList = new ArrayList<>();
+    RecyclerView.Adapter colectionAdapter;
     TextView textView_CollectionTitle;
     TextView textView_MoreCollection;
 
@@ -96,6 +116,7 @@ public class HomeFragment extends Fragment {
     TextView AllRestaurant_Title;
 
     //ImageSlider Promo and Advertisement
+    List<ImageSliderModel> imageSliderModelList = new ArrayList<>();
     ImageSlider imageSlider_advertisement;
     ImageSlider imageSlider_promo;
     List<SlideModel> slideModels = new ArrayList<>();
@@ -132,6 +153,8 @@ public class HomeFragment extends Fragment {
     Bitmap bitmap;
     ByteArrayOutputStream stream;
     byte[] bitmapData;
+
+    private static final String TAG = "HomeFragment";
 
     public HomeFragment(){
 
@@ -295,53 +318,199 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private void filter(String toString, int id) {
-        searchBarModels = new ArrayList<>();
-        String selectQuery = "SELECT B._id, B.NAME, R.Image FROM (RESTAURANT R JOIN BRANCHES B ON R._id = B.Restaurant) JOIN ADDRESS A ON B.Address = A._id WHERE A.District ='" + id + "';";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            do {
-                String name_branch = cursor.getString(cursor.getColumnIndex("NAME"));
-                if(name_branch.toLowerCase().contains(toString.toLowerCase())) {
-                    byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
-                    int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
-                    Bitmap img_bitmap = BitmapFactory.decodeByteArray(img_byte, 0, img_byte.length);
-                    SearchBarModel searchBarModel = new SearchBarModel(img_bitmap, name_branch, branch_id);
-                    searchBarModels.add(searchBarModel);
+    private void GetDataForAllRestaurants(int id, List<AllRestaurantModel> list) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/getAllRestaurants.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                list.clear();
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String success = jsonObject.getString("success");
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+                    if(success.equals("1")) {
+                        for(int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
+
+                            int id = object.getInt("_ID");
+                            String image = object.getString("IMAGE");
+                            String name = object.getString("NAME");
+                            String address = object.getString("ADDRESS");
+
+                            AllRestaurantModel allRestaurantModel = new AllRestaurantModel(id, image, name, address);
+                            list.add(allRestaurantModel);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            } while (cursor.moveToNext());
-            searchBarAdapter.filterList(searchBarModels);
-            recyclerView_SearchBar.setAdapter(searchBarAdapter);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Override
+            protected java.util.Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("district_id", String.valueOf(id));
+                return params;
+            }
+        };
 
-        }
-        cursor.close();
-
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue.add(request);
 
     }
 
-    private void GetDataForAllRestaurants(int id) {
-        int count = 0;
-        allRestaurantModelList = new ArrayList<>();
-        String selectQuery = "SELECT B._id, R.Image, B.NAME, A.Address FROM (RESTAURANT R JOIN BRANCHES B ON R._id = B.Restaurant) JOIN ADDRESS A ON B.Address = A._id WHERE A.District = '" + id + "';";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            do {
-                if (count < 8) {
-                    count++;
-                    int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
-                    byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(img_byte, 0, img_byte.length);
-                    String name_branch = cursor.getString(cursor.getColumnIndex("NAME"));
-                    String address_branch = cursor.getString(cursor.getColumnIndex("Address"));
-                    AllRestaurantModel allRestaurantModel = new AllRestaurantModel(bitmap, name_branch, address_branch, branch_id);
-                    allRestaurantModelList.add(allRestaurantModel);
-                }
-            } while (cursor.moveToNext());
+    private void filter(String toString, List<AllRestaurantModel> list) {
+        searchBarModels = new ArrayList<>();
+        for(int i = 0; i < list.size(); i++) {
+            String name_branch = list.get(i).getNameBranch();
+            if(name_branch.toLowerCase().contains(toString.toLowerCase())) {
+                String image = list.get(i).getImage();
+                int branch_id = list.get(i).getBranchID();
+                SearchBarModel searchBarModel = new SearchBarModel(image, name_branch, branch_id);
+                searchBarModels.add(searchBarModel);
+            }
         }
-        cursor.close();
+        searchBarAdapter.filterList(searchBarModels);
+        recyclerView_SearchBar.setAdapter(searchBarAdapter);
+    }
+
+    private void GetDataForAllRestaurants(int id) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/getAllRestaurants.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                int count = 0;
+                allRestaurantModelList.clear();
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String success = jsonObject.getString("success");
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+                    if(success.equals("1")) {
+                        for(int i = 0; i < jsonArray.length(); i++) {
+                            if(count < 10) {
+                                JSONObject object = jsonArray.getJSONObject(i);
+
+                                int id = object.getInt("_ID");
+                                String image = object.getString("IMAGE");
+                                String name = object.getString("NAME");
+                                String address = object.getString("ADDRESS");
+
+                                AllRestaurantModel allRestaurantModel = new AllRestaurantModel(id, image, name, address);
+                                allRestaurantModelList.add(allRestaurantModel);
+                                allRestaurantAdapter.notifyDataSetChanged();
+
+                                count++;
+                            }
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("district_id", String.valueOf(id));
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue.add(request);
+
+    }
+
+    private void GetDataForAllImageSliders(List<ImageSliderModel> list) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/getAllImageSliders.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                list.clear();
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String success = jsonObject.getString("success");
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+                    if(success.equals("1")) {
+                        for(int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject object = jsonArray.getJSONObject(i);
+
+                                int id = object.getInt("_ID");
+                                String image = object.getString("IMAGE");
+                                String name = object.getString("NAME");
+                                String description = object.getString("DESCRIPTION");
+                                ImageSliderModel imageSliderModel = new ImageSliderModel(id, image, name, description);
+                                list.add(imageSliderModel);
+                                colectionAdapter.notifyDataSetChanged();
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, error.toString());
+            }
+        });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue.add(request);
+
+    }
+
+    private void GetDataForAllCollections(List<CollectionModel> list) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/getAllCollections.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                list.clear();
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String success = jsonObject.getString("success");
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+                    if(success.equals("1")) {
+                        for(int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
+
+                            int id = object.getInt("_ID");
+                            String image = object.getString("IMAGE");
+                            String name = object.getString("NAME");
+                            String description = object.getString("DESCRIPTION");
+                            CollectionModel collectionModel = new CollectionModel(id, image, name, description);
+                            list.add(collectionModel);
+                            colectionAdapter.notifyDataSetChanged();
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, error.toString());
+            }
+        });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue.add(request);
+
     }
 
     private void AddDataForDiscountComboProduct(int id) {
@@ -479,20 +648,6 @@ public class HomeFragment extends Fragment {
             images.add(R.drawable.xoi_icon);
     }
 
-    public void AddDataForCollection()
-    {
-            collectionModels = new ArrayList<>();
-            collectionModels.add(new CollectionModel(R.drawable.banh_mi_0d, "Bánh Mì 0Đ"));
-            collectionModels.add(new CollectionModel(R.drawable.bay_ngay_tien_trieu_ve_tui, "7 Ngày Review - \nTiền Triệu Về Túi"));
-            collectionModels.add(new CollectionModel(R.drawable.chi_5k, "Chi 5K - \nƯu Đãi Freeship 15k"));
-            collectionModels.add(new CollectionModel(R.drawable.cuoi_tuan_freeship, "Cuối Tuần \nFree Ship"));
-            collectionModels.add(new CollectionModel(R.drawable.day_don_ngay_le, "Đón Lễ Lớn"));
-            collectionModels.add(new CollectionModel(R.drawable.deal_nua_gia_quan_gan_nha, "Deal Nửa Giá - \nQuán Gần Nhà"));
-            collectionModels.add(new CollectionModel(R.drawable.deal_xin, "Deal Xịn - \n Giảm Tới 70k"));
-            collectionModels.add(new CollectionModel(R.drawable.di_het_viet_nam, "Đi Hết Việt Nam - \nFreeship"));
-            collectionModels.add(new CollectionModel(R.drawable.he_xinh_tiec_xin, "Hè Xinh - \nTiệc Xịn 55k"));
-            collectionModels.add(new CollectionModel(R.drawable.le_to_deal_xin_xo, "Lễ To - \nDeal Xịn Xò"));
-    }
 
     private void runFillAddressActivity()
     {
@@ -523,61 +678,52 @@ public class HomeFragment extends Fragment {
 
     public void AddDataForPromoImageSlider()
     {
-            slideModels = new ArrayList<>();
-            slideModels.add(new SlideModel("https://scontent-xsp1-1.xx.fbcdn.net/v/t1.6435-0/p526x296/202106671_2982052245446055_8297844154551318828_n.jpg?_nc_cat=103&ccb=1-3&_nc_sid=730e14&_nc_ohc=AwNiJP_i6UkAX8a14Kx&_nc_ht=scontent-xsp1-1.xx&tp=6&oh=0fa7676533e0164e7e3fd3698241f401&oe=60D737F3", "", ScaleTypes.FIT));
-            slideModels.add(new SlideModel("https://scontent.fsgn5-7.fna.fbcdn.net/v/t1.6435-9/186486539_2962000987451181_5574183893428808477_n.jpg?_nc_cat=104&ccb=1-3&_nc_sid=730e14&_nc_ohc=1E2IX-q2UHsAX-HXkAo&_nc_ht=scontent.fsgn5-7.fna&oh=ad4cea16142bf5a7a9c96a88ffada497&oe=60D8FE8C", "", ScaleTypes.FIT));
-            slideModels.add(new SlideModel("https://scontent-xsp1-1.xx.fbcdn.net/v/t1.6435-9/201754266_2981137335537546_9104974445809144925_n.jpg?_nc_cat=108&ccb=1-3&_nc_sid=730e14&_nc_ohc=iQZ4vVqgTvUAX9zl2rw&_nc_ht=scontent-xsp1-1.xx&oh=89308a3312f7d3bdf5c5991670d44d59&oe=60D70E59", "", ScaleTypes.FIT));
-            slideModels.add(new SlideModel("https://scontent-xsp1-2.xx.fbcdn.net/v/t1.6435-9/201337288_2980520765599203_302196789186671101_n.jpg?_nc_cat=101&ccb=1-3&_nc_sid=730e14&_nc_ohc=HL5iygGiqMsAX8KSxqP&tn=oGKLtx5wpmgDHrLD&_nc_ht=scontent-xsp1-2.xx&oh=5e5f304a9feacecd455df6dc79131684&oe=60D693EB", "", ScaleTypes.FIT));
-            slideModels.add(new SlideModel("https://scontent-xsp1-2.xx.fbcdn.net/v/t1.6435-9/202051231_2980530008931612_5677314270312715322_n.jpg?_nc_cat=101&ccb=1-3&_nc_sid=730e14&_nc_ohc=dV30_QEjXcwAX_NH1zY&_nc_ht=scontent-xsp1-2.xx&oh=857f279c7361ebaa6fc216fb7d419d97&oe=60D69CCC", "", ScaleTypes.FIT));
+        slideModels = new ArrayList<>();
+        for(int i = 0; i < 5; i++) {
+            String url = imageSliderModelList.get(i).getImage();
+            slideModels.add(new SlideModel(url, "", ScaleTypes.FIT));
             imageSlider_promo.setImageList(slideModels, ScaleTypes.FIT);
+        }
     }
 
     public void ClickPromoItemImageSlider(int i)
     {
-        String sDescription = "";
         Intent intent = new Intent(getActivity(), Details.class);
-        int iImage = 0;
+        String image = "";
         String sName = "";
+        String sDescription = "";
         switch (i) {
             case 0:
-                iImage = R.drawable.ghepdoithanhcong;
-                sName = "Ghép đôi thành công \n Nhận ngay code xịn";
-                sDescription = "[MINIGAME] GHÉP ĐÔI THÀNH CÔNG - NHẬN NGAY CODE XỊN\n" +
-                        "Fan cứng Starbucks thuộc làu làu menu đâu rồi nhỉ, test thử xem bạn đã đạt đến trình độ chỉ cần nhìn ngoại hình mỗi ly là biết ngay tên món chưa nha. Hãy cho Now thấy những đáp án đúng của các bạn nào, nhanh tay comment giật ngay code xịn nè!";
+                image = imageSliderModelList.get(0).getImage();
+                sName = imageSliderModelList.get(0).getName();
+                sDescription = imageSliderModelList.get(0).getDescription();
                 break;
+
             case 1:
-                iImage = R.drawable.oder_lien_tay;
-                sName = "Order Liền Tay \n Nhận Ngay Iphone 12 Pro Max";
-                sDescription = "                            [CONTEST]\n" +
-                        "ORDER LIỀN TAY - NHẬN NGAY IPHONE 12 PRO MAX\n" +
-                        "\n" +
-                        "Mùa này không thể ra đường thì thôi mình cứ ở nhà đặt món cho khỏe, sẵn tiện tham gia đua đơn cùng Now biết đâu rinh luôn cái Iphone 12 Pro Max 128GB nè! Không chỉ thế, chỉ cần 01 ĐƠN thôi là bạn cũng có cơ hội trúng ngay các voucher NowFood xịn xò dành cho các bạn may mắn tham gia đường đua kì này. Chờ gì nữa mà không xắn tay áo, bật điện thoại nhanh nhanh order.";
+                image = imageSliderModelList.get(1).getImage();
+                sName = imageSliderModelList.get(1).getName();
+                sDescription = imageSliderModelList.get(1).getDescription();
                 break;
+
             case 2:
-                iImage = R.drawable.shiphangthaga;
-                sName = "Ship hàng thả ga \n Giảm 50%";
-                sDescription = "Cuối tháng đánh bay phí vận chuyển cùng ưu đãi GIAO HÀNG NỬA GIÁ\n" +
-                        "\n" +
-                        "\uD83D\uDCE6Những ngày cuối tháng là bộn bề với một đống hợp đồng, hàng hóa, đồ ăn.... cần phải giao nhanh cho khách. Chỉ cần đặt ngay NowShip và sử dụng dịch vụ giao hàng siêu tốc, giao nhanh cấp tốc chỉ 30 phút là nhận được hàng rồi nè!\n" +
-                        "\uD83D\uDD14Đừng quên nhập NOWSHIP5 để giảm ngay 50% (tối đa 5k) khi sử dụng dịch vụ giao hàng siêu tốc\n" +
-                        "*Để bảo vệ sức khỏe cho mọi người trong mùa dịch, nên mọi người sử dụng hình thức thanh toán Shopee Pay khi giao hàng nhé!*";
+                image = imageSliderModelList.get(2).getImage();
+                sName = imageSliderModelList.get(2).getName();
+                sDescription = imageSliderModelList.get(2).getDescription();
                 break;
+
             case 3:
-                iImage = R.drawable.onhamotiec;
-                sName = "Ở nhà mở tiệc \n Voucher cực nhiệt";
-                sDescription = "MINIGAME [Ở NHÀ MỞ TIỆC - VOUCHER CỰC NHIỆT]\n" +
-                        "\n" +
-                        "Thành phố vẫn còn giãn cách nhưng game Now thì vẫn luôn \"rộn rã\" nhé mọi người ơi! Đón một tuần mới với \"chiếc\" game đơn giản, dễ như ăn bánh nhưng ẵm voucher thiệt nào.";
+                image = imageSliderModelList.get(3).getImage();
+                sName = imageSliderModelList.get(3).getName();
+                sDescription = imageSliderModelList.get(3).getDescription();
                 break;
+
             default:
-                iImage = R.drawable.dealxindanloi;
-                sName = "Deal Xịn Dẫn Lối \n Món mới mỗi ngày";
-                sDescription = "[DEAL XỊN DẪN LỐI - MÓN MỚI MỖI NGÀY - NOW NGAY KẺO HẾT!]\n" +
-                        "\n" +
-                        "Không cần phải lo nghĩ nhức đầu là hôm nay sẽ ăn gì đây, vì Now tặng bạn mã Deal Xịn với loạt món mới được ưu đãi cực hấp dẫn mỗi ngày đến từ các thương hiệu xịn xò: Starbucks, The Alley, KFC, Yifang, .... Tha hồ ăn ngập mặt, uống tràn bờ đê không lo ngán nhé! Nhanh tay đặt món nhập mã giảm kẻo hết nè!";
+                image = imageSliderModelList.get(4).getImage();
+                sName = imageSliderModelList.get(4).getName();
+                sDescription = imageSliderModelList.get(4).getDescription();
                 break;
         }
-        intent.putExtra("image", iImage);
+        intent.putExtra("image", image);
         intent.putExtra("name", sName);
         intent.putExtra("description", sDescription);
         startActivity(intent);
@@ -586,61 +732,51 @@ public class HomeFragment extends Fragment {
     public void AddDataForAdvertisementImageSlider()
     {
         slideModels = new ArrayList<>();
-        slideModels.add(new SlideModel("https://scontent-xsp1-1.xx.fbcdn.net/v/t1.6435-9/201776033_2979765912341355_37434459354534839_n.jpg?_nc_cat=105&ccb=1-3&_nc_sid=730e14&_nc_ohc=Mzn-Asqy0z8AX8UlAWr&_nc_ht=scontent-xsp1-1.xx&oh=590ce6e2fc965816c01b165297653eb9&oe=60D6B3AB", "", ScaleTypes.FIT));
-        slideModels.add(new SlideModel("https://scontent-xsp1-3.xx.fbcdn.net/v/t1.6435-9/185061072_2955623628088917_8236040101871481045_n.jpg?_nc_cat=107&ccb=1-3&_nc_sid=730e14&_nc_ohc=l1HyBy6ZrLoAX9icslA&_nc_ht=scontent-xsp1-3.xx&oh=62da3033eb8a0fac09aff2750e84ed1a&oe=60D20C0C", "", ScaleTypes.FIT));
-        slideModels.add(new SlideModel("https://scontent.fsgn5-5.fna.fbcdn.net/v/t1.6435-9/188460271_2955282381456375_7822490260664823430_n.jpg?_nc_cat=102&ccb=1-3&_nc_sid=730e14&_nc_ohc=3kjXuEqXHQAAX-cvzwt&_nc_ht=scontent.fsgn5-5.fna&oh=fcb070d238afbb7b3e35a56739c93421&oe=60D25137", "", ScaleTypes.FIT));
-        slideModels.add(new SlideModel("https://scontent-xsp1-2.xx.fbcdn.net/v/t1.6435-9/202436419_2979733865677893_6155688824291389949_n.jpg?_nc_cat=102&ccb=1-3&_nc_sid=730e14&_nc_ohc=DP1m6ORc2QAAX9yDE_B&_nc_oc=AQlA3yBiv7bRCNDoQq0GJu_8tEYJJx3M0144rpLLn-ooIIAp8uPKlzbRePV8GgMJ3dxVfQXf7w_5b2OoR1ujRXOh&_nc_ht=scontent-xsp1-2.xx&oh=c0a3f44d8ac0afdd610aef541c9e5713&oe=60D7D36D", "", ScaleTypes.FIT));
-        slideModels.add(new SlideModel("https://scontent-xsp1-1.xx.fbcdn.net/v/t1.6435-9/201029239_2979545829030030_6039762444511418176_n.jpg?_nc_cat=103&ccb=1-3&_nc_sid=730e14&_nc_ohc=Qj8BFWJSTqAAX_9gbBV&_nc_ht=scontent-xsp1-1.xx&oh=da9c1f50804289564039a2303ff8b0fc&oe=60D63BCD", "", ScaleTypes.FIT));
-        imageSlider_advertisement.setImageList(slideModels, ScaleTypes.FIT);
+        for(int i = 5; i < imageSliderModelList.size(); i++) {
+            String url = imageSliderModelList.get(i).getImage();
+            slideModels.add(new SlideModel(url, "", ScaleTypes.FIT));
+            imageSlider_advertisement.setImageList(slideModels, ScaleTypes.FIT);
+        }
     }
 
     public void ClickAdvertisementItemImageSlider(int i)
     {
-        String sDescription = "";
         Intent intent = new Intent(getActivity(), Details.class);
-        int iImage = 0;
+        String image = "";
         String sName = "";
+        String sDescription = "";
         switch (i) {
             case 0:
-                iImage = R.drawable.doantuoitienboi;
-                sName = "Đoán tuổi tiền bối \n Rinh voucher đỉnh";
-                sDescription = "[MINIGAME] ĐOÁN TUỔI TIỀN BỐI - RINH VOUCHER ĐỈNH\n" +
-                        "\n" +
-                        "Bạn ơi đừng để đánh rơi tài năng toán học mà vô tình tụt mất voucher 200k nhá. Bột Chiên Đạt Thành có hơn bao nhiêu năm tuổi, cùng đuổi theo những con số gợi ý tìm ra đoán án đúng nhất ha.";
+                image = imageSliderModelList.get(5).getImage();
+                sName = imageSliderModelList.get(5).getName();
+                sDescription = imageSliderModelList.get(5).getDescription();
                 break;
+
             case 1:
-                iImage = R.drawable.xe_san_sale;
-                sName = "Xế Săn Sale \n Giảm 50%";
-                sDescription = "[XẾ SĂN SALE GIẢM 50% - MĂM MĂM QUÀ VẶT DEAL GIẢM NGẬP MẶT]\n" +
-                        "Ding dong! Lại tới giờ linh của chị em mình rồi, cả nhà đã có đồ ăn vặt cả chưa, chưa thì lên Now săn ngay deal 50% các món siêu tốn \"enzym\" nè: cóc non sốt muối thái 15k, xôi chiên 6k, bánh tráng 10k, sữa chua kem socola 15k, bắp nếp xào xúc xích 17,5k,... và nhiều nhiều món ngon hấp dẫn khác. Lẹ tay chị em ơi!\n" +
-                        "✅Số lượng có hạn";
+                image = imageSliderModelList.get(6).getImage();
+                sName = imageSliderModelList.get(6).getName();
+                sDescription = imageSliderModelList.get(6).getDescription();
                 break;
+
             case 2:
-                iImage = R.drawable.mon_hau_hoan_vu;
-                sName = "Món Hậu Hoàn Vũ";
-                sDescription = "Cùng dự đoán \"món hậu\" nào sẽ lên ngôi trong mùa giải năm nay nào cả nhà ơi!\n" +
-                        "Link bình chọn: https://nowfood.onelink.me/dBJB/4b6fec7a";
+                image = imageSliderModelList.get(7).getImage();
+                sName = imageSliderModelList.get(7).getName();
+                sDescription = imageSliderModelList.get(7).getDescription();
                 break;
+
             case 3:
-                iImage = R.drawable.ngaycuacha;
-                sName = "Ngày của cha \n Bữa ngon tại gia";
-                sDescription = "[NOW KHAO MÓN NGON MỪNG NGÀY CỦA CHA - TIỆC TẠI GIA CHỈ 116K]\n" +
-                        "\n" +
-                        "Đã bao lâu bạn chưa bày tỏ yêu thương đến cha? Nhân dịp Ngày của Cha, chi bằng đặt ngay vài món ngon để khao cả nhà và bày tỏ tình \"củm\" đến \"người hùng thầm lặng\" của cả gia đình nào:\n" +
-                        "✅Nhập mã CHAYEU giảm 30k cho đơn từ 146k\n" +
-                        "✅Áp dụng cho các quán chọn lọc. Số lượng có hạn, nhanh tay Now ngay!";
+                image = imageSliderModelList.get(8).getImage();
+                sName = imageSliderModelList.get(8).getName();
+                sDescription = imageSliderModelList.get(8).getDescription();
                 break;
+
             default:
-                iImage = R.drawable.monchanaigiainhiet;
-                sName = "Món chân ái giải nhiệt";
-                sDescription = "Bình chọn Món Xịn Mùa Hè: đâu mới là chân ái vào mùa hè của bạn??\n" +
-                        "\n" +
-                        "\uD83C\uDFCD Dù là món gì thì Deal xịn cũng chiều được bạn hết nhen";
+                image = imageSliderModelList.get(9).getImage();
+                sName = imageSliderModelList.get(9).getName();
+                sDescription = imageSliderModelList.get(9).getDescription();
                 break;
-
-
         }
-        intent.putExtra("image", iImage);
+        intent.putExtra("image", image);
         intent.putExtra("name", sName);
         intent.putExtra("description", sDescription);
         startActivity(intent);
@@ -651,6 +787,7 @@ public class HomeFragment extends Fragment {
         if(a > 0) district_isAvailable = true;
 
         //Search Bar Event
+        GetDataForAllRestaurants(district_id, list);
         searchBarAdapter = new SearchBarAdapter(getActivity(), searchBarModels);
         linearLayoutManager_SearchBar = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView_SearchBar.setLayoutManager(linearLayoutManager_SearchBar);
@@ -672,22 +809,39 @@ public class HomeFragment extends Fragment {
 
                     } else {
                         recyclerView_SearchBar.setVisibility(View.VISIBLE);
-                        filter(s.toString(), district_id);
-
+                        filter(s.toString(), list);
                     }
                 }
             }
         });
 
         if(district_isAvailable == true) {
-            //Promo Image Slider Event
-            AddDataForPromoImageSlider();
-            imageSlider_promo.setItemClickListener(new ItemClickListener() {
+            GetDataForAllImageSliders(imageSliderModelList);
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
                 @Override
-                public void onItemSelected(int i) {
-                    ClickPromoItemImageSlider(i);
+                public void run() {
+                    //Promo ImageSlider Event
+                    AddDataForPromoImageSlider();
+                    imageSlider_promo.setItemClickListener(new ItemClickListener() {
+                        @Override
+                        public void onItemSelected(int i) {
+                            ClickPromoItemImageSlider(i);
+                        }
+                    });
+
+                    //Advertisement ImageSlider Event
+                    AddDataForAdvertisementImageSlider();
+                    imageSlider_advertisement.setItemClickListener(new ItemClickListener() {
+                        @Override
+                        public void onItemSelected(int i) {
+                            ClickAdvertisementItemImageSlider(i);
+                        }
+                    });
                 }
-            });
+            }, 3000);
+
+
 
             //RecyclerView Category
             AddDataForCategory();
@@ -697,12 +851,11 @@ public class HomeFragment extends Fragment {
             recyclerView_Category.setAdapter(categoryAdapter);
 
             //RecyclerView Collection
-            collectionModels = new ArrayList<>();
-            AddDataForCollection();
-            adapter = new CollectionAdapter(collectionModels, getActivity());
+            GetDataForAllCollections(collectionModelList);
+            colectionAdapter = new CollectionAdapter(collectionModelList, getActivity());
             LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
             recyclerView_Collection.setLayoutManager(linearLayoutManager1);
-            recyclerView_Collection.setAdapter(adapter);
+            recyclerView_Collection.setAdapter(colectionAdapter);
             textView_MoreCollection.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -721,20 +874,13 @@ public class HomeFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), ListRestaurant.class);
-                    intent.putExtra("Name Activity", "All Restaurants");
                     intent.putExtra("District ID", district_id);
                     startActivity(intent);
                 }
             });
 
-            // ImageSlider Advertisement
-            AddDataForAdvertisementImageSlider();
-            imageSlider_advertisement.setItemClickListener(new ItemClickListener() {
-                @Override
-                public void onItemSelected(int i) {
-                    ClickAdvertisementItemImageSlider(i);
-                }
-            });
+
+            /*
 
             // RecyclerView Discount Combo Product
             AddDataForDiscountComboProduct(district_id);
@@ -777,7 +923,7 @@ public class HomeFragment extends Fragment {
             tabLayout_KindOfRestaurant.setupWithViewPager(viewPager_KindOfRestaurant);
 
             //Prepare view pager
-            prepareViewPagerCategories(viewPager_KindOfRestaurant, title_KindOfRestaurant);
+            prepareViewPagerCategories(viewPager_KindOfRestaurant, title_KindOfRestaurant);*/
         }
     }
 }

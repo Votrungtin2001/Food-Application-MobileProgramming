@@ -7,11 +7,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.foodapplication.R;
 
 import java.util.ArrayList;
@@ -20,12 +27,17 @@ import java.util.List;
 import com.example.foodapplication.HomeFragment.adapter.ListCollectionAdapter;
 import com.example.foodapplication.HomeFragment.model.CollectionModel;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class ListCollection extends AppCompatActivity {
 
     RecyclerView recyclerView_ListCollection;
     List<CollectionModel> collectionModels;
     ImageView imageView_Back;
     RecyclerView.Adapter adapter;
+    private static final String TAG = "ListCollection";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +47,7 @@ public class ListCollection extends AppCompatActivity {
         recyclerView_ListCollection = findViewById(R.id.ItemListCollection_recyclerView);
         collectionModels = new ArrayList<>();
         adapter = new ListCollectionAdapter(collectionModels, this);
-        AddDataForCollection();
+        GetDataForAllCollections(collectionModels);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
         recyclerView_ListCollection.setLayoutManager(gridLayoutManager);
         recyclerView_ListCollection.setAdapter(adapter);
@@ -49,18 +61,43 @@ public class ListCollection extends AppCompatActivity {
         });
     }
 
-    public void AddDataForCollection()
-    {
-        collectionModels.add(new CollectionModel(R.drawable.banh_mi_0d, "Bánh Mì 0Đ"));
-        collectionModels.add(new CollectionModel(R.drawable.bay_ngay_tien_trieu_ve_tui, "7 Ngày Review - \nTiền Triệu Về Túi"));
-        collectionModels.add(new CollectionModel(R.drawable.chi_5k, "Chi 5K - \nƯu Đãi Freeship 15k"));
-        collectionModels.add(new CollectionModel(R.drawable.cuoi_tuan_freeship, "Cuối Tuần \nFree Ship"));
-        collectionModels.add(new CollectionModel(R.drawable.day_don_ngay_le, "Đón Lễ Lớn"));
-        collectionModels.add(new CollectionModel(R.drawable.deal_nua_gia_quan_gan_nha, "Deal Nửa Giá - \nQuán Gần Nhà"));
-        collectionModels.add(new CollectionModel(R.drawable.deal_xin, "Deal Xịn - \n Giảm Tới 70k"));
-        collectionModels.add(new CollectionModel(R.drawable.di_het_viet_nam, "Đi Hết Việt Nam - \nFreeship"));
-        collectionModels.add(new CollectionModel(R.drawable.he_xinh_tiec_xin, "Hè Xinh - \nTiệc Xịn 55k"));
-        collectionModels.add(new CollectionModel(R.drawable.le_to_deal_xin_xo, "Lễ To - \nDeal Xịn Xò"));
+    private void GetDataForAllCollections(List<CollectionModel> list) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/getAllCollections.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                list.clear();
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String success = jsonObject.getString("success");
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+                    if(success.equals("1")) {
+                        for(int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
+
+                            int id = object.getInt("_ID");
+                            String image = object.getString("IMAGE");
+                            String name = object.getString("NAME");
+                            String description = object.getString("DESCRIPTION");
+                            CollectionModel collectionModel = new CollectionModel(id, image, name, description);
+                            list.add(collectionModel);
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, error.toString());
+            }
+        });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(request);
 
     }
     private void transparentStatusAndNavigation()

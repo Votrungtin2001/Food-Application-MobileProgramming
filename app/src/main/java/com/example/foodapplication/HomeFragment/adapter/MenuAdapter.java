@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodapplication.databaseHelper.DatabaseHelper;
 import com.example.foodapplication.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,10 +63,17 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         holder.textView_NameProduct.setText(currentItem.getNameProduct());
         holder.textView_DescriptionProduct.setText(currentItem.getDescriptionProduct());
         holder.textView_ValueOfSell.setText(currentItem.getValueOfSell());
-        String price = Integer.toString(currentItem.getPrice());
+        String price = Double.toString(currentItem.getPrice());
         holder.textView_Price.setText(price);
 
-        holder.imageView_ImageProduct.setImageBitmap(currentItem.getImage());
+        if(currentItem.getImage().isEmpty()){
+            holder.imageView_ImageProduct.setImageResource(R.drawable.noimage_product);
+        }else {
+            Picasso.get ().load ( currentItem.getImage () )
+                    .placeholder(R.drawable.noimage_product)
+                    .error(R.drawable.error)
+                    .into(holder.imageView_ImageProduct);
+        }
 
         holder.imageView_addItem.setOnClickListener(new View.OnClickListener() {
 

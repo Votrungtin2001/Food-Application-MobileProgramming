@@ -5,21 +5,38 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.foodapplication.HomeFragment.model.AllRestaurantModel;
 import com.example.foodapplication.databaseHelper.DatabaseHelper;
 import com.example.foodapplication.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.example.foodapplication.HomeFragment.adapter.MenuAdapter;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import models.ProductModel;
 
 
@@ -27,11 +44,13 @@ public class RestaurantInformation_DatDon extends Fragment {
 
     private RecyclerView recyclerView_Menu;
     private MenuAdapter menuAdapter;
-    private List<ProductModel> productModelList;
+    private List<ProductModel> productModelList = new ArrayList<>();
     private int branch_id;
 
     SQLiteDatabase db;
     DatabaseHelper databaseHelper;
+
+    private static final String TAG = "RI_DatDon";
 
     public RestaurantInformation_DatDon() {
     }
@@ -60,35 +79,63 @@ public class RestaurantInformation_DatDon extends Fragment {
     }
 
     public void Run() {
-        productModelList = new ArrayList<>();
-        getAllProducts(branch_id);
+        getProducts(branch_id);
         menuAdapter = new MenuAdapter(getActivity(), productModelList);
         LinearLayoutManager linearLayoutManager_Menu = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView_Menu.setLayoutManager(linearLayoutManager_Menu);
         recyclerView_Menu.setAdapter(menuAdapter);
     }
 
-    public void getAllProducts(int id) {
-        String selectQuery = "SELECT P._id, P.Image, P.Name, P.Description AS PDescription, M.Description AS MDescription, M.Price " +
-                "FROM ((RESTAURANT R JOIN BRANCHES B ON R._id = B.Restaurant) JOIN MENU M ON R._id = M.Restaurant) JOIN PRODUCTS P ON M.Product = P._id " +
-                "WHERE B._id ='" + id + "';";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            do {
-                int product_id = cursor.getInt(cursor.getColumnIndex("_id"));
-                byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
-                Bitmap bitmap = BitmapFactory.decodeByteArray(img_byte, 0, img_byte.length);
-                String name_product = cursor.getString(cursor.getColumnIndex("Name"));
-                String description_product = cursor.getString(cursor.getColumnIndex("PDescription"));
-                String valueOfSell = cursor.getString(cursor.getColumnIndex("MDescription"));
-                int price = cursor.getInt(cursor.getColumnIndex("Price"));
-                ProductModel productModel = new ProductModel(bitmap, name_product, description_product, valueOfSell, price, product_id);
-                productModelList.add(productModel);
+    public void getProducts(int id) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/getProducts.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                productModelList.clear();
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String success = jsonObject.getString("success");
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
 
-            } while (cursor.moveToNext());
+                    if(success.equals("1")) {
+                        for(int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
 
-        }
-        cursor.close();
+                            int id = object.getInt("_ID");
+                            String image = object.getString("IMAGE");
+                            String name = object.getString("NAME");
+                            String product_description = object.getString("PDESCRIPTION");
+                            String menu_description = object.getString("MDESCRIPTION");
+                            double price = object.getDouble("PRICE");
+
+                            ProductModel productModel = new ProductModel(image, name, product_description, menu_description, price, id);
+                            productModelList.add(productModel);
+                            menuAdapter.notifyDataSetChanged();
+
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("branch_id", String.valueOf(id));
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue.add(request);
+
     }
+
+
 }

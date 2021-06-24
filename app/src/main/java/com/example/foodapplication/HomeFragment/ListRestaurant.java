@@ -11,19 +11,33 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.foodapplication.HomeFragment.adapter.ListRestaurantAdapter;
 
 import com.example.foodapplication.databaseHelper.DatabaseHelper;
 import com.example.foodapplication.HomeFragment.model.AllRestaurantModel;
 import com.example.foodapplication.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class ListRestaurant extends AppCompatActivity {
 
@@ -34,6 +48,8 @@ public class ListRestaurant extends AppCompatActivity {
 
     SQLiteDatabase db;
     DatabaseHelper databaseHelper;
+
+    private static final String TAG = "ListRestaurant";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,35 +71,59 @@ public class ListRestaurant extends AppCompatActivity {
         });
 
         int district_id = getIntent().getIntExtra("District ID", 0);
-        String name_activity = getIntent().getStringExtra("Name Activity");
-
-        if (name_activity.trim().equals("All Restaurants")) {
-            adapter = new ListRestaurantAdapter(allRestaurantModelList, this);
-            GetDataForAllRestaurants(district_id);
-            GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
-            recyclerView_RestaurantList.setLayoutManager(gridLayoutManager);
-            recyclerView_RestaurantList.setAdapter(adapter);
-        }
-
+        adapter = new ListRestaurantAdapter(allRestaurantModelList, this);
+        GetDataForAllRestaurants(district_id);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
+        recyclerView_RestaurantList.setLayoutManager(gridLayoutManager);
+        recyclerView_RestaurantList.setAdapter(adapter);
     }
 
     private void GetDataForAllRestaurants(int id) {
-        String selectQuery = "SELECT B._id, R.Image, B.NAME, A.Address FROM (RESTAURANT R JOIN BRANCHES B ON R._id = B.Restaurant) JOIN ADDRESS A ON B.Address = A._id WHERE A.District = '" + id + "';";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            do {
-                int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
-                byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
-                Bitmap bitmap = BitmapFactory.decodeByteArray(img_byte, 0, img_byte.length);
-                String name_branch = cursor.getString(cursor.getColumnIndex("NAME"));
-                String address_branch = cursor.getString(cursor.getColumnIndex("Address"));
-                AllRestaurantModel allRestaurantModel = new AllRestaurantModel(bitmap,name_branch,address_branch, branch_id);
-                allRestaurantModelList.add(allRestaurantModel);
-            } while (cursor.moveToNext());
+        String url = "https://foodapplicationmobile.000webhostapp.com/getAllRestaurants.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                allRestaurantModelList.clear();
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String success = jsonObject.getString("success");
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
 
-        }
-        cursor.close();
+                    if(success.equals("1")) {
+                        for(int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
+
+                            int id = object.getInt("_ID");
+                            String image = object.getString("IMAGE");
+                            String name = object.getString("NAME");
+                            String address = object.getString("ADDRESS");
+
+                            AllRestaurantModel allRestaurantModel = new AllRestaurantModel(id, image, name, address);
+                            allRestaurantModelList.add(allRestaurantModel);
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Override
+            protected java.util.Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("district_id", String.valueOf(id));
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(request);
+
     }
 
     private void transparentStatusAndNavigation()

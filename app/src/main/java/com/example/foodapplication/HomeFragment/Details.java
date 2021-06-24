@@ -12,13 +12,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.foodapplication.R;
+import com.squareup.picasso.Picasso;
 
 public class Details extends AppCompatActivity {
 
     ImageView imageView;
     TextView textView_ItemName;
     TextView textView_ItemDescription;
-    int image;
+    String image;
     String item_Name, item_Description;
     ImageView imageView_Back;
 
@@ -48,11 +49,18 @@ public class Details extends AppCompatActivity {
             }
         });
 
-        image = getIntent().getIntExtra("image", 0);
+        image = getIntent().getStringExtra("image");
         item_Name = getIntent().getStringExtra("name");
         item_Description = getIntent().getStringExtra("description");
 
-        imageView.setImageResource(image);
+        if(image.trim().equals("")){
+            imageView.setImageResource(R.drawable.noimage_restaurant);
+        }else {
+            Picasso.get ().load (image)
+                    .placeholder(R.drawable.noimage_restaurant)
+                    .error(R.drawable.error)
+                    .into(imageView);
+        }
         textView_ItemName.setText(item_Name);
         textView_ItemDescription.setText(item_Description);
     }

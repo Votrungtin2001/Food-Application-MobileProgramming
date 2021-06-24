@@ -64,7 +64,7 @@ public class Cart extends AppCompatActivity {
 
         loadListFood();
 
-        btnPlaceOrder = (Button) findViewById(R.id.btnPlaceOrder);
+        /*btnPlaceOrder = (Button) findViewById(R.id.btnPlaceOrder);
         btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,7 +90,7 @@ public class Cart extends AppCompatActivity {
                 else
                     Toast.makeText(getApplicationContext(),"Chưa thêm món ăn nào trong giỏ hàng!",Toast.LENGTH_LONG).show();
             }
-        });
+        });*/
     }
 
     private void loadListFood() {
