@@ -1,9 +1,12 @@
 package com.example.foodapplication.auth;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,19 +17,33 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.example.foodapplication.databaseHelper.DatabaseHelper;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.foodapplication.MySQL.DatabaseHelper;
 import com.example.foodapplication.R;
 import com.example.foodapplication.databinding.FragmentSignUpBinding;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+
+import static com.example.foodapplication.MySQL.MySQLQuerry.CreateCustomerAccount;
+import static com.example.foodapplication.MySQL.MySQLQuerry.CreateMasterAccount;
 
 
 public class SignUpFragment extends Fragment {
 
     private static final String TAG = "SignUpFragment";
     private FragmentSignUpBinding binding;
-    user user = new user();
-    private DatabaseHelper databaseHelper;
     private LoginFragment loginFragment;
 
     int role = 0;
@@ -48,7 +65,6 @@ public class SignUpFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        databaseHelper = new DatabaseHelper(getActivity());
 
         binding = FragmentSignUpBinding.inflate(inflater, container, false);
         binding.btnSignUp.setOnClickListener(new View.OnClickListener() {
@@ -58,7 +74,7 @@ public class SignUpFragment extends Fragment {
                         binding.email.getText().toString().trim(),
                         binding.password.getText().toString().trim(),
                         binding.password2.getText().toString().trim());
-                postDataToSQLite();
+                CreateAccount();
             }
         });
         binding.loginText.setOnClickListener(new View.OnClickListener() {
@@ -78,13 +94,6 @@ public class SignUpFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         textChangeCheck();
-        initObjects();
-    }
-    private void initObjects() {
-
-        databaseHelper = new DatabaseHelper(getActivity());
-
-        user = new user();
     }
     private void textChangeCheck() {
         //region password
@@ -154,40 +163,25 @@ public class SignUpFragment extends Fragment {
         return true;
     }
 
-    private void postDataToSQLite() {
+    private void CreateAccount() {
+        String name = binding.displayName.getText().toString().trim();
+        String email = binding.email.getText().toString().trim();
+        String password = binding.password.getText().toString().trim();
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Please wait...");
+        progressDialog.show();
         if (role == 2) {
-            if(!databaseHelper.checkMaster(binding.email.getText().toString().trim()))
-            {
-                user.setName(binding.displayName.getText().toString().trim());
-                user.setEmail(binding.email.getText().toString().trim());
-                user.setPassword(binding.password.getText().toString().trim());
-                user.setUsername(binding.email.getText().toString().trim());
-                databaseHelper.addMaster(user);
-                Toast.makeText(getActivity(),"Đăng kí thành công! ", Toast.LENGTH_LONG).show();
-            }
-            else Toast.makeText(getActivity(),"Đăng kí không thành công! ", Toast.LENGTH_LONG).show();
+          CreateMasterAccount(name, email, password,
+                  binding.displayName, binding.email, binding.password, binding.password2,
+                  progressDialog,
+                  TAG, getActivity());
         }
         else {
-            if (!databaseHelper.checkUser(binding.email.getText().toString().trim()))
-            {
-                user.setName(binding.displayName.getText().toString().trim());
-                user.setEmail(binding.email.getText().toString().trim());
-                user.setPassword(binding.password.getText().toString().trim());
-                user.setUsername(binding.email.getText().toString().trim());
-                databaseHelper.addCustomer(user);
-                Toast.makeText(getActivity(),"Đăng kí thành công! ", Toast.LENGTH_LONG).show();
-            }
-            else Toast.makeText(getActivity(),"Đăng kí không thành công! ", Toast.LENGTH_LONG).show();
+            CreateCustomerAccount(name, email, password,
+                    binding.displayName, binding.email, binding.password, binding.password2,
+                    progressDialog,
+                    TAG, getActivity());
         }
-
-
-        emptyInputEditText();
     }
 
-    private void emptyInputEditText() {
-        binding.displayName.setText(null);
-        binding.email.setText(null);
-        binding.password.setText(null);
-        binding.password2.setText(null);
-    }
 }

@@ -1,12 +1,6 @@
 package com.example.foodapplication.HomeFragment;
 
 import android.content.Intent;
-import android.content.res.Resources;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -18,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -39,18 +32,15 @@ import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.interfaces.ItemClickListener;
 import com.denzcoskun.imageslider.models.SlideModel;
+import com.example.foodapplication.HomeFragment.fragment.BestRatingRestaurantFragment;
+import com.example.foodapplication.HomeFragment.fragment.BestSellerRestaurantFragment;
+import com.example.foodapplication.HomeFragment.fragment.FastestDeliveryRestaurantFragment;
 import com.example.foodapplication.HomeFragment.model.ImageSliderModel;
-import com.example.foodapplication.SubScreen.GetCurrentLocation;
-import com.example.foodapplication.SubScreen.LoadingScreen;
-import com.example.foodapplication.databaseHelper.DatabaseHelper;
 import com.example.foodapplication.HomeFragment.adapter.AllRestaurantAdapter;
 import com.example.foodapplication.HomeFragment.adapter.CategoryAdapter;
 import com.example.foodapplication.HomeFragment.adapter.CollectionAdapter;
 import com.example.foodapplication.HomeFragment.adapter.DiscountComboProductAdapter;
 import com.example.foodapplication.HomeFragment.adapter.SearchBarAdapter;
-import com.example.foodapplication.HomeFragment.fragment.BestRatingRestaurantFragment;
-import com.example.foodapplication.HomeFragment.fragment.BestSellerRestaurantFragment;
-import com.example.foodapplication.HomeFragment.fragment.FastestDeliveryRestaurantFragment;
 import com.example.foodapplication.HomeFragment.fragment.NearMeRestaurantsFragment;
 import com.example.foodapplication.HomeFragment.model.AllRestaurantModel;
 import com.example.foodapplication.HomeFragment.model.CollectionModel;
@@ -64,7 +54,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -74,6 +63,10 @@ import static com.example.foodapplication.MainActivity.addressLine;
 import static com.example.foodapplication.MainActivity.district_id;
 import static com.example.foodapplication.MainActivity.nameStreet;
 
+import static com.example.foodapplication.MySQL.MySQLQuerry.GetDataForAllRestaurants;
+import static com.example.foodapplication.MySQL.MySQLQuerry.GetDataForAllImageSliders;
+import static com.example.foodapplication.MySQL.MySQLQuerry.GetDataForAllCollections;
+import static com.example.foodapplication.MySQL.MySQLQuerry.GetDataForDiscountComboProductAndCheapestProduct;
 
 public class HomeFragment extends Fragment {
 
@@ -104,7 +97,7 @@ public class HomeFragment extends Fragment {
     //RecyclerView Collection
     RecyclerView recyclerView_Collection;
     List<CollectionModel> collectionModelList = new ArrayList<>();
-    RecyclerView.Adapter colectionAdapter;
+    CollectionAdapter colectionAdapter;
     TextView textView_CollectionTitle;
     TextView textView_MoreCollection;
 
@@ -144,16 +137,6 @@ public class HomeFragment extends Fragment {
 
     boolean district_isAvailable = false;
 
-    DatabaseHelper databaseHelper;
-    SQLiteDatabase db;
-    byte[] img1;
-    int img;
-    Resources resources;
-    Drawable drawable;
-    Bitmap bitmap;
-    ByteArrayOutputStream stream;
-    byte[] bitmapData;
-
     private static final String TAG = "HomeFragment";
 
     public HomeFragment(){
@@ -164,9 +147,6 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-
-        databaseHelper = new DatabaseHelper(getActivity());
-        db = databaseHelper.getReadableDatabase();
 
         initComponents(view);
         Run();
@@ -318,53 +298,6 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    private void GetDataForAllRestaurants(int id, List<AllRestaurantModel> list) {
-        String url = "https://foodapplicationmobile.000webhostapp.com/getAllRestaurants.php";
-        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                list.clear();
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    String success = jsonObject.getString("success");
-                    JSONArray jsonArray = jsonObject.getJSONArray("data");
-
-                    if(success.equals("1")) {
-                        for(int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject object = jsonArray.getJSONObject(i);
-
-                            int id = object.getInt("_ID");
-                            String image = object.getString("IMAGE");
-                            String name = object.getString("NAME");
-                            String address = object.getString("ADDRESS");
-
-                            AllRestaurantModel allRestaurantModel = new AllRestaurantModel(id, image, name, address);
-                            list.add(allRestaurantModel);
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, error.toString());
-            }
-        }) {
-            @Override
-            protected java.util.Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("district_id", String.valueOf(id));
-                return params;
-            }
-        };
-
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-        requestQueue.add(request);
-
-    }
-
     private void filter(String toString, List<AllRestaurantModel> list) {
         searchBarModels = new ArrayList<>();
         for(int i = 0; i < list.size(); i++) {
@@ -378,202 +311,6 @@ public class HomeFragment extends Fragment {
         }
         searchBarAdapter.filterList(searchBarModels);
         recyclerView_SearchBar.setAdapter(searchBarAdapter);
-    }
-
-    private void GetDataForAllRestaurants(int id) {
-        String url = "https://foodapplicationmobile.000webhostapp.com/getAllRestaurants.php";
-        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                int count = 0;
-                allRestaurantModelList.clear();
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    String success = jsonObject.getString("success");
-                    JSONArray jsonArray = jsonObject.getJSONArray("data");
-
-                    if(success.equals("1")) {
-                        for(int i = 0; i < jsonArray.length(); i++) {
-                            if(count < 10) {
-                                JSONObject object = jsonArray.getJSONObject(i);
-
-                                int id = object.getInt("_ID");
-                                String image = object.getString("IMAGE");
-                                String name = object.getString("NAME");
-                                String address = object.getString("ADDRESS");
-
-                                AllRestaurantModel allRestaurantModel = new AllRestaurantModel(id, image, name, address);
-                                allRestaurantModelList.add(allRestaurantModel);
-                                allRestaurantAdapter.notifyDataSetChanged();
-
-                                count++;
-                            }
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, error.toString());
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("district_id", String.valueOf(id));
-                return params;
-            }
-        };
-
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-        requestQueue.add(request);
-
-    }
-
-    private void GetDataForAllImageSliders(List<ImageSliderModel> list) {
-        String url = "https://foodapplicationmobile.000webhostapp.com/getAllImageSliders.php";
-        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                list.clear();
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    String success = jsonObject.getString("success");
-                    JSONArray jsonArray = jsonObject.getJSONArray("data");
-
-                    if(success.equals("1")) {
-                        for(int i = 0; i < jsonArray.length(); i++) {
-                                JSONObject object = jsonArray.getJSONObject(i);
-
-                                int id = object.getInt("_ID");
-                                String image = object.getString("IMAGE");
-                                String name = object.getString("NAME");
-                                String description = object.getString("DESCRIPTION");
-                                ImageSliderModel imageSliderModel = new ImageSliderModel(id, image, name, description);
-                                list.add(imageSliderModel);
-                                colectionAdapter.notifyDataSetChanged();
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, error.toString());
-            }
-        });
-
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-        requestQueue.add(request);
-
-    }
-
-    private void GetDataForAllCollections(List<CollectionModel> list) {
-        String url = "https://foodapplicationmobile.000webhostapp.com/getAllCollections.php";
-        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                list.clear();
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    String success = jsonObject.getString("success");
-                    JSONArray jsonArray = jsonObject.getJSONArray("data");
-
-                    if(success.equals("1")) {
-                        for(int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject object = jsonArray.getJSONObject(i);
-
-                            int id = object.getInt("_ID");
-                            String image = object.getString("IMAGE");
-                            String name = object.getString("NAME");
-                            String description = object.getString("DESCRIPTION");
-                            CollectionModel collectionModel = new CollectionModel(id, image, name, description);
-                            list.add(collectionModel);
-                            colectionAdapter.notifyDataSetChanged();
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, error.toString());
-            }
-        });
-
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-        requestQueue.add(request);
-
-    }
-
-    private void AddDataForDiscountComboProduct(int id) {
-        int count = 0;
-        sortOfProductModelList1 = new ArrayList<>();
-        String selectQuery = "SELECT B._id, P.Image, P.Name, B.NAME, M.Price " +
-                "FROM (((PRODUCTS P JOIN MENU M ON P._id = M.Product) " +
-                "JOIN RESTAURANT R ON M.Restaurant = R._id) " +
-                "JOIN BRANCHES B ON R._id = B.Restaurant) " +
-                "JOIN ADDRESS A ON B.Address = A._id " +
-                "WHERE A.District ='" + id + "';";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            do {
-                if (count < 8) {
-                    String key = "Combo";
-                    String name_product = cursor.getString(cursor.getColumnIndex("Name"));
-                    if (name_product.toLowerCase().contains(key.toLowerCase())) {
-                        count++;
-                        byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
-                        int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
-                        Bitmap img_bitmap = BitmapFactory.decodeByteArray(img_byte, 0, img_byte.length);
-                        String name_branch = cursor.getString(cursor.getColumnIndex("NAME"));
-                        int price = cursor.getInt(cursor.getColumnIndex("Price"));
-                        SortOfProductModel sortOfProductModel = new SortOfProductModel(img_bitmap, name_product, name_branch, price, branch_id);
-                        sortOfProductModelList1.add(sortOfProductModel);
-                    }
-                }
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-    }
-
-    public void AddDataForCheapestProduct(int id) {
-        int count = 0;
-        sortOfProductModelList2 = new ArrayList<>();
-        String selectQuery = "SELECT B._id, P.Image, P.Name, B.NAME, M.Price " +
-                "FROM (((PRODUCTS P JOIN MENU M ON P._id = M.Product) " +
-                "JOIN RESTAURANT R ON M.Restaurant = R._id) " +
-                "JOIN BRANCHES B ON R._id = B.Restaurant) " +
-                "JOIN ADDRESS A ON B.Address = A._id  " +
-                "WHERE M.Price < 20000 AND M.Price >= 15000 AND P.Category != 4 AND P.Category != 12 AND A.District ='" + id + "';";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            do {
-                if (count < 8) {
-                    count++;
-                    String name_product = cursor.getString(cursor.getColumnIndex("Name"));
-                    byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
-                    int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
-                    Bitmap img_bitmap = BitmapFactory.decodeByteArray(img_byte, 0, img_byte.length);
-                    String name_branch = cursor.getString(cursor.getColumnIndex("NAME"));
-                    int price = cursor.getInt(cursor.getColumnIndex("Price"));
-                    SortOfProductModel sortOfProductModel = new SortOfProductModel(img_bitmap, name_product, name_branch, price, branch_id);
-                    sortOfProductModelList2.add(sortOfProductModel);
-                }
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
     }
 
     private void prepareViewPagerCategories(ViewPager viewPager, ArrayList<String> arrayList)
@@ -596,13 +333,12 @@ public class HomeFragment extends Fragment {
                 BestRatingRestaurantFragment bestRatingRestaurantFragment = new BestRatingRestaurantFragment(district_id);
                 viewPagerAdapter.addFragment(bestRatingRestaurantFragment, arrayList.get(i));
             }
+
             if (i == 3)
             {
                 FastestDeliveryRestaurantFragment fastestDeliveryRestaurantFragment = new FastestDeliveryRestaurantFragment(district_id);
                 viewPagerAdapter.addFragment(fastestDeliveryRestaurantFragment, arrayList.get(i));
             }
-
-
         }
         viewPager.setAdapter(viewPagerAdapter);
     }
@@ -629,7 +365,6 @@ public class HomeFragment extends Fragment {
             titles1.add("Sushi");
             titles1.add("Xôi");
 
-
             images.add(R.drawable.rice);
             images.add(R.drawable.milk_tea);
             images.add(R.drawable.noodle_icon);
@@ -647,7 +382,6 @@ public class HomeFragment extends Fragment {
             images.add(R.drawable.sushi_icon);
             images.add(R.drawable.xoi_icon);
     }
-
 
     private void runFillAddressActivity()
     {
@@ -787,7 +521,7 @@ public class HomeFragment extends Fragment {
         if(a > 0) district_isAvailable = true;
 
         //Search Bar Event
-        GetDataForAllRestaurants(district_id, list);
+        GetDataForAllRestaurants(district_id, list, TAG, getActivity());
         searchBarAdapter = new SearchBarAdapter(getActivity(), searchBarModels);
         linearLayoutManager_SearchBar = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView_SearchBar.setLayoutManager(linearLayoutManager_SearchBar);
@@ -816,7 +550,7 @@ public class HomeFragment extends Fragment {
         });
 
         if(district_isAvailable == true) {
-            GetDataForAllImageSliders(imageSliderModelList);
+            GetDataForAllImageSliders(imageSliderModelList, TAG, getActivity());
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
@@ -839,9 +573,7 @@ public class HomeFragment extends Fragment {
                         }
                     });
                 }
-            }, 3000);
-
-
+            }, 4000);
 
             //RecyclerView Category
             AddDataForCategory();
@@ -851,8 +583,8 @@ public class HomeFragment extends Fragment {
             recyclerView_Category.setAdapter(categoryAdapter);
 
             //RecyclerView Collection
-            GetDataForAllCollections(collectionModelList);
             colectionAdapter = new CollectionAdapter(collectionModelList, getActivity());
+            GetDataForAllCollections(collectionModelList, colectionAdapter, TAG, getActivity());
             LinearLayoutManager linearLayoutManager1 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
             recyclerView_Collection.setLayoutManager(linearLayoutManager1);
             recyclerView_Collection.setAdapter(colectionAdapter);
@@ -864,9 +596,9 @@ public class HomeFragment extends Fragment {
                 }
             });
 
-            //RecyclerView AllRestaurant
-            GetDataForAllRestaurants(district_id);
+           // RecyclerView AllRestaurant
             allRestaurantAdapter = new AllRestaurantAdapter(getActivity(), allRestaurantModelList);
+            GetDataForAllRestaurants(district_id, allRestaurantModelList, TAG, getActivity(), allRestaurantAdapter);
             LinearLayoutManager linearLayoutManager2 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
             recyclerView_AllRestaurants.setLayoutManager(linearLayoutManager2);
             recyclerView_AllRestaurants.setAdapter(allRestaurantAdapter);
@@ -879,12 +611,12 @@ public class HomeFragment extends Fragment {
                 }
             });
 
-
-            /*
-
-            // RecyclerView Discount Combo Product
-            AddDataForDiscountComboProduct(district_id);
+            // RecyclerView Discount Combo Product and RecyclerView Cheapest Product
             discountComboProductAdapter = new DiscountComboProductAdapter(getActivity(), sortOfProductModelList1);
+            cheapestproductAdapter = new DiscountComboProductAdapter(getActivity(), sortOfProductModelList2);
+            GetDataForDiscountComboProductAndCheapestProduct(district_id, sortOfProductModelList1, sortOfProductModelList2,
+                    discountComboProductAdapter, cheapestproductAdapter, TAG, getActivity());
+
             LinearLayoutManager linearLayoutManager3 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
             recyclerView_DiscountComboProduct.setLayoutManager(linearLayoutManager3);
             recyclerView_DiscountComboProduct.setAdapter(discountComboProductAdapter);
@@ -898,9 +630,6 @@ public class HomeFragment extends Fragment {
                 }
             });
 
-            //RecyclerView Cheapest Product
-            AddDataForCheapestProduct(district_id);
-            cheapestproductAdapter = new DiscountComboProductAdapter(getActivity(), sortOfProductModelList2);
             LinearLayoutManager linearLayoutManager4 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
             recyclerView_CheapestProduct.setLayoutManager(linearLayoutManager4);
             recyclerView_CheapestProduct.setAdapter(cheapestproductAdapter);
@@ -923,7 +652,7 @@ public class HomeFragment extends Fragment {
             tabLayout_KindOfRestaurant.setupWithViewPager(viewPager_KindOfRestaurant);
 
             //Prepare view pager
-            prepareViewPagerCategories(viewPager_KindOfRestaurant, title_KindOfRestaurant);*/
+            prepareViewPagerCategories(viewPager_KindOfRestaurant, title_KindOfRestaurant);
         }
     }
 }

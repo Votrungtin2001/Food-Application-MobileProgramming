@@ -14,14 +14,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.foodapplication.databaseHelper.DatabaseHelper;
+import com.example.foodapplication.MySQL.DatabaseHelper;
 import com.example.foodapplication.R;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import models.ProductModel;
+import com.example.foodapplication.HomeFragment.model.ProductModel;
 
 import static com.example.foodapplication.MainActivity.customer_id;
 
@@ -63,8 +64,8 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         holder.textView_NameProduct.setText(currentItem.getNameProduct());
         holder.textView_DescriptionProduct.setText(currentItem.getDescriptionProduct());
         holder.textView_ValueOfSell.setText(currentItem.getValueOfSell());
-        String price = Double.toString(currentItem.getPrice());
-        holder.textView_Price.setText(price);
+        DecimalFormat decimalFormat = new DecimalFormat( "###,###,###" );
+        holder.textView_Price.setText(decimalFormat.format(currentItem.getPrice()) + "đ");
 
         if(currentItem.getImage().isEmpty()){
             holder.imageView_ImageProduct.setImageResource(R.drawable.noimage_product);

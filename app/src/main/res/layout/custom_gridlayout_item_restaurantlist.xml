@@ -20,6 +20,7 @@
             android:layout_height="100dp"
             android:id="@+id/ImageView_ItemRestaurantList"
             app:srcCompat="@drawable/ic_baseline_favorite_24"
+            android:layout_marginTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>

@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodapplication.HomeFragment.Details;
@@ -49,7 +50,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
                     .error(R.drawable.error)
                     .into(holder.linearIcon);
         };
-        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+        holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String sDescription;
@@ -70,13 +71,13 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.Vi
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView title;
         ImageView linearIcon;
-        LinearLayout linearLayout;
+        ConstraintLayout constraintLayout;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             title = itemView.findViewById(R.id.textView_NameVoucher);
             linearIcon = itemView.findViewById(R.id.imageView_Collection);
-            linearLayout = itemView.findViewById(R.id.Collection_LinearLayout);
+            constraintLayout = itemView.findViewById(R.id.Collection_LinearLayout);
         }
     }
 }

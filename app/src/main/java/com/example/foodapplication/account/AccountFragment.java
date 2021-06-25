@@ -13,14 +13,15 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.foodapplication.databaseHelper.DatabaseHelper;
-import com.example.foodapplication.databaseHelper.FoodManagementContract;
+import com.example.foodapplication.MySQL.DatabaseHelper;
+import com.example.foodapplication.MySQL.FoodManagementContract;
 import com.example.foodapplication.R;
 import com.example.foodapplication.auth.LoginFragment;
 import com.example.foodapplication.auth.LoginFragmentMaster;
 
 import static com.example.foodapplication.MainActivity.customer_id;
 import static com.example.foodapplication.MainActivity.master_id;
+import static com.example.foodapplication.MySQL.MySQLQuerry.SetCustomerAccountInformationInAccountFragment;
 
 public class AccountFragment extends Fragment {
     Button btnPayment, btnInvite, btnAddress, btnPolicy, btnSettings, btnAbout, btnLogout;
@@ -29,6 +30,8 @@ public class AccountFragment extends Fragment {
     ImageView imgUser;
 
     Dialog LoginDialog;
+
+    private final String TAG = "AccountFragment";
 
     int choose_role = 0;
     int namefragment = 0;
@@ -77,24 +80,7 @@ public class AccountFragment extends Fragment {
 
         txtlogin = view.findViewById(R.id.txtName);
         if (customer_id > 0) {
-            Cursor cursor = databaseHelper.getCustomerById(customer_id);
-            if (cursor.moveToFirst()) {
-                imgUser.setVisibility(View.VISIBLE);
-                btnLogout.setVisibility(View.VISIBLE);
-                txtlogin.setText(cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CCustomer.KEY_NAME)));
-                switch (cursor.getInt(cursor.getColumnIndexOrThrow(FoodManagementContract.CCustomer.KEY_GENDER))) {
-                    case 0:
-                        imgUser.setImageResource(R.drawable.avatar_male);
-                        break;
-                    case 1:
-                        imgUser.setImageResource(R.drawable.avatar_female);
-                        break;
-                    default:
-                        imgUser.setImageResource(R.drawable.avatar_none);
-                        break;
-                }
-            }
-            cursor.close();
+            SetCustomerAccountInformationInAccountFragment(customer_id, txtlogin, imgUser, btnLogout, TAG, getActivity());
         }
         else {
             txtlogin.setText(getResources().getString(R.string.activity_account_login_name));

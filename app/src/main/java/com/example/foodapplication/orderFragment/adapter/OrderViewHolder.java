@@ -10,7 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.foodapplication.databaseHelper.DatabaseHelper;
+import com.example.foodapplication.MySQL.DatabaseHelper;
 import com.example.foodapplication.R;
 import com.example.foodapplication.orderFragment.model.OrderModel;
 

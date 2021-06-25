@@ -16,8 +16,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.foodapplication.databaseHelper.DatabaseHelper;
-import com.example.foodapplication.databaseHelper.FoodManagementContract;
+import com.example.foodapplication.MySQL.DatabaseHelper;
+import com.example.foodapplication.MySQL.FoodManagementContract;
 
 public class SingleEditTextUpdateFragment extends Fragment {
     private String type, target;

@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.foodapplication.databaseHelper.DatabaseHelper;
+import com.example.foodapplication.MySQL.DatabaseHelper;
 import com.example.foodapplication.DateFragment;
 import com.example.foodapplication.MainActivity;
 import com.example.foodapplication.R;

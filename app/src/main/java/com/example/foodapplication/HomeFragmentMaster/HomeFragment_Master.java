@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.foodapplication.databaseHelper.DatabaseHelper;
+import com.example.foodapplication.MySQL.DatabaseHelper;
 import com.example.foodapplication.HomeFragment.fragment.RestaurantInformation_ThongTin;
 import com.example.foodapplication.HomeFragmentMaster.fragment.HomeFragment_Master_MonAn;
 import com.example.foodapplication.R;

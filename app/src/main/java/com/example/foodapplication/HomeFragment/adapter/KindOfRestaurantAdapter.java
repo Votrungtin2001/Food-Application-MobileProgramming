@@ -17,7 +17,8 @@ import com.example.foodapplication.HomeFragment.RestaurantInformation;
 
 import java.util.List;
 
-import models.KindOfRestaurantModel;
+import com.example.foodapplication.HomeFragment.model.KindOfRestaurantModel;
+import com.squareup.picasso.Picasso;
 
 public class KindOfRestaurantAdapter extends RecyclerView.Adapter<KindOfRestaurantAdapter.ViewHolder> {
 
@@ -41,7 +42,14 @@ public class KindOfRestaurantAdapter extends RecyclerView.Adapter<KindOfRestaura
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         KindOfRestaurantModel currentItem = itemList.get(position);
-        holder.image.setImageBitmap(currentItem.getImage());
+        if(currentItem.getImage().isEmpty()){
+            holder.image.setImageResource(R.drawable.noimage_restaurant);
+        }else {
+            Picasso.get ().load ( currentItem.getImage () )
+                    .placeholder(R.drawable.noimage_restaurant)
+                    .error(R.drawable.error)
+                    .into(holder.image);
+        }
         holder.name_branch.setText(currentItem.getNameBranch());
         holder.address_branch.setText(currentItem.getAddressBranch());
         holder.openingtime_restaurant.setText(currentItem.getOpeningTime());
@@ -60,8 +68,6 @@ public class KindOfRestaurantAdapter extends RecyclerView.Adapter<KindOfRestaura
     public int getItemCount() {
         return itemList.size();
     }
-
-
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView image;

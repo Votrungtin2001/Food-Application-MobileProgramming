@@ -3,16 +3,14 @@ package com.example.foodapplication.orderFragment.cart;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.foodapplication.databaseHelper.DatabaseHelper;
+import com.example.foodapplication.MySQL.DatabaseHelper;
 import com.example.foodapplication.orderFragment.adapter.CartAdapter;
 import com.example.foodapplication.orderFragment.model.OrderModel;
 import com.example.foodapplication.R;
@@ -22,8 +20,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import models.ProductModel;
-import models.Request;
+import com.example.foodapplication.HomeFragment.model.ProductModel;
 
 import static com.example.foodapplication.HomeFragment.adapter.MenuAdapter.productModelList;
 import static com.example.foodapplication.MainActivity.customer_id;

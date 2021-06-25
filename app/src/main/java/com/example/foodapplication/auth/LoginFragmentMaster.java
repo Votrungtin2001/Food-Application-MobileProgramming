@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.foodapplication.account.AccountFragment;
-import com.example.foodapplication.databaseHelper.DatabaseHelper;
+import com.example.foodapplication.MySQL.DatabaseHelper;
 import com.example.foodapplication.MainActivity;
 import com.example.foodapplication.Master_MainActivity;
 import com.example.foodapplication.databinding.FragmentLoginMasterBinding;

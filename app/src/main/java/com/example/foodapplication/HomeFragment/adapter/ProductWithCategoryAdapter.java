@@ -18,6 +18,7 @@ import com.example.foodapplication.HomeFragment.RestaurantInformation;
 import java.util.List;
 
 import com.example.foodapplication.HomeFragment.model.ProductCategoryModel;
+import com.squareup.picasso.Picasso;
 
 public class ProductWithCategoryAdapter extends RecyclerView.Adapter<ProductWithCategoryAdapter.ViewHolder> {
 
@@ -45,7 +46,14 @@ public class ProductWithCategoryAdapter extends RecyclerView.Adapter<ProductWith
         holder.textView_NameProduct.setText(currentItem.getNameProduct());
         holder.textView_DescriptionProduct.setText(currentItem.getDescriptionProduct());
         holder.textView_NameBranch.setText(currentItem.getNameBranch());
-        holder.imageView_ImageProduct.setImageBitmap(currentItem.getImage());
+        if(currentItem.getImage().isEmpty()){
+            holder.imageView_ImageProduct.setImageResource(R.drawable.noimage_product);
+        }else {
+            Picasso.get ().load ( currentItem.getImage () )
+                    .placeholder(R.drawable.noimage_product)
+                    .error(R.drawable.error)
+                    .into(holder.imageView_ImageProduct);
+        }
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

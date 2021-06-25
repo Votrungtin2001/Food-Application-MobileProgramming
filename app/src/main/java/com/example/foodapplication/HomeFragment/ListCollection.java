@@ -7,18 +7,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.example.foodapplication.HomeFragment.adapter.CollectionAdapter;
 import com.example.foodapplication.R;
 
 import java.util.ArrayList;
@@ -27,16 +21,15 @@ import java.util.List;
 import com.example.foodapplication.HomeFragment.adapter.ListCollectionAdapter;
 import com.example.foodapplication.HomeFragment.model.CollectionModel;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import static com.example.foodapplication.MySQL.MySQLQuerry.GetDataForAllCollections;
+
 
 public class ListCollection extends AppCompatActivity {
 
     RecyclerView recyclerView_ListCollection;
     List<CollectionModel> collectionModels;
     ImageView imageView_Back;
-    RecyclerView.Adapter adapter;
+    ListCollectionAdapter adapter;
     private static final String TAG = "ListCollection";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,15 +37,24 @@ public class ListCollection extends AppCompatActivity {
         transparentStatusAndNavigation();
         setContentView(R.layout.activity_list__collection);
 
+        initComponents();
+
+        Run();
+    }
+
+    private void initComponents() {
         recyclerView_ListCollection = findViewById(R.id.ItemListCollection_recyclerView);
+        imageView_Back = findViewById(R.id.Back_ItemListCollection);
+    }
+
+    private void Run() {
         collectionModels = new ArrayList<>();
         adapter = new ListCollectionAdapter(collectionModels, this);
-        GetDataForAllCollections(collectionModels);
+        GetDataForAllCollections(collectionModels, adapter, TAG, this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
         recyclerView_ListCollection.setLayoutManager(gridLayoutManager);
         recyclerView_ListCollection.setAdapter(adapter);
 
-        imageView_Back = findViewById(R.id.Back_ItemListCollection);
         imageView_Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,45 +63,6 @@ public class ListCollection extends AppCompatActivity {
         });
     }
 
-    private void GetDataForAllCollections(List<CollectionModel> list) {
-        String url = "https://foodapplicationmobile.000webhostapp.com/getAllCollections.php";
-        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                list.clear();
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    String success = jsonObject.getString("success");
-                    JSONArray jsonArray = jsonObject.getJSONArray("data");
-
-                    if(success.equals("1")) {
-                        for(int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject object = jsonArray.getJSONObject(i);
-
-                            int id = object.getInt("_ID");
-                            String image = object.getString("IMAGE");
-                            String name = object.getString("NAME");
-                            String description = object.getString("DESCRIPTION");
-                            CollectionModel collectionModel = new CollectionModel(id, image, name, description);
-                            list.add(collectionModel);
-                            adapter.notifyDataSetChanged();
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, error.toString());
-            }
-        });
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(request);
-
-    }
     private void transparentStatusAndNavigation()
     {
         //make full transparent statusBar

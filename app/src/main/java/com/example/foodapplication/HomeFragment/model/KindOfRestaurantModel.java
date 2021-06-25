@@ -1,15 +1,15 @@
-package models;
+package com.example.foodapplication.HomeFragment.model;
 
 import android.graphics.Bitmap;
 
 public class KindOfRestaurantModel {
-    private Bitmap image_restaurant;
+    private String image_restaurant;
     private String name_branch;
     private String address_branch;
     private String openingtime_restaurant;
     private int branch_id;
 
-    public KindOfRestaurantModel(Bitmap Image, String Name, String Address, String OpeningTime, int id) {
+    public KindOfRestaurantModel(String Image, String Name, String Address, String OpeningTime, int id) {
         this.image_restaurant = Image;
         this.name_branch= Name;
         this.address_branch = Address;
@@ -17,7 +17,7 @@ public class KindOfRestaurantModel {
         this.branch_id = id;
     }
 
-    public Bitmap getImage() {
+    public String getImage() {
         return image_restaurant;
     }
 

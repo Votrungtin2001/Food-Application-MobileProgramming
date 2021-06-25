@@ -1,7 +1,5 @@
 package com.example.foodapplication.HomeFragment.fragment;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +16,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.foodapplication.databaseHelper.DatabaseHelper;
 import com.example.foodapplication.R;
 
 import org.json.JSONArray;
@@ -27,6 +24,9 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.example.foodapplication.MySQL.MySQLQuerry.GetBranchAddress;
+import static com.example.foodapplication.MySQL.MySQLQuerry.GetOpeningTime;
 
 
 public class RestaurantInformation_ThongTin extends Fragment {
@@ -68,94 +68,11 @@ public class RestaurantInformation_ThongTin extends Fragment {
 
     public void Run() {
         textView_address.setText(branch_address);
-        getBranchAddress(branch_id);
+        GetBranchAddress(branch_id, textView_address, TAG, getActivity());
 
         textView_openingtime.setText(restaurant_openingtime);
-        getOpeningTime(branch_id);
+        GetOpeningTime(branch_id, textView_openingtime, TAG, getActivity());
     }
 
 
-    public void getBranchAddress(int id) {
-        String url = "https://foodapplicationmobile.000webhostapp.com/getBranchAddress.php";
-        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    String success = jsonObject.getString("success");
-                    JSONArray jsonArray = jsonObject.getJSONArray("data");
-
-                    if(success.equals("1")) {
-                        for(int i = 0; i < jsonArray.length(); i++) {
-
-                            JSONObject object = jsonArray.getJSONObject(i);
-
-                            branch_address = object.getString("ADDRESS");
-                            if(!branch_address.trim().equals("")) textView_address.setText(branch_address);
-
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, error.toString());
-            }
-        }) {
-            @Override
-            protected java.util.Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("branch_id", String.valueOf(id));
-                return params;
-            }
-        };
-
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-        requestQueue.add(request);
-    }
-
-    public void getOpeningTime(int id) {
-        String url = "https://foodapplicationmobile.000webhostapp.com/getRestaurantOpeningTime.php";
-        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    String success = jsonObject.getString("success");
-                    JSONArray jsonArray = jsonObject.getJSONArray("data");
-
-                    if(success.equals("1")) {
-                        for(int i = 0; i < jsonArray.length(); i++) {
-
-                            JSONObject object = jsonArray.getJSONObject(i);
-
-                            restaurant_openingtime = object.getString("OPENING_TIMES");
-                            if(!restaurant_openingtime.trim().equals("")) textView_openingtime.setText("Giờ mở cửa \t" + restaurant_openingtime);
-
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, error.toString());
-            }
-        }) {
-            @Override
-            protected java.util.Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("branch_id", String.valueOf(id));
-                return params;
-            }
-        };
-
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-        requestQueue.add(request);
-    }
 }

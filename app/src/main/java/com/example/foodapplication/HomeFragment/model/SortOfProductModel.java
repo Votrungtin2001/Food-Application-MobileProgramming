@@ -4,12 +4,12 @@ import android.graphics.Bitmap;
 
 public class SortOfProductModel {
     private int branch_id;
-    private Bitmap image_product;
+    private String image_product;
     private String name_product;
     private String name_branch;
-    private int price;
+    private double price;
 
-    public SortOfProductModel(Bitmap Image, String NameProduct, String NameBranch, int Price, int id) {
+    public SortOfProductModel(String Image, String NameProduct, String NameBranch, double Price, int id) {
         this.image_product = Image;
         this.name_product= NameProduct;
         this.name_branch = NameBranch;
@@ -17,7 +17,7 @@ public class SortOfProductModel {
         this.branch_id = id;
     }
 
-    public Bitmap getImage() {
+    public String getImage() {
         return image_product;
     }
 
@@ -29,7 +29,7 @@ public class SortOfProductModel {
         return name_branch;
     }
 
-    public int getPrice() { return price;}
+    public double getPrice() { return price;}
 
     public int getBranch_id() {return branch_id;}
 }

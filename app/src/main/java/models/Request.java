@@ -1,5 +1,7 @@
 package models;
 
+import com.example.foodapplication.HomeFragment.model.ProductModel;
+
 import java.util.Date;
 import java.util.List;
 

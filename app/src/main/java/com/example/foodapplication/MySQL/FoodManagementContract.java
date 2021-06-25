@@ -1,4 +1,4 @@
-package com.example.foodapplication.databaseHelper;
+package com.example.foodapplication.MySQL;
 
 import android.provider.BaseColumns;
 

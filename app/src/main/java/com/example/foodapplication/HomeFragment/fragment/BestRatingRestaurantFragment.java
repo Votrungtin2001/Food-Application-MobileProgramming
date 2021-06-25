@@ -3,9 +3,8 @@ package com.example.foodapplication.HomeFragment.fragment;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +13,29 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.foodapplication.databaseHelper.DatabaseHelper;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.foodapplication.MySQL.DatabaseHelper;
 import com.example.foodapplication.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.example.foodapplication.HomeFragment.adapter.KindOfRestaurantAdapter;
-import models.KindOfRestaurantModel;
+import com.example.foodapplication.HomeFragment.model.KindOfRestaurantModel;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import static com.example.foodapplication.MySQL.MySQLQuerry.GetDataForKindOfRestaurantWithType;
 
 
 public class BestRatingRestaurantFragment extends Fragment {
@@ -33,8 +47,7 @@ public class BestRatingRestaurantFragment extends Fragment {
 
     int district_id;
 
-    SQLiteDatabase db;
-    DatabaseHelper databaseHelper;
+    private static final String TAG = "BestRatingRestaurantFra";
 
     public BestRatingRestaurantFragment() {
     }
@@ -48,46 +61,25 @@ public class BestRatingRestaurantFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_best_rating_kindofrestaurant, container, false);
 
-        databaseHelper = new DatabaseHelper(getActivity());
-        db = databaseHelper.getReadableDatabase();
+        initComponents(view);
 
-        recyclerView_KindOfRestaurant = view.findViewById(R.id.BestRatingKindOfRestaurant_RecyclerView);
-
-        AddDataForKindOfRestaurantWithBestRating(district_id);
-        kindOfRestaurantAdapter = new KindOfRestaurantAdapter(getActivity(), kindOfRestaurantModelList);
-        LinearLayoutManager linearLayoutManager_Categories = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        recyclerView_KindOfRestaurant.setLayoutManager(linearLayoutManager_Categories);
-        recyclerView_KindOfRestaurant.setAdapter(kindOfRestaurantAdapter);
-
+        Run();
 
         return  view;
     }
 
-    private void AddDataForKindOfRestaurantWithBestRating(int id)
-    {
-        kindOfRestaurantModelList = new ArrayList<>();
-        String selectQuery = "SELECT B._id, R.Image, B.NAME, A.Address, R.Opening_Times " +
-                "FROM (RESTAURANT R JOIN BRANCHES B ON R._id = B.Restaurant) " +
-                "JOIN ADDRESS A ON B.Address = A._id WHERE A.District ='" + id + "';";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            do {
-                int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
-                if(branch_id % 4 == 0) {
-                    byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(img_byte, 0, img_byte.length);
-                    String name_branch = cursor.getString(cursor.getColumnIndex("NAME"));
-                    String address_branch = cursor.getString(cursor.getColumnIndex("Address"));
-                    String opening_time = cursor.getString(cursor.getColumnIndex("Opening_Times"));
-                    KindOfRestaurantModel kindOfRestaurantModel = new KindOfRestaurantModel(bitmap, name_branch, address_branch, opening_time, branch_id);
-                    kindOfRestaurantModelList.add(kindOfRestaurantModel);
-
-                }
-            } while (cursor.moveToNext());
-
-        }
-        cursor.close();
-
+    private void initComponents(View view) {
+        recyclerView_KindOfRestaurant = view.findViewById(R.id.BestRatingKindOfRestaurant_RecyclerView);
     }
+
+    private void Run() {
+        kindOfRestaurantModelList = new ArrayList<>();
+        kindOfRestaurantAdapter = new KindOfRestaurantAdapter(getActivity(), kindOfRestaurantModelList);
+        GetDataForKindOfRestaurantWithType(district_id, kindOfRestaurantModelList, kindOfRestaurantAdapter, 4, TAG, getActivity());
+        LinearLayoutManager linearLayoutManager_Categories = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        recyclerView_KindOfRestaurant.setLayoutManager(linearLayoutManager_Categories);
+        recyclerView_KindOfRestaurant.setAdapter(kindOfRestaurantAdapter);
+    }
+
+
 }

@@ -1,4 +1,4 @@
-package com.example.foodapplication.databaseHelper;
+package com.example.foodapplication.MySQL;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -18,10 +18,10 @@ import java.util.Date;
 
 import models.Request;
 
-import static com.example.foodapplication.databaseHelper.FoodManagementContract.CCustomer.KEY_EMAIL;
-import static com.example.foodapplication.databaseHelper.FoodManagementContract.CCustomer.KEY_NAME;
-import static com.example.foodapplication.databaseHelper.FoodManagementContract.CCustomer.KEY_PASSWORD;
-import static com.example.foodapplication.databaseHelper.FoodManagementContract.CCustomer.TABLE_NAME;
+import static com.example.foodapplication.MySQL.FoodManagementContract.CCustomer.KEY_EMAIL;
+import static com.example.foodapplication.MySQL.FoodManagementContract.CCustomer.KEY_NAME;
+import static com.example.foodapplication.MySQL.FoodManagementContract.CCustomer.KEY_PASSWORD;
+import static com.example.foodapplication.MySQL.FoodManagementContract.CCustomer.TABLE_NAME;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     // REMEMBER TO ADD 1 TO THIS CONSTANT WHEN YOU MAKE ANY CHANGES TO THE CONTRACT CLASS!

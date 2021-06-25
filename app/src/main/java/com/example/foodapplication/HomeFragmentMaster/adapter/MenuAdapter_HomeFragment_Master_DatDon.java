@@ -13,13 +13,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.foodapplication.databaseHelper.DatabaseHelper;
+import com.example.foodapplication.MySQL.DatabaseHelper;
 import com.example.foodapplication.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import models.ProductModel;
+import com.example.foodapplication.HomeFragment.model.ProductModel;
 
 public class MenuAdapter_HomeFragment_Master_DatDon extends RecyclerView.Adapter<MenuAdapter_HomeFragment_Master_DatDon.ViewHolder> {
 

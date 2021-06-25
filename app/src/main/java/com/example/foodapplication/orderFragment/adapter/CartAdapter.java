@@ -13,7 +13,7 @@ import com.example.foodapplication.R;
 
 import java.util.List;
 
-import models.ProductModel;
+import com.example.foodapplication.HomeFragment.model.ProductModel;
 
 import static com.example.foodapplication.HomeFragment.adapter.MenuAdapter.productModelList;
 

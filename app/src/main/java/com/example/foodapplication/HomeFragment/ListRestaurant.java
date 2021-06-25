@@ -4,10 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,36 +15,21 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.foodapplication.HomeFragment.adapter.ListRestaurantAdapter;
 
-import com.example.foodapplication.databaseHelper.DatabaseHelper;
+import com.example.foodapplication.MySQL.DatabaseHelper;
 import com.example.foodapplication.HomeFragment.model.AllRestaurantModel;
 import com.example.foodapplication.R;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+import static com.example.foodapplication.MySQL.MySQLQuerry.GetDataForAllRestaurants;
 
 public class ListRestaurant extends AppCompatActivity {
 
     RecyclerView recyclerView_RestaurantList;
     List<AllRestaurantModel> allRestaurantModelList;
     ImageView imageView_Back;
-    RecyclerView.Adapter adapter;
-
-    SQLiteDatabase db;
-    DatabaseHelper databaseHelper;
+    ListRestaurantAdapter adapter;
 
     private static final String TAG = "ListRestaurant";
     @Override
@@ -56,13 +38,19 @@ public class ListRestaurant extends AppCompatActivity {
         transparentStatusAndNavigation();
         setContentView(R.layout.activity_list_restaurant);
 
-        databaseHelper = new DatabaseHelper(this);
-        db = databaseHelper.getReadableDatabase();
+        initComponents();
 
+        Run();
+    }
+
+    private void initComponents() {
         recyclerView_RestaurantList = findViewById(R.id.RestaurantList_recyclerView);
+        imageView_Back = findViewById(R.id.Back_RestaurantList);
+    }
+
+    private void Run() {
         allRestaurantModelList = new ArrayList<>();
 
-        imageView_Back = findViewById(R.id.Back_RestaurantList);
         imageView_Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,58 +60,10 @@ public class ListRestaurant extends AppCompatActivity {
 
         int district_id = getIntent().getIntExtra("District ID", 0);
         adapter = new ListRestaurantAdapter(allRestaurantModelList, this);
-        GetDataForAllRestaurants(district_id);
+        GetDataForAllRestaurants(district_id, allRestaurantModelList, TAG, this, adapter);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
         recyclerView_RestaurantList.setLayoutManager(gridLayoutManager);
         recyclerView_RestaurantList.setAdapter(adapter);
-    }
-
-    private void GetDataForAllRestaurants(int id) {
-        String url = "https://foodapplicationmobile.000webhostapp.com/getAllRestaurants.php";
-        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                allRestaurantModelList.clear();
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    String success = jsonObject.getString("success");
-                    JSONArray jsonArray = jsonObject.getJSONArray("data");
-
-                    if(success.equals("1")) {
-                        for(int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject object = jsonArray.getJSONObject(i);
-
-                            int id = object.getInt("_ID");
-                            String image = object.getString("IMAGE");
-                            String name = object.getString("NAME");
-                            String address = object.getString("ADDRESS");
-
-                            AllRestaurantModel allRestaurantModel = new AllRestaurantModel(id, image, name, address);
-                            allRestaurantModelList.add(allRestaurantModel);
-                            adapter.notifyDataSetChanged();
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, error.toString());
-            }
-        }) {
-            @Override
-            protected java.util.Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("district_id", String.valueOf(id));
-                return params;
-            }
-        };
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(request);
-
     }
 
     private void transparentStatusAndNavigation()

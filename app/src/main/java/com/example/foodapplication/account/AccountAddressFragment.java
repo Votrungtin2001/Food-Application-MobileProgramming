@@ -18,8 +18,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-import com.example.foodapplication.databaseHelper.DatabaseHelper;
-import com.example.foodapplication.databaseHelper.FoodManagementContract;
+import com.example.foodapplication.MySQL.DatabaseHelper;
+import com.example.foodapplication.MySQL.FoodManagementContract;
 import com.example.foodapplication.IdWithNameListItem;
 import com.example.foodapplication.MainActivity;
 import com.example.foodapplication.R;

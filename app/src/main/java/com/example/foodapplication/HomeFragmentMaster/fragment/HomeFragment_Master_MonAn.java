@@ -1,27 +1,22 @@
 package com.example.foodapplication.HomeFragmentMaster.fragment;
 
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.foodapplication.databaseHelper.DatabaseHelper;
+import com.example.foodapplication.MySQL.DatabaseHelper;
 import com.example.foodapplication.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.example.foodapplication.HomeFragmentMaster.adapter.MenuAdapter_HomeFragment_Master_DatDon;
-import models.ProductModel;
+import com.example.foodapplication.HomeFragment.model.ProductModel;
 
 
 public class HomeFragment_Master_MonAn extends Fragment {

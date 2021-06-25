@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 
-import com.example.foodapplication.databaseHelper.DatabaseHelper;
+import com.example.foodapplication.MySQL.DatabaseHelper;
 
 import org.jetbrains.annotations.NotNull;
 

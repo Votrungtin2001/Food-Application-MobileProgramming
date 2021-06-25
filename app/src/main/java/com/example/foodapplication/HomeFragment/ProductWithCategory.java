@@ -4,13 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -18,13 +15,29 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.foodapplication.HomeFragment.adapter.ProductWithCategoryAdapter;
 
-import com.example.foodapplication.databaseHelper.DatabaseHelper;
 import com.example.foodapplication.HomeFragment.model.ProductCategoryModel;
 import com.example.foodapplication.R;
+
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import static com.example.foodapplication.MySQL.MySQLQuerry.GetCategoryName;
+import static com.example.foodapplication.MySQL.MySQLQuerry.GetProductsWithCategory;
 
 public class ProductWithCategory extends AppCompatActivity {
 
@@ -33,22 +46,18 @@ public class ProductWithCategory extends AppCompatActivity {
     private List<ProductCategoryModel> productCategoryModelList;
     private int category_id;
     private int district_id;
-    private String category_name;
+    private String category_name = "";
 
     ImageView imageView;
     TextView textView;
 
-    SQLiteDatabase db;
-    DatabaseHelper databaseHelper;
+    private static final String TAG = "ProductWithCategory";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         transparentStatusAndNavigation();
         setContentView(R.layout.activity_product_with_category);
-
-        databaseHelper = new DatabaseHelper(this);
-        db = databaseHelper.getReadableDatabase();
 
         initComponents();
 
@@ -65,9 +74,8 @@ public class ProductWithCategory extends AppCompatActivity {
         category_id = getIntent().getIntExtra("Category ID", 0);
         district_id = getIntent().getIntExtra("District ID", 0);
 
-        category_name = getNameCategory(category_id);
-
         textView.setText(category_name);
+        GetCategoryName(category_id, textView, TAG, this);
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,52 +85,11 @@ public class ProductWithCategory extends AppCompatActivity {
         });
 
         productCategoryModelList = new ArrayList<>();
-        getAllProducts(category_id, district_id);
         productWithCategoryAdapter = new ProductWithCategoryAdapter(this, productCategoryModelList);
+        GetProductsWithCategory(category_id, district_id, productCategoryModelList, productWithCategoryAdapter, TAG, this);
         LinearLayoutManager linearLayoutManager_Category = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView_ProductWithCategory.setLayoutManager(linearLayoutManager_Category);
         recyclerView_ProductWithCategory.setAdapter(productWithCategoryAdapter);
-    }
-
-    public void getAllProducts(int id, int district) {
-        String selectQuery = "SELECT P.Image, P.Name, P.Description, B.NAME, B._id " +
-                "FROM ((((RESTAURANT R JOIN BRANCHES B ON R._id = B.Restaurant) " +
-                "JOIN MENU M ON R._id = M.Restaurant) JOIN PRODUCTS P ON M.Product = P._id) " +
-                "JOIN CATEGORIES C ON P.Category = C._id) " +
-                "JOIN ADDRESS A ON B.Address = A._id " +
-                "WHERE C._id ='" + id + "' AND A.District ='" + district + "';";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            do {
-                byte[] img_byte = cursor.getBlob(cursor.getColumnIndex("Image"));
-                Bitmap bitmap = BitmapFactory.decodeByteArray(img_byte, 0, img_byte.length);
-                String name_product = cursor.getString(cursor.getColumnIndex("Name"));
-                String description_product = cursor.getString(cursor.getColumnIndex("Description"));
-                String branch_name = cursor.getString(cursor.getColumnIndex("NAME"));
-                int branch_id = cursor.getInt(cursor.getColumnIndex("_id"));
-                ProductCategoryModel productCategoryModel = new ProductCategoryModel(bitmap, name_product, description_product, branch_name, branch_id);
-                productCategoryModelList.add(productCategoryModel);
-
-            } while (cursor.moveToNext());
-
-        }
-        cursor.close();
-    }
-
-    public String getNameCategory(int id) {
-        String name = "";
-        String selectQuery = "SELECT Description FROM CATEGORIES WHERE _id='" + id + "';";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor != null) {
-            cursor.moveToFirst();
-            do {
-                name = cursor.getString(cursor.getColumnIndex("Description"));
-            } while (cursor.moveToNext());
-
-        }
-        cursor.close();
-        return name;
     }
 
     private void transparentStatusAndNavigation()

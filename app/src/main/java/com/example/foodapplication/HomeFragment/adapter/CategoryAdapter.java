@@ -54,15 +54,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                     Intent intent = new Intent(context, ProductWithCategory.class);
                     switch (position) {
                         case 0:
-                            category_id = 8;
+                            category_id = 10;
                             break;
 
                         case 1:
-                            category_id = 13;
+                            category_id = 4;
                             break;
 
                         case 2:
-                            category_id = 7;
+                            category_id = 9;
                             break;
 
                         case 3:
@@ -70,7 +70,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                             break;
 
                         case 4:
-                            category_id = 6;
+                            category_id = 8;
                             break;
 
                         case 5:
@@ -78,7 +78,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                             break;
 
                         case 6:
-                            category_id = 15;
+                            category_id = 14;
                             break;
 
                         case 7:
@@ -86,35 +86,35 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                             break;
 
                         case 8:
-                            category_id = 9;
+                            category_id = 11;
                             break;
 
                         case 9:
-                            category_id = 14;
-                            break;
-
-                        case 10:
-                            category_id = 10;
-                            break;
-
-                        case 11:
-                            category_id = 18;
-                            break;
-
-                        case 12:
-                            category_id = 16;
-                            break;
-
-                        case 13:
                             category_id = 5;
                             break;
 
-                        case 14:
+                        case 10:
+                            category_id = 12;
+                            break;
+
+                        case 11:
+                            category_id = 6;
+                            break;
+
+                        case 12:
+                            category_id = 15;
+                            break;
+
+                        case 13:
                             category_id = 19;
                             break;
 
-                        case 15:
+                        case 14:
                             category_id = 17;
+                            break;
+
+                        case 15:
+                            category_id = 16;
                             break;
 
 
