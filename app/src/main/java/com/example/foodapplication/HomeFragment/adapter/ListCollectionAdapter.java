@@ -42,10 +42,10 @@ public class ListCollectionAdapter extends RecyclerView.Adapter<ListCollectionAd
         CollectionModel collectionModel = my_list.get(position);
         holder.title.setText(collectionModel.getName());
         if(collectionModel.getImage().isEmpty()){
-            holder.linearIcon.setImageResource(R.drawable.noimage_restaurant);
+            holder.linearIcon.setImageResource(R.drawable.noimage_voucher);
         }else {
             Picasso.get ().load ( collectionModel.getImage () )
-                    .placeholder(R.drawable.noimage_restaurant)
+                    .placeholder(R.drawable.noimage_voucher)
                     .error(R.drawable.error)
                     .into(holder.linearIcon);
         };

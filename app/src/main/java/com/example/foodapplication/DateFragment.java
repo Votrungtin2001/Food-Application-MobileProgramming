@@ -2,6 +2,7 @@ package com.example.foodapplication;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.widget.DatePicker;
 import android.widget.Toast;
@@ -12,13 +13,16 @@ import com.example.foodapplication.MySQL.DatabaseHelper;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import static com.example.foodapplication.MySQL.MySQLQuerry.UpdateCustomerDOB;
+
 public class DateFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener{
     int user_id = -1;
-
+    private final String TAG = "DateFragment";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +42,6 @@ public class DateFragment extends DialogFragment implements DatePickerDialog.OnD
 
     public void onDateSet(DatePicker view, int yy, int mm, int dd) {
         if (user_id != -1) {
-            DatabaseHelper dbHelper = new DatabaseHelper(getContext());
-
             Calendar calendar = GregorianCalendar.getInstance();
             calendar.set(Calendar.DAY_OF_MONTH, dd);
             calendar.set(Calendar.MONTH, mm);
@@ -50,8 +52,12 @@ public class DateFragment extends DialogFragment implements DatePickerDialog.OnD
             calendar.set(Calendar.HOUR_OF_DAY, 0);
 
             Date date = calendar.getTime();
-            dbHelper.updUserDoB(user_id, date);
-            dbHelper.close();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            String sDate = simpleDateFormat.format(date);
+            final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setMessage("Please wait...");
+            progressDialog.show();
+            UpdateCustomerDOB(user_id, sDate, progressDialog, TAG, getActivity());
         }
         else
             Toast.makeText(getContext(), "Unknown user. Did you forget to log in?", Toast.LENGTH_LONG).show();

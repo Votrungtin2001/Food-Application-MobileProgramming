@@ -1,7 +1,9 @@
 package com.example.foodapplication.account;
 
+import android.app.ProgressDialog;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,16 +16,35 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.foodapplication.MySQL.DatabaseHelper;
 import com.example.foodapplication.MySQL.FoodManagementContract;
 import com.example.foodapplication.MainActivity;
 import com.example.foodapplication.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.example.foodapplication.MySQL.MySQLQuerry.UpdateCustomerPassword;
 
 public class AccountSettingsPasswordFragment extends Fragment {
     EditText txtCurrentPassword, txtNewPassword, txtConfirmPassword;
     Button btnSavePassword;
     int user_id = -1;
     boolean IsUpdatingCustomer;
+
+    String currentPassword = "";
+    private final String TAG = "AccountSettingPF";
 
     public AccountSettingsPasswordFragment() { }
 
@@ -72,48 +93,69 @@ public class AccountSettingsPasswordFragment extends Fragment {
 
     View.OnClickListener onPasswordSave = v -> {
         if (user_id != -1) {
-            DatabaseHelper dbHelper = new DatabaseHelper(getContext());
-            Cursor cursor;
-
             if (IsUpdatingCustomer)
-                cursor = dbHelper.getCustomerById(user_id);
-            else
-                cursor = dbHelper.getMasterById(user_id);
+                UpdatingCustomerPassword(user_id);
+            else ;
 
-            if (cursor.moveToFirst()) {
-                String currentPassword;
-
-                if (IsUpdatingCustomer)
-                    currentPassword = cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CCustomer.KEY_PASSWORD));
-                else
-                    currentPassword = cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CMaster.KEY_PASSWORD));
-
-                if (txtCurrentPassword.getText().toString().equals(currentPassword)) {
-                    if (txtConfirmPassword.getText().toString().equals(txtNewPassword.getText().toString())) {
-                        if (IsUpdatingCustomer)
-                            dbHelper.updUserPassword(user_id, txtNewPassword.getText().toString());
-                        else
-                            dbHelper.updMasterPassword(user_id, txtNewPassword.getText().toString());
-
-                        Toast.makeText(getContext(), "Đã cập nhật mật khẩu!", Toast.LENGTH_SHORT).show();
-                        FragmentManager fragmentManager = getParentFragmentManager();
-                        fragmentManager.popBackStack(null, 0);
-                    } else {
-                        txtNewPassword.setText("");
-                        txtConfirmPassword.setText("");
-                        Toast.makeText(getContext(), "Mật khẩu xác nhận không trùng mật khẩu mới!", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    txtCurrentPassword.setText("");
-                    txtNewPassword.setText("");
-                    txtConfirmPassword.setText("");
-                    Toast.makeText(getContext(), "Sai mật khẩu hiện tại!", Toast.LENGTH_SHORT).show();
-                }
-            }
-            dbHelper.close();
-            cursor.close();
         }
         else
             Toast.makeText(getContext(), "Unknown user. Did you forget to log in?", Toast.LENGTH_LONG).show();
     };
+
+    private void UpdatingCustomerPassword(int id) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/getCustomerAccountInformation.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String success = jsonObject.getString("success");
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+                    if(success.equals("1")) {
+                        for(int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
+
+                            currentPassword = object.getString("PASSWORD");
+                            if (txtCurrentPassword.getText().toString().equals(currentPassword)) {
+                                if (txtConfirmPassword.getText().toString().equals(txtNewPassword.getText().toString())) {
+                                    final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+                                    progressDialog.setMessage("Please wait...");
+                                    progressDialog.show();
+                                    UpdateCustomerPassword(id, txtNewPassword.getText().toString(), progressDialog, TAG, getActivity());
+                                    FragmentManager fragmentManager = getParentFragmentManager();
+                                    fragmentManager.popBackStack(null, 0);
+                                } else {
+                                    txtNewPassword.setText("");
+                                    txtConfirmPassword.setText("");
+                                    Toast.makeText(getContext(), "Mật khẩu xác nhận không trùng mật khẩu mới!", Toast.LENGTH_SHORT).show();
+                                }
+                            } else {
+                                txtCurrentPassword.setText("");
+                                txtNewPassword.setText("");
+                                txtConfirmPassword.setText("");
+                                Toast.makeText(getContext(), "Sai mật khẩu hiện tại!", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("customer_id", String.valueOf(id));
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue.add(request);
+    }
 }

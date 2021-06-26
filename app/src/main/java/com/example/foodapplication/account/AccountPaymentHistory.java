@@ -1,5 +1,6 @@
 package com.example.foodapplication.account;
 
+import android.app.ProgressDialog;
 import android.database.Cursor;
 import android.os.Bundle;
 
@@ -24,9 +25,13 @@ import java.util.ArrayList;
 
 import adapter.TransactionAdapter;
 
+import static com.example.foodapplication.MySQL.MySQLQuerry.GetTransactionHistory;
+
 public class AccountPaymentHistory extends Fragment {
-    ArrayList<Transaction> transactions;
+    ArrayList<Transaction> transactions = new ArrayList<>();
     int user_id = -1;
+    private final String TAG = "AccountPaymentHistory";
+
 
     public AccountPaymentHistory() { }
 
@@ -60,16 +65,12 @@ public class AccountPaymentHistory extends Fragment {
         transactions = new ArrayList<>();
 
         if (user_id != -1) {
-            DatabaseHelper dbHelper = new DatabaseHelper(getContext());
-            Cursor cursor = dbHelper.getTransactions(user_id);
-            while (cursor.moveToNext()) {
-                int credits = cursor.getInt(cursor.getColumnIndexOrThrow(FoodManagementContract.CTransaction.KEY_CREDITS));
-                String date = cursor.getString(cursor.getColumnIndexOrThrow(FoodManagementContract.CTransaction.KEY_DATE));
-                transactions.add(new Transaction(credits, date));
-            }
-            cursor.close();
-
             TransactionAdapter adapter = new TransactionAdapter(transactions);
+            final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+            progressDialog.setMessage("Please wait...");
+            progressDialog.show();
+            GetTransactionHistory(user_id, transactions, adapter, progressDialog, TAG, getActivity());
+
             rvTransactionHistory.setAdapter(adapter);
             rvTransactionHistory.setLayoutManager(new LinearLayoutManager(getActivity()));
         }

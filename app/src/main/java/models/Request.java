@@ -8,11 +8,12 @@ import java.util.List;
 import static com.example.foodapplication.HomeFragment.adapter.MenuAdapter.productModelList;
 
 public class Request {
-    Date DateTime;
-    int CustomerId, AddressId, Total, Status;
+    String DateTime;
+    int CustomerId, AddressId, Status;
+    double Total;
     List<ProductModel> listCart = productModelList;
 
-    public Request(Date dateTime,int customerId,int addressId ,int total,int status){
+    public Request(String dateTime,int customerId,int addressId ,double total,int status){
         DateTime = dateTime;
         CustomerId = customerId;
         AddressId = addressId;
@@ -24,11 +25,11 @@ public class Request {
         this.listCart = listCart;
     }
 
-    public Date getDateTime() {
+    public String getDateTime() {
         return DateTime;
     }
 
-    public void setDateTime(Date dateTime) {
+    public void setDateTime(String dateTime) {
         DateTime = dateTime;
     }
 
@@ -56,11 +57,11 @@ public class Request {
         Status = status;
     }
 
-    public int getTotal() {
+    public double getTotal() {
         return Total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(double total) {
         Total = total;
     }
 }

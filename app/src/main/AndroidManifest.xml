@@ -28,10 +28,6 @@
         <activity android:name=".HomeFragment.RestaurantInformation" />
         <activity android:name=".HomeFragment.ListCollection" />
         <activity android:name=".HomeFragment.Details" />
-        <activity
-            android:name=".HomeFragment.FillAddress"
-            android:parentActivityName=".HomeFragment.ManageAddress"
-            android:theme="@style/Theme.AppCompat.Button" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

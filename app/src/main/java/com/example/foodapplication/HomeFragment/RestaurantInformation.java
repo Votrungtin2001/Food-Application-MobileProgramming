@@ -1,6 +1,7 @@
 package com.example.foodapplication.HomeFragment;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -25,6 +26,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.foodapplication.Transaction;
 import com.example.foodapplication.orderFragment.cart.Cart;
 import com.example.foodapplication.MySQL.DatabaseHelper;
 import com.example.foodapplication.R;
@@ -45,6 +47,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import static com.example.foodapplication.MainActivity.customer_id;
+import static com.example.foodapplication.MainActivity.isCustomerHasAddress;
 import static com.example.foodapplication.MySQL.MySQLQuerry.GetBranchName;
 import static com.example.foodapplication.MySQL.MySQLQuerry.GetRestaurantImage;
 
@@ -62,11 +65,11 @@ public class RestaurantInformation extends AppCompatActivity {
     ViewPagerAdapter viewPagerAdapter;
 
     int branch_id;
-    String image_restaurant = "";
-    String branch_name = "";
     SQLiteDatabase db;
     DatabaseHelper databaseHelper;
-    Bitmap bitmap_restaurant;
+
+    public static int addressid_Home = 0;
+    public static int addressid_Work = 0;
 
     Dialog AnnouncementDialog;
 
@@ -126,17 +129,19 @@ public class RestaurantInformation extends AppCompatActivity {
         //Prepare viewpager
         prepareViewPagerRestaurantInformation(viewPager_RestaurantInformation, title_TabLayout);
 
+        GetCustomerAddressIDWithLabel(customer_id, 1);
+        GetCustomerAddressIDWithLabel(customer_id, 2);
         //Code Minh Thi
 
         cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                if(customer_id > 0) {
-                    boolean checkCustomerHasAddress = CheckCustomerHasAddress(customer_id);
+                    boolean checkCustomerHasAddress = isCustomerHasAddress;
                     if(checkCustomerHasAddress == true) {
                         Intent intent = new Intent(getApplication(), Cart.class);
                         startActivity(intent);
-                         }
+                    }
                   else ShowPopUpRequireAddress();
                 }
             else ShowPopUpRequireLogin();
@@ -230,22 +235,50 @@ public class RestaurantInformation extends AppCompatActivity {
         AnnouncementDialog.show();
     }
 
-    public boolean CheckCustomerHasAddress(int customer_id) {
-        int count = 0;
+    public void GetCustomerAddressIDWithLabel(int customer_id, int address_label) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/getCustomerAddressIDWithLabel.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e(TAG, response.toString());
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String success = jsonObject.getString("success");
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
 
-        String selectQuery = "SELECT * FROM CUSTOMER_ADDRESS WHERE Customer='" + customer_id + "';";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            do {
+                    if (success.equals("1")) {
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
 
-            } while (cursor.moveToNext());
+                            int address_id = object.getInt("_ID");
+                            if(address_label == 1) {
+                                addressid_Home = address_id;
+                            }
+                            else addressid_Work = address_id;
+                        }
+                    }
 
-        }
-        count = cursor.getCount();
-        cursor.close();
-        if(count > 0) return true;
-        else return false;
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("customer_id", String.valueOf(customer_id));
+                params.put("address_label", String.valueOf(address_label));
+                return params;
+            }
+        };
 
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(request);
     }
+
 }

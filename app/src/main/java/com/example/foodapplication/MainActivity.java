@@ -3,6 +3,7 @@ package com.example.foodapplication;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -14,10 +15,20 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.foodapplication.HomeFragment.HomeFragment;
 import com.example.foodapplication.orderFragment.OrderFragment;
 import com.example.foodapplication.account.AccountFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
     public static int customer_id;
     public static int master_id;
     public static String stateName;
+
+    public static boolean isCustomerHasAddress = false;
+    private final String TAG = "MainActivity";
 
     Bundle importArgs;
 
@@ -61,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
         nameStreet = getIntent().getExtras().getString("NameStreet");
         district_id = getIntent().getExtras().getInt("District ID");
         customer_id = getIntent().getExtras().getInt("Customer ID");
+
+        CheckCustomerHasAddress(customer_id);
 
         fragmentTransaction.add(R.id.frame_container, homeFragment);
         fragmentTransaction.commit();
@@ -134,5 +150,34 @@ public class MainActivity extends AppCompatActivity {
             winParams.flags &= ~bits;
         }
         win.setAttributes(winParams);
+    }
+
+    private void CheckCustomerHasAddress(int customer_id) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/checkCustomerHasAddress.php\n";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                String announcement = "";
+                if(response.toString().trim().equals("true")) {
+                    isCustomerHasAddress = true;
+                }
+                else isCustomerHasAddress = false;
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Override
+            protected java.util.Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("customer_id", String.valueOf(customer_id));
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(request);
     }
 }

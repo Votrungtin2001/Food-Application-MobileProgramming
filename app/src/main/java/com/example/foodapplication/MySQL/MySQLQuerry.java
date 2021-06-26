@@ -5,12 +5,15 @@ import android.content.Context;
 import android.media.Image;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.AuthFailureError;
@@ -36,16 +39,24 @@ import com.example.foodapplication.HomeFragment.model.KindOfRestaurantModel;
 import com.example.foodapplication.HomeFragment.model.ProductCategoryModel;
 import com.example.foodapplication.HomeFragment.model.ProductModel;
 import com.example.foodapplication.HomeFragment.model.SortOfProductModel;
+import com.example.foodapplication.IdWithNameListItem;
 import com.example.foodapplication.R;
+import com.example.foodapplication.Transaction;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import adapter.TransactionAdapter;
+
+import static com.example.foodapplication.MainActivity.customer_id;
+import static com.example.foodapplication.MainActivity.master_id;
 
 public class MySQLQuerry {
 
@@ -727,7 +738,6 @@ public class MySQLQuerry {
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e(TAG, response.toString());
                 list.clear();
                 try {
                     JSONObject jsonObject = new JSONObject(response);
@@ -744,8 +754,9 @@ public class MySQLQuerry {
                             String product_description = object.getString("PDESCRIPTION");
                             String menu_description = object.getString("MDESCRIPTION");
                             double price = object.getDouble("PRICE");
+                            int menu_id = object.getInt("MID");
 
-                            ProductModel productModel = new ProductModel(image, name, product_description, menu_description, price, id);
+                            ProductModel productModel = new ProductModel(image, name, product_description, menu_description, price, id, menu_id);
                             list.add(productModel);
                             adapter.notifyDataSetChanged();
 
@@ -952,7 +963,6 @@ public class MySQLQuerry {
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e(TAG, response.toString());
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     String success = jsonObject.getString("success");
@@ -1003,5 +1013,563 @@ public class MySQLQuerry {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(request);
     }
+
+    public static void LogOutCustomerAccount(TextView textView, ImageView imageView, Button button, ProgressDialog progressDialog, String TAG, Context context) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/getLogOutAccount.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                progressDialog.dismiss();
+                String announcement = "";
+                if(response.toString().trim().equals("Logged out successfully")) {
+                    announcement = "Đăng xuất thành công!!!";
+                    imageView.setImageResource(0);
+                    textView.setText("Đăng nhập/Đăng ký");
+                    button.setVisibility(View.VISIBLE);
+                    customer_id = 0;
+                    master_id = 0;
+                }
+                else announcement = "Đăng xuất không thành công!!!";
+                Toast.makeText(context, announcement, Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                Log.e(TAG, error.toString());
+            }
+        });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+
+    public static void GetTransactionHistory(int id, List<Transaction> list, TransactionAdapter adapter, ProgressDialog progressDialog, String TAG, Context context) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/getTransactionHistory.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                progressDialog.dismiss();
+                list.clear();
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String success = jsonObject.getString("success");
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+                    if (success.equals("1")) {
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
+
+                            double credit = object.getInt("CREDIT");
+                            String date = object.getString("DATE");
+
+                            Transaction transaction = new Transaction(credit, date);
+                            list.add(transaction);
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("customer_id", String.valueOf(id));
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+
+    public static void GetCities(List<IdWithNameListItem> list, ArrayAdapter adapter, String TAG, Context context) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/getCities.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                list.clear();
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String success = jsonObject.getString("success");
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+                    if(success.equals("1")) {
+                        for(int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
+
+                            int id = object.getInt("_ID");
+                            String name = object.getString("NAME");
+
+                            IdWithNameListItem item = new IdWithNameListItem(id, name);
+                            list.add(item);
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, error.toString());
+            }
+        });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+
+    public static void GetDistrictsWithCity(int id, List<IdWithNameListItem> list, ArrayAdapter adapter, ProgressDialog progressDialog, String TAG, Context context) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/getDistrictsWithCity.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                progressDialog.dismiss();
+                list.clear();
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String success = jsonObject.getString("success");
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+                    if(success.equals("1")) {
+                        for(int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
+
+                            int id = object.getInt("_ID");
+                            String name = object.getString("NAME");
+
+                            IdWithNameListItem item = new IdWithNameListItem(id, name);
+                            list.add(item);
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("city_id", String.valueOf(id));
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+
+    public static void GetCustomerPhone(int id, EditText editText, ProgressDialog progressDialog, String TAG, Context context) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/getCustomerAccountInformation.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                progressDialog.dismiss();
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String success = jsonObject.getString("success");
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+                    if(success.equals("1")) {
+                        for(int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
+
+                            String phone = object.getString("PHONE");
+                            if(phone.trim().equals("null") || phone.trim().equals("")) editText.setHint("Chưa có thông tin...");
+                            else editText.setHint(phone);
+
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("customer_id", String.valueOf(id));
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+
+    public static void GetCustomerPhone(int id, TextView textView, ProgressDialog progressDialog, String TAG, Context context) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/getCustomerAccountInformation.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                progressDialog.dismiss();
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String success = jsonObject.getString("success");
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+                    if(success.equals("1")) {
+                        for(int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
+
+                            String phone = object.getString("PHONE");
+                            if(phone.trim().equals("null") || phone.trim().equals("")) textView.setText("Chưa có thông tin...");
+                            else textView.setText("Điện thoại: " + phone);
+
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("customer_id", String.valueOf(id));
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+
+    public static void GetCustomerName(int id, EditText editText, ProgressDialog progressDialog, String TAG, Context context) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/getCustomerAccountInformation.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                progressDialog.dismiss();
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String success = jsonObject.getString("success");
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+                    if(success.equals("1")) {
+                        for(int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
+
+                            String name = object.getString("NAME");
+                            if(name.trim().equals("null") || name.trim().equals("")) editText.setHint("Chưa có thông tin...");
+                            else editText.setHint(name);
+
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("customer_id", String.valueOf(id));
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+
+    public static void GetCustomerName(int id, TextView textView, String TAG, Context context) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/getCustomerAccountInformation.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String success = jsonObject.getString("success");
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+                    if(success.equals("1")) {
+                        for(int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
+
+                            String name = object.getString("NAME");
+                            if(name.trim().equals("null") || name.trim().equals("")) textView.setText("Chưa có thông tin...");
+                            else textView.setText("Tên liên lạc: " + name);
+
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("customer_id", String.valueOf(id));
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+
+    public static void GetCustomerEmail(int id, EditText editText, ProgressDialog progressDialog, String TAG, Context context) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/getCustomerAccountInformation.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                progressDialog.dismiss();
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String success = jsonObject.getString("success");
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+                    if(success.equals("1")) {
+                        for(int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
+
+                            String email = object.getString("EMAIL");
+                            if(email.trim().equals("null") || email.trim().equals("")) editText.setHint("Chưa có thông tin...");
+                            else editText.setHint(email);
+
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("customer_id", String.valueOf(id));
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+
+    public static void GetCustomerUsername(int id, TextView textView, String TAG, Context context) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/getCustomerAccountInformation.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e(TAG, response.toString());
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String success = jsonObject.getString("success");
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+                    if(success.equals("1")) {
+                        for(int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
+
+                            String username = object.getString("USERNAME");
+                            if(username.trim().equals("null") || username.trim().equals("")) textView.setText("Chưa có thông tin...");
+                            else textView.setText(username);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("customer_id", String.valueOf(id));
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+
+    public static void UpdateCustomerGender(int customer_id, int gender, ProgressDialog progressDialog, String TAG, Context context) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/updateCustomerGender.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                progressDialog.dismiss();
+                String announcement = "";
+                if(response.toString().trim().equals("Successfully")) {
+                    announcement = "Cập nhật giới tính thành công!";
+                }
+                else announcement = "Việc cập nhật giới tính thất bại!!!";
+                Toast.makeText(context, announcement, Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Override
+            protected java.util.Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("customer_id", String.valueOf(customer_id));
+                params.put("gender", String.valueOf(gender));
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+
+    public static void UpdateCustomerDOB(int customer_id, String date, ProgressDialog progressDialog, String TAG, Context context) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/updateCustomerDOB.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                progressDialog.dismiss();
+                String announcement = "";
+                if(response.toString().trim().equals("Successfully")) {
+                    announcement = "Cập nhật ngày sinh thành công!";
+                }
+                else announcement = "Việc cập nhật ngày sinh thất bại!!!";
+                Toast.makeText(context, announcement, Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Override
+            protected java.util.Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("customer_id", String.valueOf(customer_id));
+                params.put("dob", String.valueOf(date));
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+
+    public static void UpdateCustomerOccupation(int customer_id, String occupation, ProgressDialog progressDialog, String TAG, Context context) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/updateCustomerOccupation.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                progressDialog.dismiss();
+                String announcement = "";
+                if(response.toString().trim().equals("Successfully")) {
+                    announcement = "Cập nhật việc làm thành công!";
+                }
+                else announcement = "Việc cập nhật việc làm thất bại!!!";
+                Toast.makeText(context, announcement, Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Override
+            protected java.util.Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("customer_id", String.valueOf(customer_id));
+                params.put("occupation", String.valueOf(occupation));
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+
+    public static void UpdateCustomerPassword(int customer_id, String password, ProgressDialog progressDialog, String TAG, Context context) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/updateCustomerPassword.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                progressDialog.dismiss();
+                String announcement = "";
+                if(response.toString().trim().equals("Successfully")) {
+                    announcement = "Cập nhật mật khẩu thành công!";
+                }
+                else announcement = "Việc cập nhật mật khẩu thất bại!!!";
+                Toast.makeText(context, announcement, Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Override
+            protected java.util.Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("customer_id", String.valueOf(customer_id));
+                params.put("password", String.valueOf(password));
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+
+
+
 
 }

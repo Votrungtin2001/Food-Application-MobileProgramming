@@ -1,6 +1,7 @@
 package com.example.foodapplication.account;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,9 +22,13 @@ import com.example.foodapplication.MainActivity;
 import com.example.foodapplication.R;
 import com.example.foodapplication.SingleEditTextUpdateFragment;
 
+import static com.example.foodapplication.MySQL.MySQLQuerry.UpdateCustomerGender;
+
 public class AccountSettingsInfoFragment extends Fragment {
     TextView txtAccountSettingsInfoPhone, txtAccountSettingsInfoName, txtAccountSettingsInfoEmail, txtAccountSettingsInfoGender, txtAccountSettingsInfoDoB, txtAccountSettingsInfoOccupation;
     int user_id = -1;
+
+    private final String TAG = "AccountSettingIF";
 
     public AccountSettingsInfoFragment() {}
 
@@ -99,20 +104,20 @@ public class AccountSettingsInfoFragment extends Fragment {
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setItems(gender, (dialog, which) -> {
-                DatabaseHelper dbHelper = new DatabaseHelper(getContext());
+                final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+                progressDialog.setMessage("Please wait...");
+                progressDialog.show();
                 switch (gender[which]) {
                     case "Nam":
-                        dbHelper.updUserGender(user_id, 0);
+                        UpdateCustomerGender(user_id, 0, progressDialog, TAG, getActivity());
                         break;
                     case "Nữ":
-                        dbHelper.updUserGender(user_id, 1);
+                        UpdateCustomerGender(user_id, 1, progressDialog, TAG, getActivity());
                         break;
                     case "Chưa rõ":
-                        dbHelper.updUserGender(user_id, 2);
+                        UpdateCustomerGender(user_id, 2, progressDialog, TAG, getActivity());
                         break;
                 }
-                dbHelper.close();
-                Toast.makeText(getContext(), "Đã cập nhật giới tính!", Toast.LENGTH_SHORT).show();
             });
             builder.show();
         }

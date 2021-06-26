@@ -1,6 +1,7 @@
 package com.example.foodapplication.SubScreen;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -12,6 +13,7 @@ import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -21,6 +23,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.foodapplication.MySQL.DatabaseHelper;
 import com.example.foodapplication.MainActivity;
 import com.example.foodapplication.Master_MainActivity;
@@ -30,9 +39,15 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class GetCurrentLocation extends AppCompatActivity {
 
@@ -40,14 +55,12 @@ public class GetCurrentLocation extends AppCompatActivity {
     private String addressLine;
     private String nameStreet;
 
-    SQLiteDatabase db;
-    DatabaseHelper databaseHelper;
-
     FusedLocationProviderClient fusedLocationProviderClient;
     boolean permission = false;
     int district_id = 0;
     int master_id = 0;
     int customer_id = 0;
+    private final String TAG = "GetCurrentLocation";
 
 
     @Override
@@ -58,8 +71,6 @@ public class GetCurrentLocation extends AppCompatActivity {
         transparentStatusAndNavigation();
         setContentView(R.layout.activity_get_current_location);
 
-        databaseHelper = new DatabaseHelper(this);
-        db = databaseHelper.getReadableDatabase();
         initComponents();
 
         Run();
@@ -73,8 +84,8 @@ public class GetCurrentLocation extends AppCompatActivity {
         //get current location - Address Line
         getLocation();
 
-        customer_id = GetCustomerIDLoginBefore();
-        master_id = GetMasterIDLoginBefore();
+        GetCustomerAccountLoginBefore();
+        GetMasterAccountLoginBefore();
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -180,34 +191,70 @@ public class GetCurrentLocation extends AppCompatActivity {
         win.setAttributes(winParams);
     }
 
-    public int GetCustomerIDLoginBefore() {
-        int cus_id = 0;
-        String selectQuery = "Select _id from CUSTOMER where Status ='" + 1 + "';";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            do {
-                cus_id = cursor.getInt(cursor.getColumnIndex("_id"));
-            } while (cursor.moveToNext());
+    public void GetCustomerAccountLoginBefore() {
+        String url = "https://foodapplicationmobile.000webhostapp.com/getCustomerAccountLoginBefore.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String success = jsonObject.getString("success");
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
 
-        }
-        cursor.close();
-        return cus_id;
+                    if(success.equals("1")) {
+                        for(int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
+
+                            int _id = object.getInt("_ID");
+                            customer_id = _id;
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, error.toString());
+            }
+        });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(request);
     }
 
-    public int GetMasterIDLoginBefore() {
-        int master_id = 0;
-        String selectQuery = "Select _id from MASTER where Status ='" + 1 + "';";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            do {
-                master_id = cursor.getInt(cursor.getColumnIndex("_id"));
-            } while (cursor.moveToNext());
+    public void GetMasterAccountLoginBefore() {
+        String url = "https://foodapplicationmobile.000webhostapp.com/getMasterAccountLoginBefore.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String success = jsonObject.getString("success");
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
 
-        }
-        cursor.close();
-        return master_id;
+                    if(success.equals("1")) {
+                        for(int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
+
+                            int _id = object.getInt("_ID");
+                            master_id = _id;
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, error.toString());
+            }
+        });
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(request);
     }
 
 
