@@ -29,7 +29,6 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -57,22 +56,21 @@ import static com.example.foodapplication.MainActivity.customer_id;
 public class LoginFragment extends Fragment  {
 
     private final String TAG = "LoginFragment";
-    AccountFragment accountFragment = new AccountFragment();
+
     private static final int RC_SIGN_IN = 9001 ;
     private AccessTokenTracker accessTokenTracker;
     private FirebaseAuth mFirebaseAuth;
     private FirebaseAuth.AuthStateListener mAuthStateListener;
     private GoogleSignInClient mGoogleSignInClient;
 
-    private GoogleApiClient mGoogleApiClient; // for google sign in
-    private CallbackManager mFacebookCallbackManager; // for facebook log in
-    LoginButton mFacebookLoginButton;
+    private GoogleApiClient mGoogleApiClient;
+    private CallbackManager mFacebookCallbackManager;
     private DatabaseHelper databaseHelper;
     private user user;
     private FragmentLoginBinding binding;
 
-    String userId;
     MainActivity mainActivity = new MainActivity();
+    AccountFragment accountFragment = new AccountFragment();
 
     int role = 0;
     int namefragment_before = 0;
@@ -87,7 +85,6 @@ public class LoginFragment extends Fragment  {
     public LoginFragment(int choose_role) {
         this.role = choose_role;
     }
-
 
     public static LoginFragment newInstance() {
         LoginFragment fragment = new LoginFragment();
@@ -210,13 +207,10 @@ public class LoginFragment extends Fragment  {
         binding.email.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) { }
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -245,7 +239,6 @@ public class LoginFragment extends Fragment  {
             }
         }
          mFacebookCallbackManager.onActivityResult(requestCode, resultCode, data);
-
     }
 
     // [START auth_with_google]
@@ -262,7 +255,6 @@ public class LoginFragment extends Fragment  {
         Intent signIn = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signIn, RC_SIGN_IN);
     }
-
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
@@ -291,18 +283,20 @@ public class LoginFragment extends Fragment  {
                                                 Toast.makeText(getActivity(), "Login id: " + customer_id, Toast.LENGTH_LONG).show();
                                                 databaseHelper.updAllAcountLogOutStatus();
                                                 databaseHelper.updCustomerLoginStatus(customer_id);
+
+                                                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                                                transaction.replace(R.id.frame_container, accountFragment);
+                                                transaction.addToBackStack(null);
+                                                transaction.commit();
+
                                             } else {
-                                                Toast.makeText(getActivity(), "Email chưa được đăng ký. Vui lòng đăng ký!", Toast.LENGTH_LONG).show();
+                                                Toast.makeText(getActivity(), "Vui lòng đăng ký tài khoản mới!", Toast.LENGTH_LONG).show();
                                             }
                                         }
                                     }
                                 });
                             }
-                            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                            transaction.replace(R.id.frame_container, accountFragment);
-                            transaction.addToBackStack(null);
-                            transaction.commit();
-}
+                        }
                         }
                         else {
                             Toast.makeText(getActivity(), "Đăng nhập không thành công!", Toast.LENGTH_SHORT).show();

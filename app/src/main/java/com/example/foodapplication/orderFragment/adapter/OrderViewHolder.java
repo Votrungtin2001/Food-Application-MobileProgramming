@@ -8,11 +8,14 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.foodapplication.databaseHelper.DatabaseHelper;
 import com.example.foodapplication.R;
-import com.example.foodapplication.orderFragment.model.OrderModel;
+import com.example.foodapplication.databaseHelper.DatabaseHelper;
+import com.example.foodapplication.orderFragment.OrderDetailFragment;
+import com.example.foodapplication.orderFragment.models.OrderModel;
 
 import java.util.List;
 
@@ -51,6 +54,17 @@ public class OrderViewHolder extends RecyclerView.Adapter<OrderViewHolder.ViewHo
         holder.txtPhone.setText(currentItem.getPhone());
         holder.txtAddress.setText(currentItem.getAddress());
 
+        for(int i = 0; i < itemList.size(); i++) {
+            holder.cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AppCompatActivity activity = (AppCompatActivity) v.getContext();
+                    OrderDetailFragment myFragment = new OrderDetailFragment(currentItem.getOrderId());
+                    activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, myFragment).addToBackStack(null).commit();
+                }
+
+            });
+        }
     }
 
     @Override
@@ -63,11 +77,12 @@ public class OrderViewHolder extends RecyclerView.Adapter<OrderViewHolder.ViewHo
         TextView txtOrderStt;
         TextView txtPhone;
         TextView txtAddress;
-
+        CardView cardView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
+            cardView = itemView.findViewById(R.id.cardlist_item);
             txtOrderId = itemView.findViewById(R.id.order_id);
             txtOrderStt = itemView.findViewById(R.id.order_status);
             txtPhone = itemView.findViewById(R.id.order_phone);
@@ -75,5 +90,21 @@ public class OrderViewHolder extends RecyclerView.Adapter<OrderViewHolder.ViewHo
 
         }
     }
+//    public int getOrderId() {
+//        int orderid = -1;
+//        String selectQuery = "SELECT O._id " +
+//                "FROM (ORDERS O JOIN ORDER_DETAILS OD ON O._id = OD.OrderID) " +
+//                "WHERE O.Customer ='" + customer_id + "';";
+//        Cursor cursor = db.rawQuery(selectQuery, null);
+//        if (cursor.getCount() > 0) {
+//            cursor.moveToFirst();
+//            do {
+//                orderid = cursor.getInt(cursor.getColumnIndex("_id"));
+//            }
+//            while (cursor.moveToNext());
+//        }
+//        cursor.close();
+//        return  orderid;
+//    }
 }
 

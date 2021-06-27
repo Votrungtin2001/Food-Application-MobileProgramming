@@ -32,10 +32,14 @@ public class AccountFragment extends Fragment {
 
     int choose_role = 0;
     int namefragment = 0;
+
     DatabaseHelper databaseHelper;
+
     public AccountFragment(int role,int name) {
         this.choose_role = role;
-        this.namefragment = name;}
+        this.namefragment = name;
+    }
+
     public AccountFragment() { }
 
     @Override

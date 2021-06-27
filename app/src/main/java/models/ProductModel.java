@@ -9,12 +9,12 @@ public class ProductModel {
     private String valueOfSell_product;
     private int price;
 
-    public int quantity = 1;
+    public int quantity;
     private int product_id;
 
     public ProductModel( String Name, int Quantity, int Price, int product_id) {
         this.name_product = Name;
-        this.quantity = Quantity;
+        this.quantity = 1;
         this.price = Price;
         this.product_id = product_id;
     }
@@ -26,6 +26,10 @@ public class ProductModel {
         this.valueOfSell_product = Value;
         this.price = Price;
         this.product_id = Product_ID;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
     }
 
     public Bitmap getImage() {

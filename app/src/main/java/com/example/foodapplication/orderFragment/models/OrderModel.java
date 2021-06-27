@@ -1,4 +1,4 @@
-package com.example.foodapplication.orderFragment.model;
+package com.example.foodapplication.orderFragment.models;
 
 public class OrderModel {
 

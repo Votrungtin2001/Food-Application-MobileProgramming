@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodapplication.databaseHelper.DatabaseHelper;
 import com.example.foodapplication.orderFragment.adapter.CartAdapter;
-import com.example.foodapplication.orderFragment.model.OrderModel;
+import com.example.foodapplication.orderFragment.models.OrderModel;
 import com.example.foodapplication.R;
 import com.example.foodapplication.auth.user;
 
@@ -95,18 +95,17 @@ public class Cart extends AppCompatActivity {
 
     private void loadListFood() {
         getAllProducts(branch_id);
-        cartAdapter = new CartAdapter(listCart, getApplicationContext());
+        cartAdapter = new CartAdapter(productModelList, getApplicationContext());
         LinearLayoutManager linearLayoutManager_Menu = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager_Menu);
         recyclerView.setAdapter(cartAdapter);
 
         int total = 0;
 
-        for(int i = 0; i < listCart.size(); i++)
-            total += ((listCart.get(i).getPrice()*(listCart.get(i).getQuantity())));
+        for(int i = 0; i < productModelList.size(); i++)
+            total += ((productModelList.get(i).getPrice()*(productModelList.get(i).getQuantity())));
 
         txtTotalPrice.setText(Integer.toString(total));
-
 
     }
     public int getAddressId() {
@@ -165,7 +164,7 @@ public class Cart extends AppCompatActivity {
                 int price = cursor.getInt(cursor.getColumnIndex("Price"));
                 int productId = cursor.getInt(cursor.getColumnIndex("Product Id"));
                 ProductModel productModel = new ProductModel(name_product,1,price,productId);
-                listCart.add(productModel);
+                productModelList.add(productModel);
             } while (cursor.moveToNext());
 
         }

@@ -62,6 +62,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
 
         holder.nameItem.setText(listCart.get(position).getNameProduct());
         holder.countItem.setText(Integer.toString(listCart.get(position).getQuantity()));
+
         int price = (listCart.get(position).getPrice())*(listCart.get(position).getQuantity());
         holder.price.setText(Integer.toString(price));
         holder.addItem.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +73,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
                 holder.price.setText(Integer.toString(price));
             }
         });
+
         holder.removeItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,7 +87,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
             }
         });
     }
-
 
     @Override
     public int getItemCount() {

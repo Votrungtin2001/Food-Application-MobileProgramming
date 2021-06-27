@@ -36,8 +36,8 @@
                 android:id="@+id/item_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="10dp"
                 android:ellipsize="marquee"
                 android:focusable="false"
                 android:freezesText="true"
@@ -46,8 +46,8 @@
                 android:singleLine="true"
                 android:text="Item Name"
                 android:textColor="@android:color/background_dark"
-                android:textSize="15sp" />
-
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/item_price"
@@ -64,8 +64,8 @@
                 android:singleLine="true"
                 android:text="19,800đ"
                 android:textColor="@android:color/background_dark"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:textSize="20sp"
+                android:textStyle="italic" />
 
             <TextView
                 android:id="@+id/remove_item"
@@ -88,8 +88,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_gravity="center_vertical|center_horizontal"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="6dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
                 android:layout_marginBottom="12dp"
                 android:layout_toLeftOf="@+id/add_item"
                 android:ellipsize="marquee"

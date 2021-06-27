@@ -14,8 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.foodapplication.databaseHelper.DatabaseHelper;
 import com.example.foodapplication.R;
+import com.example.foodapplication.databaseHelper.DatabaseHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,10 +31,10 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     LayoutInflater inflater;
 
     Dialog AnnouncementDialog;
-
+    int qti = 1;
     SQLiteDatabase db;
     DatabaseHelper databaseHelper;
-
+    boolean isExist = false;
     public static List<ProductModel> productModelList = new ArrayList<>();
 
 
@@ -59,30 +59,36 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ProductModel currentItem = itemList.get(position);
 
+
+
         holder.textView_NameProduct.setText(currentItem.getNameProduct());
         holder.textView_DescriptionProduct.setText(currentItem.getDescriptionProduct());
         holder.textView_ValueOfSell.setText(currentItem.getValueOfSell());
         String price = Integer.toString(currentItem.getPrice());
         holder.textView_Price.setText(price);
-
         holder.imageView_ImageProduct.setImageBitmap(currentItem.getImage());
 
         holder.imageView_addItem.setOnClickListener(new View.OnClickListener() {
-
-
             @Override
             public void onClick(View v) {
                 int qty = currentItem.getQuantity();
+                for (int i = 0; i < productModelList.size(); i++) {
+                    isExist = currentItem.getProduct_id() == productModelList.get(i).getProduct_id();
+                }
                 if (customer_id > 0) {
-                    ProductModel checkProduct = new ProductModel(currentItem.getNameProduct(), qty, currentItem.getPrice(),currentItem.getProduct_id());
                     boolean checkCustomerHasAddress = CheckCustomerHasAddress(customer_id);
-                    boolean isExist = productModelList.contains(checkProduct);
+
                     if(checkCustomerHasAddress) {
-                        if(!isExist){
-                        productModelList.add(new ProductModel(currentItem.getNameProduct(), qty, currentItem.getPrice(),currentItem.getProduct_id()));
-                        Toast.makeText(context, "Thêm vào giỏ hàng thành công!", Toast.LENGTH_SHORT).show();
+                        if(!isExist) {
+                            productModelList.add(new ProductModel(currentItem.getNameProduct(), currentItem.getQuantity(), currentItem.getPrice(), currentItem.getProduct_id()));
                         }
-                        else ++qty;
+                        else {
+                            for (int i = 0; i < productModelList.size(); i++) {
+                                qti = productModelList.get(i).getQuantity();
+                            }
+                            qti++;
+                        }
+                        Toast.makeText(context, "Thêm vào giỏ hàng thành công!", Toast.LENGTH_SHORT).show();
                     }
                     else {
                         ShowPopUpRequireAddress();
@@ -157,12 +163,12 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         AnnouncementDialog.show();
     }
 
-    public boolean checkProduct(int product_id) {
+    public boolean CheckCustomerHasAddress(int customer_id) {
         int count = 0;
 
-        String selectQuery = "SELECT * FROM PRODUCT WHERE _id = '" + product_id + "';";
+        String selectQuery = "SELECT * FROM CUSTOMER_ADDRESS WHERE Customer ='" + customer_id + "';";
         Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.getCount() > 0) {
+        if (cursor != null) {
             cursor.moveToFirst();
             do {
 
@@ -173,20 +179,4 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         if(count > 0) return true;
         else return false;
     }
-        public boolean CheckCustomerHasAddress(int customer_id) {
-            int count = 0;
-
-            String selectQuery = "SELECT * FROM CUSTOMER_ADDRESS WHERE Customer ='" + customer_id + "';";
-            Cursor cursor = db.rawQuery(selectQuery, null);
-            if (cursor != null) {
-                cursor.moveToFirst();
-                do {
-
-                } while (cursor.moveToNext());
-            }
-            count = cursor.getCount();
-            cursor.close();
-            if(count > 0) return true;
-            else return false;
-        }
 }
