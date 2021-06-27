@@ -4,11 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -18,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import com.example.foodapplication.HomeFragment.adapter.ListRestaurantAdapter;
 
-import com.example.foodapplication.MySQL.DatabaseHelper;
 import com.example.foodapplication.HomeFragment.model.AllRestaurantModel;
 import com.example.foodapplication.R;
 

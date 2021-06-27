@@ -1,11 +1,8 @@
 package com.example.foodapplication.SubScreen;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
@@ -23,14 +20,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.foodapplication.MySQL.DatabaseHelper;
 import com.example.foodapplication.MainActivity;
 import com.example.foodapplication.Master_MainActivity;
 import com.example.foodapplication.R;
@@ -44,10 +39,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class GetCurrentLocation extends AppCompatActivity {
 
@@ -114,7 +107,7 @@ public class GetCurrentLocation extends AppCompatActivity {
                     finish();
                 }
             }
-        }, 5000);
+        }, 6000);
     }
 
     public void getLocation() {

@@ -1,23 +1,33 @@
 package com.example.foodapplication.HomeFragmentMaster.adapter;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.foodapplication.MySQL.DatabaseHelper;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.foodapplication.R;
 import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.example.foodapplication.HomeFragment.model.ProductModel;
 
@@ -27,10 +37,9 @@ public class MenuAdapter_HomeFragment_Master_DatDon extends RecyclerView.Adapter
     Context context;
     LayoutInflater inflater;
 
-    SQLiteDatabase db;
-    DatabaseHelper databaseHelper;
-
     Dialog AnnouncementDialog;
+
+    private final String TAG = "MenuAdapterHFMDD";
 
     public MenuAdapter_HomeFragment_Master_DatDon(Context ctx, List<ProductModel> ItemList) {
         this.context = ctx;
@@ -43,9 +52,6 @@ public class MenuAdapter_HomeFragment_Master_DatDon extends RecyclerView.Adapter
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.custom_menu_homefragment_master, parent, false);
 
-        databaseHelper = new DatabaseHelper(context);
-        db = databaseHelper.getReadableDatabase();
-
         return new ViewHolder(view);
     }
 
@@ -56,8 +62,8 @@ public class MenuAdapter_HomeFragment_Master_DatDon extends RecyclerView.Adapter
         holder.textView_NameProduct.setText(currentItem.getNameProduct());
         holder.textView_DescriptionProduct.setText(currentItem.getDescriptionProduct());
         holder.textView_ValueOfSell.setText(currentItem.getValueOfSell());
-        String price = Double.toString(currentItem.getPrice());
-        holder.textView_Price.setText(price);
+        DecimalFormat decimalFormat = new DecimalFormat( "###,###,###" );
+        holder.textView_Price.setText(decimalFormat.format(currentItem.getPrice()) + " đ");
 
         if(currentItem.getImage().isEmpty()){
             holder.imageView_ImageProduct.setImageResource(R.drawable.noimage_product);
@@ -71,13 +77,12 @@ public class MenuAdapter_HomeFragment_Master_DatDon extends RecyclerView.Adapter
         holder.imageView_Delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final ProgressDialog progressDialog = new ProgressDialog(context);
+                progressDialog.setMessage("Please wait...");
+                progressDialog.show();
                 int product_id = currentItem.getProduct_id();
-                int menu_id = getMenuID(product_id);
-                itemList.remove(currentItem);
-                notifyDataSetChanged();
-                databaseHelper.delMenu(menu_id);
-                databaseHelper.delProduct(product_id);
-                ShowPopDeleteSuccesfully();
+                int menu_id = currentItem.getMenu_id();
+                DeleteProductAndMenu(product_id, menu_id, position, progressDialog);
 
             }
         });
@@ -111,35 +116,39 @@ public class MenuAdapter_HomeFragment_Master_DatDon extends RecyclerView.Adapter
         }
     }
 
-    public int getMenuID(int product_id) {
-        int id = -1;
-        String selectQuery = "SELECT * FROM MENU WHERE Product ='" + product_id + "';";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor != null) {
-            cursor.moveToFirst();
-            do {
-                id = cursor.getInt(cursor.getColumnIndex("_id"));
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-
-        return id;
-    }
-
-    public void ShowPopDeleteSuccesfully() {
-        TextView textView_Close;
-        textView_Close = (TextView) AnnouncementDialog.findViewById(R.id.Close_PopUpLogin);
-        textView_Close.setOnClickListener(new View.OnClickListener() {
+    private void DeleteProductAndMenu(int product_id, int menu_id, int position, ProgressDialog progressDialog) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/delProductAndMenu.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
-            public void onClick(View v) {
-                AnnouncementDialog.dismiss();
+            public void onResponse(String response) {
+                Log.e(TAG, response.toString());
+                progressDialog.dismiss();
+                String announcement = "";
+                if(response.toString().trim().equals("Successfully")) {
+                    announcement = "Đã xóa thành công!!!";
+                    itemList.remove(position);
+                    notifyDataSetChanged();
+                }
+                else announcement = "Xóa món thất bại!!!";
+                Toast.makeText(context, announcement, Toast.LENGTH_SHORT).show();
             }
-        });
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Override
+            protected java.util.Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("product_id", String.valueOf(product_id));
+                params.put("menu_id", String.valueOf(menu_id));
+                return params;
+            }
+        };
 
-        TextView textView_Text;
-        textView_Text = (TextView) AnnouncementDialog.findViewById(R.id.TextView_PopUp_RequireLogin);
-        textView_Text.setText("Bạn đã xóa món thành công!!!");
-
-        AnnouncementDialog.show();
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
     }
 }

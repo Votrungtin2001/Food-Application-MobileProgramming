@@ -1,7 +1,6 @@
 package com.example.foodapplication.auth;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -27,8 +26,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.foodapplication.MainActivity;
 import com.example.foodapplication.R;
-import com.example.foodapplication.account.AccountFragment;
-import com.example.foodapplication.MySQL.DatabaseHelper;
+import com.example.foodapplication.account.fragment.AccountFragment;
 import com.example.foodapplication.databinding.FragmentLoginBinding;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -62,7 +60,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.example.foodapplication.MainActivity.addressLine;
 import static com.example.foodapplication.MainActivity.customer_id;
+import static com.example.foodapplication.MainActivity.district_id;
+import static com.example.foodapplication.MainActivity.nameStreet;
 
 
 // DataPasser reference: https://stackoverflow.com/questions/9343241/passing-data-between-a-fragment-and-its-container-activity
@@ -80,8 +81,6 @@ public class LoginFragment extends Fragment  {
     private GoogleApiClient mGoogleApiClient; // for google sign in
     private CallbackManager mFacebookCallbackManager; // for facebook log in
     LoginButton mFacebookLoginButton;
-    private DatabaseHelper databaseHelper;
-    private user user;
     private FragmentLoginBinding binding;
 
     String userId;
@@ -117,8 +116,6 @@ public class LoginFragment extends Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        databaseHelper = new DatabaseHelper(getActivity());
-
         mFirebaseAuth = FirebaseAuth.getInstance();
 
         binding = FragmentLoginBinding.inflate(inflater, container, false);
@@ -148,14 +145,14 @@ public class LoginFragment extends Fragment  {
                 progressDialog.show();
 
                 if (namefragment_before == 1 && role == 1) {
-                    NormalLoginForCustomerAndBackToAccountFragment(binding.email.getText().toString().trim(), binding.password.getText().toString().trim(),
+                    NormalLoginForCustomerAndBackToCustomerAccountFragment(binding.email.getText().toString().trim(), binding.password.getText().toString().trim(),
                             progressDialog, binding.password);
 
                 }
-                /*else if(namefragment_before == 2 && role == 1) {
-                    NormalLoginForCustomerAndBackToAccountFragment(binding.email.getText().toString().trim(), binding.password.getText().toString().trim(),
+                else if(namefragment_before == 2 && role == 1) {
+                    NormalLoginForCustomerAndOpenMainActivity(binding.email.getText().toString().trim(), binding.password.getText().toString().trim(),
                             progressDialog, binding.password);
-                }*/
+                }
             }
         });
 
@@ -350,7 +347,7 @@ public class LoginFragment extends Fragment  {
 
     }
 
-    private void NormalLoginForCustomerAndBackToAccountFragment(String username, String password,
+    private void NormalLoginForCustomerAndBackToCustomerAccountFragment(String username, String password,
                                                                 ProgressDialog progressDialog, EditText editText) {
         String url = "https://foodapplicationmobile.000webhostapp.com/getNormalLoginForCustomer.php";
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
@@ -410,15 +407,30 @@ public class LoginFragment extends Fragment  {
             public void onResponse(String response) {
                 progressDialog.dismiss();
                 String announcement = "";
-                if(response.toString().trim().equals("Logged in successfully")) {
-                    Intent intent = new Intent(getActivity(), MainActivity.class);
-                    intent.putExtra("Customer ID", customer_id);
-                    startActivity(intent);
-                }
-                else {
+                if(response.toString().trim().equals("Failed to log in")) {
                     editText.setText(null);
                     announcement = "Đăng nhập thất bại! Tài khoản hoặc mật khẩu không chính xác!";
                     Toast.makeText(getActivity(), announcement, Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+                        for(int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
+                            customer_id = Integer.parseInt(object.getString("_ID"));
+                            Intent intent = new Intent(getActivity(), MainActivity.class);
+                            intent.putExtra("Customer ID", customer_id);
+                            intent.putExtra("AddressLine", addressLine);
+                            intent.putExtra("NameStreet", nameStreet);
+                            intent.putExtra("District ID", district_id);
+                            startActivity(intent);
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }, new Response.ErrorListener() {

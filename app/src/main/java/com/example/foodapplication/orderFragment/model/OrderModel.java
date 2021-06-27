@@ -2,18 +2,19 @@ package com.example.foodapplication.orderFragment.model;
 
 public class OrderModel {
 
-    public int OrderId, Total;
+    public int OrderId;
+    public double Total;
     public String Phone, Address;
 
 
-    public OrderModel(int orderId,int total,String phone,String address){
+    public OrderModel(int orderId,double total,String phone,String address){
         OrderId = orderId;
         Total = total;
         Phone = phone;
         Address = address;
     }
 
-    public int getTotal() {
+    public double getTotal() {
         return Total;
     }
 

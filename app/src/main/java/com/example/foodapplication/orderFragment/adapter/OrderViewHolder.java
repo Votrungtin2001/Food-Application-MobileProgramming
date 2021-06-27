@@ -1,7 +1,6 @@
 package com.example.foodapplication.orderFragment.adapter;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +9,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.foodapplication.MySQL.DatabaseHelper;
 import com.example.foodapplication.R;
 import com.example.foodapplication.orderFragment.model.OrderModel;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class OrderViewHolder extends RecyclerView.Adapter<OrderViewHolder.ViewHolder> {
@@ -21,9 +20,6 @@ public class OrderViewHolder extends RecyclerView.Adapter<OrderViewHolder.ViewHo
     List<OrderModel> itemList;
     Context context;
     LayoutInflater inflater;
-
-    SQLiteDatabase db;
-    DatabaseHelper databaseHelper;
 
     public OrderViewHolder(Context ctx, List<OrderModel> ItemList) {
         this.context = ctx;
@@ -36,9 +32,6 @@ public class OrderViewHolder extends RecyclerView.Adapter<OrderViewHolder.ViewHo
     public OrderViewHolder.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.order_layout, parent, false);
 
-        databaseHelper = new DatabaseHelper(context);
-        db = databaseHelper.getReadableDatabase();
-
         return new OrderViewHolder.ViewHolder(view);
     }
 
@@ -47,7 +40,8 @@ public class OrderViewHolder extends RecyclerView.Adapter<OrderViewHolder.ViewHo
         OrderModel currentItem = itemList.get(position);
 
         holder.txtOrderId.setText(Integer.toString(currentItem.getOrderId()));
-        holder.txtOrderStt.setText(Integer.toString(currentItem.getTotal()));
+        DecimalFormat decimalFormat = new DecimalFormat( "###,###,###");
+        holder.txtOrderStt.setText(decimalFormat.format(currentItem.getTotal()) + "đ");
         holder.txtPhone.setText(currentItem.getPhone());
         holder.txtAddress.setText(currentItem.getAddress());
 

@@ -6,11 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodapplication.R;
-import com.example.foodapplication.Transaction;
+import com.example.foodapplication.account.model.Transaction;
 
 import java.text.DecimalFormat;
 import java.util.List;

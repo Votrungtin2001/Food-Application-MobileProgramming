@@ -1,15 +1,12 @@
 package com.example.foodapplication.HomeFragment;
 
 import android.app.Dialog;
-import android.content.Context;
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -19,32 +16,16 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.example.foodapplication.Transaction;
 import com.example.foodapplication.orderFragment.cart.Cart;
-import com.example.foodapplication.MySQL.DatabaseHelper;
 import com.example.foodapplication.R;
-import com.example.foodapplication.ViewPagerAdapter;
+import com.example.foodapplication.HomeFragment.adapter.ViewPagerAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import com.example.foodapplication.HomeFragment.fragment.RestaurantInformation_DatDon;
 import com.example.foodapplication.HomeFragment.fragment.RestaurantInformation_ThongTin;
-import com.squareup.picasso.Picasso;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import static com.example.foodapplication.MainActivity.customer_id;
 import static com.example.foodapplication.MainActivity.isCustomerHasAddress;
@@ -65,11 +46,6 @@ public class RestaurantInformation extends AppCompatActivity {
     ViewPagerAdapter viewPagerAdapter;
 
     int branch_id;
-    SQLiteDatabase db;
-    DatabaseHelper databaseHelper;
-
-    public static int addressid_Home = 0;
-    public static int addressid_Work = 0;
 
     Dialog AnnouncementDialog;
 
@@ -80,9 +56,6 @@ public class RestaurantInformation extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         transparentStatusAndNavigation();
         setContentView(R.layout.activity_restaurant_information);
-
-        databaseHelper = new DatabaseHelper(this);
-        db = databaseHelper.getReadableDatabase();
 
         initComponents();
 
@@ -129,8 +102,18 @@ public class RestaurantInformation extends AppCompatActivity {
         //Prepare viewpager
         prepareViewPagerRestaurantInformation(viewPager_RestaurantInformation, title_TabLayout);
 
-        GetCustomerAddressIDWithLabel(customer_id, 1);
-        GetCustomerAddressIDWithLabel(customer_id, 2);
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Please wait...");
+        progressDialog.show();
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progressDialog.dismiss();
+            }
+        }, 2000);
+
         //Code Minh Thi
 
         cart.setOnClickListener(new View.OnClickListener() {
@@ -159,7 +142,7 @@ public class RestaurantInformation extends AppCompatActivity {
             }
 
             if (i == 1) {
-                RestaurantInformation_ThongTin fragment2 = new RestaurantInformation_ThongTin(branch_id);
+                RestaurantInformation_ThongTin fragment2 = new RestaurantInformation_ThongTin(branch_id, 1);
                 viewPagerAdapter.addFragment(fragment2, title_TabLayout.get(i));
             }
 
@@ -233,52 +216,6 @@ public class RestaurantInformation extends AppCompatActivity {
         textView_Text.setText("Vui lòng thêm địa chỉ giao hàng!!!    ");
 
         AnnouncementDialog.show();
-    }
-
-    public void GetCustomerAddressIDWithLabel(int customer_id, int address_label) {
-        String url = "https://foodapplicationmobile.000webhostapp.com/getCustomerAddressIDWithLabel.php";
-        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.e(TAG, response.toString());
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    String success = jsonObject.getString("success");
-                    JSONArray jsonArray = jsonObject.getJSONArray("data");
-
-                    if (success.equals("1")) {
-                        for (int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject object = jsonArray.getJSONObject(i);
-
-                            int address_id = object.getInt("_ID");
-                            if(address_label == 1) {
-                                addressid_Home = address_id;
-                            }
-                            else addressid_Work = address_id;
-                        }
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, error.toString());
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("customer_id", String.valueOf(customer_id));
-                params.put("address_label", String.valueOf(address_label));
-                return params;
-            }
-        };
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(request);
     }
 
 }

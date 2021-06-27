@@ -24,8 +24,12 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.foodapplication.HomeFragment.HomeFragment;
 import com.example.foodapplication.orderFragment.OrderFragment;
-import com.example.foodapplication.account.AccountFragment;
+import com.example.foodapplication.account.fragment.AccountFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
     public static boolean isCustomerHasAddress = false;
     private final String TAG = "MainActivity";
+    public static int addressid_Home = 0;
+    public static int addressid_Work = 0;
 
     Bundle importArgs;
 
@@ -77,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
         customer_id = getIntent().getExtras().getInt("Customer ID");
 
         CheckCustomerHasAddress(customer_id);
+        GetCustomerAddressIDWithLabel(customer_id, 1);
+        GetCustomerAddressIDWithLabel(customer_id, 2);
 
         fragmentTransaction.add(R.id.frame_container, homeFragment);
         fragmentTransaction.commit();
@@ -153,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void CheckCustomerHasAddress(int customer_id) {
-        String url = "https://foodapplicationmobile.000webhostapp.com/checkCustomerHasAddress.php\n";
+        String url = "https://foodapplicationmobile.000webhostapp.com/checkCustomerHasAddress.php";
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -180,4 +188,51 @@ public class MainActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(request);
     }
+
+    public void GetCustomerAddressIDWithLabel(int customer_id, int address_label) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/getCustomerAddressIDWithLabel.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e(TAG, response.toString());
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String success = jsonObject.getString("success");
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+                    if (success.equals("1")) {
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
+
+                            int address_id = object.getInt("_ID");
+                            if(address_label == 1) {
+                                addressid_Home = address_id;
+                            }
+                            else addressid_Work = address_id;
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("customer_id", String.valueOf(customer_id));
+                params.put("address_label", String.valueOf(address_label));
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(request);
+    }
+
 }

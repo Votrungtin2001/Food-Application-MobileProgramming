@@ -2,8 +2,6 @@
 
 import android.app.Dialog;
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +12,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.foodapplication.MySQL.DatabaseHelper;
 import com.example.foodapplication.R;
 import com.squareup.picasso.Picasso;
 
@@ -35,9 +32,6 @@ import static com.example.foodapplication.MainActivity.isCustomerHasAddress;
 
     Dialog AnnouncementDialog;
 
-    SQLiteDatabase db;
-    DatabaseHelper databaseHelper;
-
     public static List<ProductModel> productModelList = new ArrayList<>();
 
 
@@ -51,9 +45,6 @@ import static com.example.foodapplication.MainActivity.isCustomerHasAddress;
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.custom_layout_item_menu, parent, false);
-
-        databaseHelper = new DatabaseHelper(context);
-        db = databaseHelper.getReadableDatabase();
 
         return new ViewHolder(view);
     }
@@ -167,20 +158,4 @@ import static com.example.foodapplication.MainActivity.isCustomerHasAddress;
         AnnouncementDialog.show();
     }
 
-    public boolean checkProduct(int product_id) {
-        int count = 0;
-
-        String selectQuery = "SELECT * FROM PRODUCT WHERE _id = '" + product_id + "';";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            do {
-
-            } while (cursor.moveToNext());
-        }
-        count = cursor.getCount();
-        cursor.close();
-        if(count > 0) return true;
-        else return false;
-    }
 }

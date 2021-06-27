@@ -2,14 +2,11 @@ package com.example.foodapplication.orderFragment.cart;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,12 +20,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.denzcoskun.imageslider.interfaces.ItemClickListener;
-import com.example.foodapplication.MySQL.DatabaseHelper;
 import com.example.foodapplication.orderFragment.adapter.CartAdapter;
 import com.example.foodapplication.orderFragment.model.OrderModel;
 import com.example.foodapplication.R;
-import com.example.foodapplication.auth.user;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -40,12 +34,11 @@ import java.util.Map;
 
 import com.example.foodapplication.HomeFragment.model.ProductModel;
 
-import adapter.TransactionAdapter;
-import models.Request;
+import com.example.foodapplication.orderFragment.model.Request;
 
-import static com.example.foodapplication.HomeFragment.RestaurantInformation.addressid_Home;
-import static com.example.foodapplication.HomeFragment.RestaurantInformation.addressid_Work;
 import static com.example.foodapplication.HomeFragment.adapter.MenuAdapter.productModelList;
+import static com.example.foodapplication.MainActivity.addressid_Home;
+import static com.example.foodapplication.MainActivity.addressid_Work;
 import static com.example.foodapplication.MainActivity.customer_id;
 
 
@@ -53,16 +46,13 @@ public class Cart extends AppCompatActivity {
 
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
-    DatabaseHelper databaseHelper;
     public static TextView txtTotalPrice;
     Button btnPlaceOrder;
     OrderModel orderModel;
     CartAdapter cartAdapter;
-    private SQLiteDatabase db;
     List<ProductModel> listCart = productModelList;
     private int branch_id;
     ProductModel productModel;
-    user user;
     private static final String TAG = "Cart";
     int address_id;
     public static int result = 0;
@@ -79,18 +69,13 @@ public class Cart extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        user = new user();
-
         recyclerView = findViewById(R.id.listCart);
         recyclerView.setHasFixedSize(true);
-        databaseHelper = new DatabaseHelper(getBaseContext());
-        db = databaseHelper.getReadableDatabase();
         txtTotalPrice = findViewById(R.id.total);
 
         loadListFood();
 
-        if(addressid_Home > 0) address_id = addressid_Home;
-        else address_id = addressid_Work;
+        if(addressid_Home > 0) address_id = addressid_Home;        else address_id = addressid_Work;
 
         btnPlaceOrder = (Button) findViewById(R.id.btnPlaceOrder);
         btnPlaceOrder.setOnClickListener(new View.OnClickListener() {

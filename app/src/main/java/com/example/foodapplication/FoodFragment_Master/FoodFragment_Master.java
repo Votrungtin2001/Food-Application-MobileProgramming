@@ -2,10 +2,9 @@ package com.example.foodapplication.FoodFragment_Master;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -22,6 +21,7 @@ import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,27 +32,25 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.foodapplication.MySQL.DatabaseHelper;
+import com.example.foodapplication.account.model.IdWithNameListItem;
 import com.example.foodapplication.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
+import static com.example.foodapplication.Master_MainActivity.isMasterHasRestaurant;
+import static com.example.foodapplication.MySQL.MySQLQuerry.AddProductAndMenu;
+import static com.example.foodapplication.MySQL.MySQLQuerry.GetCategories;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class FoodFragment_Master extends Fragment {
 
     int master_id;
-
-    DatabaseHelper databaseHelper;
-    SQLiteDatabase db;
 
     TextView textView_Announcement_FoodFragment;
     TextView textView_Title_FoodFragment;
@@ -77,14 +75,12 @@ public class FoodFragment_Master extends Fragment {
     ConstraintLayout constraintLayout;
     ConstraintLayout constraintLayout1;
 
-    List<String> categoryList = new ArrayList<>();
+    ArrayList<IdWithNameListItem> categoryList = new ArrayList<>();
+    private final String TAG = "MasterFoodFragment";
+    String encodedImage;
 
     private static final int IMAGE_PICK_CODE = 1000;
     private static final int REQUEST_STORAGE = 1001;
-
-    int category_id;
-    int branch_id;
-    int restaurant_id;
 
     Dialog AnnouncementDialog;
 
@@ -112,11 +108,7 @@ public class FoodFragment_Master extends Fragment {
 
         initComponents(view);
 
-        databaseHelper = new DatabaseHelper(getActivity());
-        db = databaseHelper.getReadableDatabase();
-
         SetUpScreen();
-
 
         return view;
     }
@@ -151,39 +143,40 @@ public class FoodFragment_Master extends Fragment {
         AnnouncementDialog.setContentView(view1);
     }
 
-    public boolean CheckMasterHasRestaurant_Is_Right(int id) {
-        int count = 0;
-        String selectQuery = "SELECT _id FROM BRANCHES WHERE Master='" + id + "';";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        count = cursor.getCount();
-        cursor.close();
+    private void imageStore(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] imagebytes = stream.toByteArray();
 
-        if(count > 0) return true;
-        else return false;
-    }
-
-    public List<String> getAllCategoryInSQLite() {
-        List<String> categoryList = new ArrayList<>();
-
-        String selectQuery = "SELECT * FROM CATEGORIES";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor != null) {
-            cursor.moveToFirst();
-            do {
-                String category_name = cursor.getString(cursor.getColumnIndex("Name"));
-                String category_description = cursor.getString(cursor.getColumnIndex("Description"));
-                String category_item = category_name + " - " +category_description;
-                categoryList.add(category_item);
-
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-
-        return categoryList;
+        encodedImage = android.util.Base64.encodeToString(imagebytes, Base64.DEFAULT);
     }
 
     public void SetUpScreen() {
-        boolean checkMasterHasRestaurant = CheckMasterHasRestaurant_Is_Right(master_id);
+        textView_Announcement_FoodFragment.setVisibility(View.VISIBLE);
+        imageView_NoRestaurant_FoodFragment.setVisibility(View.VISIBLE);
+
+        textView_Title_FoodFragment.setVisibility(View.GONE);
+        textView_NameProduct_FoodFragment.setVisibility(View.GONE);
+        textView_Description_FoodFraagment.setVisibility(View.GONE);
+        textView_Category_FoodFragment.setVisibility(View.GONE);
+        textView_ImageProduct_FoodFragment.setVisibility(View.GONE);
+        textView_Price_FoodFragment.setVisibility(View.GONE);
+
+        imageView_ImageProduct_FoodFragment.setVisibility(View.GONE);
+
+        editText_NameProduct_FoodFragment.setVisibility(View.GONE);
+        editText_Description_FoodFragment.setVisibility(View.GONE);
+        editText_Price_FoodFragment.setVisibility(View.GONE);
+
+        spinner_Category_FoodFragment.setVisibility(View.GONE);
+
+        button_ImageProduct_FoodFragment.setVisibility(View.GONE);
+        button_AddFood_FoodFragment.setVisibility(View.GONE);
+
+        constraintLayout.setVisibility(View.GONE);
+        constraintLayout1.setVisibility(View.GONE);
+
+        boolean checkMasterHasRestaurant = isMasterHasRestaurant;
         if(checkMasterHasRestaurant == true) {
             textView_Announcement_FoodFragment.setVisibility(View.GONE);
             imageView_NoRestaurant_FoodFragment.setVisibility(View.GONE);
@@ -239,8 +232,6 @@ public class FoodFragment_Master extends Fragment {
 
         }
 
-
-
     }
 
     @Override
@@ -258,6 +249,8 @@ public class FoodFragment_Master extends Fragment {
                     Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                     imageView_ImageProduct_FoodFragment.setImageBitmap(bitmap);
 
+                    imageStore(bitmap);
+
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -272,8 +265,9 @@ public class FoodFragment_Master extends Fragment {
     }
 
     public void Run() {
-        categoryList = getAllCategoryInSQLite();
-        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, categoryList);
+        categoryList = new ArrayList<>();
+        ArrayAdapter categoryAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, categoryList);
+        GetCategories(categoryList, categoryAdapter, TAG, getActivity());
         spinner_Category_FoodFragment.setAdapter(categoryAdapter);
 
         button_ImageProduct_FoodFragment.setOnClickListener(new View.OnClickListener() {
@@ -383,7 +377,6 @@ public class FoodFragment_Master extends Fragment {
         spinner_Category_FoodFragment.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                category_id = position + 1;
                 if(!editText_NameProduct_FoodFragment.getText().toString().trim().equals("") &&
                         !editText_Description_FoodFragment.getText().toString().trim().equals("") &&
                         !editText_Price_FoodFragment.getText().toString().trim().equals("") &&
@@ -405,100 +398,20 @@ public class FoodFragment_Master extends Fragment {
                 String name_product = editText_NameProduct_FoodFragment.getText().toString();
                 String description = editText_Description_FoodFragment.getText().toString();
                 String sPrice = editText_Price_FoodFragment.getText().toString();
-                int price = Integer.parseInt(sPrice);
-                branch_id = getBranchID(master_id);
+                double price = Double.parseDouble(sPrice);
+                IdWithNameListItem spinnerItem = (IdWithNameListItem) spinner_Category_FoodFragment.getSelectedItem();
+                int category_id = spinnerItem.getId();
 
-                databaseHelper.addProduct(name_product, description, price, imageViewToByte(imageView_ImageProduct_FoodFragment));
-                int new_product_id = getCountProduct();
-                restaurant_id = getRestaurantID(branch_id);
-
-                databaseHelper.addMenu(restaurant_id, new_product_id, "", price);
-
-                editText_NameProduct_FoodFragment.setText("");
-                editText_Description_FoodFragment.setText("");
-                editText_Price_FoodFragment.setText("");
-
-                Toast.makeText(getActivity(), "Đã thêm món thành công", Toast.LENGTH_SHORT);
-
-                button_AddFood_FoodFragment.setEnabled(false);
-
-                ShowPopUpAddFoodSuccesfully();
-
+                Bitmap bitmap = ((BitmapDrawable) imageView_ImageProduct_FoodFragment.getDrawable()).getBitmap();
+                imageStore(bitmap);
+                final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+                progressDialog.setMessage("Please wait...");
+                progressDialog.show();
+                AddProductAndMenu(name_product, description, category_id, encodedImage, price, master_id,
+                        editText_NameProduct_FoodFragment, editText_Description_FoodFragment, editText_Price_FoodFragment,
+                        button_AddFood_FoodFragment, progressDialog, TAG, getActivity());
             }
         });
-    }
-
-    public byte[] imageViewToByte(ImageView image) {
-        Bitmap bitmap = ((BitmapDrawable) image.getDrawable()).getBitmap();
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] byteArray = stream.toByteArray();
-        return byteArray;
-    }
-
-    public int getBranchID(int master_id) {
-        int id = -1;
-        String selectQuery = "SELECT * FROM BRANCHES WHERE Master ='" + master_id + "';";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor != null) {
-            cursor.moveToFirst();
-            do {
-                id = cursor.getInt(cursor.getColumnIndex("_id"));
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-
-        return id;
-    }
-
-    public int getRestaurantID(int branch_id) {
-        int id = -1;
-        String selectQuery = "SELECT * FROM BRANCHES WHERE _id='" + branch_id + "';";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor != null) {
-            cursor.moveToFirst();
-            do {
-                id = cursor.getInt(cursor.getColumnIndex("Restaurant"));
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-
-        return id;
-    }
-
-
-    public int getCountProduct() {
-        int count = 0;
-        String selectQuery = "SELECT * FROM PRODUCTS";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor != null) {
-            cursor.moveToFirst();
-            do {
-
-            } while (cursor.moveToNext());
-
-        }
-        count = cursor.getCount();
-        cursor.close();
-        return count;
-
-    }
-
-    public void ShowPopUpAddFoodSuccesfully() {
-        TextView textView_Close;
-        textView_Close = (TextView) AnnouncementDialog.findViewById(R.id.Close_PopUpLogin);
-        textView_Close.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AnnouncementDialog.dismiss();
-            }
-        });
-
-        TextView textView_Text;
-        textView_Text = (TextView) AnnouncementDialog.findViewById(R.id.TextView_PopUp_RequireLogin);
-        textView_Text.setText("  Bạn đã thêm món thành công!!!  \n   ");
-
-        AnnouncementDialog.show();
     }
 
 }
