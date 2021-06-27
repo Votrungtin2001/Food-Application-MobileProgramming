@@ -2,8 +2,6 @@
 
 import android.app.Dialog;
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,26 +13,25 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodapplication.R;
-import com.example.foodapplication.databaseHelper.DatabaseHelper;
+import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import models.ProductModel;
+import com.example.foodapplication.HomeFragment.model.ProductModel;
 
 import static com.example.foodapplication.MainActivity.customer_id;
+import static com.example.foodapplication.MainActivity.isCustomerHasAddress;
 
-public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
+ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
 
     List<ProductModel> itemList;
     Context context;
     LayoutInflater inflater;
 
     Dialog AnnouncementDialog;
-    int qti = 1;
-    SQLiteDatabase db;
-    DatabaseHelper databaseHelper;
-    boolean isExist = false;
+
     public static List<ProductModel> productModelList = new ArrayList<>();
 
 
@@ -49,9 +46,6 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.custom_layout_item_menu, parent, false);
 
-        databaseHelper = new DatabaseHelper(context);
-        db = databaseHelper.getReadableDatabase();
-
         return new ViewHolder(view);
     }
 
@@ -59,36 +53,37 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ProductModel currentItem = itemList.get(position);
 
-
-
         holder.textView_NameProduct.setText(currentItem.getNameProduct());
         holder.textView_DescriptionProduct.setText(currentItem.getDescriptionProduct());
         holder.textView_ValueOfSell.setText(currentItem.getValueOfSell());
-        String price = Integer.toString(currentItem.getPrice());
-        holder.textView_Price.setText(price);
-        holder.imageView_ImageProduct.setImageBitmap(currentItem.getImage());
+        DecimalFormat decimalFormat = new DecimalFormat( "###,###,###" );
+        holder.textView_Price.setText(decimalFormat.format(currentItem.getPrice()) + "đ");
+
+        if(currentItem.getImage().isEmpty()){
+            holder.imageView_ImageProduct.setImageResource(R.drawable.noimage_product);
+        }else {
+            Picasso.get ().load ( currentItem.getImage () )
+                    .placeholder(R.drawable.noimage_product)
+                    .error(R.drawable.error)
+                    .into(holder.imageView_ImageProduct);
+        }
 
         holder.imageView_addItem.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View v) {
                 int qty = currentItem.getQuantity();
-                for (int i = 0; i < productModelList.size(); i++) {
-                    isExist = currentItem.getProduct_id() == productModelList.get(i).getProduct_id();
-                }
                 if (customer_id > 0) {
-                    boolean checkCustomerHasAddress = CheckCustomerHasAddress(customer_id);
-
+                    ProductModel checkProduct = new ProductModel(currentItem.getNameProduct(), qty, currentItem.getPrice(),currentItem.getProduct_id(), currentItem.getMenu_id());
+                    boolean checkCustomerHasAddress = isCustomerHasAddress;
+                    boolean isExist = productModelList.contains(checkProduct);
                     if(checkCustomerHasAddress) {
-                        if(!isExist) {
-                            productModelList.add(new ProductModel(currentItem.getNameProduct(), currentItem.getQuantity(), currentItem.getPrice(), currentItem.getProduct_id()));
-                        }
-                        else {
-                            for (int i = 0; i < productModelList.size(); i++) {
-                                qti = productModelList.get(i).getQuantity();
-                            }
-                            qti++;
-                        }
+                        if(!isExist){
+                        productModelList.add(new ProductModel(currentItem.getNameProduct(), qty, currentItem.getPrice(),currentItem.getProduct_id(), currentItem.getMenu_id()));
                         Toast.makeText(context, "Thêm vào giỏ hàng thành công!", Toast.LENGTH_SHORT).show();
+                        }
+                        else ++qty;
                     }
                     else {
                         ShowPopUpRequireAddress();
@@ -163,20 +158,4 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         AnnouncementDialog.show();
     }
 
-    public boolean CheckCustomerHasAddress(int customer_id) {
-        int count = 0;
-
-        String selectQuery = "SELECT * FROM CUSTOMER_ADDRESS WHERE Customer ='" + customer_id + "';";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor != null) {
-            cursor.moveToFirst();
-            do {
-
-            } while (cursor.moveToNext());
-        }
-        count = cursor.getCount();
-        cursor.close();
-        if(count > 0) return true;
-        else return false;
-    }
 }

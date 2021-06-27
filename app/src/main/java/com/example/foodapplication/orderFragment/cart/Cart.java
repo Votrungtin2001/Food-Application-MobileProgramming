@@ -1,8 +1,10 @@
 package com.example.foodapplication.orderFragment.cart;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,20 +14,31 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.foodapplication.databaseHelper.DatabaseHelper;
+import com.android.volley.AuthFailureError;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.foodapplication.orderFragment.adapter.CartAdapter;
-import com.example.foodapplication.orderFragment.models.OrderModel;
+import com.example.foodapplication.orderFragment.model.OrderModel;
 import com.example.foodapplication.R;
-import com.example.foodapplication.auth.user;
 
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import models.ProductModel;
-import models.Request;
+import com.example.foodapplication.HomeFragment.model.ProductModel;
+
+import com.example.foodapplication.orderFragment.model.Request;
 
 import static com.example.foodapplication.HomeFragment.adapter.MenuAdapter.productModelList;
+import static com.example.foodapplication.MainActivity.addressid_Home;
+import static com.example.foodapplication.MainActivity.addressid_Work;
 import static com.example.foodapplication.MainActivity.customer_id;
 
 
@@ -33,17 +46,19 @@ public class Cart extends AppCompatActivity {
 
     RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
-    DatabaseHelper databaseHelper;
-    TextView txtTotalPrice;
+    public static TextView txtTotalPrice;
     Button btnPlaceOrder;
     OrderModel orderModel;
     CartAdapter cartAdapter;
-    private SQLiteDatabase db;
     List<ProductModel> listCart = productModelList;
     private int branch_id;
     ProductModel productModel;
-    Date currentTime = Calendar.getInstance().getTime();
-    user user;
+    private static final String TAG = "Cart";
+    int address_id;
+    public static int result = 0;
+
+    Context context = this;
+    public static double dTotal = 0;
 
     public Cart(){ }
 
@@ -54,121 +69,147 @@ public class Cart extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cart);
 
-        user = new user();
-
         recyclerView = findViewById(R.id.listCart);
         recyclerView.setHasFixedSize(true);
-        databaseHelper = new DatabaseHelper(getBaseContext());
-        db = databaseHelper.getReadableDatabase();
         txtTotalPrice = findViewById(R.id.total);
 
         loadListFood();
+
+        if(addressid_Home > 0) address_id = addressid_Home;        else address_id = addressid_Work;
 
         btnPlaceOrder = (Button) findViewById(R.id.btnPlaceOrder);
         btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(listCart.size() > 0){
-                Request req = new Request(currentTime,
-                        customer_id,
-                        getAddressId(),
-                        Integer.parseInt(txtTotalPrice.getText().toString()),
-                        0);
-                databaseHelper.addOrder(req);
-
-                for (int i = 0; i < listCart.size(); i++)
-                {
-                    databaseHelper.addOrderDetail(getOrderId(),
-                            getMenuId(listCart.get(i).getProduct_id()) ,
-                            listCart.get(i).getQuantity(),
-                            listCart.get(i).getPrice());
-                }
-
-                listCart.clear();
-                finish();
-            }
-                else
-                    Toast.makeText(getApplicationContext(),"Chưa thêm món ăn nào trong giỏ hàng!",Toast.LENGTH_LONG).show();
+                AddOrder();
             }
         });
     }
 
+    public void AddOrder() {
+            Date currentTime = Calendar.getInstance().getTime();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
+            String sDate = simpleDateFormat.format(currentTime);
+            if(listCart.size() > 0){
+                Request req = new Request(sDate,
+                        customer_id,
+                        address_id,
+                        dTotal,
+                        0);
+
+                final ProgressDialog progressDialog = new ProgressDialog(this);
+                progressDialog.setMessage("Please wait...");
+                progressDialog.show();
+
+                AddOrder(req.getDateTime(), req.getCustomerId(), req.getAddressId(),
+                        req.getTotal(), this);
+
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        for (int i = 0; i < listCart.size(); i++)
+                        {
+                            AddOrderDetails(listCart.get(i).getMenu_id(), listCart.get(i).getQuantity(), listCart.get(i).getPrice());
+                        }
+                    }
+                }, 1500);
+
+                handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressDialog.dismiss();
+                        listCart.clear();
+                        if (result == 1) Toast.makeText(context, "Đã thêm đơn hàng thành công", Toast.LENGTH_SHORT).show();
+                        else if(result == 0) Toast.makeText(context, "Thêm đơn hàng không thành công", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                }, 3500);
+
+            }
+            else
+                Toast.makeText(getApplicationContext(),"Chưa thêm món ăn nào trong giỏ hàng!",Toast.LENGTH_LONG).show();
+
+    }
+
     private void loadListFood() {
-        getAllProducts(branch_id);
-        cartAdapter = new CartAdapter(productModelList, getApplicationContext());
+        cartAdapter = new CartAdapter(listCart, getApplicationContext());
         LinearLayoutManager linearLayoutManager_Menu = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager_Menu);
         recyclerView.setAdapter(cartAdapter);
 
         int total = 0;
+        DecimalFormat decimalFormat = new DecimalFormat( "###,###,###");
+        for(int i = 0; i < listCart.size(); i++)
+            total += ((listCart.get(i).getPrice()*(listCart.get(i).getQuantity())));
 
-        for(int i = 0; i < productModelList.size(); i++)
-            total += ((productModelList.get(i).getPrice()*(productModelList.get(i).getQuantity())));
-
-        txtTotalPrice.setText(Integer.toString(total));
+        txtTotalPrice.setText(decimalFormat.format(total));
+        dTotal = total;
 
     }
-    public int getAddressId() {
-        int addressId = -1;
-        String selectQuery = "SELECT _id FROM CUSTOMER_ADDRESS WHERE Customer ='" + customer_id + "';";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            do {
-                addressId = cursor.getInt(cursor.getColumnIndex("_id"));
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        return  addressId;
-    }
 
-    public int getMenuId(int product_id) {
-        int menuid = -1;
-        String selectQuery = "SELECT _id FROM MENU WHERE Product ='" + product_id + "';";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            do {
-                menuid = cursor.getInt(cursor.getColumnIndex("_id"));
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        return  menuid;
-    }
+    private void AddOrder(String datetime, int customer_id, int address_id, double total, Context context) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/addOrder.php";
+        StringRequest request = new StringRequest(com.android.volley.Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if(response.trim().equals("Successfully")) {
 
-    public int getOrderId() {
-        int orderid = -1;
-        String selectQuery = "SELECT _id FROM ORDERS WHERE Customer ='" + customer_id + "';";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            do {
-                orderid = cursor.getInt(cursor.getColumnIndex("_id"));
+                }
+                else Toast.makeText(context, "Thêm đơn hàng không thành công", Toast.LENGTH_SHORT);
+
             }
-            while (cursor.moveToNext());
-        }
-        cursor.close();
-        return  orderid;
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Override
+            protected java.util.Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("datetime", String.valueOf(datetime));
+                params.put("customer_id", String.valueOf(customer_id));
+                params.put("address_id", String.valueOf(address_id));
+                params.put("total", String.valueOf(total));
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(request);
     }
 
-    public void getAllProducts(int id) {
-        String selectQuery = "SELECT P._id, P.Image, P.Name, P.Description AS PDescription, M.Description AS MDescription, M.Price " +
-                "FROM ((RESTAURANT R JOIN BRANCHES B ON R._id = B.Restaurant) JOIN MENU M ON R._id = M.Restaurant) JOIN PRODUCTS P ON M.Product = P._id " +
-                "WHERE B._id ='" + id + "';";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            do {
-                String name_product = cursor.getString(cursor.getColumnIndex("Name"));
-                String valueOfSell = cursor.getString(cursor.getColumnIndex("MDescription"));
-                int price = cursor.getInt(cursor.getColumnIndex("Price"));
-                int productId = cursor.getInt(cursor.getColumnIndex("Product Id"));
-                ProductModel productModel = new ProductModel(name_product,1,price,productId);
-                productModelList.add(productModel);
-            } while (cursor.moveToNext());
+    private void AddOrderDetails(int menu, int quantity, double price) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/addCustomerOrderDetails.php";
+        StringRequest request = new StringRequest(com.android.volley.Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e(TAG, response.toString());
+                if(response.toString().trim().equals("Successfully")) {
+                    result = 1;
+                }
+                else result = 0;
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Override
+            protected java.util.Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("menu", String.valueOf(menu));
+                params.put("quantity", String.valueOf(quantity));
+                params.put("price", String.valueOf(price));
+                return params;
+            }
+        };
 
-        }
-        cursor.close();
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
     }
 
 }

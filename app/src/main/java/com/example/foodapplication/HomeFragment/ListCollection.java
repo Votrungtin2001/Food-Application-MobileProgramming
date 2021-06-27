@@ -12,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+import com.example.foodapplication.HomeFragment.adapter.CollectionAdapter;
 import com.example.foodapplication.R;
 
 import java.util.ArrayList;
@@ -20,27 +21,40 @@ import java.util.List;
 import com.example.foodapplication.HomeFragment.adapter.ListCollectionAdapter;
 import com.example.foodapplication.HomeFragment.model.CollectionModel;
 
+import static com.example.foodapplication.MySQL.MySQLQuerry.GetDataForAllCollections;
+
+
 public class ListCollection extends AppCompatActivity {
 
     RecyclerView recyclerView_ListCollection;
     List<CollectionModel> collectionModels;
     ImageView imageView_Back;
-    RecyclerView.Adapter adapter;
+    ListCollectionAdapter adapter;
+    private static final String TAG = "ListCollection";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         transparentStatusAndNavigation();
         setContentView(R.layout.activity_list__collection);
 
+        initComponents();
+
+        Run();
+    }
+
+    private void initComponents() {
         recyclerView_ListCollection = findViewById(R.id.ItemListCollection_recyclerView);
+        imageView_Back = findViewById(R.id.Back_ItemListCollection);
+    }
+
+    private void Run() {
         collectionModels = new ArrayList<>();
         adapter = new ListCollectionAdapter(collectionModels, this);
-        AddDataForCollection();
+        GetDataForAllCollections(collectionModels, adapter, TAG, this);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
         recyclerView_ListCollection.setLayoutManager(gridLayoutManager);
         recyclerView_ListCollection.setAdapter(adapter);
 
-        imageView_Back = findViewById(R.id.Back_ItemListCollection);
         imageView_Back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,20 +63,6 @@ public class ListCollection extends AppCompatActivity {
         });
     }
 
-    public void AddDataForCollection()
-    {
-        collectionModels.add(new CollectionModel(R.drawable.banh_mi_0d, "Bánh Mì 0Đ"));
-        collectionModels.add(new CollectionModel(R.drawable.bay_ngay_tien_trieu_ve_tui, "7 Ngày Review - \nTiền Triệu Về Túi"));
-        collectionModels.add(new CollectionModel(R.drawable.chi_5k, "Chi 5K - \nƯu Đãi Freeship 15k"));
-        collectionModels.add(new CollectionModel(R.drawable.cuoi_tuan_freeship, "Cuối Tuần \nFree Ship"));
-        collectionModels.add(new CollectionModel(R.drawable.day_don_ngay_le, "Đón Lễ Lớn"));
-        collectionModels.add(new CollectionModel(R.drawable.deal_nua_gia_quan_gan_nha, "Deal Nửa Giá - \nQuán Gần Nhà"));
-        collectionModels.add(new CollectionModel(R.drawable.deal_xin, "Deal Xịn - \n Giảm Tới 70k"));
-        collectionModels.add(new CollectionModel(R.drawable.di_het_viet_nam, "Đi Hết Việt Nam - \nFreeship"));
-        collectionModels.add(new CollectionModel(R.drawable.he_xinh_tiec_xin, "Hè Xinh - \nTiệc Xịn 55k"));
-        collectionModels.add(new CollectionModel(R.drawable.le_to_deal_xin_xo, "Lễ To - \nDeal Xịn Xò"));
-
-    }
     private void transparentStatusAndNavigation()
     {
         //make full transparent statusBar

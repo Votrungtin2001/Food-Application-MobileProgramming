@@ -1,14 +1,12 @@
 package com.example.foodapplication.HomeFragment;
 
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -18,18 +16,21 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.foodapplication.HomeFragment.fragment.RestaurantInformation_DatDon;
-import com.example.foodapplication.HomeFragment.fragment.RestaurantInformation_ThongTin;
-import com.example.foodapplication.R;
-import com.example.foodapplication.ViewPagerAdapter;
-import com.example.foodapplication.databaseHelper.DatabaseHelper;
 import com.example.foodapplication.orderFragment.cart.Cart;
+import com.example.foodapplication.R;
+import com.example.foodapplication.HomeFragment.adapter.ViewPagerAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 
+import com.example.foodapplication.HomeFragment.fragment.RestaurantInformation_DatDon;
+import com.example.foodapplication.HomeFragment.fragment.RestaurantInformation_ThongTin;
+
 import static com.example.foodapplication.MainActivity.customer_id;
+import static com.example.foodapplication.MainActivity.isCustomerHasAddress;
+import static com.example.foodapplication.MySQL.MySQLQuerry.GetBranchName;
+import static com.example.foodapplication.MySQL.MySQLQuerry.GetRestaurantImage;
 
 public class RestaurantInformation extends AppCompatActivity {
 
@@ -45,22 +46,16 @@ public class RestaurantInformation extends AppCompatActivity {
     ViewPagerAdapter viewPagerAdapter;
 
     int branch_id;
-    byte[] image_restaurant;
-    String branch_name;
-    SQLiteDatabase db;
-    DatabaseHelper databaseHelper;
-    Bitmap bitmap_restaurant;
 
     Dialog AnnouncementDialog;
+
+    private static final String TAG = "RestaurantInformation";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         transparentStatusAndNavigation();
         setContentView(R.layout.activity_restaurant_information);
-
-        databaseHelper = new DatabaseHelper(this);
-        db = databaseHelper.getReadableDatabase();
 
         initComponents();
 
@@ -92,12 +87,12 @@ public class RestaurantInformation extends AppCompatActivity {
         });
 
         branch_id = getIntent().getIntExtra("Branch ID", 0);
-        image_restaurant = getRestaurantImage(branch_id);
-        bitmap_restaurant = BitmapFactory.decodeByteArray(image_restaurant, 0, image_restaurant.length);
-        imageView_RestaurantInformation.setImageBitmap(bitmap_restaurant);
 
-        branch_name = getBranchName(branch_id);
-        textView_BranchName.setText(branch_name);
+        textView_BranchName.setText("");
+        GetBranchName(branch_id, textView_BranchName, TAG, this);
+
+        imageView_RestaurantInformation.setImageResource(R.drawable.noimage_restaurant);
+        GetRestaurantImage(branch_id, imageView_RestaurantInformation, TAG, this);
 
         title_TabLayout.add("Đặt đơn");
         title_TabLayout.add("Thông tin");
@@ -107,17 +102,29 @@ public class RestaurantInformation extends AppCompatActivity {
         //Prepare viewpager
         prepareViewPagerRestaurantInformation(viewPager_RestaurantInformation, title_TabLayout);
 
+        final ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Please wait...");
+        progressDialog.show();
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                progressDialog.dismiss();
+            }
+        }, 2000);
+
         //Code Minh Thi
 
         cart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                if(customer_id > 0) {
-                    boolean checkCustomerHasAddress = CheckCustomerHasAddress(customer_id);
-                    if(checkCustomerHasAddress) {
+                    boolean checkCustomerHasAddress = isCustomerHasAddress;
+                    if(checkCustomerHasAddress == true) {
                         Intent intent = new Intent(getApplication(), Cart.class);
                         startActivity(intent);
-                         }
+                    }
                   else ShowPopUpRequireAddress();
                 }
             else ShowPopUpRequireLogin();
@@ -135,40 +142,12 @@ public class RestaurantInformation extends AppCompatActivity {
             }
 
             if (i == 1) {
-                RestaurantInformation_ThongTin fragment2 = new RestaurantInformation_ThongTin(branch_id);
+                RestaurantInformation_ThongTin fragment2 = new RestaurantInformation_ThongTin(branch_id, 1);
                 viewPagerAdapter.addFragment(fragment2, title_TabLayout.get(i));
             }
 
         }
         viewPager_RestaurantInformation.setAdapter(viewPagerAdapter);
-    }
-
-    public byte[] getRestaurantImage(int id) {
-        byte[] img = null;
-        String selectQuery = "SELECT R.Image FROM Restaurant R JOIN BRANCHES B ON R._id = B.Restaurant WHERE B._id ='" + id + "';";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            do {
-                img = cursor.getBlob(cursor.getColumnIndex("Image"));
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        return img;
-    }
-
-    public String getBranchName(int id) {
-        String name = "";
-        String selectQuery = "SELECT NAME FROM BRANCHES WHERE _id ='" + id + "';";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            do {
-                name = cursor.getString(cursor.getColumnIndex("NAME"));
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        return name;
     }
 
     private void transparentStatusAndNavigation()
@@ -239,22 +218,4 @@ public class RestaurantInformation extends AppCompatActivity {
         AnnouncementDialog.show();
     }
 
-    public boolean CheckCustomerHasAddress(int customer_id) {
-        int count = 0;
-
-        String selectQuery = "SELECT * FROM CUSTOMER_ADDRESS WHERE Customer='" + customer_id + "';";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            do {
-
-            } while (cursor.moveToNext());
-
-        }
-        count = cursor.getCount();
-        cursor.close();
-        if(count > 0) return true;
-        else return false;
-
-    }
 }

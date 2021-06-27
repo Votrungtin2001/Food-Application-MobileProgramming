@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EAE7E7"
-    tools:context=".account.AccountAddressFragment">
+    tools:context=".account.fragment.AccountAddressFragment">
 
     <include
         android:id="@+id/toolbar"
@@ -130,20 +130,6 @@
             android:checked="false"
             android:text="@string/activity_account_address_label_other" />
     </RadioGroup>
-
-    <EditText
-        android:id="@+id/txtOtherLabelName"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_below="@+id/rbGroup"
-        android:background="#FFFFFF"
-        android:ems="10"
-        android:gravity="center|start"
-        android:hint="@string/activity_account_address_label_other_spec"
-        android:inputType="textPersonName"
-        android:textAlignment="gravity"
-        android:textSize="18sp"
-        android:visibility="invisible" />
 
     <Button
         android:id="@+id/btnAccountAddressSave"

@@ -6,12 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodapplication.R;
-import com.example.foodapplication.Transaction;
+import com.example.foodapplication.account.model.Transaction;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.ViewHolder> {
@@ -31,7 +31,8 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         Transaction transaction = transactions.get(position);
 
         holder.txtTransactionDate.setText(transaction.getDate());
-        holder.txtTransactionAmount.setText(Integer.toString(transaction.getCredits()));
+        DecimalFormat decimalFormat = new DecimalFormat( "###,###,###" );
+        holder.txtTransactionAmount.setText(decimalFormat.format(transaction.getCredits()));
     }
 
     @Override

@@ -1,8 +1,7 @@
 package com.example.foodapplication.HomeFragment.fragment;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,24 +9,42 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
-import com.example.foodapplication.databaseHelper.DatabaseHelper;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.foodapplication.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.example.foodapplication.MainActivity.master_id;
+import static com.example.foodapplication.MySQL.MySQLQuerry.GetBranchAddress;
+import static com.example.foodapplication.MySQL.MySQLQuerry.GetBranchAddressAndOpeningTimeWithMaster;
+import static com.example.foodapplication.MySQL.MySQLQuerry.GetOpeningTime;
 
 
 public class RestaurantInformation_ThongTin extends Fragment {
 
-    String address;
-    String opening_time;
-
     TextView textView_address;
     TextView textView_openingtime;
 
-    SQLiteDatabase db;
-    DatabaseHelper databaseHelper;
-
     int branch_id;
+    String branch_address = "";
+    String restaurant_openingtime = "";
+    int namefragment = 0;
 
-    public RestaurantInformation_ThongTin(int id) {
+    private static final String TAG = "RI_ThongTin";
+
+    public RestaurantInformation_ThongTin(int id, int namefragment) {
+        this.namefragment = namefragment;
         this.branch_id = id;
 
     }
@@ -42,9 +59,6 @@ public class RestaurantInformation_ThongTin extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_restaurant_information__thong_tin, container, false);
 
-        databaseHelper = new DatabaseHelper(getActivity());
-        db = databaseHelper.getReadableDatabase();
-
         initComponents(view);
         Run();
 
@@ -57,40 +71,19 @@ public class RestaurantInformation_ThongTin extends Fragment {
     }
 
     public void Run() {
-        address = getAddress(branch_id);
-        textView_address.setText(address);
+        if(namefragment == 1) {
+            textView_address.setText(branch_address);
+            GetBranchAddress(branch_id, textView_address, TAG, getActivity());
 
-
-        opening_time = getOpeningTime(branch_id);
-        textView_openingtime.setText("Giờ mở cửa \t" + opening_time);
-    }
-
-
-    public String getAddress(int id) {
-        String branch_address = "";
-        String selectQuery = "SELECT A.Address FROM BRANCHES B JOIN ADDRESS A ON B.Address = A._id WHERE B._id ='" + id + "';";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            do {
-                branch_address = cursor.getString(cursor.getColumnIndex("Address"));
-            } while (cursor.moveToNext());
+            textView_openingtime.setText(restaurant_openingtime);
+            GetOpeningTime(branch_id, textView_openingtime, TAG, getActivity());
         }
-        cursor.close();
-        return branch_address;
+        if(namefragment == 2) {
+            textView_address.setText(branch_address);
+            textView_openingtime.setText(restaurant_openingtime);
+            GetBranchAddressAndOpeningTimeWithMaster(master_id, textView_address, textView_openingtime, TAG, getActivity());
+        }
     }
 
-    public String getOpeningTime(int id) {
-        String branch_openingtime = "";
-        String selectQuery = "SELECT R.Opening_Times FROM BRANCHES B JOIN RESTAURANT R ON B.Restaurant = R._id WHERE B._id ='" + id + "';";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            do {
-                branch_openingtime = cursor.getString(cursor.getColumnIndex("Opening_Times"));
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        return branch_openingtime;
-    }
+
 }

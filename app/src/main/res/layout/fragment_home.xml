@@ -164,6 +164,7 @@
                 android:textColor="#575555"
                 android:textSize="22dp"
                 android:textStyle="bold"
+                android:layout_marginTop="5dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
@@ -175,6 +176,7 @@
                 android:gravity="center"
                 android:text="Xem thêm"
                 android:textSize="18dp"
+                android:layout_marginTop="2dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView7" />
 
@@ -187,7 +189,7 @@
                 android:scrollbarThumbHorizontal="@color/scrollBackground"
                 android:scrollbarTrackHorizontal="@color/scrollTrack"
                 android:scrollbars="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/collection_textView" />
+                app:layout_constraintTop_toBottomOf="@+id/collection_more" />
 
             <TextView
                 android:id="@+id/AllRestaurants_textView"
@@ -197,6 +199,7 @@
                 android:textColor="#575555"
                 android:textSize="22dp"
                 android:textStyle="bold"
+                android:layout_marginTop="5dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
@@ -208,6 +211,7 @@
                 android:gravity="center"
                 android:text="Xem thêm"
                 android:textSize="18dp"
+                android:layout_marginTop="2dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView17" />
 
@@ -228,9 +232,10 @@
                 android:scrollbarThumbHorizontal="@color/scrollBackground"
                 android:scrollbarTrackHorizontal="@color/scrollTrack"
                 android:scrollbars="horizontal"
+                android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/AllRestaurants_textView" />
+                app:layout_constraintTop_toBottomOf="@+id/AllRestaurants_more" />
 
             <com.denzcoskun.imageslider.ImageSlider
                 android:id="@+id/advertisement_slider"
@@ -265,6 +270,7 @@
                 android:textColor="#575555"
                 android:textSize="22dp"
                 android:textStyle="bold"
+                android:layout_marginTop="5dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtView" />
 
@@ -276,6 +282,7 @@
                 android:gravity="center"
                 android:text="Xem thêm"
                 android:textSize="18dp"
+                android:layout_marginTop="2dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtView" />
 
@@ -287,9 +294,10 @@
                 android:scrollbarThumbHorizontal="@color/scrollBackground"
                 android:scrollbarTrackHorizontal="@color/scrollTrack"
                 android:scrollbars="horizontal"
+                android:layout_marginTop="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/DiscountComboProduct_Title"/>
+                app:layout_constraintTop_toBottomOf="@+id/DiscountComboProduct_more"/>
 
             <TextView
                 android:id="@+id/txtView1"
@@ -308,6 +316,7 @@
                 android:textColor="#575555"
                 android:textSize="22dp"
                 android:textStyle="bold"
+                android:layout_marginTop="5dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtView1" />
 
@@ -319,6 +328,7 @@
                 android:gravity="center"
                 android:text="Xem thêm"
                 android:textSize="18dp"
+                android:layout_marginTop="2dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtView1" />
 
@@ -332,7 +342,7 @@
                 android:scrollbars="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/CheapestProduct_Title"/>
+                app:layout_constraintTop_toBottomOf="@+id/CheapestProduct_more"/>
 
             <TextView
                 android:id="@+id/txtView2"

@@ -8,19 +8,30 @@ import androidx.fragment.app.FragmentTransaction;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import fragments.AccountFragment_Master;
+import com.example.foodapplication.account.fragment.AccountFragment_Master;
 
 import com.example.foodapplication.FoodFragment_Master.FoodFragment_Master;
 import com.example.foodapplication.HomeFragmentMaster.HomeFragment_Master;
 import com.example.foodapplication.HomeFragmentMaster.fragment.HomeFragment_Master_MonAn;
 import com.example.foodapplication.HomeFragment.fragment.RestaurantInformation_ThongTin;
 import com.example.foodapplication.UpdateFragmentMaster.UpdateFragment_Master;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.example.foodapplication.MainActivity.master_id;
 import static com.example.foodapplication.MainActivity.addressLine;
@@ -37,6 +48,9 @@ public class Master_MainActivity extends AppCompatActivity {
 
     public static HomeFragment_Master_MonAn fragment1;
     public static RestaurantInformation_ThongTin fragment2;
+
+    public static boolean isMasterHasRestaurant = false;
+    private final String TAG = "MasterMainActivity";
 
 
     @Override
@@ -59,6 +73,8 @@ public class Master_MainActivity extends AppCompatActivity {
         addressLine = getIntent().getStringExtra("AddressLine");
         nameStreet = getIntent().getStringExtra("NameStreet");
         district_id = getIntent().getIntExtra("District ID", -1);
+
+        CheckMasterHasAddress(master_id);
 
         homeFragment = new HomeFragment_Master(master_id);
         updateFragment = new UpdateFragment_Master(master_id);
@@ -141,5 +157,34 @@ public class Master_MainActivity extends AppCompatActivity {
             winParams.flags &= ~bits;
         }
         win.setAttributes(winParams);
+    }
+
+    private void CheckMasterHasAddress(int master_id) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/checkMasterHasRestaurant.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                String announcement = "";
+                if(response.toString().trim().equals("true")) {
+                    isMasterHasRestaurant = true;
+                }
+                else isMasterHasRestaurant = false;
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Override
+            protected java.util.Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("master_id", String.valueOf(master_id));
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(request);
     }
 }

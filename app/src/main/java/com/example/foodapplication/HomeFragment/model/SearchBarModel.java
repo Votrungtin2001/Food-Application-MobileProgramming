@@ -2,17 +2,17 @@ package com.example.foodapplication.HomeFragment.model;
 import android.graphics.Bitmap;
 
 public class SearchBarModel {
-    private Bitmap image;
+    private String image;
     private String text;
     private int branch_id;
 
-    public SearchBarModel(Bitmap Image, String Text, int id) {
+    public SearchBarModel(String Image, String Text, int id) {
         this.image = Image;
         this.text = Text;
         this.branch_id = id;
     }
 
-    public Bitmap getImage() {
+    public String getImage() {
         return image;
     }
 

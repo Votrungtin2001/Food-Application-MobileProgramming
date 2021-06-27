@@ -1,40 +1,61 @@
 package com.example.foodapplication.auth;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
-import com.example.foodapplication.account.AccountFragment;
-import com.example.foodapplication.databaseHelper.DatabaseHelper;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.foodapplication.R;
 import com.example.foodapplication.MainActivity;
 import com.example.foodapplication.Master_MainActivity;
 import com.example.foodapplication.databinding.FragmentLoginMasterBinding;
 
-import fragments.AccountFragment_Master;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import com.example.foodapplication.account.fragment.AccountFragment_Master;
+
+import static com.example.foodapplication.MainActivity.addressLine;
+import static com.example.foodapplication.MainActivity.district_id;
 import static com.example.foodapplication.MainActivity.master_id;
+import static com.example.foodapplication.MainActivity.nameStreet;
 
 
 public class LoginFragmentMaster extends Fragment {
 
     @NonNull FragmentLoginMasterBinding binding;
-    DatabaseHelper databaseHelper;
     MainActivity mainActivity = new MainActivity();
-    AccountFragment accountFragment = new AccountFragment();
     AccountFragment_Master accountFragment_master = new AccountFragment_Master();
+    private final String TAG = "LoginFragmentMaster";
 
     int role = 0;
     int getRole = 0;
+    int namefragment_before = 0;
 
     public LoginFragmentMaster() { }
 
-    public LoginFragmentMaster(int choose_role) {
+    public LoginFragmentMaster(int name, int choose_role) {
+        this.namefragment_before = name;
         this.role = choose_role;
     }
     public void LoginFragment(int choose_role) {
@@ -49,53 +70,26 @@ public class LoginFragmentMaster extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        databaseHelper = new DatabaseHelper(getActivity());
-
         binding = FragmentLoginMasterBinding.inflate(inflater, container, false);
 
         binding.signinMail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (role == 2) {
-                    boolean isExist = databaseHelper.checkMaster(binding.emailMaster.getText().toString().trim(),binding.passwordMaster.getText().toString().trim());
+                final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+                progressDialog.setMessage("Please wait...");
+                progressDialog.show();
 
-                    if(isExist){
-                        master_id = databaseHelper.getIdMasterByUsername(binding.emailMaster.getText().toString().trim());
-                        databaseHelper.updAllAcountLogOutStatus();
-                        databaseHelper.updMasterLoginStatus(master_id);
-
-                        Intent intent = new Intent(getActivity(), Master_MainActivity.class);
-                        intent.putExtra("Master ID",master_id);
-                        startActivity(intent);
-                    } else {
-                        binding.passwordMaster.setText(null);
-                        Toast.makeText(getActivity(), "Đăng nhập không thành công. Vui lòng điền email hoặc mật khẩu!", Toast.LENGTH_SHORT).show();
-                    }
+                if (namefragment_before == 1 && role == 2) {
+                    NormalLoginForMasterAndOpenMasterMainActivity(binding.emailMaster.getText().toString().trim(), binding.passwordMaster.getText().toString().trim(),
+                            progressDialog, binding.passwordMaster);
+                }
+                else if(namefragment_before == 2 && role == 2) {
+                    NormalLoginForMasterAndBackMasterAccountFragment(binding.emailMaster.getText().toString().trim(), binding.passwordMaster.getText().toString().trim(),
+                            progressDialog, binding.passwordMaster);
                 }
 
 
-//                else {
-//                    boolean isExist = databaseHelper.checkUser(binding.emailMaster.getText().toString().trim(),binding.passwordMaster.getText().toString().trim());
-//
-//                    if(isExist){
-//                        customer_id = databaseHelper.getIdByUsername(binding.emailMaster.getText().toString().trim());
-//                        databaseHelper.updAllAcountLogOutStatus();
-//                        databaseHelper.updCustomerLoginStatus(customer_id);
-//                        Toast.makeText(getActivity(), "Login id: " + customer_id, Toast.LENGTH_SHORT).show();
-//
-////                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-////                        transaction.replace(R.id.frame_container, accountFragment);
-////                        transaction.addToBackStack(null);
-////                        transaction.commit();
-//                        Intent intent = new Intent(getActivity(), MainActivity.class);
-//                        intent.putExtra("_id",customer_id);
-//                        startActivity(intent);
-//                    } else {
-//                        binding.passwordMaster.setText(null);
-//                        Toast.makeText(getActivity(), "Đăng nhập không thành công. Vui lòng điền email hoặc mật khẩu!", Toast.LENGTH_SHORT).show();
-//                    }
-//                }
             }
         });
 
@@ -111,4 +105,110 @@ public class LoginFragmentMaster extends Fragment {
                 .addToBackStack(null)
                 .commit();
     };
+
+    private void NormalLoginForMasterAndOpenMasterMainActivity(String username, String password,
+                                                                ProgressDialog progressDialog, EditText editText) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/getNormalLoginForMaster.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                progressDialog.dismiss();
+                String announcement = "";
+                if(response.toString().trim().equals("Failed to log in")) {
+                    editText.setText(null);
+                    announcement = "Đăng nhập thất bại! Tài khoản hoặc mật khẩu không chính xác!";
+                    Toast.makeText(getActivity(), announcement, Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+                        for(int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
+                            master_id = Integer.parseInt(object.getString("_ID"));
+                            Intent intent = new Intent(getActivity(), Master_MainActivity.class);
+                            intent.putExtra("Master ID",master_id);
+                            intent.putExtra("AddressLine", addressLine);
+                            intent.putExtra("NameStreet", nameStreet);
+                            intent.putExtra("District ID", district_id);
+                            startActivity(intent);
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Override
+            protected java.util.Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("username", String.valueOf(username));
+                params.put("password", String.valueOf(password));
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue.add(request);
+    }
+
+    private void NormalLoginForMasterAndBackMasterAccountFragment(String username, String password,
+                                                               ProgressDialog progressDialog, EditText editText) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/getNormalLoginForMaster.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                progressDialog.dismiss();
+                String announcement = "";
+                if(response.toString().trim().equals("Failed to log in")) {
+                    editText.setText(null);
+                    announcement = "Đăng nhập thất bại! Tài khoản hoặc mật khẩu không chính xác!";
+                    Toast.makeText(getActivity(), announcement, Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    try {
+                        JSONObject jsonObject = new JSONObject(response);
+                        JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+                        for(int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
+                            master_id = Integer.parseInt(object.getString("_ID"));
+                            FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                            transaction.replace(R.id.frame_container_master, accountFragment_master);
+                            transaction.addToBackStack(null);
+                            transaction.commit();
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Override
+            protected java.util.Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("username", String.valueOf(username));
+                params.put("password", String.valueOf(password));
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue.add(request);
+    }
 }

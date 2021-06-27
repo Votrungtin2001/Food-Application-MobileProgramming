@@ -1,8 +1,9 @@
 package com.example.foodapplication.orderFragment;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,15 +13,26 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.foodapplication.R;
-import com.example.foodapplication.databaseHelper.DatabaseHelper;
 import com.example.foodapplication.orderFragment.adapter.OrderViewHolder;
 import com.example.foodapplication.orderFragment.models.OrderModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import static com.example.foodapplication.MainActivity.addressid_Home;
+import static com.example.foodapplication.MainActivity.addressid_Work;
 import static com.example.foodapplication.MainActivity.customer_id;
+import static com.example.foodapplication.MySQL.MySQLQuerry.GetOrders;
 
 
 public class OrderFragment extends Fragment {
@@ -28,12 +40,11 @@ public class OrderFragment extends Fragment {
     public RecyclerView recyclerView;
     List<OrderModel> orderModelList = new ArrayList<>();
     OrderViewHolder orderViewHolder;
-    DatabaseHelper databaseHelper;
-    SQLiteDatabase db;
     LinearLayout linearLayout;
     LinearLayoutManager linearLayoutManager_Menu;
 
     boolean order_isAvailable = false;
+    private final String TAG = "OrderFragment";
 
     public OrderFragment() {
         // Required empty public constructor
@@ -43,22 +54,35 @@ public class OrderFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_order, container, false);
 
-        databaseHelper = new DatabaseHelper(getActivity());
-        db = databaseHelper.getReadableDatabase();
-
         recyclerView = (RecyclerView) view.findViewById(R.id.listOrders);
         linearLayout = view.findViewById(R.id.none);
 
-        if(getOId() > 0) {order_isAvailable = true;}
-        SetAllData();
-        setUpSreen(order_isAvailable);
+        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Please wait...");
+        CheckCustomerOrderWithCustomerID(customer_id);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if(order_isAvailable) {
+                    progressDialog.show();
+                    SetAllData(progressDialog);
+                }
+               setUpSreen(order_isAvailable);
+
+            }
+        }, 1000);
 
         return view;
     }
 
-    public void SetAllData() {
-        getOrder(customer_id);
+    public void SetAllData(ProgressDialog progressDialog) {
+        orderModelList = new ArrayList<>();
         orderViewHolder = new OrderViewHolder(getActivity(), orderModelList);
+        if(addressid_Home > 0) {
+            GetOrders(customer_id, addressid_Home, orderModelList, orderViewHolder,progressDialog, TAG, getActivity());
+        }
+        else  GetOrders(customer_id, addressid_Work, orderModelList, orderViewHolder,progressDialog, TAG, getActivity());
         linearLayoutManager_Menu = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager_Menu);
         recyclerView.setAdapter(orderViewHolder);
@@ -75,40 +99,33 @@ public class OrderFragment extends Fragment {
         }
     }
 
-    public void getOrder(int id) {
-        orderModelList = new ArrayList<>();
-        String selectQuery =  " SELECT O._id, O.Total, C.Phone, A.Address " +
-                " FROM ((ORDERS O JOIN CUSTOMER C ON O.Customer = C._id) JOIN CUSTOMER_ADDRESS CA ON CA.Customer = C._id ) JOIN ADDRESS A ON A._id = CA.Address " +
-                "WHERE O.Customer ='" + id + "';";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            do {
-                int orderid = cursor.getInt(cursor.getColumnIndex("_id"));
-                int total = cursor.getInt(cursor.getColumnIndex("Total"));
-                String phone = cursor.getString(cursor.getColumnIndex("Phone"));
-                String address = cursor.getString(cursor.getColumnIndex("Address"));
-                OrderModel orderModel = new OrderModel(orderid,total,phone,address);
-                orderModelList.add(orderModel);
+    private void CheckCustomerOrderWithCustomerID(int customer_id) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/checkCustomerOrderWithCustomerID.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                String announcement = "";
+                if(response.toString().trim().equals("true")) {
+                    order_isAvailable = true;
+                }
+                else order_isAvailable = false;
             }
-            while (cursor.moveToNext());
-        }
-        cursor.close();
-    }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Override
+            protected java.util.Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("customer_id", String.valueOf(customer_id));
+                return params;
+            }
+        };
 
-    public int getOId() {
-        int orderid = -1;
-        String selectQuery = "SELECT * FROM ORDERS WHERE Customer ='" + customer_id + "';";
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            do {
-                orderid = cursor.getInt(cursor.getColumnIndex("_id"));
-            }
-            while (cursor.moveToNext());
-        }
-        cursor.close();
-        return  orderid;
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+        requestQueue.add(request);
     }
 
 }

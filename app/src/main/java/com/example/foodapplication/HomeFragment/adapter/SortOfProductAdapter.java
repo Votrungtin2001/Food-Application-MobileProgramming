@@ -15,9 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.foodapplication.R;
 import com.example.foodapplication.HomeFragment.RestaurantInformation;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 import com.example.foodapplication.HomeFragment.model.SortOfProductModel;
+import com.squareup.picasso.Picasso;
 
 public class SortOfProductAdapter extends RecyclerView.Adapter<SortOfProductAdapter.ViewHolder> {
 
@@ -41,10 +43,18 @@ public class SortOfProductAdapter extends RecyclerView.Adapter<SortOfProductAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         SortOfProductModel currentItem = itemList.get(position);
-        holder.image_product.setImageBitmap(currentItem.getImage());
+        if(currentItem.getImage().isEmpty()){
+            holder.image_product.setImageResource(R.drawable.noimage_product);
+        }else {
+            Picasso.get ().load ( currentItem.getImage () )
+                    .placeholder(R.drawable.noimage_product)
+                    .error(R.drawable.error)
+                    .into(holder.image_product);
+        }
         holder.name_product.setText(currentItem.getNameProduct());
         holder.name_branch.setText(currentItem.getNameBranch());
-        holder.price.setText(currentItem.getPrice() + "đ");
+        DecimalFormat decimalFormat = new DecimalFormat( "###,###,###" );
+        holder.price.setText(decimalFormat.format(currentItem.getPrice()) + "đ");
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

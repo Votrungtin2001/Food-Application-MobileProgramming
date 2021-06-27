@@ -1,27 +1,30 @@
 package com.example.foodapplication.HomeFragment.model;
 
 public class CollectionModel {
-    int image;
-    String item_name;
+    private int collection_id;
+    private String image;
+    private String name;
+    private String description;
 
-    public CollectionModel(int image, String item_name) {
-        this.image = image;
-        this.item_name = item_name;
+
+    public CollectionModel(int id, String Image, String Name, String Description) {
+        this.collection_id = id;
+        this.image = Image;
+        this.name= Name;
+        this.description = Description;
     }
 
-    public int getImage() {
+    public String getImage() {
         return image;
     }
 
-    public void setImage(int image) {
-        this.image = image;
+    public String getName() {
+        return name;
     }
 
-    public String getItem_name() {
-        return item_name;
+    public String getDescription() {
+        return description;
     }
 
-    public void setItem_name(String item_name) {
-        this.item_name = item_name;
-    }
+    public int getCollectionID() {return collection_id;}
 }

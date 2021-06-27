@@ -18,6 +18,7 @@ import com.example.foodapplication.HomeFragment.RestaurantInformation;
 import java.util.List;
 
 import com.example.foodapplication.HomeFragment.model.SearchBarModel;
+import com.squareup.picasso.Picasso;
 
 public class SearchBarAdapter extends RecyclerView.Adapter<SearchBarAdapter.ViewHolder> {
 
@@ -43,7 +44,14 @@ public class SearchBarAdapter extends RecyclerView.Adapter<SearchBarAdapter.View
         SearchBarModel currentItem = itemList.get(position);
 
         holder.textView.setText(currentItem.getText());
-        holder.imageView.setImageBitmap(currentItem.getImage());
+        if(currentItem.getImage().isEmpty()){
+            holder.imageView.setImageResource(R.drawable.noimage_restaurant);
+        }else {
+            Picasso.get ().load ( currentItem.getImage () )
+                    .placeholder(R.drawable.noimage_restaurant)
+                    .error(R.drawable.error)
+                    .into(holder.imageView);
+        }
         holder.constraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

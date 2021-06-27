@@ -11,11 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodapplication.R;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
-import models.ProductModel;
+import com.example.foodapplication.HomeFragment.model.ProductModel;
 
 import static com.example.foodapplication.HomeFragment.adapter.MenuAdapter.productModelList;
+import static com.example.foodapplication.orderFragment.cart.Cart.dTotal;
+import static com.example.foodapplication.orderFragment.cart.Cart.txtTotalPrice;
 
 class CartViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
@@ -41,6 +44,8 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
     public List<ProductModel> listCart;
     private Context context;
 
+    double total = 0;
+
     public CartAdapter(List<ProductModel> listCart,Context context) {
         this.listCart = listCart;
         this.context= context;
@@ -62,31 +67,46 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
 
         holder.nameItem.setText(listCart.get(position).getNameProduct());
         holder.countItem.setText(Integer.toString(listCart.get(position).getQuantity()));
-
-        int price = (listCart.get(position).getPrice())*(listCart.get(position).getQuantity());
-        holder.price.setText(Integer.toString(price));
+        double price = (listCart.get(position).getPrice())*(listCart.get(position).getQuantity());
+        DecimalFormat decimalFormat = new DecimalFormat( "###,###,###");
+        holder.price.setText(decimalFormat.format(price) + "đ");
         holder.addItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.countItem.setText(Integer.toString(++listCart.get(position).quantity));
-                int price = (listCart.get(position).getPrice())*(listCart.get(position).getQuantity());
-                holder.price.setText(Integer.toString(price));
+                int newQuantity = listCart.get(position).getQuantity();
+                listCart.get(position).setQuantity(newQuantity + 1);
+                holder.countItem.setText(Integer.toString(listCart.get(position).getQuantity()));
+                double price = (listCart.get(position).getPrice())*(listCart.get(position).getQuantity());
+                holder.price.setText(decimalFormat.format(price) + "đ");
+                total = 0;
+                for(int i = 0; i < listCart.size(); i++)
+                    total += ((listCart.get(i).getPrice()*(listCart.get(i).getQuantity())));
+
+                txtTotalPrice.setText(decimalFormat.format(total));
+                dTotal = total;
             }
         });
-
         holder.removeItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                holder.countItem.setText(Integer.toString(listCart.get(position).quantity--));
-                int price = (listCart.get(position).getPrice())*(listCart.get(position).getQuantity());
-                holder.price.setText(Integer.toString(price));
+                int newQuantity = listCart.get(position).getQuantity();
+                listCart.get(position).setQuantity(newQuantity - 1);
+                holder.countItem.setText(Integer.toString(listCart.get(position).getQuantity()));
+                double price = (listCart.get(position).getPrice())*(listCart.get(position).getQuantity());
+                holder.price.setText(decimalFormat.format(price) + "đ");
                 if(listCart.get(position).quantity == 0)
                 {
                     listCart.remove(listCart.get(position));
                 }
+                total = 0;
+                for(int i = 0; i < listCart.size(); i++)
+                    total += ((listCart.get(i).getPrice()*(listCart.get(i).getQuantity())));
+
+                txtTotalPrice.setText(decimalFormat.format(total));
             }
         });
     }
+
 
     @Override
     public int getItemCount() {
