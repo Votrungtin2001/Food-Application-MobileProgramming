@@ -37,11 +37,11 @@ import com.example.foodapplication.HomeFragment.model.ProductCategoryModel;
 import com.example.foodapplication.HomeFragment.model.ProductModel;
 import com.example.foodapplication.HomeFragment.model.SortOfProductModel;
 import com.example.foodapplication.HomeFragmentMaster.adapter.MenuAdapter_HomeFragment_Master_DatDon;
-import com.example.foodapplication.account.model.IdWithNameListItem;
 import com.example.foodapplication.R;
+import com.example.foodapplication.account.model.IdWithNameListItem;
 import com.example.foodapplication.account.model.Transaction;
 import com.example.foodapplication.orderFragment.adapter.OrderViewHolder;
-import com.example.foodapplication.orderFragment.model.OrderModel;
+import com.example.foodapplication.orderFragment.models.OrderModel;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;

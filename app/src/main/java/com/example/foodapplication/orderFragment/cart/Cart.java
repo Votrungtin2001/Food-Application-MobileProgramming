@@ -20,9 +20,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.foodapplication.orderFragment.adapter.CartAdapter;
-import com.example.foodapplication.orderFragment.model.OrderModel;
+import com.example.foodapplication.HomeFragment.model.ProductModel;
 import com.example.foodapplication.R;
+import com.example.foodapplication.orderFragment.adapter.CartAdapter;
+import com.example.foodapplication.orderFragment.model.Request;
+import com.example.foodapplication.orderFragment.models.OrderModel;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -31,10 +33,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.example.foodapplication.HomeFragment.model.ProductModel;
-
-import com.example.foodapplication.orderFragment.model.Request;
 
 import static com.example.foodapplication.HomeFragment.adapter.MenuAdapter.productModelList;
 import static com.example.foodapplication.MainActivity.addressid_Home;

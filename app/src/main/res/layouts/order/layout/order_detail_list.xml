@@ -24,6 +24,7 @@
             android:layout_height="90dp"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/nowlogo" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -35,9 +36,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Cơm gà ngon - Tô Vĩnh Diện"
+                    android:textSize="16sp"
                     android:textColor="#000000"
                     android:textStyle="bold"
                     android:layout_marginStart="15dp"
+                    android:layout_marginTop="8dp"
                     app:layout_constraintStart_toEndOf="@+id/imageView4"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -45,7 +48,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginTop="20dp">
+                    android:layout_marginTop="18dp"
+                    android:layout_marginBottom="8dp">
 
 
                     <TextView
@@ -55,8 +59,10 @@
                         android:layout_marginStart="15dp"
                         android:layout_marginTop="8dp"
                         android:text="19,800đ"
+                        android:textSize="16sp"
                         android:textColor="#000000"
-                        android:textStyle="bold"
+                        android:textStyle="italic"
+
                         app:layout_constraintStart_toEndOf="@+id/imageView4"
                         app:layout_constraintTop_toBottomOf="@+id/res_address" />
 
@@ -64,6 +70,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="("
+                        android:textSize="16sp"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="8dp" />
 
@@ -72,6 +79,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="1"
+                        android:textSize="16sp"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="8dp" />
 
@@ -80,6 +88,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="phần )"
+                        android:textSize="16sp"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="8dp" />
 

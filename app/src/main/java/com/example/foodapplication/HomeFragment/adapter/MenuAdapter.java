@@ -70,7 +70,6 @@ import static com.example.foodapplication.MainActivity.isCustomerHasAddress;
 
         holder.imageView_addItem.setOnClickListener(new View.OnClickListener() {
 
-
             @Override
             public void onClick(View v) {
                 int qty = currentItem.getQuantity();

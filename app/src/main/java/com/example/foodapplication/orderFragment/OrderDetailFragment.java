@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodapplication.R;
-import com.example.foodapplication.databaseHelper.DatabaseHelper;
+
 import com.example.foodapplication.orderFragment.adapter.OrderDetailAdapter;
 import com.example.foodapplication.orderFragment.models.OrderDetailModel;
 
@@ -30,7 +30,6 @@ public class OrderDetailFragment extends Fragment {
     private List<OrderDetailModel> orderDetailModelList;
 
     SQLiteDatabase db;
-    DatabaseHelper databaseHelper;
 
     private int orderId;
 
