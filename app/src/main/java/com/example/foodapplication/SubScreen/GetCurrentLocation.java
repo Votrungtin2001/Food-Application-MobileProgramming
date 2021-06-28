@@ -3,6 +3,8 @@ package com.example.foodapplication.SubScreen;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
@@ -28,6 +30,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.foodapplication.MainActivity;
 import com.example.foodapplication.Master_MainActivity;
+import com.example.foodapplication.MySQL.DatabaseHelper;
 import com.example.foodapplication.R;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -55,6 +58,9 @@ public class GetCurrentLocation extends AppCompatActivity {
     int customer_id = 0;
     private final String TAG = "GetCurrentLocation";
 
+    DatabaseHelper databaseHelper;
+    SQLiteDatabase db;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +69,8 @@ public class GetCurrentLocation extends AppCompatActivity {
         //Transparent Status and Navigation Bar
         transparentStatusAndNavigation();
         setContentView(R.layout.activity_get_current_location);
+
+        databaseHelper = new DatabaseHelper(this);
 
         initComponents();
 
@@ -77,8 +85,8 @@ public class GetCurrentLocation extends AppCompatActivity {
         //get current location - Address Line
         getLocation();
 
-        GetCustomerAccountLoginBefore();
-        GetMasterAccountLoginBefore();
+        customer_id = GetCustomerIDLoginBefore();
+        master_id = GetMasterIDLoginBefore();
 
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -184,71 +192,36 @@ public class GetCurrentLocation extends AppCompatActivity {
         win.setAttributes(winParams);
     }
 
-    public void GetCustomerAccountLoginBefore() {
-        String url = "https://foodapplicationmobile.000webhostapp.com/getCustomerAccountLoginBefore.php";
-        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    String success = jsonObject.getString("success");
-                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+    public int GetCustomerIDLoginBefore() {
+        db = databaseHelper.getReadableDatabase();
+        int cus_id = 0;
+        String selectQuery = "Select * from CUSTOMER where Status ='" + 1 + "';";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                cus_id = cursor.getInt(cursor.getColumnIndex("Customer_ID"));
+            } while (cursor.moveToNext());
 
-                    if(success.equals("1")) {
-                        for(int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject object = jsonArray.getJSONObject(i);
-
-                            int _id = object.getInt("_ID");
-                            customer_id = _id;
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, error.toString());
-            }
-        });
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(request);
+        }
+        cursor.close();
+        return cus_id;
     }
 
-    public void GetMasterAccountLoginBefore() {
-        String url = "https://foodapplicationmobile.000webhostapp.com/getMasterAccountLoginBefore.php";
-        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    String success = jsonObject.getString("success");
-                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+    public int GetMasterIDLoginBefore() {
+        db = databaseHelper.getReadableDatabase();
+        int master_id = 0;
+        String selectQuery = "Select * from MASTER where Status ='" + 1 + "';";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                master_id = cursor.getInt(cursor.getColumnIndex("Master_ID"));
+            } while (cursor.moveToNext());
 
-                    if(success.equals("1")) {
-                        for(int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject object = jsonArray.getJSONObject(i);
-
-                            int _id = object.getInt("_ID");
-                            master_id = _id;
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, error.toString());
-            }
-        });
-
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(request);
+        }
+        cursor.close();
+        return master_id;
     }
-
 
 }

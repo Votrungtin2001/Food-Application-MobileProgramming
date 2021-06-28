@@ -2,6 +2,8 @@ package com.example.foodapplication.auth;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -25,6 +27,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.foodapplication.MainActivity;
+import com.example.foodapplication.MySQL.DatabaseHelper;
 import com.example.foodapplication.R;
 import com.example.foodapplication.account.fragment.AccountFragment;
 import com.example.foodapplication.databinding.FragmentLoginBinding;
@@ -86,6 +89,9 @@ public class LoginFragment extends Fragment  {
     String userId;
     MainActivity mainActivity = new MainActivity();
 
+    DatabaseHelper databaseHelper;
+    SQLiteDatabase db;
+
     int role = 0;
     int namefragment_before = 0;
 
@@ -117,6 +123,8 @@ public class LoginFragment extends Fragment  {
                              Bundle savedInstanceState) {
 
         mFirebaseAuth = FirebaseAuth.getInstance();
+
+        databaseHelper = new DatabaseHelper(getActivity());
 
         binding = FragmentLoginBinding.inflate(inflater, container, false);
 
@@ -162,7 +170,7 @@ public class LoginFragment extends Fragment  {
     }
 
     View.OnClickListener runSignUpFragment = v -> {
-        SignUpFragment newFragment = new SignUpFragment(role);
+        SignUpFragment newFragment = new SignUpFragment(role, namefragment_before);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
                 .addToBackStack(null)
@@ -367,7 +375,22 @@ public class LoginFragment extends Fragment  {
 
                         for(int i = 0; i < jsonArray.length(); i++) {
                             JSONObject object = jsonArray.getJSONObject(i);
-                            customer_id = Integer.parseInt(object.getString("_ID"));
+                            int cus_id = Integer.parseInt(object.getString("_ID"));
+                            boolean checkCustomerIDIsExist = CheckCustomerIDIsExist(cus_id);
+                            if(checkCustomerIDIsExist) {
+                                int id = getIDInCustomerTable(cus_id);
+                                databaseHelper.updAllAcountLogOutStatus();
+                                databaseHelper.updCustomerLoginStatus(id);
+                                customer_id = getCustomerIDLogin();
+                            }
+                            else {
+                                databaseHelper.addCustomer(cus_id);
+                                int id = getIDInCustomerTable(cus_id);
+                                databaseHelper.updAllAcountLogOutStatus();
+                                databaseHelper.updCustomerLoginStatus(id);
+                                customer_id = getCustomerIDLogin();
+                            }
+
                             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                             transaction.replace(R.id.frame_container, accountFragment);
                             transaction.addToBackStack(null);
@@ -419,7 +442,22 @@ public class LoginFragment extends Fragment  {
 
                         for(int i = 0; i < jsonArray.length(); i++) {
                             JSONObject object = jsonArray.getJSONObject(i);
-                            customer_id = Integer.parseInt(object.getString("_ID"));
+                            int cus_id = Integer.parseInt(object.getString("_ID"));
+                            boolean checkCustomerIDIsExist = CheckCustomerIDIsExist(cus_id);
+                            if(checkCustomerIDIsExist) {
+                                int id = getIDInCustomerTable(cus_id);
+                                databaseHelper.updAllAcountLogOutStatus();
+                                databaseHelper.updCustomerLoginStatus(id);
+                                customer_id = getCustomerIDLogin();
+                            }
+                            else {
+                                databaseHelper.addCustomer(cus_id);
+                                int id = getIDInCustomerTable(cus_id);
+                                databaseHelper.updAllAcountLogOutStatus();
+                                databaseHelper.updCustomerLoginStatus(id);
+                                customer_id = getCustomerIDLogin();
+                            }
+
                             Intent intent = new Intent(getActivity(), MainActivity.class);
                             intent.putExtra("Customer ID", customer_id);
                             intent.putExtra("AddressLine", addressLine);
@@ -471,7 +509,21 @@ public class LoginFragment extends Fragment  {
 
                         for(int i = 0; i < jsonArray.length(); i++) {
                             JSONObject object = jsonArray.getJSONObject(i);
-                            customer_id = Integer.parseInt(object.getString("_ID"));
+                            int cus_id = Integer.parseInt(object.getString("_ID"));
+                            boolean checkCustomerIDIsExist = CheckCustomerIDIsExist(cus_id);
+                            if(checkCustomerIDIsExist) {
+                                int id = getIDInCustomerTable(cus_id);
+                                databaseHelper.updAllAcountLogOutStatus();
+                                databaseHelper.updCustomerLoginStatus(id);
+                                customer_id = getCustomerIDLogin();
+                            }
+                            else {
+                                databaseHelper.addCustomer(cus_id);
+                                int id = getIDInCustomerTable(cus_id);
+                                databaseHelper.updAllAcountLogOutStatus();
+                                databaseHelper.updCustomerLoginStatus(id);
+                                customer_id = getCustomerIDLogin();
+                            }
                             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                             transaction.replace(R.id.frame_container, accountFragment);
                             transaction.addToBackStack(null);
@@ -550,4 +602,54 @@ public class LoginFragment extends Fragment  {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(request);
     }
+
+    public boolean CheckCustomerIDIsExist(int cus_id) {
+        db = databaseHelper.getReadableDatabase();
+        int count = 0;
+        String selectQuery =  "SELECT * FROM CUSTOMER WHERE Customer_ID = '" + customer_id + "';";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+
+            } while (cursor.moveToNext());
+
+        }
+        count = cursor.getCount();
+        cursor.close();
+        if(count > 0) return true;
+        else return false;
+    }
+
+    public int getIDInCustomerTable(int cus_id) {
+        db = databaseHelper.getReadableDatabase();
+        int id = 0;
+        String selectQuery =  "SELECT * FROM CUSTOMER WHERE Customer_ID = '" + cus_id + "';";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                id = cursor.getInt(cursor.getColumnIndex("_id"));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return  id;
+    }
+
+    public int getCustomerIDLogin() {
+        db = databaseHelper.getReadableDatabase();
+        int id = 0;
+        String selectQuery =  "SELECT * FROM CUSTOMER WHERE STATUS = '" + 1 + "';";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                id = cursor.getInt(cursor.getColumnIndex("Customer_ID"));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return  id;
+    }
+
+
 }
