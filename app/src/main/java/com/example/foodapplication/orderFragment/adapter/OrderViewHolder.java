@@ -57,7 +57,6 @@ public class OrderViewHolder extends RecyclerView.Adapter<OrderViewHolder.ViewHo
                     OrderDetailFragment myFragment = new OrderDetailFragment(currentItem.getOrderId());
                     activity.getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, myFragment).addToBackStack(null).commit();
                 }
-
             });
         }
     }

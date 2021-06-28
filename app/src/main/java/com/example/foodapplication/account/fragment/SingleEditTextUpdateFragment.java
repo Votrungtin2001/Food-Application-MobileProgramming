@@ -31,12 +31,12 @@ import com.example.foodapplication.R;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.example.foodapplication.MySQL.MySQLQuerry.GetCustomerEmail;
-import static com.example.foodapplication.MySQL.MySQLQuerry.GetCustomerName;
-import static com.example.foodapplication.MySQL.MySQLQuerry.GetCustomerPhone;
-import static com.example.foodapplication.MySQL.MySQLQuerry.GetMasterEmail;
-import static com.example.foodapplication.MySQL.MySQLQuerry.GetMasterName;
-import static com.example.foodapplication.MySQL.MySQLQuerry.GetMasterPhone;
+import static com.example.foodapplication.mySQL.MySQLQuerry.GetCustomerEmail;
+import static com.example.foodapplication.mySQL.MySQLQuerry.GetCustomerName;
+import static com.example.foodapplication.mySQL.MySQLQuerry.GetCustomerPhone;
+import static com.example.foodapplication.mySQL.MySQLQuerry.GetMasterEmail;
+import static com.example.foodapplication.mySQL.MySQLQuerry.GetMasterName;
+import static com.example.foodapplication.mySQL.MySQLQuerry.GetMasterPhone;
 
 public class SingleEditTextUpdateFragment extends Fragment {
     private String type, target;

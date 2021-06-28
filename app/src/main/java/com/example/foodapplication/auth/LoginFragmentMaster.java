@@ -23,10 +23,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.foodapplication.MySQL.DatabaseHelper;
-import com.example.foodapplication.R;
-import com.example.foodapplication.MainActivity;
 import com.example.foodapplication.Master_MainActivity;
+import com.example.foodapplication.mySQL.DatabaseHelper;
+import com.example.foodapplication.R;
+import com.example.foodapplication.account.fragment.AccountFragment_Master;
 import com.example.foodapplication.databinding.FragmentLoginMasterBinding;
 
 import org.json.JSONArray;
@@ -36,10 +36,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.example.foodapplication.account.fragment.AccountFragment_Master;
-
 import static com.example.foodapplication.MainActivity.addressLine;
-import static com.example.foodapplication.MainActivity.customer_id;
 import static com.example.foodapplication.MainActivity.district_id;
 import static com.example.foodapplication.MainActivity.master_id;
 import static com.example.foodapplication.MainActivity.nameStreet;
@@ -48,12 +45,10 @@ import static com.example.foodapplication.MainActivity.nameStreet;
 public class LoginFragmentMaster extends Fragment {
 
     @NonNull FragmentLoginMasterBinding binding;
-    MainActivity mainActivity = new MainActivity();
     AccountFragment_Master accountFragment_master = new AccountFragment_Master();
     private final String TAG = "LoginFragmentMaster";
 
     int role = 0;
-    int getRole = 0;
     int namefragment_before = 0;
 
     DatabaseHelper databaseHelper;
@@ -65,9 +60,7 @@ public class LoginFragmentMaster extends Fragment {
         this.namefragment_before = name;
         this.role = choose_role;
     }
-    public void LoginFragment(int choose_role) {
-        this.getRole = choose_role;
-    }
+
     public static LoginFragment newInstance() {
         LoginFragment fragment = new LoginFragment();
         return fragment;
@@ -97,8 +90,6 @@ public class LoginFragmentMaster extends Fragment {
                     NormalLoginForMasterAndBackMasterAccountFragment(binding.emailMaster.getText().toString().trim(), binding.passwordMaster.getText().toString().trim(),
                             progressDialog, binding.passwordMaster);
                 }
-
-
             }
         });
 

@@ -23,7 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.foodapplication.MainActivity;
-import com.example.foodapplication.MySQL.DatabaseHelper;
+import com.example.foodapplication.mySQL.DatabaseHelper;
 import com.example.foodapplication.R;
 import com.example.foodapplication.auth.LoginFragment;
 import com.example.foodapplication.auth.LoginFragmentMaster;
@@ -32,9 +32,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.example.foodapplication.MainActivity.master_id;
-import static com.example.foodapplication.MySQL.MySQLQuerry.LogOutAccount;
 import static com.example.foodapplication.Master_MainActivity.isMasterHasRestaurant;
-import static com.example.foodapplication.MySQL.MySQLQuerry.SetMasterAccountInformationInMasterAccountFragment;
+import static com.example.foodapplication.mySQL.MySQLQuerry.SetMasterAccountInformationInMasterAccountFragment;
 
 public class AccountFragment_Master extends Fragment {
 

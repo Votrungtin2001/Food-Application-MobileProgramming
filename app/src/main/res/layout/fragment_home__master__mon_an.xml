@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".HomeFragmentMaster.fragment.HomeFragment_Master_MonAn">
+    tools:context=".homeMaster.fragment.HomeFragment_Master_MonAn">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/Menu_RecyclerView_HomeFragment_Master_DatDon"

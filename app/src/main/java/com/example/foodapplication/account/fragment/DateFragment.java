@@ -18,7 +18,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import static com.example.foodapplication.MySQL.MySQLQuerry.UpdateCustomerDOB;
+import static com.example.foodapplication.mySQL.MySQLQuerry.UpdateCustomerDOB;
 
 public class DateFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener{
     int user_id = -1;

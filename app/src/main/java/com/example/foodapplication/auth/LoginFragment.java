@@ -27,7 +27,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.foodapplication.MainActivity;
-import com.example.foodapplication.MySQL.DatabaseHelper;
+import com.example.foodapplication.mySQL.DatabaseHelper;
 import com.example.foodapplication.R;
 import com.example.foodapplication.account.fragment.AccountFragment;
 import com.example.foodapplication.databinding.FragmentLoginBinding;
@@ -86,9 +86,6 @@ public class LoginFragment extends Fragment  {
     LoginButton mFacebookLoginButton;
     private FragmentLoginBinding binding;
 
-    String userId;
-    MainActivity mainActivity = new MainActivity();
-
     DatabaseHelper databaseHelper;
     SQLiteDatabase db;
 
@@ -101,11 +98,6 @@ public class LoginFragment extends Fragment  {
         this.namefragment_before = name;
         this.role = choose_role;
     }
-
-    public LoginFragment(int choose_role) {
-        this.role = choose_role;
-    }
-
 
     public static LoginFragment newInstance() {
         LoginFragment fragment = new LoginFragment();
@@ -198,10 +190,7 @@ public class LoginFragment extends Fragment  {
         }
     }
 
-    private void emptyInputEditText() {
-        binding.email.setText(null);
-        binding.password.setText(null);
-    }
+
     private void textChangeCheck() {
 
         binding.email.addTextChangedListener(new TextWatcher() {
@@ -219,7 +208,6 @@ public class LoginFragment extends Fragment  {
             public void afterTextChanged(Editable s) {
                 String emailString = binding.email.getText().toString().trim();
                 if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailString).matches()) {
-                    // or
                     binding.email.setError("Email không hợp lệ");
                 } else {
                     binding.email.setError(null);
@@ -245,7 +233,6 @@ public class LoginFragment extends Fragment  {
 
     }
 
-    // [START auth_with_google]
     public void createRequest() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -259,7 +246,6 @@ public class LoginFragment extends Fragment  {
         Intent signIn = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signIn, RC_SIGN_IN);
     }
-
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
@@ -298,10 +284,6 @@ public class LoginFragment extends Fragment  {
                     }
                 });
     }
-
-    // [END auth_with_google]
-
-    // [START auth_with_facebook]
 
     private void facebookLogin() {
         binding.signinFb.setReadPermissions(Arrays.asList("email"));
@@ -650,6 +632,4 @@ public class LoginFragment extends Fragment  {
         cursor.close();
         return  id;
     }
-
-
 }

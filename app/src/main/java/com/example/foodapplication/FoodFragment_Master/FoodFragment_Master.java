@@ -43,8 +43,8 @@ import java.util.ArrayList;
 
 import static android.app.Activity.RESULT_OK;
 import static com.example.foodapplication.Master_MainActivity.isMasterHasRestaurant;
-import static com.example.foodapplication.MySQL.MySQLQuerry.AddProductAndMenu;
-import static com.example.foodapplication.MySQL.MySQLQuerry.GetCategories;
+import static com.example.foodapplication.mySQL.MySQLQuerry.AddProductAndMenu;
+import static com.example.foodapplication.mySQL.MySQLQuerry.GetCategories;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 

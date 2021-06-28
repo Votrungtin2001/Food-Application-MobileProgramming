@@ -1,29 +1,26 @@
 package com.example.foodapplication.orderFragment;
 
 import android.app.ProgressDialog;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodapplication.R;
-
 import com.example.foodapplication.orderFragment.adapter.OrderDetailAdapter;
 import com.example.foodapplication.orderFragment.models.OrderDetailModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.foodapplication.MainActivity.customer_id;
-import static com.example.foodapplication.MySQL.MySQLQuerry.GetOrderDetailsWithOrderID;
+import static com.example.foodapplication.mySQL.MySQLQuerry.GetOrderDetailsWithOrderID;
 
 public class OrderDetailFragment extends Fragment {
 
@@ -46,6 +43,15 @@ public class OrderDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_order_detail, container, false);
+
+        Toolbar toolbar = view.findViewById(R.id.toolbar);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle("Chi tiết đơn hàng");
+        toolbar.setNavigationOnClickListener(v -> {
+            FragmentManager fragmentManager = getParentFragmentManager();
+            fragmentManager.popBackStack(null, 0);
+        });
 
         initComponents(view);
         Run();

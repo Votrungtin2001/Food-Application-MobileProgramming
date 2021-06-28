@@ -20,8 +20,8 @@ import com.example.foodapplication.databinding.FragmentSignUpBinding;
 
 import java.util.Objects;
 
-import static com.example.foodapplication.MySQL.MySQLQuerry.CreateCustomerAccount;
-import static com.example.foodapplication.MySQL.MySQLQuerry.CreateMasterAccount;
+import static com.example.foodapplication.mySQL.MySQLQuerry.CreateCustomerAccount;
+import static com.example.foodapplication.mySQL.MySQLQuerry.CreateMasterAccount;
 
 
 public class SignUpFragment extends Fragment {
@@ -34,7 +34,6 @@ public class SignUpFragment extends Fragment {
     int namefragment = 0;
 
     public SignUpFragment() {
-
     }
 
     public SignUpFragment(int a, int b) {
@@ -81,9 +80,9 @@ public class SignUpFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         textChangeCheck();
     }
+
     private void textChangeCheck() {
         //region password
-        //kiểm tra 2 password có giống nhau không
         TextWatcher passwordTextWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -110,8 +109,8 @@ public class SignUpFragment extends Fragment {
         binding.password2.addTextChangedListener(passwordTextWatcher);
         binding.password.addTextChangedListener(passwordTextWatcher);
         //endregion
-        //region email
 
+        //region email
         binding.email.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -127,7 +126,6 @@ public class SignUpFragment extends Fragment {
             public void afterTextChanged(Editable s) {
                 String emailString = binding.email.getText().toString().trim();
                 if (!android.util.Patterns.EMAIL_ADDRESS.matcher(emailString).matches()) {
-                    // or
                     binding.email.setError("Email không hợp lệ");
                 } else {
                     binding.email.setError(null);
@@ -137,7 +135,6 @@ public class SignUpFragment extends Fragment {
     }
 
     private boolean validateData(String retypePasswordString, String displayNameString, String emailString, String passwordString) {
-
         if (TextUtils.isEmpty(emailString) || TextUtils.isEmpty(passwordString) || TextUtils.isEmpty(displayNameString)
                 || TextUtils.isEmpty(retypePasswordString)) {
             Toast.makeText(getContext(), "Vui lòng điền đầy đủ thông tin!", Toast.LENGTH_SHORT).show();

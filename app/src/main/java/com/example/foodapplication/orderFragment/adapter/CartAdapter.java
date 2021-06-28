@@ -9,13 +9,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.foodapplication.HomeFragment.model.ProductModel;
+import com.example.foodapplication.home.model.ProductModel;
 import com.example.foodapplication.R;
 
 import java.text.DecimalFormat;
 import java.util.List;
 
-import static com.example.foodapplication.HomeFragment.adapter.MenuAdapter.productModelList;
+import static com.example.foodapplication.home.adapter.MenuAdapter.productModelList;
 import static com.example.foodapplication.orderFragment.cart.Cart.txtTotalPrice;
 import static com.example.foodapplication.orderFragment.cart.Cart.dTotal;
 
@@ -67,6 +67,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
     public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
 
         holder.nameItem.setText(listCart.get(position).getNameProduct());
+
         holder.countItem.setText(Integer.toString(listCart.get(position).getQuantity()));
         Quantity = listCart.get(position).getQuantity();
         double price = (listCart.get(position).getPrice())*(listCart.get(position).getQuantity());

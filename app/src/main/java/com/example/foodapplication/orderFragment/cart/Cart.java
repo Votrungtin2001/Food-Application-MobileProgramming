@@ -20,10 +20,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.foodapplication.HomeFragment.model.ProductModel;
+import com.example.foodapplication.home.model.ProductModel;
 import com.example.foodapplication.R;
 import com.example.foodapplication.orderFragment.adapter.CartAdapter;
-import com.example.foodapplication.orderFragment.model.Request;
+import com.example.foodapplication.orderFragment.models.Request;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.example.foodapplication.HomeFragment.adapter.MenuAdapter.productModelList;
+import static com.example.foodapplication.home.adapter.MenuAdapter.productModelList;
 import static com.example.foodapplication.MainActivity.addressid_Home;
 import static com.example.foodapplication.MainActivity.addressid_Work;
 import static com.example.foodapplication.MainActivity.customer_id;
@@ -110,15 +110,15 @@ public class Cart extends AppCompatActivity {
                     public void run() {
                         progressDialog.dismiss();
                         listCart.clear();
-                        if (result == 1) Toast.makeText(context, "Đã thêm đơn hàng thành công", Toast.LENGTH_SHORT).show();
-                        else if(result == 0) Toast.makeText(context, "Thêm đơn hàng không thành công", Toast.LENGTH_SHORT).show();
+                        if (result == 1) Toast.makeText(context, "Đã thêm đơn hàng thành công!", Toast.LENGTH_SHORT).show();
+                        else if(result == 0) Toast.makeText(context, "Thêm đơn hàng không thành công!", Toast.LENGTH_SHORT).show();
                         finish();
                     }
                 }, 3500);
 
             }
             else
-                Toast.makeText(getApplicationContext(),"Chưa thêm món ăn nào trong giỏ hàng!",Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(),"Vui lòng thêm món ăn trước khi đặt hàng!",Toast.LENGTH_LONG).show();
 
     }
 

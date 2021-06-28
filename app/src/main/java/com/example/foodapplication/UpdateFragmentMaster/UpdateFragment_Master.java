@@ -46,11 +46,11 @@ import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 import static com.example.foodapplication.Master_MainActivity.isMasterHasRestaurant;
-import static com.example.foodapplication.MySQL.MySQLQuerry.CreateRestaurantAndBranchWithMaster;
-import static com.example.foodapplication.MySQL.MySQLQuerry.GetCities;
-import static com.example.foodapplication.MySQL.MySQLQuerry.GetDistrictsWithCity;
-import static com.example.foodapplication.MySQL.MySQLQuerry.GetRestaurantInformationForUpdateWithMaster;
-import static com.example.foodapplication.MySQL.MySQLQuerry.UpdateRestaurantInformation;
+import static com.example.foodapplication.mySQL.MySQLQuerry.CreateRestaurantAndBranchWithMaster;
+import static com.example.foodapplication.mySQL.MySQLQuerry.GetCities;
+import static com.example.foodapplication.mySQL.MySQLQuerry.GetDistrictsWithCity;
+import static com.example.foodapplication.mySQL.MySQLQuerry.GetRestaurantInformationForUpdateWithMaster;
+import static com.example.foodapplication.mySQL.MySQLQuerry.UpdateRestaurantInformation;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 

@@ -23,7 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.foodapplication.MainActivity;
-import com.example.foodapplication.MySQL.DatabaseHelper;
+import com.example.foodapplication.mySQL.DatabaseHelper;
 import com.example.foodapplication.R;
 import com.example.foodapplication.auth.LoginFragment;
 import com.example.foodapplication.auth.LoginFragmentMaster;
@@ -39,8 +39,7 @@ import static com.example.foodapplication.MainActivity.addressid_Home;
 import static com.example.foodapplication.MainActivity.addressid_Work;
 import static com.example.foodapplication.MainActivity.customer_id;
 import static com.example.foodapplication.MainActivity.isCustomerHasAddress;
-import static com.example.foodapplication.MySQL.MySQLQuerry.LogOutAccount;
-import static com.example.foodapplication.MySQL.MySQLQuerry.SetCustomerAccountInformationInAccountFragment;
+import static com.example.foodapplication.mySQL.MySQLQuerry.SetCustomerAccountInformationInAccountFragment;
 
 public class AccountFragment extends Fragment {
     Button btnPayment, btnAddress, btnPolicy, btnSettings, btnAbout, btnLogout;

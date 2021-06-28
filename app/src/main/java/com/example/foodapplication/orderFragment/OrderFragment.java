@@ -32,7 +32,7 @@ import java.util.Map;
 import static com.example.foodapplication.MainActivity.addressid_Home;
 import static com.example.foodapplication.MainActivity.addressid_Work;
 import static com.example.foodapplication.MainActivity.customer_id;
-import static com.example.foodapplication.MySQL.MySQLQuerry.GetOrders;
+import static com.example.foodapplication.mySQL.MySQLQuerry.GetOrders;
 
 
 public class OrderFragment extends Fragment {
@@ -127,5 +127,4 @@ public class OrderFragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(request);
     }
-
 }

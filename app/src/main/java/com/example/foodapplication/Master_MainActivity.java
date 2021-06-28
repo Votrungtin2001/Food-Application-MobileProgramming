@@ -25,9 +25,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.example.foodapplication.account.fragment.AccountFragment_Master;
 
 import com.example.foodapplication.FoodFragment_Master.FoodFragment_Master;
-import com.example.foodapplication.HomeFragmentMaster.HomeFragment_Master;
-import com.example.foodapplication.HomeFragmentMaster.fragment.HomeFragment_Master_MonAn;
-import com.example.foodapplication.HomeFragment.fragment.RestaurantInformation_ThongTin;
+import com.example.foodapplication.homeMaster.HomeFragment_Master;
+import com.example.foodapplication.homeMaster.fragment.HomeFragment_Master_MonAn;
+import com.example.foodapplication.home.fragment.RestaurantInformation_ThongTin;
 import com.example.foodapplication.UpdateFragmentMaster.UpdateFragment_Master;
 
 import java.util.HashMap;

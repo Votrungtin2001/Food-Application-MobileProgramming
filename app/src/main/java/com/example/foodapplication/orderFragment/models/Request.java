@@ -1,16 +1,17 @@
-package com.example.foodapplication.orderFragment.model;
+package com.example.foodapplication.orderFragment.models;
 
-import com.example.foodapplication.HomeFragment.model.ProductModel;
+import com.example.foodapplication.home.model.ProductModel;
 
-import java.util.Date;
 import java.util.List;
 
-import static com.example.foodapplication.HomeFragment.adapter.MenuAdapter.productModelList;
+import static com.example.foodapplication.home.adapter.MenuAdapter.productModelList;
 
 public class Request {
+
     String DateTime;
     int CustomerId, AddressId, Status;
     double Total;
+
     List<ProductModel> listCart = productModelList;
 
     public Request(String dateTime,int customerId,int addressId ,double total,int status){

@@ -32,8 +32,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.example.foodapplication.MySQL.MySQLQuerry.UpdateCustomerPassword;
-import static com.example.foodapplication.MySQL.MySQLQuerry.UpdateMasterPassword;
+import static com.example.foodapplication.mySQL.MySQLQuerry.UpdateCustomerPassword;
+import static com.example.foodapplication.mySQL.MySQLQuerry.UpdateMasterPassword;
 
 public class AccountSettingsPasswordFragment extends Fragment {
     EditText txtCurrentPassword, txtNewPassword, txtConfirmPassword;

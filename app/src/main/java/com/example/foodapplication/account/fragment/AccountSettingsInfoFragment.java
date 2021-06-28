@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.example.foodapplication.MainActivity;
 import com.example.foodapplication.R;
 
-import static com.example.foodapplication.MySQL.MySQLQuerry.UpdateCustomerGender;
+import static com.example.foodapplication.mySQL.MySQLQuerry.UpdateCustomerGender;
 
 public class AccountSettingsInfoFragment extends Fragment {
     TextView txtAccountSettingsInfoPhone, txtAccountSettingsInfoName, txtAccountSettingsInfoEmail, txtAccountSettingsInfoGender, txtAccountSettingsInfoDoB, txtAccountSettingsInfoOccupation;

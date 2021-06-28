@@ -39,8 +39,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.example.foodapplication.MySQL.MySQLQuerry.GetCities;
-import static com.example.foodapplication.MySQL.MySQLQuerry.GetDistrictsWithCity;
+import static com.example.foodapplication.mySQL.MySQLQuerry.GetCities;
+import static com.example.foodapplication.mySQL.MySQLQuerry.GetDistrictsWithCity;
 
 public class AccountAddressFragment extends Fragment {
     Spinner spinDistrictInput, spinCityInput;

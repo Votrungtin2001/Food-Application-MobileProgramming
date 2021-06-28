@@ -22,7 +22,7 @@ import java.util.ArrayList;
 
 import adapter.TransactionAdapter;
 
-import static com.example.foodapplication.MySQL.MySQLQuerry.GetTransactionHistory;
+import static com.example.foodapplication.mySQL.MySQLQuerry.GetTransactionHistory;
 
 public class AccountPaymentHistory extends Fragment {
     ArrayList<Transaction> transactions = new ArrayList<>();

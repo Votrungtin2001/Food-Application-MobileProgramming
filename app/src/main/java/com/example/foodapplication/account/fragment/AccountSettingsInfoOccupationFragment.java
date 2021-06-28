@@ -31,7 +31,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.example.foodapplication.MySQL.MySQLQuerry.UpdateCustomerOccupation;
+import static com.example.foodapplication.mySQL.MySQLQuerry.UpdateCustomerOccupation;
 
 public class AccountSettingsInfoOccupationFragment extends Fragment {
     TextView txtOccupationOffice, txtOccupationFree, txtOccupationStudent, txtOccupationHome, txtOccupationOther;
