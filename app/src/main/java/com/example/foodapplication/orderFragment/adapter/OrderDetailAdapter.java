@@ -12,9 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.foodapplication.R;
-import com.example.foodapplication.databaseHelper.DatabaseHelper;
 import com.example.foodapplication.orderFragment.models.OrderDetailModel;
+import com.squareup.picasso.Picasso;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.ViewHolder> {
@@ -22,9 +23,6 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
     List<OrderDetailModel> itemList;
     Context context;
     LayoutInflater inflater;
-
-    SQLiteDatabase db;
-    DatabaseHelper databaseHelper;
 
     public OrderDetailAdapter(Context ctx, List<OrderDetailModel> ItemList) {
         this.context = ctx;
@@ -38,9 +36,6 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
     public OrderDetailAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.order_detail_list, parent, false);
 
-        databaseHelper = new DatabaseHelper(context);
-        db = databaseHelper.getReadableDatabase();
-
         return new OrderDetailAdapter.ViewHolder(view);
     }
 
@@ -48,9 +43,17 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         OrderDetailModel currentItem = itemList.get(position);
 
-        holder.imgProduct.setImageBitmap(currentItem.getImageProduct());
+        if(currentItem.getImageProduct().isEmpty()){
+            holder.imgProduct.setImageResource(R.drawable.noimage_product);
+        }else {
+            Picasso.get ().load ( currentItem.getImageProduct())
+                    .placeholder(R.drawable.noimage_product)
+                    .error(R.drawable.error)
+                    .into(holder.imgProduct);
+        }
         holder.txtName.setText(currentItem.getName());
-        holder.txtPrice.setText(Integer.toString(currentItem.getPrice()));
+        DecimalFormat decimalFormat = new DecimalFormat( "###,###,###" );
+        holder.txtPrice.setText(decimalFormat.format(currentItem.getPrice()) + "đ");
         holder.txtQuantity.setText(Integer.toString(currentItem.getQuantity()));
 
     }

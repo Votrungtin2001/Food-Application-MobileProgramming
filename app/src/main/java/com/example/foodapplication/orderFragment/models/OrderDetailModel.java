@@ -4,18 +4,20 @@ import android.graphics.Bitmap;
 
 public class OrderDetailModel {
 
-    private Bitmap ImageProduct;
-    public int Price, Quantity;
+    private String ImageProduct;
+    public int Quantity, id;
+    public double Price;
     public String Name;
 
-    public OrderDetailModel(Bitmap imageProduct, String name, int price, int quantity) {
-        ImageProduct = imageProduct;
-        Name = name;
-        Price = price;
-        Quantity = quantity;
+    public OrderDetailModel(int id, String imageProduct, String name, double price, int quantity) {
+        this.id = id;
+        this.ImageProduct = imageProduct;
+        this.Name = name;
+        this.Price = price;
+        this.Quantity = quantity;
     }
 
-    public Bitmap getImageProduct() {
+    public String getImageProduct() {
         return ImageProduct;
     }
 
@@ -23,9 +25,9 @@ public class OrderDetailModel {
         return Name;
     }
 
+    public int getID() {return id;}
 
-
-    public int getPrice() {
+    public double getPrice() {
         return Price;
     }
 
@@ -33,7 +35,7 @@ public class OrderDetailModel {
         return Quantity;
     }
 
-    public void setImageProduct(Bitmap imageProduct) {
+    public void setImageProduct(String imageProduct) {
         ImageProduct = imageProduct;
     }
 
@@ -45,7 +47,7 @@ public class OrderDetailModel {
         Quantity = quantity;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(double price) {
         Price = price;
     }
 }

@@ -40,7 +40,10 @@ import com.example.foodapplication.HomeFragmentMaster.adapter.MenuAdapter_HomeFr
 import com.example.foodapplication.R;
 import com.example.foodapplication.account.model.IdWithNameListItem;
 import com.example.foodapplication.account.model.Transaction;
+import com.example.foodapplication.orderFragment.OrderFragment;
+import com.example.foodapplication.orderFragment.adapter.OrderDetailAdapter;
 import com.example.foodapplication.orderFragment.adapter.OrderViewHolder;
+import com.example.foodapplication.orderFragment.models.OrderDetailModel;
 import com.example.foodapplication.orderFragment.models.OrderModel;
 import com.squareup.picasso.Picasso;
 
@@ -2260,6 +2263,58 @@ public class MySQLQuerry {
             protected java.util.Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("master_id", String.valueOf(id));
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(request);
+    }
+
+    public static void GetOrderDetailsWithOrderID(int id, List<OrderDetailModel> list,
+                                                  OrderDetailAdapter adapter, ProgressDialog progressDialog, String TAG, Context context) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/getOrderDetailsWithOrderID.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                progressDialog.dismiss();
+                list.clear();
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String success = jsonObject.getString("success");
+                    JSONArray jsonArray = jsonObject.getJSONArray("data");
+
+                    if (success.equals("1")) {
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject object = jsonArray.getJSONObject(i);
+
+                            int id = object.getInt("_ID");
+                            String image = object.getString("IMAGE");
+                            String product_name = object.getString("NAME");
+                            double price = object.getDouble("PRICE");
+                            int quantity = object.getInt("QUANTITY");
+
+                            OrderDetailModel orderDetailModel = new OrderDetailModel(id, image, product_name, price, quantity);
+                            list.add(orderDetailModel);
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Override
+            protected java.util.Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("order_id", String.valueOf(id));
                 return params;
             }
         };
