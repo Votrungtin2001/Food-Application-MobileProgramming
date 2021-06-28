@@ -2,6 +2,8 @@ package com.example.foodapplication.auth;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.foodapplication.MySQL.DatabaseHelper;
 import com.example.foodapplication.R;
 import com.example.foodapplication.MainActivity;
 import com.example.foodapplication.Master_MainActivity;
@@ -36,6 +39,7 @@ import java.util.Map;
 import com.example.foodapplication.account.fragment.AccountFragment_Master;
 
 import static com.example.foodapplication.MainActivity.addressLine;
+import static com.example.foodapplication.MainActivity.customer_id;
 import static com.example.foodapplication.MainActivity.district_id;
 import static com.example.foodapplication.MainActivity.master_id;
 import static com.example.foodapplication.MainActivity.nameStreet;
@@ -51,6 +55,9 @@ public class LoginFragmentMaster extends Fragment {
     int role = 0;
     int getRole = 0;
     int namefragment_before = 0;
+
+    DatabaseHelper databaseHelper;
+    SQLiteDatabase db;
 
     public LoginFragmentMaster() { }
 
@@ -71,6 +78,8 @@ public class LoginFragmentMaster extends Fragment {
                              Bundle savedInstanceState) {
 
         binding = FragmentLoginMasterBinding.inflate(inflater, container, false);
+
+        databaseHelper = new DatabaseHelper(getActivity());
 
         binding.signinMail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,7 +108,7 @@ public class LoginFragmentMaster extends Fragment {
     }
 
     View.OnClickListener runSignUpFragment = v -> {
-        SignUpFragment newFragment = new SignUpFragment(role);
+        SignUpFragment newFragment = new SignUpFragment(role, namefragment_before);
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(((ViewGroup)getView().getParent()).getId(), newFragment, null)
                 .addToBackStack(null)
@@ -126,7 +135,22 @@ public class LoginFragmentMaster extends Fragment {
 
                         for(int i = 0; i < jsonArray.length(); i++) {
                             JSONObject object = jsonArray.getJSONObject(i);
-                            master_id = Integer.parseInt(object.getString("_ID"));
+                            int mas_id = Integer.parseInt(object.getString("_ID"));
+                            boolean checkMasterIDIsExist = CheckMasterIDIsExist(mas_id);
+                            if(checkMasterIDIsExist) {
+                                int id = getIDInMasterTable(mas_id);
+                                databaseHelper.updAllAcountLogOutStatus();
+                                databaseHelper.updMasterLoginStatus(id);
+                                master_id = getMasterIDLogin();
+                            }
+                            else {
+                                databaseHelper.addMaster(mas_id);
+                                int id = getIDInMasterTable(mas_id);
+                                databaseHelper.updAllAcountLogOutStatus();
+                                databaseHelper.updMasterLoginStatus(id);
+                                master_id = getMasterIDLogin();
+                            }
+
                             Intent intent = new Intent(getActivity(), Master_MainActivity.class);
                             intent.putExtra("Master ID",master_id);
                             intent.putExtra("AddressLine", addressLine);
@@ -180,7 +204,21 @@ public class LoginFragmentMaster extends Fragment {
 
                         for(int i = 0; i < jsonArray.length(); i++) {
                             JSONObject object = jsonArray.getJSONObject(i);
-                            master_id = Integer.parseInt(object.getString("_ID"));
+                            int mas_id = Integer.parseInt(object.getString("_ID"));
+                            boolean checkMasterIDIsExist = CheckMasterIDIsExist(mas_id);
+                            if(checkMasterIDIsExist) {
+                                int id = getIDInMasterTable(mas_id);
+                                databaseHelper.updAllAcountLogOutStatus();
+                                databaseHelper.updMasterLoginStatus(id);
+                                master_id = getMasterIDLogin();
+                            }
+                            else {
+                                databaseHelper.addMaster(mas_id);
+                                int id = getIDInMasterTable(mas_id);
+                                databaseHelper.updAllAcountLogOutStatus();
+                                databaseHelper.updMasterLoginStatus(id);
+                                master_id = getMasterIDLogin();
+                            }
                             FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                             transaction.replace(R.id.frame_container_master, accountFragment_master);
                             transaction.addToBackStack(null);
@@ -210,5 +248,53 @@ public class LoginFragmentMaster extends Fragment {
 
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         requestQueue.add(request);
+    }
+
+    public boolean CheckMasterIDIsExist(int mas_id) {
+        db = databaseHelper.getReadableDatabase();
+        int count = 0;
+        String selectQuery =  "SELECT * FROM MASTER WHERE Master_ID = '" + mas_id + "';";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+
+            } while (cursor.moveToNext());
+
+        }
+        count = cursor.getCount();
+        cursor.close();
+        if(count > 0) return true;
+        else return false;
+    }
+
+    public int getIDInMasterTable(int mas_id) {
+        db = databaseHelper.getReadableDatabase();
+        int id = 0;
+        String selectQuery =  "SELECT * FROM MASTER WHERE Master_ID = '" + mas_id + "';";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                id = cursor.getInt(cursor.getColumnIndex("_id"));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return  id;
+    }
+
+    public int getMasterIDLogin() {
+        db = databaseHelper.getReadableDatabase();
+        int id = 0;
+        String selectQuery =  "SELECT * FROM MASTER WHERE STATUS = '" + 1 + "';";
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            do {
+                id = cursor.getInt(cursor.getColumnIndex("Master_ID"));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return  id;
     }
 }

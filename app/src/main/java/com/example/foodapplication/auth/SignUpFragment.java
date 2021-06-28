@@ -31,13 +31,15 @@ public class SignUpFragment extends Fragment {
     private LoginFragment loginFragment;
 
     int role = 0;
+    int namefragment = 0;
 
     public SignUpFragment() {
 
     }
 
-    public SignUpFragment(int a) {
+    public SignUpFragment(int a, int b) {
         this.role = a;
+        this.namefragment = b;
     }
 
     @Override
@@ -64,7 +66,7 @@ public class SignUpFragment extends Fragment {
         binding.loginText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginFragment = new LoginFragment(role);
+                loginFragment = new LoginFragment(role, namefragment);
                 FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.frame_container, loginFragment);
                 transaction.addToBackStack(null);

@@ -23,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.foodapplication.MainActivity;
+import com.example.foodapplication.MySQL.DatabaseHelper;
 import com.example.foodapplication.R;
 import com.example.foodapplication.auth.LoginFragment;
 import com.example.foodapplication.auth.LoginFragmentMaster;
@@ -47,6 +48,7 @@ public class AccountFragment_Master extends Fragment {
     int role = 0;
     int namefragment = 0;
     private final String TAG = "AccountFragmentMaster";
+    DatabaseHelper databaseHelper;
     public AccountFragment_Master() {}
 
     public AccountFragment_Master(int role) {this.role = role;}
@@ -69,6 +71,8 @@ public class AccountFragment_Master extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_account__master, container, false);
+
+        databaseHelper = new DatabaseHelper(getActivity());
 
         initComponents(view);
 
@@ -93,12 +97,14 @@ public class AccountFragment_Master extends Fragment {
 
     private void Run() {
         btnLogout_Master.setOnClickListener(v -> {
-            final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Please wait...");
-            progressDialog.show();
-            LogOutAccount(txtName_Master, imgMaster, btnLogout_Master, progressDialog, TAG, getActivity());
+            databaseHelper.updAllAcountLogOutStatus();
             MainActivity.customer_id = 0;
-            master_id = 0;
+            MainActivity.master_id = 0;
+            imgMaster.setImageResource(0);
+            txtName_Master.setText("Đăng nhập/Đăng ký");
+            btnLogout_Master.setVisibility(View.INVISIBLE);
+            Toast.makeText(getActivity(), "Đã đăng xuất tài khoản thành công", Toast.LENGTH_SHORT).show();
+
         });
 
         if (master_id > 0) {

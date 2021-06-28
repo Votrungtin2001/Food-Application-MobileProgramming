@@ -23,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.foodapplication.MainActivity;
+import com.example.foodapplication.MySQL.DatabaseHelper;
 import com.example.foodapplication.R;
 import com.example.foodapplication.auth.LoginFragment;
 import com.example.foodapplication.auth.LoginFragmentMaster;
@@ -52,6 +53,8 @@ public class AccountFragment extends Fragment {
     private final String TAG = "AccountFragment";
     boolean checkCustomerHasAddress = false;
 
+    DatabaseHelper databaseHelper;
+
     int choose_role = 0;
     int namefragment = 0;
     public AccountFragment(int role,int name) {
@@ -68,6 +71,8 @@ public class AccountFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_account, container, false);
+
+        databaseHelper = new DatabaseHelper(getActivity());
 
         initComponents(view);
 
@@ -141,12 +146,14 @@ public class AccountFragment extends Fragment {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-                progressDialog.setMessage("Please wait...");
-                progressDialog.show();
-                LogOutAccount(txtlogin, imgUser, btnLogout, progressDialog, TAG, getActivity());
+                databaseHelper.updAllAcountLogOutStatus();
                 MainActivity.customer_id = 0;
                 MainActivity.master_id = 0;
+                imgUser.setImageResource(0);
+                txtlogin.setText("Đăng nhập/Đăng ký");
+                btnLogout.setVisibility(View.INVISIBLE);
+                Toast.makeText(getActivity(), "Đã đăng xuất tài khoản thành công", Toast.LENGTH_SHORT).show();
+
             }
         });
 
