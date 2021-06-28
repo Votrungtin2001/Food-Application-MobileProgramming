@@ -6,10 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".orderFragment.cart.Cart">
 
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="43dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/left_arrow" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="165dp"
+        android:text="Giỏ hàng"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listCart"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"/>
 
     <androidx.cardview.widget.CardView
         android:layout_alignParentBottom="true"
@@ -26,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tổng tiền: "
-                android:textSize="20sp"
+                android:textSize="23sp"
                 android:textStyle="bold"/>
 
             <TextView
@@ -35,9 +57,9 @@
                 android:layout_height="wrap_content"
                 android:text="100,000đ"
                 android:textColor="@color/colorAccent"
-                android:textSize="20sp"
+                android:textSize="23sp"
                 android:textStyle="bold"
-                android:layout_marginLeft="10dp"/>
+                android:layout_marginStart="10dp"/>
         </LinearLayout>
 
     <Button

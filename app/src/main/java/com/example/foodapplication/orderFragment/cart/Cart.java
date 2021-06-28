@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,8 +21,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.foodapplication.home.model.ProductModel;
 import com.example.foodapplication.R;
+import com.example.foodapplication.home.model.ProductModel;
 import com.example.foodapplication.orderFragment.adapter.CartAdapter;
 import com.example.foodapplication.orderFragment.models.Request;
 
@@ -33,10 +34,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.example.foodapplication.home.adapter.MenuAdapter.productModelList;
 import static com.example.foodapplication.MainActivity.addressid_Home;
 import static com.example.foodapplication.MainActivity.addressid_Work;
 import static com.example.foodapplication.MainActivity.customer_id;
+import static com.example.foodapplication.home.adapter.MenuAdapter.Quantity;
+import static com.example.foodapplication.home.adapter.MenuAdapter.productModelList;
 
 
 public class Cart extends AppCompatActivity {
@@ -45,6 +47,7 @@ public class Cart extends AppCompatActivity {
     RecyclerView recyclerView;
     public static TextView txtTotalPrice;
     Button btnPlaceOrder;
+    ImageView imageViewBack;
     CartAdapter cartAdapter;
     List<ProductModel> listCart = productModelList;
     int address_id;
@@ -61,6 +64,13 @@ public class Cart extends AppCompatActivity {
         recyclerView = findViewById(R.id.listCart);
         recyclerView.setHasFixedSize(true);
         txtTotalPrice = findViewById(R.id.total);
+        imageViewBack = findViewById(R.id.back);
+        imageViewBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         loadListFood();
 
@@ -130,8 +140,9 @@ public class Cart extends AppCompatActivity {
 
         int total = 0;
         DecimalFormat decimalFormat = new DecimalFormat( "###,###,###");
-        for(int i = 0; i < listCart.size(); i++)
-            total += ((listCart.get(i).getPrice()*(listCart.get(i).getQuantity())));
+        for(int i = 0; i < listCart.size(); i++) {
+            total += ((listCart.get(i).getPrice()*(Quantity)));
+        }
 
         txtTotalPrice.setText(decimalFormat.format(total));
         dTotal = total;

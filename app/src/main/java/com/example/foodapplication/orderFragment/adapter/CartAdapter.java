@@ -1,5 +1,6 @@
 package com.example.foodapplication.orderFragment.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,15 +10,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.foodapplication.home.model.ProductModel;
 import com.example.foodapplication.R;
+import com.example.foodapplication.home.model.ProductModel;
 
 import java.text.DecimalFormat;
 import java.util.List;
 
+import static com.example.foodapplication.home.adapter.MenuAdapter.Quantity;
 import static com.example.foodapplication.home.adapter.MenuAdapter.productModelList;
-import static com.example.foodapplication.orderFragment.cart.Cart.txtTotalPrice;
 import static com.example.foodapplication.orderFragment.cart.Cart.dTotal;
+import static com.example.foodapplication.orderFragment.cart.Cart.txtTotalPrice;
 
 
 class CartViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -45,7 +47,6 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
     private Context context;
 
     double total = 0;
-    public static int Quantity = 1;
 
     public CartAdapter(List<ProductModel> listCart,Context context) {
         this.listCart = listCart;
@@ -63,13 +64,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
         return new CartViewHolder(itemView);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
 
         holder.nameItem.setText(listCart.get(position).getNameProduct());
-
+        listCart.get(position).setQuantity(Quantity);
         holder.countItem.setText(Integer.toString(listCart.get(position).getQuantity()));
-        Quantity = listCart.get(position).getQuantity();
         double price = (listCart.get(position).getPrice())*(listCart.get(position).getQuantity());
         DecimalFormat decimalFormat = new DecimalFormat( "###,###,###");
         holder.price.setText(decimalFormat.format(price) + "đ");

@@ -12,8 +12,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.foodapplication.home.model.ProductModel;
 import com.example.foodapplication.R;
+import com.example.foodapplication.home.model.ProductModel;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
@@ -22,7 +22,6 @@ import java.util.List;
 
 import static com.example.foodapplication.MainActivity.customer_id;
 import static com.example.foodapplication.MainActivity.isCustomerHasAddress;
-import static com.example.foodapplication.orderFragment.adapter.CartAdapter.Quantity;
 
  public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
 
@@ -31,6 +30,8 @@ import static com.example.foodapplication.orderFragment.adapter.CartAdapter.Quan
     LayoutInflater inflater;
 
     Dialog AnnouncementDialog;
+    public static int Quantity = 1;
+    double total = 0;
     public static List<ProductModel> productModelList = new ArrayList<>();
 
     boolean isExist = false;
@@ -52,6 +53,7 @@ import static com.example.foodapplication.orderFragment.adapter.CartAdapter.Quan
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ProductModel currentItem = itemList.get(position);
+
 
         holder.textView_NameProduct.setText(currentItem.getNameProduct());
         holder.textView_DescriptionProduct.setText(currentItem.getDescriptionProduct());
@@ -83,7 +85,12 @@ import static com.example.foodapplication.orderFragment.adapter.CartAdapter.Quan
                         productModelList.add(new ProductModel(currentItem.getNameProduct(), Quantity, currentItem.getPrice(),currentItem.getProduct_id(), currentItem.getMenu_id()));
                         }
                         else {
-                           ++Quantity;
+                            Quantity++;
+//                            total = 0;
+//                            for(int i = 0; i < productModelList.size(); i++)
+//                               total += ((productModelList.get(i).getPrice()*(productModelList.get(i).getQuantity())));
+//                            dTotal = total;
+
                         }
                         Toast.makeText(context, "Thêm vào giỏ hàng thành công!", Toast.LENGTH_SHORT).show();
                     }

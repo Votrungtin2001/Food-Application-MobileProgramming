@@ -13,7 +13,7 @@
         android:layout_marginTop="25dp"
         android:text="Bộ sưu tập"
         android:textColor="@color/black"
-        android:textSize="25dp"
+        android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
