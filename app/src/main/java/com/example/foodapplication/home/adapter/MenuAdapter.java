@@ -31,7 +31,6 @@ import static com.example.foodapplication.MainActivity.isCustomerHasAddress;
 
     Dialog AnnouncementDialog;
     public static int Quantity = 1;
-    double total = 0;
     public static List<ProductModel> productModelList = new ArrayList<>();
 
     boolean isExist = false;
@@ -74,7 +73,6 @@ import static com.example.foodapplication.MainActivity.isCustomerHasAddress;
 
             @Override
             public void onClick(View v) {
-                Quantity = currentItem.getQuantity();
                 for (int i =0; i < productModelList.size(); i++) {
                     isExist = currentItem.getProduct_id() == productModelList.get(i).getProduct_id();
                 }
@@ -85,12 +83,7 @@ import static com.example.foodapplication.MainActivity.isCustomerHasAddress;
                         productModelList.add(new ProductModel(currentItem.getNameProduct(), Quantity, currentItem.getPrice(),currentItem.getProduct_id(), currentItem.getMenu_id()));
                         }
                         else {
-                            Quantity++;
-//                            total = 0;
-//                            for(int i = 0; i < productModelList.size(); i++)
-//                               total += ((productModelList.get(i).getPrice()*(productModelList.get(i).getQuantity())));
-//                            dTotal = total;
-
+                            ++Quantity;
                         }
                         Toast.makeText(context, "Thêm vào giỏ hàng thành công!", Toast.LENGTH_SHORT).show();
                     }
