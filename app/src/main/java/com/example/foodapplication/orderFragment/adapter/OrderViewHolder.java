@@ -85,21 +85,6 @@ public class OrderViewHolder extends RecyclerView.Adapter<OrderViewHolder.ViewHo
 
         }
     }
-//    public int getOrderId() {
-//        int orderid = -1;
-//        String selectQuery = "SELECT O._id " +
-//                "FROM (ORDERS O JOIN ORDER_DETAILS OD ON O._id = OD.OrderID) " +
-//                "WHERE O.Customer ='" + customer_id + "';";
-//        Cursor cursor = db.rawQuery(selectQuery, null);
-//        if (cursor.getCount() > 0) {
-//            cursor.moveToFirst();
-//            do {
-//                orderid = cursor.getInt(cursor.getColumnIndex("_id"));
-//            }
-//            while (cursor.moveToNext());
-//        }
-//        cursor.close();
-//        return  orderid;
-//    }
+
 }
 

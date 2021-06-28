@@ -9,16 +9,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.foodapplication.HomeFragment.model.ProductModel;
 import com.example.foodapplication.R;
 
 import java.text.DecimalFormat;
 import java.util.List;
 
-import com.example.foodapplication.HomeFragment.model.ProductModel;
-
 import static com.example.foodapplication.HomeFragment.adapter.MenuAdapter.productModelList;
-import static com.example.foodapplication.orderFragment.cart.Cart.dTotal;
 import static com.example.foodapplication.orderFragment.cart.Cart.txtTotalPrice;
+import static com.example.foodapplication.orderFragment.cart.Cart.dTotal;
+
 
 class CartViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
@@ -45,6 +45,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
     private Context context;
 
     double total = 0;
+    public static int Quantity = 1;
 
     public CartAdapter(List<ProductModel> listCart,Context context) {
         this.listCart = listCart;
@@ -67,6 +68,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
 
         holder.nameItem.setText(listCart.get(position).getNameProduct());
         holder.countItem.setText(Integer.toString(listCart.get(position).getQuantity()));
+        Quantity = listCart.get(position).getQuantity();
         double price = (listCart.get(position).getPrice())*(listCart.get(position).getQuantity());
         DecimalFormat decimalFormat = new DecimalFormat( "###,###,###");
         holder.price.setText(decimalFormat.format(price) + "đ");

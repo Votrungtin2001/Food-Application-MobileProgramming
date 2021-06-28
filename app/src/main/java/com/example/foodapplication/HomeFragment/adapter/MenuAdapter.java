@@ -12,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.foodapplication.HomeFragment.model.ProductModel;
 import com.example.foodapplication.R;
 import com.squareup.picasso.Picasso;
 
@@ -19,10 +20,9 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.foodapplication.HomeFragment.model.ProductModel;
-
 import static com.example.foodapplication.MainActivity.customer_id;
 import static com.example.foodapplication.MainActivity.isCustomerHasAddress;
+import static com.example.foodapplication.orderFragment.adapter.CartAdapter.Quantity;
 
  public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
 
@@ -31,9 +31,10 @@ import static com.example.foodapplication.MainActivity.isCustomerHasAddress;
     LayoutInflater inflater;
 
     Dialog AnnouncementDialog;
-
+     int quantity ;
     public static List<ProductModel> productModelList = new ArrayList<>();
 
+     boolean isExist = false;
 
     public MenuAdapter(Context ctx, List<ProductModel> ItemList) {
         this.context = ctx;
@@ -72,17 +73,24 @@ import static com.example.foodapplication.MainActivity.isCustomerHasAddress;
 
             @Override
             public void onClick(View v) {
-                int qty = currentItem.getQuantity();
+
+                for (int i =0; i < productModelList.size(); i++) {
+                    isExist = currentItem.getProduct_id() == productModelList.get(i).getProduct_id();
+                }
                 if (customer_id > 0) {
-                    ProductModel checkProduct = new ProductModel(currentItem.getNameProduct(), qty, currentItem.getPrice(),currentItem.getProduct_id(), currentItem.getMenu_id());
                     boolean checkCustomerHasAddress = isCustomerHasAddress;
-                    boolean isExist = productModelList.contains(checkProduct);
                     if(checkCustomerHasAddress) {
                         if(!isExist){
-                        productModelList.add(new ProductModel(currentItem.getNameProduct(), qty, currentItem.getPrice(),currentItem.getProduct_id(), currentItem.getMenu_id()));
-                        Toast.makeText(context, "Thêm vào giỏ hàng thành công!", Toast.LENGTH_SHORT).show();
+                        productModelList.add(new ProductModel(currentItem.getNameProduct(), quantity, currentItem.getPrice(),currentItem.getProduct_id(), currentItem.getMenu_id()));
                         }
-                        else ++qty;
+                        else {
+                            for(int i = 0; i < productModelList.size(); i++) {
+                                quantity = productModelList.get(i).getQuantity();
+                                quantity = Quantity;
+                            }
+                            quantity++;
+                        }
+                        Toast.makeText(context, "Thêm vào giỏ hàng thành công!", Toast.LENGTH_SHORT).show();
                     }
                     else {
                         ShowPopUpRequireAddress();

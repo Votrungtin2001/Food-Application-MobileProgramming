@@ -24,7 +24,6 @@ import com.example.foodapplication.HomeFragment.model.ProductModel;
 import com.example.foodapplication.R;
 import com.example.foodapplication.orderFragment.adapter.CartAdapter;
 import com.example.foodapplication.orderFragment.model.Request;
-import com.example.foodapplication.orderFragment.models.OrderModel;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -42,25 +41,17 @@ import static com.example.foodapplication.MainActivity.customer_id;
 
 public class Cart extends AppCompatActivity {
 
+    private static final String TAG = "Cart";
     RecyclerView recyclerView;
-    RecyclerView.LayoutManager layoutManager;
     public static TextView txtTotalPrice;
     Button btnPlaceOrder;
-    OrderModel orderModel;
     CartAdapter cartAdapter;
     List<ProductModel> listCart = productModelList;
-    private int branch_id;
-    ProductModel productModel;
-    private static final String TAG = "Cart";
     int address_id;
     public static int result = 0;
 
     Context context = this;
     public static double dTotal = 0;
-
-    public Cart(){ }
-
-    public Cart(int id) { branch_id = id; }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
