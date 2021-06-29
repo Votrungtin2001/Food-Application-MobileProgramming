@@ -8,6 +8,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.text.method.DigitsKeyListener;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -88,7 +91,10 @@ public class SingleEditTextUpdateFragment extends Fragment {
         });
 
         txtSingleEditTitle = view.findViewById(R.id.txtSingleEditTitle);
+
         txtEditText = view.findViewById(R.id.txtEditText);
+        txtEditText.addTextChangedListener(textWatcher);
+
         btnConfirmEdit = view.findViewById(R.id.btnConfirmEdit);
 
         if (user_id != -1) {
@@ -100,7 +106,7 @@ public class SingleEditTextUpdateFragment extends Fragment {
                     case "EditPhone":
                         txtSingleEditTitle.setText("Cập nhật số điện thoại");
                         btnConfirmEdit.setText("Cập nhật");
-                        txtEditText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
+                        txtEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
                         GetCustomerPhone(user_id, txtEditText, progressDialog, TAG, getActivity());
                         break;
                     case "EditName":
@@ -123,7 +129,7 @@ public class SingleEditTextUpdateFragment extends Fragment {
                         case "EditPhone":
                             txtSingleEditTitle.setText("Cập nhật số điện thoại");
                             btnConfirmEdit.setText("Cập nhật");
-                            txtEditText.setKeyListener(DigitsKeyListener.getInstance("0123456789"));
+                            txtEditText.setInputType(InputType.TYPE_CLASS_NUMBER);
                             GetMasterPhone(user_id, txtEditText, progressDialog, TAG, getActivity());
                             break;
                         case "EditName":
@@ -186,6 +192,28 @@ public class SingleEditTextUpdateFragment extends Fragment {
         }
         else
             Toast.makeText(getContext(), "Unknown user. Did you forget to log in?", Toast.LENGTH_LONG).show();
+    };
+
+    TextWatcher textWatcher = new TextWatcher() {
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (s.toString().trim().length() == 0) {
+                btnConfirmEdit.setEnabled(false);
+            } else {
+                btnConfirmEdit.setEnabled(true);
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
     };
 
     public void UpdateCustomerPhone(int customer_id, String phone, ProgressDialog progressDialog) {

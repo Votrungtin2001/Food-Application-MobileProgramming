@@ -15,10 +15,12 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@+id/toolbar"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="5dp"
         android:background="#FFFFFF"
         android:clickable="true"
         android:gravity="center|left"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         android:text="@string/activity_account_settings_account_info_phone"
         android:textSize="18sp" />
 
@@ -27,10 +29,12 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@+id/txtAccountSettingsInfoPhoneMaster"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="3dp"
         android:background="#FFFFFF"
         android:clickable="true"
         android:gravity="center|left"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         android:text="@string/activity_account_settings_account_info_name"
         android:textSize="18sp" />
 
@@ -39,10 +43,12 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@+id/txtAccountSettingsInfoNameMaster"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="3dp"
         android:background="#FFFFFF"
         android:clickable="true"
         android:gravity="center|left"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         android:text="@string/activity_account_settings_account_info_email"
         android:textSize="18sp" />
 
@@ -51,10 +57,12 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_below="@+id/txtAccountSettingsInfoEmailMaster"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="3dp"
         android:background="#FFFFFF"
         android:clickable="true"
         android:gravity="center|left"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         android:text="@string/activity_account_settings_account_password"
         android:textSize="18sp" />
 

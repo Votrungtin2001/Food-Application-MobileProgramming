@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_below="@+id/textView2"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="5dp"
         android:background="#FFFFFF" />
 
     <Spinner
@@ -40,6 +40,7 @@
         android:gravity="center|start"
         android:hint="@string/activity_account_address_input"
         android:inputType="textPersonName"
+        android:paddingStart="5dp"
         android:textAlignment="gravity"
         android:textSize="18sp" />
 
@@ -56,6 +57,8 @@
         android:gravity="center|start"
         android:hint="@string/activity_account_address_gate"
         android:inputType="textPersonName"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         android:textAlignment="gravity"
         android:textSize="18sp" />
 
@@ -72,6 +75,8 @@
         android:gravity="center|start"
         android:hint="@string/activity_account_address_floor"
         android:inputType="textPersonName"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         android:textAlignment="gravity"
         android:textSize="18sp" />
 
@@ -82,8 +87,8 @@
         android:layout_below="@+id/toolbar"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="250dp"
         android:text="@string/activity_account_address"
         android:textSize="18sp" />
@@ -93,7 +98,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txtAccountAddressGate"
-        android:layout_marginTop="3dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
         android:text="@string/activity_account_address_label"
         android:textSize="18sp" />
 
@@ -102,7 +109,7 @@
         android:layout_width="match_parent"
         android:layout_height="31dp"
         android:layout_below="@+id/textView4"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="5dp"
         android:orientation="horizontal">
 
         <RadioButton

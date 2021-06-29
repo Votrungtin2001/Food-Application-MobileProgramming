@@ -1,71 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#E8E8E8"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E8E8E8">
 
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar" />
 
     <TextView
-            android:id="@+id/txtPaymentGuide"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_below="@+id/toolbar"
-            android:layout_marginTop="0dp"
-            android:background="#FFFFFF"
-            android:gravity="center|start"
-            android:text="@string/activity_account_policy_payment"
-            android:textAlignment="gravity"
-            android:textSize="20sp" />
+        android:id="@+id/txtPaymentGuide"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/toolbar"
+        android:layout_marginTop="5dp"
+        android:background="#FFFFFF"
+        android:gravity="center|start"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="@string/activity_account_policy_payment"
+        android:textAlignment="gravity"
+        android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/txtPrivacyPolicy"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_below="@+id/txtPaymentGuide"
-            android:layout_marginTop="2dp"
-            android:background="#FFFFFF"
-            android:gravity="center|start"
-            android:text="@string/activity_account_policy_privacy"
-            android:textAlignment="gravity"
-            android:textSize="20sp" />
+    <TextView
+        android:id="@+id/txtPrivacyPolicy"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/txtPaymentGuide"
+        android:layout_marginTop="3dp"
+        android:background="#FFFFFF"
+        android:gravity="center|start"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="@string/activity_account_policy_privacy"
+        android:textAlignment="gravity"
+        android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/txtRegulation"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_below="@+id/txtPrivacyPolicy"
-            android:layout_marginTop="2dp"
-            android:background="#FFFFFF"
-            android:gravity="center|start"
-            android:text="@string/activity_account_policy_regulation"
-            android:textAlignment="gravity"
-            android:textSize="20sp" />
+    <TextView
+        android:id="@+id/txtRegulation"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/txtPrivacyPolicy"
+        android:layout_marginTop="3dp"
+        android:background="#FFFFFF"
+        android:gravity="center|start"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="@string/activity_account_policy_regulation"
+        android:textAlignment="gravity"
+        android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/txtToS"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_below="@+id/txtRegulation"
-            android:layout_marginTop="2dp"
-            android:background="#FFFFFF"
-            android:gravity="center|start"
-            android:text="@string/activity_account_policy_tos"
-            android:textAlignment="gravity"
-            android:textSize="20sp" />
+    <TextView
+        android:id="@+id/txtToS"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/txtRegulation"
+        android:layout_marginTop="3dp"
+        android:background="#FFFFFF"
+        android:gravity="center|start"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="@string/activity_account_policy_tos"
+        android:textAlignment="gravity"
+        android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/txtDisputePolicy"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_below="@+id/txtToS"
-            android:layout_marginTop="2dp"
-            android:background="#FFFFFF"
-            android:gravity="center|start"
-            android:text="@string/activity_account_policy_dispute"
-            android:textAlignment="gravity"
-            android:textSize="20sp" />
+    <TextView
+        android:id="@+id/txtDisputePolicy"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_below="@+id/txtToS"
+        android:layout_marginTop="3dp"
+        android:background="#FFFFFF"
+        android:gravity="center|start"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="@string/activity_account_policy_dispute"
+        android:textAlignment="gravity"
+        android:textSize="20sp" />
 
 </RelativeLayout>

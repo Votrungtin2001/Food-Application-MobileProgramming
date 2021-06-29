@@ -15,9 +15,11 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_below="@+id/toolbar"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="5dp"
         android:background="#FFFFFF"
         android:gravity="center|left"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         android:textAlignment="gravity"
         android:textSize="20sp" />
 
@@ -26,9 +28,11 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_below="@+id/txtAccountPaymentTopup"
-        android:layout_marginTop="2dp"
+        android:layout_marginTop="3dp"
         android:background="#FFFFFF"
         android:gravity="center|left"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         android:text="@string/activity_account_payment_history"
         android:textAlignment="gravity"
         android:textSize="20sp" />
@@ -38,9 +42,11 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_below="@+id/txtAccountPaymentCoins"
-        android:layout_marginTop="1dp"
+        android:layout_marginTop="3dp"
         android:background="#FFFFFF"
         android:gravity="center|left"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
         android:text="@string/activity_account_payment_topup"
         android:textAlignment="gravity"
         android:textSize="20sp" />

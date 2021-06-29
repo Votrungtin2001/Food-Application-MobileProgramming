@@ -19,7 +19,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="5dp"
         android:layout_marginEnd="100dp"
         android:textSize="18sp" />
 
@@ -31,7 +31,9 @@
         android:layout_marginTop="5dp"
         android:background="#FFFFFF"
         android:ems="10"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp" />
 
     <Button
         android:id="@+id/btnConfirmEdit"

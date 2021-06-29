@@ -61,10 +61,27 @@
                 app:cornerRadius="0dp" />
 
             <Button
-                android:id="@+id/btnAddress"
+                android:id="@+id/btnInvite"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:layout_below="@+id/btnPayment"
+                android:layout_marginTop="2dp"
+                android:drawableLeft="@drawable/ic_baseline_person_add_24"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:text="@string/activity_account_invite"
+                android:textAlignment="viewStart"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                app:backgroundTint="@color/white"
+                app:cornerRadius="0dp" />
+
+            <Button
+                android:id="@+id/btnAddress"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_below="@+id/btnInvite"
                 android:layout_marginTop="2dp"
                 android:drawableLeft="@drawable/ic_baseline_place_24"
                 android:insetTop="0dp"
