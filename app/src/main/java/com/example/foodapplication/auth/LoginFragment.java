@@ -141,7 +141,7 @@ public class LoginFragment extends Fragment  {
             @Override
             public void onClick(View v) {
                 final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-                progressDialog.setMessage("Please wait...");
+                progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
                 progressDialog.show();
 
                 if (namefragment_before == 1 && role == 1) {
@@ -269,7 +269,7 @@ public class LoginFragment extends Fragment  {
                                                 GoogleSignInAccount signedInAccount = task.getResult();
                                                 //   user.setAccessToken(signedInAccount.getIdToken());
                                                 final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-                                                progressDialog.setMessage("Please wait...");
+                                                progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
                                                 progressDialog.show();
                                                 GoogleLoginForCustomerAndBackToAccountFragment(User.getEmail().toString().trim(), progressDialog);
                                             }
@@ -299,7 +299,7 @@ public class LoginFragment extends Fragment  {
                                         try {
                                             String email = object.getString("email");
                                             final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-                                            progressDialog.setMessage("Please wait...");
+                                            progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
                                             progressDialog.show();
                                             FacebookLoginForCustomerAndBackToAccountFragment(email, progressDialog);
                                         } catch ( JSONException e) {

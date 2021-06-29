@@ -79,7 +79,7 @@ public class LoginFragmentMaster extends Fragment {
             public void onClick(View v) {
 
                 final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-                progressDialog.setMessage("Please wait...");
+                progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
                 progressDialog.show();
 
                 if (namefragment_before == 1 && role == 2) {

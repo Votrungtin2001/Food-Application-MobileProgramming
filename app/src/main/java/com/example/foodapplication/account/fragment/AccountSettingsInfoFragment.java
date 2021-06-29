@@ -102,7 +102,7 @@ public class AccountSettingsInfoFragment extends Fragment {
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
             builder.setItems(gender, (dialog, which) -> {
                 final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-                progressDialog.setMessage("Please wait...");
+                progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
                 progressDialog.show();
                 switch (gender[which]) {
                     case "Nam":

@@ -64,7 +64,7 @@ public class AccountPaymentHistory extends Fragment {
         if (user_id != -1) {
             TransactionAdapter adapter = new TransactionAdapter(transactions);
             final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Please wait...");
+            progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
             progressDialog.show();
             GetTransactionHistory(user_id, transactions, adapter, progressDialog, TAG, getActivity());
 

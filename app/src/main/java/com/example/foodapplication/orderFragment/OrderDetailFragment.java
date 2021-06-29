@@ -67,7 +67,7 @@ public class OrderDetailFragment extends Fragment {
         orderDetailModelList = new ArrayList<>();
         menuAdapter = new OrderDetailAdapter(getActivity(), orderDetailModelList);
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Please wait...");
+        progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
         progressDialog.show();
         GetOrderDetailsWithOrderID(orderId, orderDetailModelList, menuAdapter, progressDialog, TAG, getActivity());
 

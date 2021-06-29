@@ -97,7 +97,7 @@ public class Cart extends AppCompatActivity {
                         0);
 
                 final ProgressDialog progressDialog = new ProgressDialog(this);
-                progressDialog.setMessage("Please wait...");
+                progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
                 progressDialog.show();
 
                 AddOrder(req.getDateTime(), req.getCustomerId(), req.getAddressId(),

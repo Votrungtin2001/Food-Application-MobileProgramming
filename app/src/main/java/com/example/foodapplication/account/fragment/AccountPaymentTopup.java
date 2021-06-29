@@ -115,7 +115,7 @@ public class AccountPaymentTopup extends Fragment {
                 customer_credit += topup;
 
                 final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-                progressDialog.setMessage("Please wait...");
+                progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
                 progressDialog.show();
                 UpdateCreditAndAddTransaction(user_id, customer_credit, topup, sDate, progressDialog);
 

@@ -151,7 +151,7 @@ public class SignUpFragment extends Fragment {
         String email = binding.email.getText().toString().trim();
         String password = binding.password.getText().toString().trim();
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Please wait...");
+        progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
         progressDialog.show();
         if (role == 2) {
           CreateMasterAccount(name, email, password,

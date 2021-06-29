@@ -100,7 +100,7 @@ public class HomeFragment_Master extends Fragment {
         viewPager_HomeFragment_Master.setVisibility(View.GONE);
 
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Please wait...");
+        progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
         progressDialog.show();
 
         Handler handler = new Handler();

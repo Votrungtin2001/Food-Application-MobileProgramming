@@ -133,7 +133,7 @@ public class AccountAddressFragment extends Fragment {
             districtSpinner = new ArrayList<>();
             ArrayAdapter spinnerAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, districtSpinner);
             final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Please wait...");
+            progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
             progressDialog.show();
             GetDistrictsWithCity(city_id, districtSpinner, spinnerAdapter, progressDialog, TAG, getActivity());
             spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -149,7 +149,7 @@ public class AccountAddressFragment extends Fragment {
     View.OnClickListener onAddressSave = v -> {
         if(!txtAccountAddressInput.getText().toString().trim().equals("")) {
             final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Please wait...");
+            progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
             progressDialog.show();
             if (user_id != -1) {
                 IdWithNameListItem selectedCity = (IdWithNameListItem) spinCityInput.getSelectedItem();

@@ -100,7 +100,7 @@ public class SingleEditTextUpdateFragment extends Fragment {
         if (user_id != -1) {
             if (target.equals("Customer")) {
                 final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-                progressDialog.setMessage("Please wait...");
+                progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
                 progressDialog.show();
                 switch (type) {
                     case "EditPhone":
@@ -123,7 +123,7 @@ public class SingleEditTextUpdateFragment extends Fragment {
             } else {
                 if (target.equals("Master")) {
                     final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-                    progressDialog.setMessage("Please wait...");
+                    progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
                     progressDialog.show();
                     switch (type) {
                         case "EditPhone":
@@ -158,7 +158,7 @@ public class SingleEditTextUpdateFragment extends Fragment {
             if (!txtEditText.getText().toString().equals("")) {
                 if (target.equals("Customer")) {
                     final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-                    progressDialog.setMessage("Please wait...");
+                    progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
                     progressDialog.show();
                     switch (type) {
                         case "EditPhone":
@@ -174,7 +174,7 @@ public class SingleEditTextUpdateFragment extends Fragment {
                 }
                 else {
                     final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-                    progressDialog.setMessage("Please wait...");
+                    progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
                     progressDialog.show();
                     switch (type) {
                         case "EditPhone":

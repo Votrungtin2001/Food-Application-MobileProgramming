@@ -112,7 +112,7 @@ public class AccountFragment extends Fragment {
     private void Run() {
         if (customer_id > 0) {
             final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Please wait...");
+            progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
             progressDialog.show();
 
             CheckCustomerHasAddress(customer_id);

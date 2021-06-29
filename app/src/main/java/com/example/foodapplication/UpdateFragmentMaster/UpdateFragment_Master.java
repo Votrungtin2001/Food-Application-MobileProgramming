@@ -201,7 +201,7 @@ public class UpdateFragment_Master extends Fragment {
                 int city_id = spinnerItem.getId();
                 districtList =  new ArrayList<>();
                 final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-                progressDialog.setMessage("Please wait...");
+                progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
                 progressDialog.show();
                 ArrayAdapter districtAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, districtList);
                 GetDistrictsWithCity(city_id, districtList, districtAdapter, progressDialog, TAG, getActivity());
@@ -425,7 +425,7 @@ public class UpdateFragment_Master extends Fragment {
             @Override
             public void onClick(View v) {
                 final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-                progressDialog.setMessage("Please wait...");
+                progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
                 progressDialog.show();
 
                 IdWithNameListItem selectedCity = (IdWithNameListItem) spinner_City_UpdateFragment.getSelectedItem();
@@ -448,7 +448,7 @@ public class UpdateFragment_Master extends Fragment {
 
     public void Run2() {
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Please wait...");
+        progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
         cityList = new ArrayList<>();
         ArrayAdapter cityAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, cityList);
         GetCities(cityList, cityAdapter, TAG, getActivity());
@@ -473,7 +473,7 @@ public class UpdateFragment_Master extends Fragment {
                 int city_id = spinnerItem.getId();
                 districtList =  new ArrayList<>();
                 final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-                progressDialog.setMessage("Please wait...");
+                progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
                 progressDialog.show();
                 ArrayAdapter districtAdapter = new ArrayAdapter(getActivity(), android.R.layout.simple_list_item_1, districtList);
                 GetDistrictsWithCity(city_id, districtList, districtAdapter, progressDialog, TAG, getActivity());
@@ -696,7 +696,7 @@ public class UpdateFragment_Master extends Fragment {
             @Override
             public void onClick(View v) {
                 final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-                progressDialog.setMessage("Please wait...");
+                progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
                 progressDialog.show();
 
                 IdWithNameListItem selectedCity = (IdWithNameListItem) spinner_City_UpdateFragment.getSelectedItem();

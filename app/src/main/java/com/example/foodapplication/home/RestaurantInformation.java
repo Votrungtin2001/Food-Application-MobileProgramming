@@ -103,7 +103,7 @@ public class RestaurantInformation extends AppCompatActivity {
         prepareViewPagerRestaurantInformation(viewPager_RestaurantInformation, title_TabLayout);
 
         final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Please wait...");
+        progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
         progressDialog.show();
 
         Handler handler = new Handler();

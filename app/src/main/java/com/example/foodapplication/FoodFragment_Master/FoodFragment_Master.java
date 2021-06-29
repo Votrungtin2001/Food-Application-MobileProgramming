@@ -405,7 +405,7 @@ public class FoodFragment_Master extends Fragment {
                 Bitmap bitmap = ((BitmapDrawable) imageView_ImageProduct_FoodFragment.getDrawable()).getBitmap();
                 imageStore(bitmap);
                 final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-                progressDialog.setMessage("Please wait...");
+                progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
                 progressDialog.show();
                 AddProductAndMenu(name_product, description, category_id, encodedImage, price, master_id,
                         editText_NameProduct_FoodFragment, editText_Description_FoodFragment, editText_Price_FoodFragment,

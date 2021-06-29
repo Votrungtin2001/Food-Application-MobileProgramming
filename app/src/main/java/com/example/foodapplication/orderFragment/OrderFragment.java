@@ -58,7 +58,7 @@ public class OrderFragment extends Fragment {
         linearLayout = view.findViewById(R.id.none);
 
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Please wait...");
+        progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
         CheckCustomerOrderWithCustomerID(customer_id);
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {

@@ -55,7 +55,7 @@ public class DateFragment extends DialogFragment implements DatePickerDialog.OnD
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
             String sDate = simpleDateFormat.format(date);
             final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Please wait...");
+            progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
             progressDialog.show();
             UpdateCustomerDOB(user_id, sDate, progressDialog, TAG, getActivity());
         }

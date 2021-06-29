@@ -78,7 +78,7 @@ public class MenuAdapter_HomeFragment_Master_DatDon extends RecyclerView.Adapter
             @Override
             public void onClick(View v) {
                 final ProgressDialog progressDialog = new ProgressDialog(context);
-                progressDialog.setMessage("Please wait...");
+                progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
                 progressDialog.show();
                 int product_id = currentItem.getProduct_id();
                 int menu_id = currentItem.getMenu_id();

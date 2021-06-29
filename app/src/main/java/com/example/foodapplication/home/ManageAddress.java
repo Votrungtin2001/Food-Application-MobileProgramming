@@ -291,7 +291,7 @@ public class ManageAddress extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 final ProgressDialog progressDialog = new ProgressDialog(context);
-                progressDialog.setMessage("Please wait...");
+                progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
                 progressDialog.show();
                 try {
                     JSONObject jsonObject = new JSONObject(response);

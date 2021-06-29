@@ -108,7 +108,7 @@ public class AccountFragment_Master extends Fragment {
 
         if (master_id > 0) {
             final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Please wait...");
+            progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
             progressDialog.show();
 
             CheckMasterHasAddress(master_id);

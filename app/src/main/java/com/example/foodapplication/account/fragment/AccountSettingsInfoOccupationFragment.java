@@ -82,7 +82,7 @@ public class AccountSettingsInfoOccupationFragment extends Fragment {
         txtOccupationOther.setOnClickListener(onTextViewClick);
 
         final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-        progressDialog.setMessage("Please wait...");
+        progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
         progressDialog.show();
         GetCustomerOccupation(user_id, progressDialog);
         return view;
@@ -92,7 +92,7 @@ public class AccountSettingsInfoOccupationFragment extends Fragment {
         if (user_id != -1) {
             TextView view = (TextView) v;
             final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-            progressDialog.setMessage("Please wait...");
+            progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
             progressDialog.show();
             UpdateCustomerOccupation(user_id, view.getText().toString(), progressDialog, TAG, getActivity());
             FragmentManager fragmentManager = getParentFragmentManager();

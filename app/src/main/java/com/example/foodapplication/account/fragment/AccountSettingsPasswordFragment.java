@@ -118,7 +118,7 @@ public class AccountSettingsPasswordFragment extends Fragment {
                             if (txtCurrentPassword.getText().toString().equals(currentPassword)) {
                                 if (txtConfirmPassword.getText().toString().equals(txtNewPassword.getText().toString())) {
                                     final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-                                    progressDialog.setMessage("Please wait...");
+                                    progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
                                     progressDialog.show();
                                     UpdateCustomerPassword(id, txtNewPassword.getText().toString(), progressDialog, TAG, getActivity());
                                     FragmentManager fragmentManager = getParentFragmentManager();
@@ -175,7 +175,7 @@ public class AccountSettingsPasswordFragment extends Fragment {
                             if (txtCurrentPassword.getText().toString().equals(currentPassword)) {
                                 if (txtConfirmPassword.getText().toString().equals(txtNewPassword.getText().toString())) {
                                     final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-                                    progressDialog.setMessage("Please wait...");
+                                    progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
                                     progressDialog.show();
                                     UpdateMasterPassword(id, txtNewPassword.getText().toString(), progressDialog, TAG, getActivity());
                                     FragmentManager fragmentManager = getParentFragmentManager();
