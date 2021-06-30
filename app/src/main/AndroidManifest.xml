@@ -22,7 +22,7 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".Master_MainActivity"></activity>
         <activity android:name=".home.SortOfProductList" />
-        <activity android:name=".orderFragment.cart.Cart"></activity>
+        <activity android:name=".orderFragment.Cart"></activity>
         <activity android:name=".home.ListRestaurant" />
         <activity android:name=".home.ProductWithCategory" />
         <activity android:name=".home.RestaurantInformation" />

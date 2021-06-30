@@ -8,7 +8,7 @@ public class ProductModel {
     private double price;
     private int menu_id;
 
-    public int quantity;
+    public int quantity = 1;
     private int product_id;
 
     public ProductModel( String Name, int Quantity, double Price, int product_id, int Menu_id) {

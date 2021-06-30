@@ -16,16 +16,15 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import com.example.foodapplication.orderFragment.cart.Cart;
 import com.example.foodapplication.R;
 import com.example.foodapplication.home.adapter.ViewPagerAdapter;
+import com.example.foodapplication.home.fragment.RestaurantInformation_DatDon;
+import com.example.foodapplication.home.fragment.RestaurantInformation_ThongTin;
+import com.example.foodapplication.orderFragment.Cart;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
-
-import com.example.foodapplication.home.fragment.RestaurantInformation_DatDon;
-import com.example.foodapplication.home.fragment.RestaurantInformation_ThongTin;
 
 import static com.example.foodapplication.MainActivity.customer_id;
 import static com.example.foodapplication.MainActivity.isCustomerHasAddress;
@@ -121,7 +120,7 @@ public class RestaurantInformation extends AppCompatActivity {
             public void onClick(View v) {
                if(customer_id > 0) {
                     boolean checkCustomerHasAddress = isCustomerHasAddress;
-                    if(checkCustomerHasAddress == true) {
+                    if(checkCustomerHasAddress) {
                         Intent intent = new Intent(getApplication(), Cart.class);
                         startActivity(intent);
                     }

@@ -18,8 +18,8 @@ import java.util.List;
 
 import static com.example.foodapplication.home.adapter.MenuAdapter.Quantity;
 import static com.example.foodapplication.home.adapter.MenuAdapter.productModelList;
-import static com.example.foodapplication.orderFragment.cart.Cart.dTotal;
-import static com.example.foodapplication.orderFragment.cart.Cart.txtTotalPrice;
+import static com.example.foodapplication.orderFragment.Cart.txtTotalPrice;
+import static com.example.foodapplication.orderFragment.Cart.dTotal;
 
 
 class CartViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -69,6 +69,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartViewHolder> {
     public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
 
         holder.nameItem.setText(listCart.get(position).getNameProduct());
+        Quantity = listCart.get(position).getQuantity();
         listCart.get(position).setQuantity(Quantity);
         holder.countItem.setText(Integer.toString(listCart.get(position).getQuantity()));
         double price = (listCart.get(position).getPrice())*(listCart.get(position).getQuantity());

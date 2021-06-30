@@ -1,5 +1,6 @@
-package com.example.foodapplication.orderFragment.cart;
+package com.example.foodapplication.orderFragment;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -37,9 +38,9 @@ import java.util.Map;
 import static com.example.foodapplication.MainActivity.addressid_Home;
 import static com.example.foodapplication.MainActivity.addressid_Work;
 import static com.example.foodapplication.MainActivity.customer_id;
+import static com.example.foodapplication.MainActivity.isCustomerHasPhone;
 import static com.example.foodapplication.home.adapter.MenuAdapter.Quantity;
 import static com.example.foodapplication.home.adapter.MenuAdapter.productModelList;
-
 
 public class Cart extends AppCompatActivity {
 
@@ -49,6 +50,7 @@ public class Cart extends AppCompatActivity {
     Button btnPlaceOrder;
     ImageView imageViewBack;
     CartAdapter cartAdapter;
+    Dialog AnnouncementDialog;
     List<ProductModel> listCart = productModelList;
     int address_id;
     public static int result = 0;
@@ -71,6 +73,8 @@ public class Cart extends AppCompatActivity {
                 finish();
             }
         });
+        AnnouncementDialog = new Dialog(this);
+        AnnouncementDialog.setContentView(R.layout.custom_popup_require_login);
 
         loadListFood();
 
@@ -80,7 +84,13 @@ public class Cart extends AppCompatActivity {
         btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddOrder();
+                boolean checkCustomerHasPhone = isCustomerHasPhone;
+                if(checkCustomerHasPhone) {
+                    AddOrder();
+                }
+                else {
+                    ShowPopUpRequirePhone();
+                }
             }
         });
     }
@@ -211,5 +221,23 @@ public class Cart extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(request);
     }
+
+    public void ShowPopUpRequirePhone() {
+        TextView textView_Close;
+        textView_Close = (TextView) AnnouncementDialog.findViewById(R.id.Close_PopUpLogin);
+        textView_Close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AnnouncementDialog.dismiss();
+            }
+        });
+
+        TextView textView_Text;
+        textView_Text = (TextView) AnnouncementDialog.findViewById(R.id.TextView_PopUp_RequireLogin);
+        textView_Text.setText("Vui lòng thêm số điện thoại!!!   ");
+
+        AnnouncementDialog.show();
+    }
+
 
 }

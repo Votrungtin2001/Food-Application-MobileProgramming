@@ -30,7 +30,7 @@ import static com.example.foodapplication.MainActivity.isCustomerHasAddress;
     LayoutInflater inflater;
 
     Dialog AnnouncementDialog;
-    public static int Quantity = 1;
+    public static int Quantity;
     public static List<ProductModel> productModelList = new ArrayList<>();
 
     boolean isExist = false;
@@ -53,7 +53,6 @@ import static com.example.foodapplication.MainActivity.isCustomerHasAddress;
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ProductModel currentItem = itemList.get(position);
 
-
         holder.textView_NameProduct.setText(currentItem.getNameProduct());
         holder.textView_DescriptionProduct.setText(currentItem.getDescriptionProduct());
         holder.textView_ValueOfSell.setText(currentItem.getValueOfSell());
@@ -70,20 +69,20 @@ import static com.example.foodapplication.MainActivity.isCustomerHasAddress;
         }
 
         holder.imageView_addItem.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-                for (int i =0; i < productModelList.size(); i++) {
+               Quantity = currentItem.getQuantity();
+                for (int i = 0; i < productModelList.size(); i++) {
                     isExist = currentItem.getProduct_id() == productModelList.get(i).getProduct_id();
                 }
                 if (customer_id > 0) {
                     boolean checkCustomerHasAddress = isCustomerHasAddress;
                     if(checkCustomerHasAddress) {
                         if(!isExist){
-                        productModelList.add(new ProductModel(currentItem.getNameProduct(), Quantity, currentItem.getPrice(),currentItem.getProduct_id(), currentItem.getMenu_id()));
+                        productModelList.add(new ProductModel(currentItem.getNameProduct(), currentItem.getQuantity(), currentItem.getPrice(),currentItem.getProduct_id(), currentItem.getMenu_id()));
                         }
                         else {
-                            ++Quantity;
+                            Quantity++;
                         }
                         Toast.makeText(context, "Thêm vào giỏ hàng thành công!", Toast.LENGTH_SHORT).show();
                     }
