@@ -1398,11 +1398,12 @@ public class MySQLQuerry {
         requestQueue.add(request);
     }
 
-    public static void GetCustomerUsername(int id, TextView textView, String TAG, Context context) {
+    public static void GetCustomerUsername(int id, TextView textView, ProgressDialog progressDialog, String TAG, Context context) {
         String url = "https://foodapplicationmobile.000webhostapp.com/getCustomerAccountInformation.php";
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                progressDialog.dismiss();
                 Log.e(TAG, response.toString());
                 try {
                     JSONObject jsonObject = new JSONObject(response);
@@ -1425,6 +1426,7 @@ public class MySQLQuerry {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
                 Log.e(TAG, error.toString());
             }
         }) {

@@ -128,7 +128,10 @@ public class ManageAddress extends AppCompatActivity {
         textView_addressLine.setText(addressLine);
 
         if (customer_id > 0) {
-           GetCustomerUsername(customer_id, textView_NameAccount, TAG, this);
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
+            progressDialog.show();
+           GetCustomerUsername(customer_id, textView_NameAccount, progressDialog, TAG, this);
            GetCustomerAddressWithLabel(customer_id, 1, this);
            GetCustomerAddressWithLabel(customer_id, 2, this);
 
@@ -290,9 +293,6 @@ public class ManageAddress extends AppCompatActivity {
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                final ProgressDialog progressDialog = new ProgressDialog(context);
-                progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
-                progressDialog.show();
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     String success = jsonObject.getString("success");
@@ -318,6 +318,9 @@ public class ManageAddress extends AppCompatActivity {
                                 textView_HomeAddress.setText("Nhà");
                                 if (!full_address.trim().equals(""))
                                     textView_FullAddress1.setText(full_address);
+                                final ProgressDialog progressDialog = new ProgressDialog(context);
+                                progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
+                                progressDialog.show();
                                 GetCustomerName(customer_id, textView_NameContact1, TAG, context);
                                 GetCustomerPhone(customer_id, textView_PhoneContact1, progressDialog, TAG, context);
                             }
@@ -325,6 +328,9 @@ public class ManageAddress extends AppCompatActivity {
                                 textView_CompanyAddress.setText("Công ty");
                                 if (!full_address.trim().equals(""))
                                     textView_FullAddress2.setText(full_address);
+                                final ProgressDialog progressDialog = new ProgressDialog(context);
+                                progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
+                                progressDialog.show();
                                 GetCustomerName(customer_id, textView_NameContact2, TAG, context);
                                 GetCustomerPhone(customer_id, textView_PhoneContact2, progressDialog, TAG, context);
                             }
