@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     public static String stateName;
 
     public static boolean isCustomerHasAddress = false;
+    public static boolean isCustomerHasPhone = false;
     private final String TAG = "MainActivity";
     public static int addressid_Home = 0;
     public static int addressid_Work = 0;
@@ -83,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
         customer_id = getIntent().getExtras().getInt("Customer ID");
 
         CheckCustomerHasAddress(customer_id);
+        CheckCustomerHasPhone(customer_id);
         GetCustomerAddressIDWithLabel(customer_id, 1);
         GetCustomerAddressIDWithLabel(customer_id, 2);
 
@@ -170,6 +172,35 @@ public class MainActivity extends AppCompatActivity {
                     isCustomerHasAddress = true;
                 }
                 else isCustomerHasAddress = false;
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e(TAG, error.toString());
+            }
+        }) {
+            @Override
+            protected java.util.Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("customer_id", String.valueOf(customer_id));
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(request);
+    }
+
+    private void CheckCustomerHasPhone(int customer_id) {
+        String url = "https://foodapplicationmobile.000webhostapp.com/checkCustomerHasPhone.php";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                String announcement = "";
+                if(response.toString().trim().equals("true")) {
+                    isCustomerHasPhone = true;
+                }
+                else isCustomerHasPhone = false;
             }
         }, new Response.ErrorListener() {
             @Override
