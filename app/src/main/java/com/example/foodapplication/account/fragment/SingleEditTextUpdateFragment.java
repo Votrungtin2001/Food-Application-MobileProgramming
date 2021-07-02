@@ -168,7 +168,10 @@ public class SingleEditTextUpdateFragment extends Fragment {
                             UpdateCustomerName(user_id, txtEditText.getText().toString(), progressDialog);
                             break;
                         case "EditEmail":
-                            UpdateCustomerEmail(user_id, txtEditText.getText().toString(), progressDialog);
+                            if (android.util.Patterns.EMAIL_ADDRESS.matcher(txtEditText.getText().toString()).matches())
+                                UpdateCustomerEmail(user_id, txtEditText.getText().toString(), progressDialog);
+                            else
+                                Toast.makeText(getContext(), "Email không hợp lệ!", Toast.LENGTH_SHORT).show();
                             break;
                     }
                 }
@@ -184,7 +187,10 @@ public class SingleEditTextUpdateFragment extends Fragment {
                             UpdateMasterName(user_id, txtEditText.getText().toString(), progressDialog);
                             break;
                         case "EditEmail":
-                            UpdateMasterEmail(user_id, txtEditText.getText().toString(), progressDialog);
+                            if (android.util.Patterns.EMAIL_ADDRESS.matcher(txtEditText.getText().toString()).matches())
+                                UpdateMasterEmail(user_id, txtEditText.getText().toString(), progressDialog);
+                            else
+                                Toast.makeText(getContext(), "Email không hợp lệ!", Toast.LENGTH_SHORT).show();
                             break;
                     }
                 }
