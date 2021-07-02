@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.foodapplication.MainActivity;
 import com.example.foodapplication.R;
 import com.google.android.libraries.places.api.Places;
 
@@ -48,6 +49,8 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
+
+import static com.example.foodapplication.MainActivity.nameStreet;
 
 public class Map extends AppCompatActivity implements OnMapReadyCallback,
         GoogleApiClient.OnConnectionFailedListener {
@@ -161,6 +164,8 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback,
                     dLatitude = place.getLatLng().latitude;
                     dLongitude = place.getLatLng().longitude;
                     String placeAddress = place.getAddress();
+                    nameStreet = placeName;
+                    addressLine = placeAddress;
 
                         if (placeLatLng != null) {
                             Geocoder geocoder = new Geocoder(Map.this, Locale.getDefault());
@@ -169,8 +174,12 @@ public class Map extends AppCompatActivity implements OnMapReadyCallback,
                                 stateName = addresses.get(0).getSubAdminArea();
                                 if(stateName.trim().equals("Thủ Đức") || stateName.trim().equals("Thu Duc") || stateName.trim().equals("Thành Phố Thủ Đức") || stateName.trim().equals("Quận Thủ Đức")) {
                                     district_id = 14;
+                                    MainActivity.district_id = 14;
                                 }
-                                else district_id = 0;
+                                else {
+                                    district_id = 0;
+                                    MainActivity.district_id = 0;
+                                }
                             } catch (IOException e) {
                                 e.printStackTrace();
 

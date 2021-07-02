@@ -50,7 +50,6 @@ public class AccountFragment extends Fragment {
     Dialog LoginDialog;
 
     private final String TAG = "AccountFragment";
-    boolean checkCustomerHasAddress = false;
 
     DatabaseHelper databaseHelper;
 
@@ -159,7 +158,6 @@ public class AccountFragment extends Fragment {
             }
         });
 
-        isCustomerHasAddress = checkCustomerHasAddress;
     }
 
     View.OnClickListener runAddressFragment = v -> {
@@ -282,11 +280,12 @@ public class AccountFragment extends Fragment {
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                Log.e(TAG, response.toString());
                 String announcement = "";
                 if(response.toString().trim().equals("true")) {
-                    checkCustomerHasAddress = true;
+                    isCustomerHasAddress = true;
                 }
-                else checkCustomerHasAddress = false;
+                else isCustomerHasAddress = false;
             }
         }, new Response.ErrorListener() {
             @Override
