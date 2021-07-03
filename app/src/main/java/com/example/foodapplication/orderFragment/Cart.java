@@ -39,7 +39,6 @@ import static com.example.foodapplication.MainActivity.addressid_Home;
 import static com.example.foodapplication.MainActivity.addressid_Work;
 import static com.example.foodapplication.MainActivity.customer_id;
 import static com.example.foodapplication.MainActivity.isCustomerHasPhone;
-import static com.example.foodapplication.home.adapter.MenuAdapter.Quantity;
 import static com.example.foodapplication.home.adapter.MenuAdapter.productModelList;
 
 public class Cart extends AppCompatActivity {
@@ -122,7 +121,7 @@ public class Cart extends AppCompatActivity {
                             AddOrderDetails(listCart.get(i).getMenu_id(), listCart.get(i).getQuantity(), listCart.get(i).getPrice());
                         }
                     }
-                }, 1500);
+                }, 100);
 
                 handler = new Handler();
                 handler.postDelayed(new Runnable() {
@@ -134,7 +133,7 @@ public class Cart extends AppCompatActivity {
                         else if(result == 0) Toast.makeText(context, "Thêm đơn hàng không thành công!", Toast.LENGTH_SHORT).show();
                         finish();
                     }
-                }, 3500);
+                }, 1500);
 
             }
             else
@@ -151,7 +150,7 @@ public class Cart extends AppCompatActivity {
         int total = 0;
         DecimalFormat decimalFormat = new DecimalFormat( "###,###,###");
         for(int i = 0; i < listCart.size(); i++) {
-            total += ((listCart.get(i).getPrice()*(Quantity)));
+            total += ((listCart.get(i).getPrice()*(listCart.get(i).getQuantity())));
         }
 
         txtTotalPrice.setText(decimalFormat.format(total));
@@ -238,6 +237,5 @@ public class Cart extends AppCompatActivity {
 
         AnnouncementDialog.show();
     }
-
 
 }

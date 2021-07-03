@@ -30,7 +30,7 @@ import static com.example.foodapplication.MainActivity.isCustomerHasAddress;
     LayoutInflater inflater;
 
     Dialog AnnouncementDialog;
-    public static int Quantity;
+    public static int Quantity = 1;
     public static List<ProductModel> productModelList = new ArrayList<>();
 
     boolean isExist = false;
@@ -71,26 +71,26 @@ import static com.example.foodapplication.MainActivity.isCustomerHasAddress;
         holder.imageView_addItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    Quantity = currentItem.getQuantity();
-                    for (int i = 0; i < productModelList.size(); i++) {
-                        isExist = currentItem.getProduct_id() == productModelList.get(i).getProduct_id();
-                    }
+                for (int i = 0; i < productModelList.size(); i++) {
+                        isExist = productModelList.get(i).getProduct_id() == currentItem.getProduct_id();
+                }
                     if (customer_id > 0) {
                         boolean checkCustomerHasAddress = isCustomerHasAddress;
                         if (checkCustomerHasAddress) {
                             if (!isExist) {
-                                productModelList.add(new ProductModel(currentItem.getNameProduct(), currentItem.getQuantity(), currentItem.getPrice(), currentItem.getProduct_id(), currentItem.getMenu_id()));
+                                productModelList.add(new ProductModel(currentItem.getNameProduct(), 1, currentItem.getPrice(), currentItem.getProduct_id()));
+                                Toast.makeText(context, "Thêm vào giỏ hàng thành công!", Toast.LENGTH_SHORT).show();
                             } else {
-                                Quantity++;
+                                Toast.makeText(context, "Sản phẩm đã được thêm vào giỏ!", Toast.LENGTH_SHORT).show();
                             }
-                            Toast.makeText(context, "Thêm vào giỏ hàng thành công!", Toast.LENGTH_SHORT).show();
+
                         } else {
                             ShowPopUpRequireAddress();
                         }
                     } else
                         ShowPopUpRequireLogin();
+                }
 
-            }
         });
     }
 
