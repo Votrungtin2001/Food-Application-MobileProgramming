@@ -154,50 +154,46 @@ public class SingleEditTextUpdateFragment extends Fragment {
     }
 
     View.OnClickListener onConfirmEditClick = v -> {
-        if (user_id != -1) {
-            if (!txtEditText.getText().toString().equals("")) {
-                if (target.equals("Customer")) {
-                    final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-                    progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
-                    progressDialog.show();
-                    switch (type) {
-                        case "EditPhone":
-                            UpdateCustomerPhone(user_id, txtEditText.getText().toString(), progressDialog);
-                            break;
-                        case "EditName":
-                            UpdateCustomerName(user_id, txtEditText.getText().toString(), progressDialog);
-                            break;
-                        case "EditEmail":
-                            if (android.util.Patterns.EMAIL_ADDRESS.matcher(txtEditText.getText().toString()).matches())
+        if ((type.equals("EditEmail")) && (!android.util.Patterns.EMAIL_ADDRESS.matcher(txtEditText.getText().toString()).matches()))
+            Toast.makeText(getContext(), "Email không hợp lệ!", Toast.LENGTH_SHORT).show();
+        else {
+            if (user_id != -1) {
+                if (!txtEditText.getText().toString().equals("")) {
+                    if (target.equals("Customer")) {
+                        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+                        progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
+                        progressDialog.show();
+                        switch (type) {
+                            case "EditPhone":
+                                UpdateCustomerPhone(user_id, txtEditText.getText().toString(), progressDialog);
+                                break;
+                            case "EditName":
+                                UpdateCustomerName(user_id, txtEditText.getText().toString(), progressDialog);
+                                break;
+                            case "EditEmail":
                                 UpdateCustomerEmail(user_id, txtEditText.getText().toString(), progressDialog);
-                            else
-                                Toast.makeText(getContext(), "Email không hợp lệ!", Toast.LENGTH_SHORT).show();
-                            break;
-                    }
-                }
-                else {
-                    final ProgressDialog progressDialog = new ProgressDialog(getActivity());
-                    progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
-                    progressDialog.show();
-                    switch (type) {
-                        case "EditPhone":
-                            UpdateMasterPhone(user_id, txtEditText.getText().toString(), progressDialog);
-                            break;
-                        case "EditName":
-                            UpdateMasterName(user_id, txtEditText.getText().toString(), progressDialog);
-                            break;
-                        case "EditEmail":
-                            if (android.util.Patterns.EMAIL_ADDRESS.matcher(txtEditText.getText().toString()).matches())
+                                break;
+                        }
+                    } else {
+                        final ProgressDialog progressDialog = new ProgressDialog(getActivity());
+                        progressDialog.setMessage("Xin vui lòng chờ trong giây lát...");
+                        progressDialog.show();
+                        switch (type) {
+                            case "EditPhone":
+                                UpdateMasterPhone(user_id, txtEditText.getText().toString(), progressDialog);
+                                break;
+                            case "EditName":
+                                UpdateMasterName(user_id, txtEditText.getText().toString(), progressDialog);
+                                break;
+                            case "EditEmail":
                                 UpdateMasterEmail(user_id, txtEditText.getText().toString(), progressDialog);
-                            else
-                                Toast.makeText(getContext(), "Email không hợp lệ!", Toast.LENGTH_SHORT).show();
-                            break;
+                                break;
+                        }
                     }
                 }
-            }
+            } else
+                Toast.makeText(getContext(), "Unknown user. Did you forget to log in?", Toast.LENGTH_LONG).show();
         }
-        else
-            Toast.makeText(getContext(), "Unknown user. Did you forget to log in?", Toast.LENGTH_LONG).show();
     };
 
     TextWatcher textWatcher = new TextWatcher() {
