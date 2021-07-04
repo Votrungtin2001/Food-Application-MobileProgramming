@@ -847,7 +847,7 @@ public class MySQLQuerry {
                             JSONObject object = jsonArray.getJSONObject(i);
 
                             restaurant_openingtime = object.getString("OPENING_TIMES");
-                            if(!restaurant_openingtime.trim().equals("")) textView.setText("Giờ mở cửa \t" + restaurant_openingtime);
+                            if(!restaurant_openingtime.trim().equals("")) textView.setText("Giờ mở cửa: \t" + restaurant_openingtime);
 
                         }
                     }
@@ -1957,7 +1957,7 @@ public class MySQLQuerry {
                             String address = object.getString("ADDRESS");
                             String openingtime = object.getString("OPENING_TIME");
                             textView1.setText(address);
-                            textView2.setText("Giờ mở cửa" + openingtime);
+                            textView2.setText("Giờ mở cửa: \t" + openingtime);
 
 
 
