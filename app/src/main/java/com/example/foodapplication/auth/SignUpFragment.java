@@ -65,11 +65,21 @@ public class SignUpFragment extends Fragment {
         binding.loginText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginFragment = new LoginFragment(role, namefragment);
-                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_container, loginFragment);
-                transaction.addToBackStack(null);
-                transaction.commit();
+                if(role == 1) {
+                    loginFragment = new LoginFragment(namefragment, role);
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.frame_container, loginFragment);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }
+                else if (role == 2) {
+                    LoginFragmentMaster loginFragmentMaster = new LoginFragmentMaster(namefragment, role);
+                    FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.frame_container, loginFragmentMaster);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }
+
             }
         });
         return binding.getRoot();
