@@ -30,7 +30,6 @@ import static com.example.foodapplication.MainActivity.isCustomerHasAddress;
     LayoutInflater inflater;
 
     Dialog AnnouncementDialog;
-    public static int Quantity = 1;
     public static List<ProductModel> productModelList = new ArrayList<>();
 
     boolean isExist = false;
@@ -78,19 +77,17 @@ import static com.example.foodapplication.MainActivity.isCustomerHasAddress;
                         boolean checkCustomerHasAddress = isCustomerHasAddress;
                         if (checkCustomerHasAddress) {
                             if (!isExist) {
-                                productModelList.add(new ProductModel(currentItem.getNameProduct(), 1, currentItem.getPrice(), currentItem.getProduct_id()));
+                                productModelList.add(new ProductModel(currentItem.getNameProduct(), 1, currentItem.getPrice(), currentItem.getProduct_id(),currentItem.getMenu_id()));
                                 Toast.makeText(context, "Thêm vào giỏ hàng thành công!", Toast.LENGTH_SHORT).show();
                             } else {
                                 Toast.makeText(context, "Sản phẩm đã được thêm vào giỏ!", Toast.LENGTH_SHORT).show();
                             }
-
                         } else {
                             ShowPopUpRequireAddress();
                         }
                     } else
                         ShowPopUpRequireLogin();
                 }
-
         });
     }
 

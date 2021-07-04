@@ -121,7 +121,7 @@ public class Cart extends AppCompatActivity {
                             AddOrderDetails(listCart.get(i).getMenu_id(), listCart.get(i).getQuantity(), listCart.get(i).getPrice());
                         }
                     }
-                }, 100);
+                }, 1500);
 
                 handler = new Handler();
                 handler.postDelayed(new Runnable() {
@@ -133,7 +133,7 @@ public class Cart extends AppCompatActivity {
                         else if(result == 0) Toast.makeText(context, "Thêm đơn hàng không thành công!", Toast.LENGTH_SHORT).show();
                         finish();
                     }
-                }, 1500);
+                }, 5000);
 
             }
             else

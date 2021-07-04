@@ -11,11 +11,12 @@ public class ProductModel {
     public int quantity = 1;
     private int product_id;
 
-    public ProductModel(String Name, int Quantity, double Price,int product_id) {
+    public ProductModel(String Name, int Quantity, double Price,int product_id, int Menu_id) {
         this.name_product = Name;
         this.quantity = Quantity;
         this.price = Price;
         this.product_id = product_id;
+        this.menu_id = Menu_id;
     }
 
     public ProductModel(String Image, String Name, String Description_Product, String Value, double Price, int Product_ID, int Menu_id) {
@@ -49,6 +50,7 @@ public class ProductModel {
     public int getMenu_id() {return menu_id;}
 
     public int getQuantity() {return quantity;}
+
     public void setQuantity(int Quantity) {this.quantity = Quantity;}
 
 }

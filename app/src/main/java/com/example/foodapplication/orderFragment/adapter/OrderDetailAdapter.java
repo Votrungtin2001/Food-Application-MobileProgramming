@@ -1,7 +1,6 @@
 package com.example.foodapplication.orderFragment.adapter;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +44,7 @@ public class OrderDetailAdapter extends RecyclerView.Adapter<OrderDetailAdapter.
 
         if(currentItem.getImageProduct().isEmpty()){
             holder.imgProduct.setImageResource(R.drawable.noimage_product);
-        }else {
+        } else {
             Picasso.get ().load ( currentItem.getImageProduct())
                     .placeholder(R.drawable.noimage_product)
                     .error(R.drawable.error)
