@@ -59,7 +59,7 @@
     <string name="activity_account_settings_account">Cài đặt Tài khoản</string>
     <string name="activity_account_settings_account_info">Thông tin liên lạc</string>
     <string name="activity_account_settings_account_password">Mật khẩu</string>
-    <string name="activity_account_settings_account_info_phone">Cập nhật số điện thoạt</string>
+    <string name="activity_account_settings_account_info_phone">Cập nhật số điện thoại</string>
     <string name="activity_account_settings_account_info_name">Cập nhật tên</string>
     <string name="activity_account_settings_account_info_email">Cập nhật email</string>
     <string name="activity_account_settings_account_info_gender">Cập nhật giới tính</string>

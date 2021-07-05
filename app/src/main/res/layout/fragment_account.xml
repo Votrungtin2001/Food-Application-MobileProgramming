@@ -33,20 +33,19 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/txtName"
-        android:layout_marginTop="10dp"
-        >
+        android:layout_marginTop="10dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/btnPayment"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="0dp"
                 android:drawableLeft="@drawable/ic_baseline_credit_card_24"
@@ -63,7 +62,7 @@
             <Button
                 android:id="@+id/btnInvite"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:layout_below="@+id/btnPayment"
                 android:layout_marginTop="2dp"
                 android:drawableLeft="@drawable/ic_baseline_person_add_24"
@@ -80,7 +79,7 @@
             <Button
                 android:id="@+id/btnAddress"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:layout_below="@+id/btnInvite"
                 android:layout_marginTop="2dp"
                 android:drawableLeft="@drawable/ic_baseline_place_24"
@@ -97,7 +96,7 @@
             <Button
                 android:id="@+id/btnPolicy"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:layout_below="@+id/btnAddress"
                 android:layout_marginTop="10dp"
                 android:drawableLeft="@drawable/ic_baseline_policy_24"
@@ -114,7 +113,7 @@
             <Button
                 android:id="@+id/btnSettings"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:layout_below="@+id/btnPolicy"
                 android:layout_marginTop="2dp"
                 android:drawableLeft="@drawable/ic_baseline_settings_24"
@@ -131,7 +130,7 @@
             <Button
                 android:id="@+id/btnAbout"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="50dp"
                 android:layout_below="@+id/btnSettings"
                 android:layout_marginTop="2dp"
                 android:drawableLeft="@drawable/ic_baseline_info_24"
@@ -152,9 +151,9 @@
                 android:layout_below="@+id/btnAbout"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
-                android:layout_marginStart="135dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="135dp"
+                android:layout_marginStart="138dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginEnd="131dp"
                 android:layout_marginBottom="0dp"
                 android:text="@string/activity_account_logout"
                 android:textAllCaps="false"
@@ -165,11 +164,11 @@
                 android:id="@+id/txtVersion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/btnLogout"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
-                android:layout_below="@+id/btnLogout"
-                android:layout_marginTop="0dp"
                 android:layout_marginStart="130dp"
+                android:layout_marginTop="0dp"
                 android:layout_marginEnd="130dp"
                 android:gravity="center"
                 android:text="@string/activity_account_version"

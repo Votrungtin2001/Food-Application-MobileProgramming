@@ -66,6 +66,7 @@ public class AccountInvite extends Fragment {
             ClipboardManager clipboard = getSystemService(getContext(), ClipboardManager.class);
             ClipData clip = ClipData.newPlainText("link", "https://github.com/Votrungtin2001/Food-Application-MobileProgramming");
             clipboard.setPrimaryClip(clip);
+            Toast.makeText(getContext(), "Sao chép địa chỉ thành công!", Toast.LENGTH_SHORT).show();
         });
 
         return view;

@@ -142,8 +142,8 @@
         android:id="@+id/btnAccountAddressSave"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="0dp"
+        android:layout_below="@+id/rbGroup"
+        android:layout_marginTop="20dp"
         android:text="@string/activity_account_address_save" />
 
 </RelativeLayout>
