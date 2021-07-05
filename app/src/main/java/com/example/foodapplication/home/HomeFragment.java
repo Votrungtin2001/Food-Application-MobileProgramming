@@ -224,7 +224,6 @@ public class HomeFragment extends Fragment {
         textView_addressLine.setText(addressLine);
 
         // Set Screen
-        district_id = 14;
         if(district_id > 0) district_isAvailable = true;
         SetAllData(district_id);
         setUpSreen(district_isAvailable);

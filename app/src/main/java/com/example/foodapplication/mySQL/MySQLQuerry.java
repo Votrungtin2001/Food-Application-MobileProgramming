@@ -330,6 +330,8 @@ public class MySQLQuerry {
         StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                int count1 = 0;
+                int count2 = 0;
                 list1.clear();
                 list2.clear();
                 String key = "Combo";
@@ -351,21 +353,20 @@ public class MySQLQuerry {
 
 
                             if (product_name.toLowerCase().contains(key.toLowerCase())) {
-                                int count = 0;
-                                if (count < 10) {
+                                if (count1 < 10) {
                                     SortOfProductModel sortOfProductModel = new SortOfProductModel(image, product_name, branch_name, price, id);
                                     list1.add(sortOfProductModel);
                                     adapter1.notifyDataSetChanged();
-                                    count++;
+                                    count1++;
                                 }
                             }
 
                             if ((price < 20000 && price >= 15000) && category != 7 && category != 18) {
-                                int count = 0;
-                                if (count < 10) {
+                                if (count2 < 10) {
                                     SortOfProductModel sortOfProductModel = new SortOfProductModel(image, product_name, branch_name, price, id);
                                     list2.add(sortOfProductModel);
                                     adapter2.notifyDataSetChanged();
+                                    count2++;
                                 }
                             }
                         }
